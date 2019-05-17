@@ -1,14 +1,49 @@
 <% provide(:title, "Home") %>
-<!DOCTYPE html>
-<html>
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--  <head>-->
+<!--    <title><%= yield(:title) %> | Welcome to GameInsight</title>-->
+    <!--<title>Home | </title>-->
+<!--  </head>-->
+<!--  <body>-->
+<!--    <h1>GameInsight</h1>-->
+<!--    <p>-->
+<!--     Content of latest video games are here.... TBD-->
+<!--    </p>-->
+<!--  </body>-->
+<!--</html>-->
+
+<div class="center jumbotron">
   <head>
     <title><%= yield(:title) %> | Welcome to GameInsight</title>
-    <!--<title>Home | </title>-->
+    
   </head>
   <body>
     <h1>GameInsight</h1>
-    <p>
+  </body>
+
+  <%= link_to "Sign up now!", '#', class: "btn btn-lg btn-primary" %>
+</div>
+
+<div class="center jumbotron">
+  <p>
      Content of latest video games are here.... TBD
     </p>
-  </body>
-</html>
+</div>
+
+<div class="center jumbotron">
+    <p>
+     Kiểm tra font tiếng Việt.
+    </p>
+</div>
+
+<div class="center jumbotron">
+  <p>
+     This text is just for testing the font style whenever we change it.
+     This time, things must be done right to make sure everything look better 
+     So Does this look good enough?
+   </p>
+</div>
+
+<%= link_to image_tag("ethlogo.png", alt: "Ethu logo"),
+            'http://ethugamer.com/' %>
