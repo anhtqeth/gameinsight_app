@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>EthuGamedbApp</title>
-    <%= csrf_meta_tags %>
+    <title><%= yield(:title) %> Welcome to GameInsight </title>    <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>

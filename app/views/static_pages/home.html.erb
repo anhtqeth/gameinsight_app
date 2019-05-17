@@ -1,2 +1,14 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<% provide(:title, "Home") %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= yield(:title) %> | Welcome to GameInsight</title>
+    <!--<title>Home | </title>-->
+  </head>
+  <body>
+    <h1>GameInsight</h1>
+    <p>
+     Content of latest video games are here.... TBD
+    </p>
+  </body>
+</html>

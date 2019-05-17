@@ -1,2 +1,13 @@
-<h1>StaticPages#help</h1>
-<p>Find me in app/views/static_pages/help.html.erb</p>
+<% provide(:title, "Help") %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= yield(:title) %> | GameInsight FAQ</title>
+  </head>
+  <body>
+    <h1>Sample App</h1>
+    <p>
+     Contains steps on how to use the site. Should be released in version 0.9
+    </p>
+  </body>
+</html>
