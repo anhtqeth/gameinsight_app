@@ -1,18 +1,4 @@
 <% provide(:title, "Home") %>
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--  <head>-->
-<!--    <title><%= yield(:title) %> | Welcome to GameInsight</title>-->
-    <!--<title>Home | </title>-->
-<!--  </head>-->
-<!--  <body>-->
-<!--    <h1>GameInsight</h1>-->
-<!--    <p>-->
-<!--     Content of latest video games are here.... TBD-->
-<!--    </p>-->
-<!--  </body>-->
-<!--</html>-->
-
 <div class="center jumbotron">
   <head>
     <title><%= yield(:title) %> | Welcome to GameInsight</title>
@@ -25,10 +11,39 @@
   <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
 </div>
 
-<div class="center jumbotron">
+<div class="center jumbotron" id="gamesDetail">
+  <%= %>
   <p>
-     Content of latest video games are here.... TBD
-    </p>
+    Video Games Detail
+  </p>
+  
+  <table border="1" width="100%">
+    <col style="width:15%">
+	  <col style="width:15%">
+	  <col style="width:45%">
+	  <col style="width:25%">
+	  
+      <thead>
+         <tr>
+         <th>Release Date</th>
+         <th>Title</th>
+         <th>Summary</th>
+         <th>Cover Art</th>
+         </tr>
+      </thead>
+         <tbody>
+         <tr>
+         <td>$release_date</td>
+         <td>$game_name</td>
+         <td><%= @summary %></td>
+         <td><img class="alignnone">Sigh</td>
+         </tr>
+         </tbody>
+  </table>  
+</div>
+
+<div class="center jumbotron" id="gamesReleaseSchedule">
+  
 </div>
 
 <div class="center jumbotron">
