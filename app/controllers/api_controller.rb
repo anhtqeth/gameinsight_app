@@ -2,7 +2,7 @@
 class ApiController < ApplicationController
   
   def gamesRequest
-   
+    
   end
   
   def releaseDate
