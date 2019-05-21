@@ -3,7 +3,11 @@ require 'net/http'
 class StaticPagesController < ApplicationController
   include GamesApiModule
   def home
-    @summary = gamesRequest
+    @summary = gamesRequest.first['summary']
+    @gameName = gamesRequest.first['name']
+    @cover = gameCoverRequest
+    @releaseDate = releaseDateRequest
+    puts "This is the url #{@cover}"
   end
   
 
@@ -14,5 +18,7 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+  
   end
+
 end
