@@ -20,7 +20,8 @@ module GamesApiModule
     response = http.request(request)
     JSON.parse(response.read_body)
   end
-    
+  
+  #Fix #4  
   def releaseDateRequest
     url = URI(RELEASE_URI)
     http = Net::HTTP.new(url.host, url.port)
