@@ -1,7 +1,6 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import "bootstrap-sprockets";
 @import "bootstrap";
 
 body {
@@ -23,6 +22,11 @@ p {
 }
 
 /* header */
+
+.eth_logo{
+  width: 30px;
+  height: 30px;
+}
 
 #logo {
   float: left;
