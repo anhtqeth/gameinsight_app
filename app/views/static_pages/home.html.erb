@@ -10,9 +10,18 @@
 
   <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
 </div>
+<h1>Feature</h1>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top"<%= image_tag("#{@cover}") %>
+  <div class="card-body">
+    <h5 class="card-title"><%= @gameName %></h5>
+    <p class="card-text"><%= @summary %></p>
+    <a href="#" class="btn btn-primary">Link to Game Page</a>
+  </div>
+</div>
 
+<!--This was my table get from PHP snippet-->
 <div class="center jumbotron" id="gamesDetail">
-  <%= %>
   <p>
     Video Games Detail
   </p>
@@ -37,19 +46,21 @@
          <td><%= @gameName %></td>
          <td><%= @summary %></td>
          <td><%= image_tag("#{@cover}") %></td>
-         
          </tr>
          </tbody>
   </table>  
 </div>
 
-<div class="center jumbotron" id="gamesReleaseSchedule">
-  
-</div>
+<!-- Slide Bar for Recent Release video games -->
+<h1>Recent Release</h1>
+
+
+<h1>Latest Guides</h1>
+
 
 <div class="center jumbotron">
     <p>
-     Kiểm tra font tiếng Việt.
+     Kiểm tra font tiếng Việt. 
     </p>
 </div>
 
@@ -63,5 +74,4 @@
    </p>
 </div>
 
-<%= link_to image_tag("ethlogo.png", alt: "Ethu logo"),
-            'http://ethugamer.com/' %>
+<!--<%= link_to image_tag("ethlogo.png", alt: "Ethu logo"),'http://ethugamer.com/' %>-->

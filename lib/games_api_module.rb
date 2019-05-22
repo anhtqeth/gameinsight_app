@@ -8,7 +8,7 @@ module GamesApiModule
   UNIX_TIME_NOW = Time.current.to_time.to_i
   
 #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
-
+#REFACTORING THE STRUCTURE OF CODE FOR REQUEST API
   def gamesRequest
     url = URI(GAME_URI)
     http = Net::HTTP.new(url.host, url.port)
@@ -16,7 +16,7 @@ module GamesApiModule
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     request = Net::HTTP::Get.new(url)
     request["user-key"] = USERKEY
-    request.body = 'fields *; where name = "Yakuza 0";'
+    request.body = 'fields *; where name = "Yakuza" & platform = 48;'
     response = http.request(request)
     JSON.parse(response.read_body)
   end
@@ -58,4 +58,11 @@ module GamesApiModule
     url = result.first['url'].sub! 't_thumb','t_cover_big'
     #puts url
   end
+  
+#   require 'net/https'
+# http = Net::HTTP.new('api-v3.igdb.com', 80)
+# request = Net::HTTP::Get.new(URI('https://api-v3.igdb.com/achievements'), {'user-key' => YOUR_KEY})
+# request.body = 'fields achievement_icon,category,created_at,description,external_id,game,language,name,owners,owners_percentage,rank,slug,tags,updated_at;'
+# puts http.request(request).body
+
 end
