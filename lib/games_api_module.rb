@@ -14,6 +14,9 @@ module GamesApiModule
   
 #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
 #REFACTORING THE STRUCTURE OF CODE FOR REQUEST
+
+
+
   def gamesRequest(gameID)
     url = URI(GAME_URI)
     http = Net::HTTP.new(url.host, url.port)
@@ -22,11 +25,9 @@ module GamesApiModule
     request = Net::HTTP::Get.new(url)
     request["user-key"] = USERKEY
     
-    request.body = "fields summary; where id = #{gameID};";
+    request.body = "fields name,summary; where id = #{gameID};";
     #puts request.body
-
     response = http.request(request)
-    # JSON.parse(response.read_body)
     JSON.parse(response.read_body)
   end
   
@@ -56,7 +57,7 @@ def gameCoverRequest(gameID)
     
     request = Net::HTTP::Get.new(url)
     request["user-key"] = USERKEY
-    request.body = "fields *; where game = (#{gameID});"
+    request.body = "fields url; where game = (#{gameID});"
     response = http.request(request)
     
     if JSON.parse(response.read_body).empty?
@@ -78,6 +79,7 @@ end
     
   end
   
+  #This is used to search for a specific game. Initially, this just a hardcoded string to return details of a game
   def gamesSearchRequest
     url = URI(GAME_SEARCH_URI)
     http = Net::HTTP.new(url.host, url.port)
@@ -91,11 +93,13 @@ end
     JSON.parse(response.read_body)
   end
   
+  #This is used to query for Video Games Series, 
+  #result of collection are based on gamesSearchRequest
   def gamesSeriesRequest
     require 'net/https'
     http = Net::HTTP.new('api-v3.igdb.com', 80)
     request = Net::HTTP::Get.new(URI(GAME_COLLECTION_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where id = (#{gamesSearchRequest.first['collection']});"
+    request.body = "fields games; where id = (#{gamesSearchRequest.first['collection']}); limit 5;"
     #puts JSON.parse(http.request(request).read_body)
     JSON.parse(http.request(request).read_body)
   end
@@ -106,10 +110,12 @@ end
     #games_id_array.each {|x| puts x}
     #@game_summary = Array.new()
     #@game_cover = Array.new()
-    @game_summary = games_id_array.map {|x|gamesRequest(x)}
-    @game_cover = games_id_array.map {|x| gameCoverRequest(x)}
     
-    [@game_summary,@game_cover]
+    @game_name = games_id_array[0...4].map {|x|gamesRequest(x).first['name']}
+    @game_summary = games_id_array[0...4].map {|x|gamesRequest(x).first['summary']}
+    @game_cover = games_id_array[0...4].map {|x| gameCoverRequest(x)}
+    
+    [@game_name,@game_summary,@game_cover]
   end
   
 #   require 'net/https'
