@@ -11,14 +11,32 @@
   <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
 </div>
 <h1>Feature</h1>
-<div class="card" style="width: 18rem;">
-  <img class="card-img-top"<%= image_tag("#{@cover}") %>
-  <div class="card-body">
-    <h5 class="card-title"><%= @gameName %></h5>
-    <p class="card-text"><%= @summary %></p>
-    <a href="#" class="btn btn-primary">Link to Game Page</a>
+<div class="card-deck">
+  <% @game_covers.each do |gamecover| %>
+  <div class="card">
+    <img class="card-img-top"<%= image_tag("#{gamecover}") %>
+    <div class="card-body">
+      <h5 class="card-title">Game Name here</h5>
+      <p class="card-text"> Summary should go here </p>
+      <a href="#" class="btn btn-primary">Link to Game Page</a>
+    </div>
   </div>
+  <% end %>
 </div>
+
+
+
+<!--<div class="card" style="width: 18rem;">-->
+<!--  <% @game_names.each do |gamename| %>-->
+<!--  <img class="card-img-top"%>-->
+<!--  <div class="card-body">-->
+<!--    <h5 class="card-title"><%= gamename %></h5>-->
+<!--    <p class="card-text">No thing</p>-->
+<!--    <a href="#" class="btn btn-primary">Link to Game Page</a>-->
+<!--  </div>-->
+<!--   <% end %>-->
+<!--</div>-->
+
 
 <!--This was my table get from PHP snippet-->
 <div class="center jumbotron" id="gamesDetail">
