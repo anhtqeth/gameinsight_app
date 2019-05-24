@@ -63,7 +63,7 @@ module GamesApiModule
   #This is used to search for a specific game. Initially, this just a hardcoded string to return details of a game
   def gamesSearchRequest
     request = Net::HTTP::Get.new(URI(GAME_SEARCH_URI), {'user-key' => USERKEY})
-    request.body = 'fields *; where name = "Monster Hunter";'
+    request.body = 'fields *; where name = "Yakuza";'
     response = HTTP_CNF.request(request)
     #puts JSON.parse(response.read_body)
     JSON.parse(response.read_body)
@@ -79,16 +79,24 @@ module GamesApiModule
   
   def gamesListProcess 
     games_id_array = gamesSeriesRequest.first['games']
-    #DEBUG Showing on Consoles
-    #games_id_array.each {|x| puts x}
-    #@game_summary = Array.new()
-    #@game_cover = Array.new()
     
-    @game_name = games_id_array[0...4].map {|x|gamesRequest(x).first['name']}
-    @game_summary = games_id_array[0...4].map {|x|gamesRequest(x).first['summary']}
-    @game_cover = games_id_array[0...4].map {|x| gameCoverRequest(x)}
+    @game_card_list = []
     
-    [@game_name,@game_summary,@game_cover]
+    games_id_array[0...4].each do |x|
+      game_card = {:name=>nil, :summary=> nil,:cover=>nil}  
+      game_name = gamesRequest(x).first['name']
+      game_card.store(:name,game_name)
+      game_summary = gamesRequest(x).first['summary']
+      game_card.store(:summary,game_summary)
+      game_cover = gameCoverRequest(x)
+      game_card.store(:cover,game_cover)
+      
+      @game_card_list << game_card
+      
+      puts "Current Game Card list #{@game_card_list}" 
+    end
+    @game_card_list 
+   
   end
 
 end
