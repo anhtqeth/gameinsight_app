@@ -9,11 +9,10 @@ class StaticPagesController < ApplicationController
     # @releaseDate = releaseDateRequest
     #   puts "This is the url #{@cover}"
     @game_names = gamesListProcess[0]
-    puts @games_names
+    
     @game_summaries = gamesListProcess[1]
-    puts @games_summaries
+    
     @game_covers = gamesListProcess[2]
-    puts @games_covers
     
     
   end

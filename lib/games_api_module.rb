@@ -12,36 +12,27 @@ module GamesApiModule
   USERKEY = 'ada77f859e3e4c235b5b6e360c79e249'
   UNIX_TIME_NOW = Time.current.to_time.to_i
   
+  HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 80)
+  
 #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
 #REFACTORING THE STRUCTURE OF CODE FOR REQUEST
 
 
 
   def gamesRequest(gameID)
-    url = URI(GAME_URI)
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    request = Net::HTTP::Get.new(url)
-    request["user-key"] = USERKEY
-    
+    request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
     request.body = "fields name,summary; where id = #{gameID};";
     #puts request.body
-    response = http.request(request)
+    response = HTTP_CNF.request(request)
     JSON.parse(response.read_body)
   end
   
   def releaseDateRequest
-    url = URI(RELEASE_URI)
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    
-    request = Net::HTTP::Get.new(url)
-    request["user-key"] = USERKEY
+    request = Net::HTTP::Get.new(URI(RELEASE_URI), {'user-key' => USERKEY})
+    request.body = "fields name,summary; where id = #{gameID};";
     #request.body = "fields *; where game = #{gamesRequest.first['id']} & date > #{UNIX_TIME_NOW} & platform = 48;"
     request.body = "fields *; where game = #{gamesRequest.first['id']} & platform = 48;"
-    response = http.request(request)
+    response = HTTP_CNF.request(request)
     
     result = JSON.parse(response.read_body)  
     puts result
@@ -50,15 +41,10 @@ module GamesApiModule
   end
       
 def gameCoverRequest(gameID)
-    url = URI(COVER_URI)
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    
-    request = Net::HTTP::Get.new(url)
-    request["user-key"] = USERKEY
+    request = Net::HTTP::Get.new(URI(COVER_URI), {'user-key' => USERKEY})
+    request.body = "fields name,summary; where id = #{gameID};";
     request.body = "fields url; where game = (#{gameID});"
-    response = http.request(request)
+    response = HTTP_CNF.request(request)
     
     if JSON.parse(response.read_body).empty?
        ' '
@@ -68,27 +54,16 @@ def gameCoverRequest(gameID)
         result.first['url'].sub! 't_thumb','t_cover_big'
     end
 end
-    # if result.nil?
-    #     
-    #   else
-    #     result = JSON.parse(response.read_body)
-    #     puts result
-    #     result.first['url'].sub! 't_thumb','t_cover_big'
-    # end
+
   def genericGameRequest
     
   end
   
   #This is used to search for a specific game. Initially, this just a hardcoded string to return details of a game
   def gamesSearchRequest
-    url = URI(GAME_SEARCH_URI)
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    request = Net::HTTP::Get.new(url)
-    request["user-key"] = USERKEY
-    request.body = 'fields *; where name = "Yakuza";'
-    response = http.request(request)
+    request = Net::HTTP::Get.new(URI(GAME_SEARCH_URI), {'user-key' => USERKEY})
+    request.body = 'fields *; where name = "Monster Hunter";'
+    response = HTTP_CNF.request(request)
     #puts JSON.parse(response.read_body)
     JSON.parse(response.read_body)
   end
@@ -96,12 +71,9 @@ end
   #This is used to query for Video Games Series, 
   #result of collection are based on gamesSearchRequest
   def gamesSeriesRequest
-    require 'net/https'
-    http = Net::HTTP.new('api-v3.igdb.com', 80)
     request = Net::HTTP::Get.new(URI(GAME_COLLECTION_URI), {'user-key' => USERKEY})
     request.body = "fields games; where id = (#{gamesSearchRequest.first['collection']}); limit 5;"
-    #puts JSON.parse(http.request(request).read_body)
-    JSON.parse(http.request(request).read_body)
+    JSON.parse(HTTP_CNF.request(request).read_body)
   end
   
   def gamesListProcess 
