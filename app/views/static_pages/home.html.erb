@@ -12,12 +12,12 @@
 </div>
 <h1>Feature</h1>
 <div class="card-deck">
-  <% @game_covers.each do |gamecover| %>
+  <% @game_card_list.each do |gamecard| %>
   <div class="card">
-    <img class="card-img-top"<%= image_tag("#{gamecover}") %>
+    <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
     <div class="card-body">
-      <h5 class="card-title">Game Name here</h5>
-      <p class="card-text"> Summary should go here </p>
+      <h5 class="card-title"><%= gamecard[:name] %></h5>
+      <p class="card-text"><%= gamecard[:summary]  %></p>
       <a href="#" class="btn btn-primary">Link to Game Page</a>
     </div>
   </div>
@@ -25,49 +25,6 @@
 </div>
 
 
-
-<!--<div class="card" style="width: 18rem;">-->
-<!--  <% @game_names.each do |gamename| %>-->
-<!--  <img class="card-img-top"%>-->
-<!--  <div class="card-body">-->
-<!--    <h5 class="card-title"><%= gamename %></h5>-->
-<!--    <p class="card-text">No thing</p>-->
-<!--    <a href="#" class="btn btn-primary">Link to Game Page</a>-->
-<!--  </div>-->
-<!--   <% end %>-->
-<!--</div>-->
-
-
-<!--This was my table get from PHP snippet-->
-<div class="center jumbotron" id="gamesDetail">
-  <p>
-    Video Games Detail
-  </p>
-  
-  <!--<table border="1" width="100%">-->
-  <!--  <col style="width:15%">-->
-	 <!-- <col style="width:15%">-->
-	 <!-- <col style="width:45%">-->
-	 <!-- <col style="width:25%">-->
-	  
-  <!--    <thead>-->
-  <!--       <tr>-->
-  <!--       <th>Release Date</th>-->
-  <!--       <th>Title</th>-->
-  <!--       <th>Summary</th>-->
-  <!--       <th>Cover Art</th>-->
-  <!--       </tr>-->
-  <!--    </thead>-->
-  <!--       <tbody>-->
-  <!--       <tr>-->
-  <!--       <td><%= @releaseDate %></td>-->
-  <!--       <td><%= @gameName %></td>-->
-  <!--       <td><%= @summary %></td>-->
-  <!--       <td><%= image_tag("#{@cover}") %></td>-->
-  <!--       </tr>-->
-  <!--       </tbody>-->
-  <!--</table>  -->
-</div>
 
 <!-- Slide Bar for Recent Release video games -->
 <h1>Recent Release</h1>
