@@ -8,13 +8,7 @@ class StaticPagesController < ApplicationController
     # @cover = gameCoverRequest
     # @releaseDate = releaseDateRequest
     #   puts "This is the url #{@cover}"
-    @game_names = gamesListProcess[0]
-    
-    @game_summaries = gamesListProcess[1]
-    
-    @game_covers = gamesListProcess[2]
-    
-    
+    @game_card_list = gamesListProcess
   end
   
 
