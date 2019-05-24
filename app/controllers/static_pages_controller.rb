@@ -13,8 +13,6 @@ class StaticPagesController < ApplicationController
     @game_summaries = gamesListProcess[1]
     
     @game_covers = gamesListProcess[2]
-    
-    
   end
   
 

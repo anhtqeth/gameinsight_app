@@ -4,7 +4,7 @@ module GamesApiModule
   COVER_URI = 'https://api-v3.igdb.com/covers'
   ART_URI = 'https://api-v3.igdb.com/artworks'
   SCREENSHOTS_URI = 'https://api-v3.igdb.com/screenshots'
-  RELEASE_URI = "https://api-v3.igdb.com/release_dates/"
+  RELEASE_URI = 'https://api-v3.igdb.com/release_dates/'
   
   GAME_SEARCH_URI = "https://api-v3.igdb.com/search"
   GAME_COLLECTION_URI = "https://api-v3.igdb.com/collections"
@@ -27,6 +27,7 @@ module GamesApiModule
     JSON.parse(response.read_body)
   end
   
+  
   def releaseDateRequest
     request = Net::HTTP::Get.new(URI(RELEASE_URI), {'user-key' => USERKEY})
     request.body = "fields name,summary; where id = #{gameID};";
@@ -40,20 +41,20 @@ module GamesApiModule
     DateTime.strptime(releaseTime.to_s,'%s').strftime("%A-%d-%m-%Y")
   end
       
-def gameCoverRequest(gameID)
-    request = Net::HTTP::Get.new(URI(COVER_URI), {'user-key' => USERKEY})
-    request.body = "fields name,summary; where id = #{gameID};";
-    request.body = "fields url; where game = (#{gameID});"
-    response = HTTP_CNF.request(request)
-    
-    if JSON.parse(response.read_body).empty?
-       ' '
-      else
-        result = JSON.parse(response.read_body)
-        #puts result
-        result.first['url'].sub! 't_thumb','t_cover_big'
-    end
-end
+  def gameCoverRequest(gameID)
+      request = Net::HTTP::Get.new(URI(COVER_URI), {'user-key' => USERKEY})
+      request.body = "fields name,summary; where id = #{gameID};";
+      request.body = "fields url; where game = (#{gameID});"
+      response = HTTP_CNF.request(request)
+      
+      if JSON.parse(response.read_body).empty?
+         ' '
+        else
+          result = JSON.parse(response.read_body)
+          #puts result
+          result.first['url'].sub! 't_thumb','t_cover_big'
+      end
+  end
 
   def genericGameRequest
     
@@ -89,11 +90,5 @@ end
     
     [@game_name,@game_summary,@game_cover]
   end
-  
-#   require 'net/https'
-# http = Net::HTTP.new('api-v3.igdb.com', 80)
-# request = Net::HTTP::Get.new(URI('https://api-v3.igdb.com/achievements'), {'user-key' => YOUR_KEY})
-# request.body = 'fields achievement_icon,category,created_at,description,external_id,game,language,name,owners,owners_percentage,rank,slug,tags,updated_at;'
-# puts http.request(request).body
 
 end
