@@ -1,18 +1,25 @@
 module GamesApiModule
   
+  #General Information
   GAME_URI = "https://api-v3.igdb.com/games/"
+  #Media (Videos/Photos)
   COVER_URI = 'https://api-v3.igdb.com/covers'
-  ART_URI = 'https://api-v3.igdb.com/artworks'
+  ARTWORK_URI = 'https://api-v3.igdb.com/artworks'
   SCREENSHOTS_URI = 'https://api-v3.igdb.com/screenshots'
+  
+  #Specific Info
   RELEASE_URI = 'https://api-v3.igdb.com/release_dates/'
   
+  #Searching 
   GAME_SEARCH_URI = "https://api-v3.igdb.com/search"
   GAME_COLLECTION_URI = "https://api-v3.igdb.com/collections"
   
+  #Authentication
   USERKEY = '049d27f7325bcb67768a30d5140fefb7'
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
-  UNIX_TIME_NOW = Time.current.to_time.to_i
   
+  #Utils Constant
+  UNIX_TIME_NOW = Time.current.to_time.to_i
   HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 80)
   
 #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
@@ -23,15 +30,12 @@ module GamesApiModule
   def gamesRequest(gameID)
     request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
     request.body = "fields name,summary; where id = #{gameID};";
-    #puts request.body
     response = HTTP_CNF.request(request)
     JSON.parse(response.read_body)
   end
   
-  
   def gameReleaseDateRequest
     request = Net::HTTP::Get.new(URI(RELEASE_URI), {'user-key' => USERKEY})
-    #request.body = "fields *; where game = #{gamesRequest.first['id']} & date > #{UNIX_TIME_NOW} & platform = 48;"
     request.body = "fields *; where date > #{UNIX_TIME_NOW}  & platform = 48;"
     response = HTTP_CNF.request(request)
     
@@ -46,7 +50,7 @@ module GamesApiModule
       
   def gameCoverRequest(gameID)
       request = Net::HTTP::Get.new(URI(COVER_URI), {'user-key' => USERKEY})
-      request.body = "fields name,summary; where id = #{gameID};";
+      #request.body = "fields name,summary; where id = #{gameID};";
       request.body = "fields url; where game = (#{gameID});"
       response = HTTP_CNF.request(request)
       
@@ -58,8 +62,39 @@ module GamesApiModule
           result.first['url'].sub! 't_thumb','t_cover_big'
       end
   end
+  
+  def gameArtworkRequest(gameID)
+      request = Net::HTTP::Get.new(URI(ARTWORK_URI), {'user-key' => USERKEY})
+      request.body = "fields *; where game = (#{gameID});"
+      response = HTTP_CNF.request(request)
+      
+      if JSON.parse(response.read_body).empty?
+         ' '
+        else
+          result = JSON.parse(response.read_body)
+          #puts result
+          puts result
+      end
+  end
+  
+  def gameScreenshotRequest(gameID)
+      request = Net::HTTP::Get.new(URI(SCREENSHOTS_URI), {'user-key' => USERKEY})
+      request.body = "fields *; where game = (#{gameID});"
+      response = HTTP_CNF.request(request)
+      
+      if JSON.parse(response.read_body).empty?
+         ' '
+        else
+          result = JSON.parse(response.read_body)
+          #puts result
+          result.each do |screenshot|
+            screenshot['url'].sub! 't_thumb','t_screenshot_big'
+          end
+          puts result
+      end
+  end
 
-  def genericGameRequest
+  def genericGameRequest #This was firstly created to randomly pick a game details
     
   end
   
@@ -80,6 +115,7 @@ module GamesApiModule
     JSON.parse(HTTP_CNF.request(request).read_body)
   end
   
+  #
   def gamesListProcess(games_id_array)
     game_card_list = []
     
@@ -96,7 +132,6 @@ module GamesApiModule
       
     end
     game_card_list
-   
   end
 
 end
