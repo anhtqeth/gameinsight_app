@@ -9,7 +9,8 @@ module GamesApiModule
   GAME_SEARCH_URI = "https://api-v3.igdb.com/search"
   GAME_COLLECTION_URI = "https://api-v3.igdb.com/collections"
   
-  USERKEY = 'ada77f859e3e4c235b5b6e360c79e249'
+  USERKEY = '049d27f7325bcb67768a30d5140fefb7'
+  #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
   UNIX_TIME_NOW = Time.current.to_time.to_i
   
   HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 80)
@@ -28,17 +29,19 @@ module GamesApiModule
   end
   
   
-  def releaseDateRequest
+  def gameReleaseDateRequest
     request = Net::HTTP::Get.new(URI(RELEASE_URI), {'user-key' => USERKEY})
-    request.body = "fields name,summary; where id = #{gameID};";
     #request.body = "fields *; where game = #{gamesRequest.first['id']} & date > #{UNIX_TIME_NOW} & platform = 48;"
-    request.body = "fields *; where game = #{gamesRequest.first['id']} & platform = 48;"
+    request.body = "fields *; where date > #{UNIX_TIME_NOW}  & platform = 48;"
     response = HTTP_CNF.request(request)
     
     result = JSON.parse(response.read_body)  
-    puts result
-    releaseTime = result.first['date']
-    DateTime.strptime(releaseTime.to_s,'%s').strftime("%A-%d-%m-%Y")
+    #releaseTime = result.first['date']
+    
+    result.each do |x|
+      x['date'] = DateTime.strptime(x['date'].to_s,'%s').strftime("%A-%d-%b-%Y")
+    end
+    result
   end
       
   def gameCoverRequest(gameID)
@@ -77,10 +80,8 @@ module GamesApiModule
     JSON.parse(HTTP_CNF.request(request).read_body)
   end
   
-  def gamesListProcess 
-    games_id_array = gamesSeriesRequest.first['games']
-    
-    @game_card_list = []
+  def gamesListProcess(games_id_array)
+    game_card_list = []
     
     games_id_array[0...4].each do |x|
       game_card = {:name=>nil, :summary=> nil,:cover=>nil}  
@@ -91,11 +92,10 @@ module GamesApiModule
       game_cover = gameCoverRequest(x)
       game_card.store(:cover,game_cover)
       
-      @game_card_list << game_card
+      game_card_list << game_card
       
-      puts "Current Game Card list #{@game_card_list}" 
     end
-    @game_card_list 
+    game_card_list
    
   end
 
