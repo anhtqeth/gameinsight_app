@@ -29,7 +29,8 @@ module GamesApiModule
 
   def gamesRequest(gameID)
     request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
-    request.body = "fields name,summary; where id = #{gameID};";
+    #srequest.body = "fields name,summary; where id = #{gameID};";
+    request.body = "fields *; where id = #{gameID};";
     response = HTTP_CNF.request(request)
     JSON.parse(response.read_body)
   end
@@ -76,7 +77,7 @@ module GamesApiModule
           puts result
       end
   end
-  
+
   def gameScreenshotRequest(gameID)
       request = Net::HTTP::Get.new(URI(SCREENSHOTS_URI), {'user-key' => USERKEY})
       request.body = "fields *; where game = (#{gameID});"
@@ -88,9 +89,8 @@ module GamesApiModule
           result = JSON.parse(response.read_body)
           #puts result
           result.each do |screenshot|
-            screenshot['url'].sub! 't_thumb','t_screenshot_big'
+            screenshot['url'].sub! 't_thumb','t_1080p'
           end
-          puts result
       end
   end
 
@@ -133,5 +133,4 @@ module GamesApiModule
     end
     game_card_list
   end
-
 end
