@@ -30,7 +30,7 @@
     <div class="card-body">
       <h5 class="card-title"><%= gamecard[:name] %></h5>
       <p class="card-text"><%= gamecard[:summary]  %></p>
-      <a href="#" class="btn btn-primary">Link to Game Page</a>
+      <a href="<%=game_path(gamecard[:id]) %>" class="btn btn-primary">Details</a>
     </div>
   </div>
   <% end %>
@@ -40,7 +40,6 @@
 
 <!-- For Specific Game, This is a test-->
 <h1>Screenshots Carousel</h1>
-
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
    
     <ol class="carousel-indicators">

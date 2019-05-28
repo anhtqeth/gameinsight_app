@@ -1,3 +1,5 @@
+require 'uri'
+require 'net/http'
 module GamesApiModule
   
   #General Information
@@ -27,10 +29,11 @@ module GamesApiModule
 
 
 
-  def gamesRequest(gameID)
+  def gamesRequest(game_id)
     request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
+  
+    request.body = "fields *; where id = #{game_id};";
     #srequest.body = "fields name,summary; where id = #{gameID};";
-    request.body = "fields *; where id = #{gameID};";
     response = HTTP_CNF.request(request)
     JSON.parse(response.read_body)
   end
@@ -84,7 +87,7 @@ module GamesApiModule
       response = HTTP_CNF.request(request)
       
       if JSON.parse(response.read_body).empty?
-         ' '
+         ''
         else
           result = JSON.parse(response.read_body)
           #puts result
@@ -99,9 +102,9 @@ module GamesApiModule
   end
   
   #This is used to search for a specific game. Initially, this just a hardcoded string to return details of a game
-  def gamesSearchRequest
+  def gamesSearchRequest()
     request = Net::HTTP::Get.new(URI(GAME_SEARCH_URI), {'user-key' => USERKEY})
-    request.body = 'fields *; where name = "Yakuza";'
+    request.body = 'fields *; where name = "Dynasty Warriors";'
     response = HTTP_CNF.request(request)
     #puts JSON.parse(response.read_body)
     JSON.parse(response.read_body)
@@ -120,7 +123,9 @@ module GamesApiModule
     game_card_list = []
     
     games_id_array[0...4].each do |x|
-      game_card = {:name=>nil, :summary=> nil,:cover=>nil}  
+      game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil}
+      game_id = gamesRequest(x).first['id']
+      game_card.store(:id,game_id)
       game_name = gamesRequest(x).first['name']
       game_card.store(:name,game_name)
       game_summary = gamesRequest(x).first['summary']
