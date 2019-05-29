@@ -8,6 +8,7 @@ module GamesApiModule
   COVER_URI = 'https://api-v3.igdb.com/covers'
   ARTWORK_URI = 'https://api-v3.igdb.com/artworks'
   SCREENSHOTS_URI = 'https://api-v3.igdb.com/screenshots'
+  VIDEO_URI = 'https://api-v3.igdb.com/game_videos'
   
   #Specific Info
   RELEASE_URI = 'https://api-v3.igdb.com/release_dates/'
@@ -110,12 +111,26 @@ module GamesApiModule
     JSON.parse(response.read_body)
   end
   
-  #This is used to query for Video Games Series, 
+  #This is used to query for  Games Series,
   #result of collection are based on gamesSearchRequest
   def gamesSeriesRequest
     request = Net::HTTP::Get.new(URI(GAME_COLLECTION_URI), {'user-key' => USERKEY})
     request.body = "fields games; where id = (#{gamesSearchRequest.first['collection']}); limit 5;"
     JSON.parse(HTTP_CNF.request(request).read_body)
+  end
+  
+  def gamesVideoRequest(game_id)
+    request = Net::HTTP::Get.new(URI(VIDEO_URI), {'user-key' => USERKEY})
+    request.body = "fields *; where game = (#{game_id});"
+    
+    
+    game_videos_url = []
+    result = JSON.parse(HTTP_CNF.request(request).read_body)
+    result.each do |res|
+      link = 'https://www.youtube.com/embed/'
+      game_videos_url << (link << res["video_id"])
+    end
+    game_videos_url
   end
   
   #
