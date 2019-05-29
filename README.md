@@ -6,21 +6,25 @@
  ----------------------------------------------------------------- 
 
 
-# Games DB App for Vietnam - Ethu Inc
+# Games Data Base Application for Vietnam - Ethu Inc
 
-This is a Ruby Webapp display information of videogames by using the API Service provided from third party company.
+This is a Ruby Webapp display details of videogames by using the API Service provided from third party company.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+As of 29 - May - 2019 - This web app is still in development
 
 ### Prerequisites
 
-- Working Experience in Ruby on Rails framework
+- Working Experience in Ruby on Rails (minimum 1 year)
+- Strong Understanding on Front End development (CSS, SCSS, HTML5)
+- Familiar with utilizing Bootstrap 4 on FE Components
+- Strong understanding on API Development and REST API protocol
+- Gaming Enthusiastic
 
 ### Installing
 
-This will be hosted via AWS S3 services. Right now, no specification is neeed 
+This will be hosted via AWS S3 services. Right now, no specification is neeed.
 
 
 ## Running the tests
@@ -30,22 +34,23 @@ TBD
 
 ### And coding style tests
 
+- [Ruby Styles Guides](https://github.com/rubocop-hq/ruby-style-guide) I followed this popular Ruby style guides from Git.
+
+
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+- During development and testing phase, heroku was used. 
+- 
 
 ## Built With
 
-* [Ruby 5.1.6](http://) - The web framework used
-* [Maven](https://) - Dependency Management
-* [ROME](https://) - Used to generate RSS Feeds
-
-## Contributing
+* [Rails 5.2](https://guides.rubyonrails.org/5_2_release_notes.html)
+* [Bootstrap 4.3.1](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
+* [AWS Cloud 9](https://aws.amazon.com/cloud9/)
 
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
