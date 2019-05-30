@@ -60,10 +60,10 @@ module GamesApiModule
       response = HTTP_CNF.request(request)
       
       if JSON.parse(response.read_body).empty?
-         ' '
+          nil
         else
           result = JSON.parse(response.read_body)
-          #puts result
+          puts 'COVER ART REQUEST!! ' << result.to_s
           result.first['url'].sub! 't_thumb','t_cover_big'
       end
   end
@@ -103,19 +103,26 @@ module GamesApiModule
   end
   
   #This is used to search for a specific game. Initially, this just a hardcoded string to return details of a game
-  def gamesSearchRequest()
-    request = Net::HTTP::Get.new(URI(GAME_SEARCH_URI), {'user-key' => USERKEY})
-    request.body = 'fields *; where name = "Dynasty Warriors";'
+  def gamesSearchRequest(game_string)
+    request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
+    #request.body = 'fields *; where name = "' << game_string << '";' QUERY FOR GAME_SEARCH_URI
+    request.body  = 'search " '<< game_string << '";'
+    puts request.body
     response = HTTP_CNF.request(request)
     #puts JSON.parse(response.read_body)
-    JSON.parse(response.read_body)
+    result = JSON.parse(response.read_body)
+    game_ids = []
+    result.each do |x|
+      game_ids << x["id"]
+    end
+    game_ids
   end
   
   #This is used to query for  Games Series,
   #result of collection are based on gamesSearchRequest
-  def gamesSeriesRequest
+  def gamesSeriesRequest(collection_id)
     request = Net::HTTP::Get.new(URI(GAME_COLLECTION_URI), {'user-key' => USERKEY})
-    request.body = "fields games; where id = (#{gamesSearchRequest.first['collection']}); limit 5;"
+    request.body = "fields games; where id = (#{collection_id}); limit 5;"
     JSON.parse(HTTP_CNF.request(request).read_body)
   end
   
@@ -123,9 +130,10 @@ module GamesApiModule
     request = Net::HTTP::Get.new(URI(VIDEO_URI), {'user-key' => USERKEY})
     request.body = "fields *; where game = (#{game_id});"
     
-    
     game_videos_url = []
     result = JSON.parse(HTTP_CNF.request(request).read_body)
+    
+    #Construct YTB Embed url
     result.each do |res|
       link = 'https://www.youtube.com/embed/'
       game_videos_url << (link << res["video_id"])

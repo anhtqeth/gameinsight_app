@@ -3,10 +3,16 @@
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-    <a class="navbar-brand">Navbar</a>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-warning" type="submit">Search</button>
-    </form>
+    <a class="navbar-brand">GameInsight</a>
+    <!--<form class="form-inline">-->
+    <!--  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+    <!--  <button class="btn btn-outline-warning" type="submit">Search</button>-->
+    <!--</form>-->
+    
+  <%= form_tag(search_path, :method => "get",   
+    class: 'form-inline') do %>  
+    <%= search_field_tag :name, params[:name], placeholder: " ", class: "form-control mr-sm-2" %>  
+      <%= button_tag "Search", :class => 'btn btn-outline-warning',:name => nil%>  
+  <% end %>
   </nav>
 </header>
