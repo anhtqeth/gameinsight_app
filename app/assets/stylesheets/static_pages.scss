@@ -4,7 +4,11 @@
 @import "bootstrap";
 
 body {
-  padding-top: 60px;
+  padding-top: 65px;
+}
+
+.container {
+  background-color: #E9ECEF;
 }
 
 .center {
@@ -13,6 +17,10 @@ body {
 
 .center h1 {
   margin-bottom: 10px;
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
 }
 
 p {
@@ -43,9 +51,9 @@ p {
 }
 
 footer {
-  margin-top: 45px;
+  margin-top: 35px;
   padding-top: 15px;
-  border-top: 5px solid #eaeaea;
+  border-top: 1px solid #eaeaea;
   color: #777;
 }
 
@@ -77,19 +85,21 @@ footer ul li {
   position: fixed;
   padding-left: 15px;
   left: 0;
+  height:100%;
+
 }
 
 .rightSidebar {
   float: right;
   position: fixed;
-  width: 320px;
+  width: 350px;
   padding-right: 15px;
   right: 0;
+  height:80%;
+  
 }
 
-.sidenav {
-  height: 100%;
-  border-radius: 10px;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
+.header{
+  position: fixed;
 }
+
