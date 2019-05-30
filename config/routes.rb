@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   
   get '/games/:id', to: 'games#show', as: 'game'
 
+  get '/search', to: 'games#find', as: 'search'
+
 end

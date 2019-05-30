@@ -3,7 +3,6 @@ class GamesController < ApplicationController
   
   #Render game detail url
   def show
-    
     @game_details = gamesRequest(params[:id])
     @game_cover = gameCoverRequest(params[:id])
     puts 'COVER' << @game_cover
@@ -28,8 +27,15 @@ class GamesController < ApplicationController
   end
   
   def find
-    #@game_search_details = gamesSearchRequest
     
+    if params[:name].blank?  
+      redirect_to(root_path, alert: "Please enter something!")
+    else
+      game_id_result = gamesSearchRequest(params[:name])
+      @game_card_result = gamesListProcess(game_id_result)
+    end
+    
+    render 'games/search_result'
   end
   
 end

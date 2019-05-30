@@ -1,0 +1,35 @@
+<div class="container">
+  <h1>Result</h1>
+  <%@game_card_result.each do |result| %>
+  <div class="row">
+    <div class="card" style="width: 18rem;">
+    <!--<img class="card-img-top" src="//images.igdb.com/igdb/image/upload/t_cover_big/co1j0g.jpg" alt="Card image cap">-->
+    <img class="card-img-top"<%= image_tag("#{result[:cover]}") %>
+    <div class="card-body">
+    <p class="card-text"><%= result[:name] %></p>
+    </div>
+  </div>
+    <div class="col">
+     <p>Release Date</p>
+     <p>Platform</p>
+     <p>Details</p>
+    </div>
+  </div>
+  <hr>
+  <% end %>
+  
+  <h1>I AM DUMMY CARDS</h1>
+  <div class="row">
+   <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="//images.igdb.com/igdb/image/upload/t_cover_big/izmo9gxwlshqgfws7zn7.jpg" alt="Card image cap">
+    <div class="card-body">
+      <p class="card-text">Cover Art 2</p>
+    </div>
+   </div>
+    <div class="col">
+     <p>Release Date</p>
+     <p>Platform</p>
+     <p>Details</p>
+    </div>
+  </div>
+</div>
