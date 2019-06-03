@@ -10,6 +10,9 @@ module GamesApiModule
   SCREENSHOTS_URI = 'https://api-v3.igdb.com/screenshots'
   VIDEO_URI = 'https://api-v3.igdb.com/game_videos'
   
+  PLATFORM_LOGO = 'https://api-v3.igdb.com/platform_logos'
+  PLATFORM_URI ='https://api-v3.igdb.com/platforms'
+  
   #Specific Info
   RELEASE_URI = 'https://api-v3.igdb.com/release_dates/'
   
@@ -33,10 +36,42 @@ module GamesApiModule
   def gamesRequest(game_id)
     request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
   
-    request.body = "fields *; where id = #{game_id};";
+    #request.body = "fields *; where id = #{game_id};";
+    request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
     #srequest.body = "fields name,summary; where id = #{gameID};";
     response = HTTP_CNF.request(request)
     JSON.parse(response.read_body)
+  end
+  
+
+  def gamesPlatformLogoRequest(logo_id)
+    request = Net::HTTP::Get.new(URI(PLATFORM_LOGO), {'user-key' => USERKEY})
+   
+    # request.body = "fields alpha_channel,animated,height,image_id,url,width;";
+    request.body = 'fields *; where image_id = ' << logo_id << ';';
+    response = HTTP_CNF.request(request)
+    result = JSON.parse(response.read_body)
+    img = []
+    
+    result.each do |res|
+      img << res["url"]
+    end
+    img
+  end
+  
+  def gamesPlatformRequest
+    request = Net::HTTP::Get.new(URI(PLATFORM_URI), {'user-key' => USERKEY})
+   
+    request.body = "fields *;";
+    response = HTTP_CNF.request(request)
+    result = JSON.parse(response.read_body)
+    puts result
+    ids = []
+    
+    result.each do |res|
+      ids << res["platform_logo"]
+    end
+    ids
   end
   
   def gameReleaseDateRequest
@@ -146,15 +181,25 @@ module GamesApiModule
     game_card_list = []
     
     games_id_array[0...4].each do |x|
-      game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil}
-      game_id = gamesRequest(x).first['id']
+      #game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil}
+      
+      game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
+      game_detail = gamesRequest(x).first
+      game_id = game_detail['id']
       game_card.store(:id,game_id)
-      game_name = gamesRequest(x).first['name']
+      game_name = game_detail['name']
       game_card.store(:name,game_name)
-      game_summary = gamesRequest(x).first['summary']
+      game_summary = game_detail['summary']
       game_card.store(:summary,game_summary)
       game_cover = gameCoverRequest(x)
       game_card.store(:cover,game_cover)
+      
+      game_first_release_date = game_detail['first_release_date']
+      game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
+      game_platform = game_detail["platforms"].map{|x| x["name"]}.join(', ')
+      game_card.store(:platform,game_platform)
+      game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
+      game_card.store(:genres,game_genres)
       
       game_card_list << game_card
       

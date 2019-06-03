@@ -27,15 +27,19 @@ class GamesController < ApplicationController
   end
   
   def find
+    @dummy_game_ids = [76253, 134, 112, 135, 1254, 76843, 62352, 20734, 111750, 20022] #Devil May Cry
     
     if params[:name].blank?  
-      redirect_to(root_path, alert: "Please enter something!")
+      flash[:info] = "Please specify a name"
+      redirect_to(root_path)
+      
     else
       game_id_result = gamesSearchRequest(params[:name])
       @game_card_result = gamesListProcess(game_id_result)
+      render 'games/search_result'
     end
     
-    render 'games/search_result'
+    
   end
   
 end
