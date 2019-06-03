@@ -1,35 +1,65 @@
 <div class="container">
-  <h1>Result</h1>
+  <h2>Search Result for <%= params[:name] %></h2>
+  <hr>
   <%@game_card_result.each do |result| %>
   <div class="row">
-    <div class="card" style="width: 18rem;">
-    <!--<img class="card-img-top" src="//images.igdb.com/igdb/image/upload/t_cover_big/co1j0g.jpg" alt="Card image cap">-->
+    <div class="card" style="width: 12rem;">
     <img class="card-img-top"<%= image_tag("#{result[:cover]}") %>
-    <div class="card-body">
-    <p class="card-text"><%= result[:name] %></p>
-    </div>
   </div>
     <div class="col">
-     <p>Release Date</p>
-     <p>Platform</p>
-     <p>Details</p>
-    </div>
-  </div>
-  <hr>
-  <% end %>
-  
-  <h1>I AM DUMMY CARDS</h1>
-  <div class="row">
-   <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="//images.igdb.com/igdb/image/upload/t_cover_big/izmo9gxwlshqgfws7zn7.jpg" alt="Card image cap">
-    <div class="card-body">
-      <p class="card-text">Cover Art 2</p>
+     <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= result[:name] %></h5>
+          <p class="card-text">First Release Date: <strong><%= result[:first_release_date] %></strong></p>
+          <p class="card-text">Platform: <strong><%= result[:platform] %></strong></p>
+          <p class="card-text">Genres: <strong><%= result[:genres] %></strong></p>
+          <p class="card-text">Series: <strong>TBD</strong></p>
+          <a href="<%=game_path(result[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>
+        </div>
+      </div>
     </div>
    </div>
+  <hr>
+  <% end %>
+  <hr>
+  <h2>Testing Data</h2>
+  <div class="row">
+   <div class="card" style="width: 12rem;">
+    <img class="card-img-top" src="//images.igdb.com/igdb/image/upload/t_cover_big/izmo9gxwlshqgfws7zn7.jpg" alt="Card image cap">
+   </div>
+   
     <div class="col">
-     <p>Release Date</p>
-     <p>Platform</p>
-     <p>Details</p>
+     <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Yakuza 2 Kiwami</h5>
+          <p class="card-text"><strong>Release Date:</strong> 29 - Feb - 2018 </p>
+          <p class="card-text"><strong>Platform:</strong> PS4</p>
+          <p class="card-text">Genres: Beat-Em-Up,Adventure</p>
+          <p class="card-text">Series: Yakuza</p>
+          <a href="#" class="btn btn-outline-warning btn-block">More Details</a>
+        </div>
+      </div>
     </div>
   </div>
+  
+  <hr>
+  
+  <div class="row">
+   <div class="card" style="width: 12rem;">
+    <img class="card-img-top" src="//images.igdb.com/igdb/image/upload/t_cover_big/udb2eilafrf5yujesuq8.jpg" alt="Card image cap">
+   </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Yakuza 2 Kiwami</h5>
+          <p class="card-text">Release Date: 29 - Feb - 2018</p>
+          <p class="card-text">Platform: PS4</p>
+          <p class="card-text">Genres: Beat-Em-Up,Adventure</p>
+          <p class="card-text">Series: Yakuza</p>
+          <a href="#" class="btn btn-outline-warning btn-block">More Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>
