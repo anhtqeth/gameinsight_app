@@ -194,13 +194,20 @@ module GamesApiModule
       game_cover = gameCoverRequest(x)
       game_card.store(:cover,game_cover)
       
-      game_first_release_date = game_detail['first_release_date']
-      game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
-      game_platform = game_detail["platforms"].map{|x| x["name"]}.join(', ')
-      game_card.store(:platform,game_platform)
-      game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
-      game_card.store(:genres,game_genres)
       
+      
+      unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
+        game_platform = game_detail["platforms"].map{|x| x["name"]}.join(', ')
+        game_card.store(:platform,game_platform)
+        game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
+        game_card.store(:genres,game_genres)
+        game_first_release_date = game_detail["first_release_date"]
+      game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
+      else
+        game_card.store(:platform,"NA")
+        game_card.store(:genres,"NA")
+        game_card.store(:first_release_date,"NA")
+      end
       game_card_list << game_card
       
     end
