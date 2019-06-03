@@ -20,6 +20,9 @@ module GamesApiModule
   GAME_SEARCH_URI = "https://api-v3.igdb.com/search"
   GAME_COLLECTION_URI = "https://api-v3.igdb.com/collections"
   
+  #External Sites info
+  FEED_URI = "https://api-v3.igdb.com/pulse_sources"
+  
   #Authentication
   USERKEY = '049d27f7325bcb67768a30d5140fefb7'
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
@@ -38,6 +41,16 @@ module GamesApiModule
   
     #request.body = "fields *; where id = #{game_id};";
     request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
+    #srequest.body = "fields name,summary; where id = #{gameID};";
+    response = HTTP_CNF.request(request)
+    JSON.parse(response.read_body)
+  end
+  
+  def gamesFeedRequest(game_id)
+    request = Net::HTTP::Get.new(URI(FEED_URI), {'user-key' => USERKEY})
+  
+    #request.body = "fields *; where id = #{game_id};";
+    request.body = "fields *; where id = #{game_id};";
     #srequest.body = "fields name,summary; where id = #{gameID};";
     response = HTTP_CNF.request(request)
     JSON.parse(response.read_body)
