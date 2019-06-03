@@ -1,29 +1,37 @@
-<h1>Details</h1>
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card text-white bg-secondary mb-3" style="max-width: 95rem;">
-      <div class="card-header">
-        <%= @game_details.first["name"] %>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Summary</h5>
-        <p class="card-text"><%=@game_details.first["summary"] %></p>
-        <h5 class="card-title">Storyline</h5>
-        <p class="card-text"><%=@game_details.first["storyline"] %></p>
+<div class="container" >
+  <h1>Details</h1>
+  <hr>
+  <div class="row">
+    <div class="col">
+     <div class="card text-white" style="background-color: black;">
+        <div class="card-body">
+          <div class="card-header">
+            <%= @game_details.first["name"] %>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Summary</h5>
+            <p class="card-text"><%=@game_details.first["summary"] %></p>
+            <h5 class="card-title">Storyline</h5>
+            <hr>
+            <p class="card-text"><%=@game_details.first["storyline"] %></p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card text-white bg-info mb-3 float-right" style="max-width: 18rem;">
-    <h5 align="center" class="card-title"><%= @game_details.first["name"] %> Cover Art</h5>
-    <img class="card-img-top"<%= image_tag("#{@game_cover}") %>
-   </div>
+    <div class="card text-white" style="width: 12rem; background-color: black;">
+      <h5 align="center" class="card-title"><%= @game_details.first["name"] %> Cover Art</h5>
+      <img class="card-img-top"<%= image_tag("#{@game_cover}") %>
+    </div>
   </div>
 </div>
 
-<h1>Screenshots</h1>
-  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
-     
+
+  
+<hr>
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
+     <h1>Screenshots</h1>
       <ol class="carousel-indicators">
           <% @game_screenshots.each do |img| %>
           <li data-target="#carouselExampleIndicators" data-slide-to=<% img %> </li>
@@ -52,22 +60,19 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
       </a>
-  </div>
+</div>
+  
+<hr>
   
 <h2>VIDEOS</h2>
-<!--Carousel Wrapper-->
 <div id="video-carousel-example2" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false">
-  <!--Indicators-->
- 
   <div class="carousel-inner">
   
     <div class="carousel-item active">
-        <!--Video source-->
         <div class="embed-responsive embed-responsive-16by9">
           <iframe class="embed-responsive-item" src=<%= @game_videos.first %> allowfullscreen></iframe>
         </div>
     </div>
-      <!--Caption-->
     <% @game_videos[1..-1].each do |vid| %>
     <!-- Second slide -->
     <div class="carousel-item">
@@ -86,10 +91,13 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
-  <!--/.Controls-->
 </div>
 
+<hr>
+
 <h2>SERIES</h2>
+
+<hr>
 
 <h2>NEWS</h2>
 
