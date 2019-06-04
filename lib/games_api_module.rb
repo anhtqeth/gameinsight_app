@@ -19,9 +19,14 @@ module GamesApiModule
   #Searching 
   GAME_SEARCH_URI = "https://api-v3.igdb.com/search"
   GAME_COLLECTION_URI = "https://api-v3.igdb.com/collections"
+  GAME_FRANCHISE_URI = "https://api-v3.igdb.com/franchises"
   
   #External Sites info
-  FEED_URI = "https://api-v3.igdb.com/pulse_sources"
+  GAME_NEWS_GROUP_URI = "https://api-v3.igdb.com/pulse_groups"
+  GAME_ARTICLE_URI = "https://api-v3.igdb.com/pulses"
+  GAME_EXTERNAL_ARTICLE_URI = "https://api-v3.igdb.com/pulse_urls"
+  
+  #GAME_NEWS_URI = "https://api-v3.igdb.com/feeds"
   
   #Authentication
   USERKEY = '049d27f7325bcb67768a30d5140fefb7'
@@ -34,6 +39,7 @@ module GamesApiModule
 #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
 #REFACTORING THE STRUCTURE OF CODE FOR REQUEST
 
+  
 
 
   def gamesRequest(game_id)
@@ -46,15 +52,35 @@ module GamesApiModule
     JSON.parse(response.read_body)
   end
   
-  def gamesFeedRequest(game_id)
-    request = Net::HTTP::Get.new(URI(FEED_URI), {'user-key' => USERKEY})
   
-    #request.body = "fields *; where id = #{game_id};";
-    request.body = "fields *; where id = #{game_id};";
-    #srequest.body = "fields name,summary; where id = #{gameID};";
+  
+  def gamesNewsFeedRequest(game_id)
+    request = Net::HTTP::Get.new(URI(GAME_NEWS_GROUP_URI), {'user-key' => USERKEY})
+    request.body = "fields *; where game = #{game_id};"
+    response = HTTP_CNF.request(request)
+    result = JSON.parse(response.read_body)
+    puts result
+    result
+  end
+  
+  def gameArticleRequest(id)
+    request = Net::HTTP::Get.new(URI(GAME_ARTICLE_URI), {'user-key' => USERKEY})
+    request.body = "fields *; where id = #{id};"
+    
+    response = HTTP_CNF.request(request)
+    article_meta = JSON.parse(response.read_body)
+    article_url = gameArticleExternalRequest(article_meta.first["website"])
+    return [article_meta,article_url]
+  end
+  
+  def gameArticleExternalRequest(id)
+    request = Net::HTTP::Get.new(URI(GAME_EXTERNAL_ARTICLE_URI), {'user-key' => USERKEY})
+    request.body = "fields *; where id = #{id};"
+    
     response = HTTP_CNF.request(request)
     JSON.parse(response.read_body)
   end
+  
   
 
   def gamesPlatformLogoRequest(logo_id)
