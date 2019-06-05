@@ -1,26 +1,26 @@
 <div class="container" >
-  <!--<h2>Search Result for <%= params[:name] %></h2>-->
-  <!--<hr>-->
-  <!--<%@game_card_result.each do |result| %>-->
-  <!--<div class="row">-->
-  <!--  <div class="card" style="width: 12rem;">-->
-  <!--  <img class="card-img-top"<%= image_tag("#{result[:cover]}") %>-->
-  <!--</div>-->
-  <!--  <div class="col">-->
-  <!--   <div class="card">-->
-  <!--      <div class="card-body">-->
-  <!--        <h5 class="card-title"><%= result[:name] %></h5>-->
-  <!--        <p class="card-text">First Release Date: <strong><%= result[:first_release_date] %></strong></p>-->
-  <!--        <p class="card-text">Platform: <strong><%= result[:platform] %></strong></p>-->
-  <!--        <p class="card-text">Genres: <strong><%= result[:genres] %></strong></p>-->
-  <!--        <p class="card-text">Series: <strong>TBD</strong></p>-->
-  <!--        <a href="<%=game_path(result[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
-  <!-- </div>-->
-  <!--<hr>-->
-  <!--<% end %>-->
+  <h2>Search Result for <%= params[:name] %></h2>
+  <hr>
+  <%@game_card_result.each do |result| %>
+  <div class="row">
+    <div class="card" style="width: 12rem;">
+    <img class="card-img-top"<%= image_tag("#{result[:cover]}") %>
+  </div>
+    <div class="col">
+     <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= result[:name] %></h5>
+          <p class="card-text">First Release Date: <strong><%= result[:first_release_date] %></strong></p>
+          <p class="card-text">Platform: <strong><%= result[:platform] %></strong></p>
+          <p class="card-text">Genres: <strong><%= result[:genres] %></strong></p>
+          <p class="card-text">Series: <strong>TBD</strong></p>
+          <a href="<%=game_path(result[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>
+        </div>
+      </div>
+    </div>
+   </div>
+  <hr>
+  <% end %>
   <hr>
   <h2>Testing Data</h2>
   <div class="row">

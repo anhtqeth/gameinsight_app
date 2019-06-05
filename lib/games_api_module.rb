@@ -52,15 +52,24 @@ module GamesApiModule
     JSON.parse(response.read_body)
   end
   
-  
-  
-  def gamesNewsFeedRequest(game_id)
+  def gameNewsFeedRequest(game_id)
     request = Net::HTTP::Get.new(URI(GAME_NEWS_GROUP_URI), {'user-key' => USERKEY})
     request.body = "fields *; where game = #{game_id};"
     response = HTTP_CNF.request(request)
     result = JSON.parse(response.read_body)
     puts result
-    result
+    article_list = []
+    result.each do |rs|
+      article_list << rs["pulses"]
+    end
+    puts 'List of pulses: ' 
+    puts article_list
+ 
+    
+    article_list.each do |arc|
+      gameArticleRequest(arc)
+    end
+    article_list
   end
   
   def gameArticleRequest(id)
