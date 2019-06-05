@@ -36,6 +36,8 @@ module GamesApiModule
   UNIX_TIME_NOW = Time.current.to_time.to_i
   HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 80)
   
+  DUMMY_SCREENSHOT = [[{"id"=>244572, "game"=>55090, "height"=>720, "image_id"=>"iodd6zzceqq5jkufxpcz", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/iodd6zzceqq5jkufxpcz.jpg", "width"=>1280}, {"id"=>208211, "game"=>55090, "height"=>1080, "image_id"=>"wdsb42ukz39ywlzvhro4", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/wdsb42ukz39ywlzvhro4.jpg", "width"=>1920}, {"id"=>244573, "game"=>55090, "height"=>562, "image_id"=>"af8ueznswr8xpdkw9ukf", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/af8ueznswr8xpdkw9ukf.jpg", "width"=>1000}, {"id"=>208214, "game"=>55090, "height"=>1080, "image_id"=>"cxwpickwszhgdxvxdzzh", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/cxwpickwszhgdxvxdzzh.jpg", "width"=>1920}, {"id"=>208212, "game"=>55090, "height"=>1080, "image_id"=>"enex88ekm3se7a3vpqmp", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/enex88ekm3se7a3vpqmp.jpg", "width"=>1920}, {"id"=>208213, "game"=>55090, "height"=>1080, "image_id"=>"ywgv0zxrsocslwbkir8b", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/ywgv0zxrsocslwbkir8b.jpg", "width"=>1920}]]
+  DUMMY_VIDEOS = ["https://www.youtube.com/embed/LVIdmEfiFCk","https://www.youtube.com/embed/OAQm-EzbaHM"]
 #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
 #REFACTORING THE STRUCTURE OF CODE FOR REQUEST
 
@@ -146,7 +148,6 @@ module GamesApiModule
           nil
         else
           result = JSON.parse(response.read_body)
-          puts 'COVER ART REQUEST!! ' << result.to_s
           result.first['url'].sub! 't_thumb','t_cover_big'
       end
   end
@@ -162,22 +163,6 @@ module GamesApiModule
           result = JSON.parse(response.read_body)
           #puts result
           puts result
-      end
-  end
-
-  def gameScreenshotRequest(gameID)
-      request = Net::HTTP::Get.new(URI(SCREENSHOTS_URI), {'user-key' => USERKEY})
-      request.body = "fields *; where game = (#{gameID});"
-      response = HTTP_CNF.request(request)
-      
-      if JSON.parse(response.read_body).empty?
-         ''
-        else
-          result = JSON.parse(response.read_body)
-          #puts result
-          result.each do |screenshot|
-            screenshot['url'].sub! 't_thumb','t_1080p'
-          end
       end
   end
 
@@ -209,19 +194,42 @@ module GamesApiModule
     JSON.parse(HTTP_CNF.request(request).read_body)
   end
   
+  def gameScreenshotRequest(gameID)
+      request = Net::HTTP::Get.new(URI(SCREENSHOTS_URI), {'user-key' => USERKEY})
+      request.body = "fields *; where game = (#{gameID});"
+      response = HTTP_CNF.request(request)
+  
+      if JSON.parse(response.read_body).empty?
+          DUMMY_SCREENSHOT
+        else
+          result = JSON.parse(response.read_body)
+          #Construct image format
+          result.each do |screenshot|
+            screenshot['url'].sub! 't_thumb','t_1080p'
+          end
+      end
+  end
+  
+  
   def gamesVideoRequest(game_id)
     request = Net::HTTP::Get.new(URI(VIDEO_URI), {'user-key' => USERKEY})
     request.body = "fields *; where game = (#{game_id});"
+    response = HTTP_CNF.request(request)
     
     game_videos_url = []
-    result = JSON.parse(HTTP_CNF.request(request).read_body)
     
-    #Construct YTB Embed url
-    result.each do |res|
-      link = 'https://www.youtube.com/embed/'
-      game_videos_url << (link << res["video_id"])
+    if JSON.parse(response.read_body).empty?
+          DUMMY_VIDEOS
+        else
+          #Construct YTB Embed url
+          result = JSON.parse(response.read_body)
+          result.each do |res|
+          link = 'https://www.youtube.com/embed/'
+          game_videos_url << (link << res["video_id"])
+          end
+          game_videos_url
     end
-    game_videos_url
+    
   end
   
   #
