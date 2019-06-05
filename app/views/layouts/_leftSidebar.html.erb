@@ -1,23 +1,48 @@
-<sidebar class="leftSidebar">
-  <nav class="navbar navbar-light bg-light">
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href=<%=root_path %>>Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href=<%=help_path %>>Help</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href=<%=about_path %>>About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href=<%=contact_path %>>Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href='#'>Game Search</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-</sidebar>
+<!--<sidebar class="leftSidebar">-->
+<!--  <nav class="navbar navbar-light bg-light">-->
+<!--      <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--        <ul class="navbar-nav">-->
+<!--          <li class="nav-item active">-->
+<!--            <a class="nav-link" href=<%=root_path %>>Home <span class="sr-only">(current)</span></a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href=<%=help_path %>>Help</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href=<%=about_path %>>About</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href=<%=contact_path %>>Contact</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href='#'>Game Search</a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </nav>-->
+<!--</sidebar>-->
+<!-- Sidebar  -->
+<nav id="sidebar">
+  <div id="dismiss">
+    <i class="fas fa-arrow-left"></i>
+  </div>
+  <div class="sidebar-header">
+    <h3>Bootstrap Sidebar</h3>
+  </div>
+  <ul class="list-unstyled components">
+    <p>Menu</p>
+    <hr>
+    <li>
+      <a href=<%=root_path %>>Home</a>
+    </li>
+    <li>
+      <a href=<%=about_path %>>About</a>
+    </li>
+    <li>
+      <a href=<%=help_path %>>Help</a>
+    </li>
+    <li>
+      <a href=<%=contact_path %>>Contact</a>
+    </li>
+  </ul>
+</nav>
