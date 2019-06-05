@@ -98,7 +98,20 @@
 <hr>
 
 <h2>NEWS</h2>
-
+<div class="card">
+  <div class="card-header">
+    <%= @dummy_games_news.first.first["title"] %>
+  </div>
+  <img class="card-img-top"<%= image_tag("#{@dummy_games_news.first.first["image"]}") %>
+  <div class="card-body">
+    <h5 class="card-title">Summary</h5>
+    <p class="card-text"><%= @dummy_games_news.first.first["summary"] %></p>
+    <a href=<%= @dummy_games_news.second.first["url"] %> target="_blank" class="btn btn-primary">View more</a>
+  </div>
+  <div class="card-footer text-muted">
+   <%= @dummy_games_news.first.first["created_at"] %>
+  </div>
+</div>
 
 
 <!--Carousel Wrapper-->
