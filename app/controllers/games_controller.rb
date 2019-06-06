@@ -39,7 +39,7 @@ class GamesController < ApplicationController
     # else
     #   @game_news = gameNewsFeedRequest(params[:id])
     
-    render 'games/show'
+    render 'games/game_detail'
   end
   
   def find
@@ -49,7 +49,9 @@ class GamesController < ApplicationController
       flash[:info] = "Please specify a name"
       redirect_to(root_path)
     else
-      game_id_result = gamesSearchRequest(params[:name])
+      game_id_result = Rails.cache.fetch("#{params[:name]}/game_name_search", expires_in: 1.month) do
+        gamesSearchRequest(params[:name])
+      end
       @game_card_result = gamesListProcess(game_id_result)
       render 'games/search_result'
     end

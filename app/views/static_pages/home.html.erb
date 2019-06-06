@@ -32,48 +32,38 @@
 </div>
 <hr>
 <!-- For Specific Game, This is a test-->
+<h1>Screenshots Carousel</h1>
 <div class="container" >
-    <h1>Screenshots Carousel</h1>
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-       
-        <ol class="carousel-indicators">
-            <% @dummy_feature_list.each do |img| %>
-             <% cache img do %>
-            <li data-target="#carouselExampleIndicators" data-slide-to=<% img %> </li>
-            <% end%>
-            <% end %>
-        </ol>
-        
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src=<%= @dummy_feature_list.first["url"] %> alt="First slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Yakuza Kiwami 2</h5>
-                    <p> As the heroic Kazuma Kiryu from the original Yakuza, explore Tokyo and now Osaka. </p>
-                </div>
-            </div>
-            <% @dummy_feature_list[1..-1].each do |img| %>
-            <% cache img do %>
-            <div class="carousel-item">
-                <img class="d-block w-100" src=<%= img["url"] %> alt="Second slide">
-            </div>
-            <% end%>
-            <% end%>
-            
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-    <hr>
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
+     <h1>Screenshots</h1>
+      <ol class="carousel-indicators">
+          <% @dummy_feature_list.each do |img| %>
+          <li data-target="#carouselExampleIndicators" data-slide-to=<% img %> </li>
+          <% end %>
+      </ol>
+      
+      <div class="carousel-inner">
+          <div class="carousel-item active">
+              <img class="d-block w-100" src=<%= @dummy_feature_list.first["url"] %> alt="First slide">
+          </div>
+          <% @dummy_feature_list[1..-1].each do |img| %>
+          <div class="carousel-item">
+              <img class="d-block w-100" src=<%= img["url"] %> alt="Second slide">
+          </div>
+          <% end%>
+          
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+      </a>
 </div>
-
-
+</div>
+<hr>
 <div class="container" >
 <h1>Latest Guides</h1>
 <hr>
