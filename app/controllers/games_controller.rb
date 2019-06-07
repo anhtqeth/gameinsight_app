@@ -2,33 +2,17 @@ class GamesController < ApplicationController
   include GamesApiModule
   #Render game detail page
   def show
-    
-    if(Rails.cache.fetch("#{params[:id]}/game_detail").nil?)
-        @game_details = Rails.cache.fetch("#{params[:id]}/game_detail", expires_in: 1.month) do
+    @game_details = Rails.cache.fetch("#{params[:id]}/game_detail", expires_in: 1.month) do
           gamesRequest(params[:id])
-        end
-        game_collection_id = @game_details.first["collection"]
-        
-        @game_card_carousel_list = Rails.cache.fetch("#{game_collection_id}/game_series", expires_in: 1.month) do
-          gamesListProcess(game_series_ids)
-        end
-        @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newsfeed", expires_in: 1.month) do
-          gameNewsFeedRequest(params[:id])
-        end
-    else
-        @game_details =  Rails.cache.fetch("#{params[:id]}/game_detail")
-        game_collection_id = @game_details.first["collection"]
-        @game_card_carousel_list = Rails.cache.fetch("#{game_collection_id}/game_series")
-        
-        if(Rails.cache.fetch("#{params[:id]}/game_newsfeed").nil?)
-          @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newsfeed", expires_in: 1.month) do
-            gameNewsFeedRequest(params[:id])
-          end
-        else
-          @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newsfeed")
-        end
     end
-    
+    game_collection_id = @game_details.first["collection"]
+    game_series_ids = gamesSeriesRequest(game_collection_id)
+    @game_card_carousel_list = Rails.cache.fetch("#{game_collection_id}/game_series", expires_in: 1.month) do
+          gamesListProcess(game_series_ids)
+    end
+    @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newsfeed", expires_in: 1.month) do
+          gameNewsFeedRequest(params[:id])
+    end
     
     @game_cover = Rails.cache.fetch("#{params[:id]}/game_cover", expires_in: 1.month) do
       gameCoverRequest(params[:id])
