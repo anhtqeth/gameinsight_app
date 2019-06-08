@@ -9,7 +9,7 @@ module GamesApiModule
   DUMMY_SCREENSHOT = [[{"id"=>244572, "game"=>55090, "height"=>720, "image_id"=>"iodd6zzceqq5jkufxpcz", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/iodd6zzceqq5jkufxpcz.jpg", "width"=>1280}, {"id"=>208211, "game"=>55090, "height"=>1080, "image_id"=>"wdsb42ukz39ywlzvhro4", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/wdsb42ukz39ywlzvhro4.jpg", "width"=>1920}, {"id"=>244573, "game"=>55090, "height"=>562, "image_id"=>"af8ueznswr8xpdkw9ukf", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/af8ueznswr8xpdkw9ukf.jpg", "width"=>1000}, {"id"=>208214, "game"=>55090, "height"=>1080, "image_id"=>"cxwpickwszhgdxvxdzzh", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/cxwpickwszhgdxvxdzzh.jpg", "width"=>1920}, {"id"=>208212, "game"=>55090, "height"=>1080, "image_id"=>"enex88ekm3se7a3vpqmp", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/enex88ekm3se7a3vpqmp.jpg", "width"=>1920}, {"id"=>208213, "game"=>55090, "height"=>1080, "image_id"=>"ywgv0zxrsocslwbkir8b", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/ywgv0zxrsocslwbkir8b.jpg", "width"=>1920}]]
   DUMMY_VIDEOS = ["https://www.youtube.com/embed/LVIdmEfiFCk","https://www.youtube.com/embed/OAQm-EzbaHM"]
   DUMMY_GAME_IDS = [{"id"=>2948, "games"=>[2268, 2269, 2271, 5316, 6440, 7075, 9692, 18181, 20427, 23066, 25623, 26901, 36926, 42759, 43668, 58601, 61701, 61752, 65676, 69721, 78626, 78629, 78630, 78631, 78633, 113344]}]
-  
+  DUMMY_NEWS = {:id=>261029, :author=>nil, :summary=>"Sega will apparently continue to remaster the series, with Yakuza 2 the next in line for a remake using the Yakuza 6 engine.", :img=>"https://static.gamespot.com/uploads/screen_kubrick/123/1239113/3277876-yakuza.jpg", :created_at=>1503619200, :title=>"PSN Leak Reveals Yakuza 2 Is Now Getting A PS4 Remake", :url=>"https://www.gamespot.com/articles/psn-leak-reveals-yakuza-2-is-now-getting-a-ps4-rem/1100-6452857/"}
   #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
   #REFACTORING THE STRUCTURE OF CODE FOR REQUEST
   
@@ -84,16 +84,20 @@ module GamesApiModule
     
     article_ids = []
     result.each do |rs|
-      article_ids << rs["pulses"].join.to_i
+      article_ids << rs["pulses"].join(",").to_i
     end
     
-    puts "This is the list of article ID: " << article_ids[0..4].to_s
-    article_ids[0..4]
+    puts "This is the list of article ID: " << article_ids.to_s
+    
+
     game_article_list = []
-    article_ids[0..4].each do |id|
+    article_ids.each do |id|
       game_article = gameArticleRequest(id)
-      game_article_list << game_article
+      unless game_article.nil?
+        game_article_list << game_article
+      end
     end
+    
     game_article_list
   end
     
@@ -105,24 +109,29 @@ module GamesApiModule
     
     game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil}
     article_meta = JSON.parse(response.read_body).first
-    
+    unless article_meta.nil?
     #Constructing Article Hashes
-    article_id = article_meta['id']
-    game_article.store(:id,article_id)
-    article_author = article_meta['name']
-    game_article.store(:author,article_author)
-    article_summary = article_meta['summary']
-    game_article.store(:summary,article_summary)
-    article_img = article_meta['image']
-    game_article.store(:img,article_img)
-    article_created_at = article_meta['created_at']
-    game_article.store(:created_at,article_created_at)
-    article_title = article_meta['title']
-    game_article.store(:title,article_title)
-    article_url = gameArticleExternalRequest(article_meta["website"])
-    game_article.store(:url,article_url)
+      article_id = article_meta['id']
+      game_article.store(:id,article_id)
+      article_author = article_meta['name']
+      game_article.store(:author,article_author)
+      article_summary = article_meta['summary']
+      game_article.store(:summary,article_summary)
+      article_img = article_meta['image']
+      game_article.store(:img,article_img)
+      article_created_at = article_meta['created_at']
+      game_article.store(:created_at,article_created_at)
+      article_title = article_meta['title']
+      game_article.store(:title,article_title)
+      article_url = gameArticleExternalRequest(article_meta["website"])
+      game_article.store(:url,article_url)
+      game_article
+    end
     
-    game_article
+    if article_meta.nil?
+      game_article = {:id=>261029, :author=>nil, :summary=>"Sega will apparently continue to remaster the series, with Yakuza 2 the next in line for a remake using the Yakuza 6 engine.", :img=>"https://static.gamespot.com/uploads/screen_kubrick/123/1239113/3277876-yakuza.jpg", :created_at=>1503619200, :title=>"PSN Leak Reveals Yakuza 2 Is Now Getting A PS4 Remake", :url=>"https://www.gamespot.com/articles/psn-leak-reveals-yakuza-2-is-now-getting-a-ps4-rem/1100-6452857/"}
+      game_article
+    end
   end
   
   def gameArticleExternalRequest(id)
