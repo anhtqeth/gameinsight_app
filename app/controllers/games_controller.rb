@@ -5,6 +5,7 @@ class GamesController < ApplicationController
     @game_details = Rails.cache.fetch("#{params[:id]}/game_detail", expires_in: 1.month) do
           gamesRequest(params[:id])
     end
+    
     game_collection_id = @game_details.first["collection"]
     
     if game_collection_id.nil?
