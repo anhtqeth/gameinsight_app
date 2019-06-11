@@ -1,14 +1,12 @@
 require 'test_helper'
 
 class GamesControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
   
-  test "Getting Game Details" do
-    game_details = GamesController.show
+  test "Showing Game Details Page" do
+    get "/games/2269"
     
-    assert_not_nil game_details
+    assert_response :success, "Not Right"
   end
+  
   
 end
