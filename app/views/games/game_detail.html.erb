@@ -1,5 +1,5 @@
 <div class="container" >
-  <h1>Details</h1>
+  <h3>Details</h3>
   <hr>
   <div class="row">
     <div class="col">
@@ -28,7 +28,7 @@
 
 <hr>
 <div class="container" >
-<h1>Screenshots</h1>
+<h3>Screenshots</h3>
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
    <hr>
     <ol class="carousel-indicators">
@@ -60,7 +60,7 @@
 </div>
 </div>
 <div class="container" >  
-<h1>Videos</h1>
+<h3>Videos</h3>
 <hr>
     <div id="video-carousel-example2" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false">
       <div class="carousel-inner">
@@ -91,14 +91,14 @@
     </div>
 </div>
 <div class="container" >
-  <h1>Series</h1>
+  <h3>Series</h3>
     <hr>
     <!--Showing Card Slider here-->
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
             <div class="card-deck">
-                <% @game_card_carousel_list[0..3].each do |gamecard| %>
+                <% @game_card_carousel_list[0..@size].each do |gamecard| %>
                 <div class="card" style="width: 18rem;">
                   <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
                   <div class="card-body">
@@ -111,7 +111,7 @@
           </div>
           <div class="carousel-item">
             <div class="card-deck">
-                <% @game_card_carousel_list[4..-1].each do |gamecard| %>
+                <% @game_card_carousel_list[@size..-1].each do |gamecard| %>
                 <div class="card" style="width: 18rem;">
                   <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
                   <div class="card-body">
@@ -181,7 +181,5 @@
       <span class="sr-only">Next</span>
     </a>
 </div>
-  
-  
 </div>
 

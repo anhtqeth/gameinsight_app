@@ -14,12 +14,14 @@ class GamesController < ApplicationController
     else
       game_series_ids = gamesSeriesRequest(game_collection_id)
       @game_card_carousel_list = Rails.cache.fetch("#{game_collection_id}/game_series", expires_in: 1.month) do
-      gamesListProcess(game_series_ids)
+        gamesListProcess(game_series_ids)
       end
+      @size = @game_card_carousel_list.size/2
     end
     
-    @game_newsfeed_list = gameNewsFeedRequest(params[:id])
-  
+    @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newfeed", expires_in: 1.month) do
+          gameNewsFeedRequest(params[:id])
+    end
     
     @game_cover = Rails.cache.fetch("#{params[:id]}/game_cover", expires_in: 1.month) do
       gameCoverRequest(params[:id])
