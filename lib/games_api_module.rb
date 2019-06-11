@@ -10,6 +10,7 @@ module GamesApiModule
   DUMMY_VIDEOS = ["https://www.youtube.com/embed/LVIdmEfiFCk","https://www.youtube.com/embed/OAQm-EzbaHM"]
   DUMMY_GAME_IDS = [{"id"=>2948, "games"=>[2268, 2269, 2271, 5316, 6440, 7075, 9692, 18181, 20427, 23066, 25623, 26901, 36926, 42759, 43668, 58601, 61701, 61752, 65676, 69721, 78626, 78629, 78630, 78631, 78633, 113344]}]
   DUMMY_NEWS = [{:id=>261029, :author=>nil, :summary=>"Sega will apparently continue to remaster the series, with Yakuza 2 the next in line for a remake using the Yakuza 6 engine.", :img=>"https://static.gamespot.com/uploads/screen_kubrick/123/1239113/3277876-yakuza.jpg", :created_at=>1503619200, :title=>"PSN Leak Reveals Yakuza 2 Is Now Getting A PS4 Remake", :url=>"https://www.gamespot.com/articles/psn-leak-reveals-yakuza-2-is-now-getting-a-ps4-rem/1100-6452857/"},{:id=>261029, :author=>nil, :summary=>"Sega will apparently continue to remaster the series, with Yakuza 2 the next in line for a remake using the Yakuza 6 engine.", :img=>"https://static.gamespot.com/uploads/screen_kubrick/123/1239113/3277876-yakuza.jpg", :created_at=>1503619200, :title=>"PSN Leak Reveals Yakuza 2 Is Now Getting A PS4 Remake", :url=>"https://www.gamespot.com/articles/psn-leak-reveals-yakuza-2-is-now-getting-a-ps4-rem/1100-6452857/"}]
+  DUMMY_GAME_CARDS = [{:id=>2059, :name=>"Yakuza", :summary=>"Just as Kazuma, a former rising star in the Yakuza, emerges from prison after a murder cover-up, 10 billion yen vanishes from the Yakuza vault, forcing him once again into their brutal, lawless world. A mysterious young girl will lead Kazuma to the answers if he can keep her alive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/e3cdy0d77eduopr5en37.jpg"}, {:id=>2060, :name=>"Yakuza 2", :summary=>"Yakuza 2 plunges you once more into the violent Japanese underworld. In intense brutal clashes with rival gangs, the police, and the Korean mafia, you will have opportunities to dole out more brutal punishment. As the heroic Kazuma Kiryu from the original Yakuza, explore Tokyo and now Osaka. Wander through the back alleys of Japan's underworld while trying to prevent an all-out gang war in over 16 complex, cinematic chapters written by Hase Seishu, the famous Japanese author who also wrote the first Yakuza. Endless conflicts and surprise plot twists will immerse you in a dark shadowy world where only the strongest will survive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/ozhhq6bsu5elgkhbraoe.jpg"}, {:id=>2061, :name=>"Yakuza 3", :summary=>"Introducing the next cinematic chapter in the prestigious Yakuza series renowned for it's authentic, gritty and often violent look at modern Japan. Making its first appearance exclusively on the PlayStation 3 computer entertainment system, the rich story and vibrant world of Yakuza 3 lets players engage in intense brutal clashes within the streets of Okinawa, and the vibrant and often dangerous city of Tokyo where only the strongest will survive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/amhmvuaybvl0epgcpfys.jpg"}, {:id=>2062, :name=>"Yakuza 4", :summary=>"Yakuza 4 is the fourth game in Sega's crime drama series, known as 'Ryu ga Gotoku' in Japan. As a first for the series, the story is split between the viewpoints of four different protagonists.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/udb2eilafrf5yujesuq8.jpg"}]
   #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
   #REFACTORING THE STRUCTURE OF CODE FOR REQUEST
   
@@ -41,6 +42,9 @@ module GamesApiModule
   
   #GAME_NEWS_URI = "https://api-v3.igdb.com/feeds"
   
+  
+  MESS_NA_SERIES = "There are no series related to this game. Or did we missed it?"
+  
   #Authentication
   USERKEY = '049d27f7325bcb67768a30d5140fefb7'
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
@@ -64,17 +68,16 @@ module GamesApiModule
     request = Net::HTTP::Get.new(URI(GAME_COLLECTION_URI), {'user-key' => USERKEY})
     request.body = "fields games; where id = (#{collection_id}); limit 5;"
     result= JSON.parse(HTTP_CNF.request(request).read_body)
-    result.first["games"] 
-  end
-  
-  def gameFranchiseRequest(game_id)
-    request = Net::HTTP::Get.new(URI(GAME_FRANCHISE_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where games = #{game_id};";
-    response = HTTP_CNF.request(request)
+    if result.empty?
+      MESS_NA_SERIES
+    else
+      result.first["games"] 
+    end
     
-    JSON.parse(response.read_body)
   end
+
   
+  #Get Related News from multiple sources for a game
   def gameNewsFeedRequest(game_id)
     puts "Called to News Feed Request with parameter: " << game_id.to_s
     request = Net::HTTP::Get.new(URI(GAME_NEWS_GROUP_URI), {'user-key' => USERKEY})
@@ -141,40 +144,67 @@ module GamesApiModule
     JSON.parse(response.read_body).first["url"]
   end
 
-  def gamesPlatformLogoRequest(logo_id)
-    request = Net::HTTP::Get.new(URI(PLATFORM_LOGO), {'user-key' => USERKEY})
+  # def gamesPlatformLogoRequest(logo_id)
+  #   request = Net::HTTP::Get.new(URI(PLATFORM_LOGO), {'user-key' => USERKEY})
    
-    # request.body = "fields alpha_channel,animated,height,image_id,url,width;";
-    request.body = 'fields *; where image_id = ' << logo_id << ';';
-    response = HTTP_CNF.request(request)
-    result = JSON.parse(response.read_body)
-    img = []
+  #   # request.body = "fields alpha_channel,animated,height,image_id,url,width;";
+  #   request.body = 'fields *; where image_id = ' << logo_id << ';';
+  #   response = HTTP_CNF.request(request)
+  #   result = JSON.parse(response.read_body)
+  #   img = []
     
-    result.each do |res|
-      img << res["url"]
-    end
-    img
+  #   result.each do |res|
+  #     img << res["url"]
+  #   end
+  #   img
+  # end
+  
+  # def gamesPlatformRequest
+  #   request = Net::HTTP::Get.new(URI(PLATFORM_URI), {'user-key' => USERKEY})
+   
+  #   request.body = "fields *;";
+  #   response = HTTP_CNF.request(request)
+  #   result = JSON.parse(response.read_body)
+  #   puts result
+  #   ids = []
+    
+  #   result.each do |res|
+  #     ids << res["platform_logo"]
+  #   end
+  #   ids
+  # end
+  
+  def gameRecentRelease
+    puts "Called to Recent Released Game Request"
+    request = Net::HTTP::Get.new(URI(RELEASE_URI), {'user-key' => USERKEY})
+    request.body = "fields *; where date > #{UNIX_TIME_NOW};"
+    response = HTTP_CNF.request(request)
+    result = JSON.parse(response.read_body)  
+    puts result
+    result
   end
   
-  def gamesPlatformRequest
-    request = Net::HTTP::Get.new(URI(PLATFORM_URI), {'user-key' => USERKEY})
-   
-    request.body = "fields *;";
+  def gamePopularUpcomingRelease
+    puts "Called to Popular Upcoming Release game"
+    request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
+    request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW} & popularity > 200.0; sort popularity desc;"
+    #request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW} & hypes > 500; sort hypes desc;"
+
     response = HTTP_CNF.request(request)
-    result = JSON.parse(response.read_body)
-    puts result
-    ids = []
-    
-    result.each do |res|
-      ids << res["platform_logo"]
+    result = JSON.parse(response.read_body)  
+    ids_array = []
+    result.each do |x|
+      ids_array << x["id"]
     end
-    ids
+    
+    puts ids_array
+    ids_array
   end
   
   def gameReleaseDateRequest
     puts "Called to Release Date Request with parameter: "
     request = Net::HTTP::Get.new(URI(RELEASE_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where date > #{UNIX_TIME_NOW}  & platform = 48;"
+    request.body = "fields *; where date > #{UNIX_TIME_NOW}"
     response = HTTP_CNF.request(request)
     
     result = JSON.parse(response.read_body)  
@@ -200,6 +230,7 @@ module GamesApiModule
           result.first['url'].sub! 't_thumb','t_cover_big'
       end
   end
+
   
   def gameArtworkRequest(game_id)
       puts "Called to Game Artwork Request with parameter: " << game_id.to_s
@@ -275,36 +306,40 @@ module GamesApiModule
   def gamesListProcess(games_id_array)
     puts "Called to Game List Request with parameter: " << games_id_array.to_s
     game_card_list = []
-    
-    games_id_array[0..7].each do |x|
-      #game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil}
-      
-      game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
-      game_detail = gamesRequest(x).first
-      game_id = game_detail['id']
-      game_card.store(:id,game_id)
-      game_name = game_detail['name']
-      game_card.store(:name,game_name)
-      game_summary = game_detail['summary']
-      game_card.store(:summary,game_summary)
-      game_cover = gameCoverRequest(x)
-      game_card.store(:cover,game_cover)
-      
-      unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
-        game_platform = game_detail["platforms"].map{|x| x["name"]}.join(', ')
-        game_card.store(:platform,game_platform)
-        game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
-        game_card.store(:genres,game_genres)
-        game_first_release_date = game_detail["first_release_date"]
-      game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
-      else
-        game_card.store(:platform,"NA")
-        game_card.store(:genres,"NA")
-        game_card.store(:first_release_date,"NA")
-      end
-      game_card_list << game_card
-      
+    if games_id_array.is_a? Array
+        games_id_array[0..7].each do |x|
+          #game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil}
+          
+          game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
+          game_detail = gamesRequest(x).first
+          game_id = game_detail['id']
+          game_card.store(:id,game_id)
+          game_name = game_detail['name']
+          game_card.store(:name,game_name)
+          game_summary = game_detail['summary']
+          game_card.store(:summary,game_summary)
+          game_cover = gameCoverRequest(x)
+          game_card.store(:cover,game_cover)
+          
+          unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
+            game_platform = game_detail["platforms"].map{|x| x["name"]}.join(', ')
+            game_card.store(:platform,game_platform)
+            game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
+            game_card.store(:genres,game_genres)
+            game_first_release_date = game_detail["first_release_date"]
+          game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
+          else
+            game_card.store(:platform,"NA")
+            game_card.store(:genres,"NA")
+            game_card.store(:first_release_date,"NA")
+          end
+          game_card_list << game_card
+          
+        end
+        game_card_list
+    else
+      DUMMY_GAME_CARDS
     end
-    game_card_list
+    
   end
 end
