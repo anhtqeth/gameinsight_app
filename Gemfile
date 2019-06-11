@@ -19,6 +19,9 @@ gem 'jquery-rails', '4.3.1'
 gem 'turbolinks',   '5.0.1'
 gem 'jbuilder',     '2.7.0'
 
+gem 'rspec', '~> 3.8'
+gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
+gem 'capybara', '~> 3.22'
 #For API Development of IGDB
 gem 'ruby-apicalypse'
 
