@@ -1,34 +1,52 @@
 <div class="container" >
-  <h3>Details</h3>
+  <h2>Details</h2>
   <hr>
+  <!--First Row-->
+  <div class="row">
+    <div class="card text-white" style="background-color: black;">
+        <h5 align="center" class="card-title"><%= @game_details[:name] %></h5>
+        <img class="card-img-top"<%= image_tag("#{@game_details[:cover]}") %>
+    </div>
+    <div class="col">
+    <div class="card">
+      <div class="card-body">
+          <h5 class="card-title"><%= @game_details[:name] %></h5>
+          <hr id="content-line">
+          <p class="card-text">First Release Date: <strong><%= @game_details[:first_release_date] %></strong></p>
+          <p class="card-text">Platform: <strong><%= @game_details[:platform] %></strong></p>
+          <p class="card-text">Genres: <strong><%= @game_details[:genres] %></strong></p>
+          <p class="card-text">Series: <strong></strong></p>
+          <p class="card-text">Series: <strong></strong></p>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  <!--Second Row-->
+  <br>
   <div class="row">
     <div class="col">
-     <div class="card text-white" style="background-color: black;">
+     <div class="card" >
         <div class="card-body">
           <div class="card-header">
-            <h1><%= @game_details.first["name"] %></h1>
+            <h1><%= @game_details[:name] %></h1>
           </div>
           <hr>
           <div class="card-body">
             <h5 class="card-title">Summary</h5>
-            <p class="card-text"><%=@game_details.first["summary"] %></p>
+            <hr id="content-line">
+            <p class="card-text"><%=@game_details[:summary] %></p>
             <h5 class="card-title">Storyline</h5>
-            <hr>
-            <p class="card-text"><%=@game_details.first["storyline"] %></p>
+            <hr id="content-line">
+            <p class="card-text"><%=@game_details[:storyline] %></p>
           </div>
         </div>
       </div>
     </div>
-    <div class="card text-white" style="width: 12rem; background-color: black;">
-      <h5 align="center" class="card-title"><%= @game_details.first["name"] %></h5>
-      <img class="card-img-top"<%= image_tag("#{@game_cover}") %>
-    </div>
   </div>
 </div>
-
-<hr>
 <div class="container" >
-<h3>Screenshots</h3>
+<h2>Screenshots</h2>
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
    <hr>
     <ol class="carousel-indicators">
@@ -40,7 +58,7 @@
       <div class="carousel-item active">
         <img class="d-block w-100" src=<%= @game_screenshots.first["url"] %> alt="First slide">
         <div class="carousel-caption d-none d-md-block">
-          <h5> <%= @game_details.first["name"] %></h5>
+          <h5> <%= @game_details[:name] %></h5>
         </div>
       </div>
         <% @game_screenshots[1..-1].each do |img| %>
@@ -60,7 +78,7 @@
 </div>
 </div>
 <div class="container" >  
-<h3>Videos</h3>
+<h2>Videos</h2>
 <hr>
     <div id="video-carousel-example2" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false">
       <div class="carousel-inner">
@@ -91,7 +109,7 @@
     </div>
 </div>
 <div class="container" >
-  <h3>Series</h3>
+  <h2>Series</h2>
     <hr>
     <!--Showing Card Slider here-->
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">

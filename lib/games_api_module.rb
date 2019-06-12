@@ -125,7 +125,7 @@ module GamesApiModule
       article_img = article_meta['image']
       game_article.store(:img,article_img)
       article_created_at = article_meta['created_at']
-      game_article.store(:created_at,article_created_at)
+      game_article.store(:created_at,DateTime.strptime(article_created_at.to_s,'%s').strftime("%A-%d-%b-%Y"))
       article_title = article_meta['title']
       game_article.store(:title,article_title)
       article_url = gameArticleExternalRequest(article_meta["website"])
@@ -302,44 +302,51 @@ module GamesApiModule
     end
   end
   
+  def gameCardProcess(game_card,game_detail)
+    game_id = game_detail['id']
+    game_card.store(:id,game_id)
+    game_name = game_detail['name']
+    game_card.store(:name,game_name)
+    game_summary = game_detail['summary']
+    game_card.store(:summary,game_summary)
+    game_storyline = game_detail['storyline']
+    game_card.store(:storyline,game_storyline)
+    game_cover = gameCoverRequest(game_id)
+    game_card.store(:cover,game_cover)
+    unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
+      game_platform = game_detail["platforms"].map{|x| x["name"]}.join(', ')
+      game_card.store(:platform,game_platform)
+      game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
+      game_card.store(:genres,game_genres)
+      game_first_release_date = game_detail["first_release_date"]
+      game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
+    else
+      game_card.store(:platform,"NA")
+      game_card.store(:genres,"NA")
+      game_card.store(:first_release_date,"NA")
+    end
+    game_card
+  end
+  
   #
   def gamesListProcess(games_id_array)
     puts "Called to Game List Request with parameter: " << games_id_array.to_s
     game_card_list = []
+    
     if games_id_array.is_a? Array
         games_id_array[0..7].each do |x|
           #game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil}
-          
-          game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
+          game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
           game_detail = gamesRequest(x).first
-          game_id = game_detail['id']
-          game_card.store(:id,game_id)
-          game_name = game_detail['name']
-          game_card.store(:name,game_name)
-          game_summary = game_detail['summary']
-          game_card.store(:summary,game_summary)
-          game_cover = gameCoverRequest(x)
-          game_card.store(:cover,game_cover)
-          
-          unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
-            game_platform = game_detail["platforms"].map{|x| x["name"]}.join(', ')
-            game_card.store(:platform,game_platform)
-            game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
-            game_card.store(:genres,game_genres)
-            game_first_release_date = game_detail["first_release_date"]
-          game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
-          else
-            game_card.store(:platform,"NA")
-            game_card.store(:genres,"NA")
-            game_card.store(:first_release_date,"NA")
-          end
+          game_card = gameCardProcess(game_card,game_detail)
           game_card_list << game_card
-          
         end
         game_card_list
-    else
-      DUMMY_GAME_CARDS
+    else 
+      game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
+      game_detail = gamesRequest(games_id_array).first
+      game_card = gameCardProcess(game_card,game_detail)
+      game_card
     end
-    
   end
 end
