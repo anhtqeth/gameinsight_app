@@ -51,7 +51,7 @@ class GamesController < ApplicationController
       game_id_result = Rails.cache.fetch("#{params[:name]}/game_name_search", expires_in: 1.month) do
         gamesSearchRequest(params[:name])
       end
-      @game_card_result = gamesListProcess(game_id_result)
+      @game_card_result = gamesListProcess(game_id_result).paginate(:page =>params[:page], :per_page => 4)   
       render 'games/search_result'
     end
   end
