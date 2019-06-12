@@ -75,7 +75,6 @@ RSpec.feature "Get Video Games Details", :type => :feature  do
     end
   end
   
-  
   scenario "Showing a single gamecard detail when receiving ID" do
     id = 1877
     gamecard = gamesListProcess(id)
@@ -88,5 +87,6 @@ RSpec.feature "Get Video Games Details", :type => :feature  do
     expect(gamecard).to have_key(:genres)
     expect(gamecard).to have_key(:storyline)
   end
+
   
 end

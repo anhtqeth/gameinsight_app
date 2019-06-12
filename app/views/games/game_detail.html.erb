@@ -165,7 +165,7 @@
           <div class="card-body">
             <h5 class="card-title">Summary</h5>
             <p class="card-text"><%= @game_newsfeed_list.first[:summary] %></p>
-            <a href=<%= @game_newsfeed_list.first[:url] %> target="_blank" class="btn btn-primary">View more</a>
+            <a href=<%= @game_newsfeed_list.first[:url] %> target="_blank" class="btn btn-outline-warning">View more</a>
           </div>
           <div class="card-footer text-muted">
            <%= @game_newsfeed_list.first[:created_at] %>
@@ -180,7 +180,7 @@
           <div class="card-body">
             <h5 class="card-title">Summary</h5>
             <p class="card-text"><%= news[:summary] %></p>
-            <a href=<%= news[:url] %> target="_blank" class="btn btn-primary">View more</a>
+            <a href=<%= news[:url] %> target="_blank" class="btn btn-outline-warning">View more</a>
           </div>
           <div class="card-footer text-muted">
            <%= news[:created_at] %>
