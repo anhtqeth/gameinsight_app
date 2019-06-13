@@ -1,32 +1,7 @@
 <div class="container" >
   <h2>Details</h2>
   <hr>
-  <!--First Row-->
-  <div class="row">
     <%= render "gamecards" %>
-  </div>
-  <!--Second Row-->
-  <br>
-  <div class="row">
-    <div class="col">
-     <div class="card" >
-        <div class="card-body">
-          <div class="card-header">
-            <h1><%= @game_details[:name] %></h1>
-          </div>
-          <hr>
-          <div class="card-body">
-            <h5 class="card-title">Summary</h5>
-            <hr id="content-line">
-            <p class="card-text"><%=@game_details[:summary] %></p>
-            <h5 class="card-title">Storyline</h5>
-            <hr id="content-line">
-            <p class="card-text"><%=@game_details[:storyline] %></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="container" >
 <h2>Screenshots</h2>
