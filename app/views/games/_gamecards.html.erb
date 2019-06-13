@@ -1,0 +1,17 @@
+<div class="card text-white" style="background-color: black;">
+        <h5 align="center" class="card-title"><%= @game_details[:name] %></h5>
+        <img class="card-img-top"<%= image_tag("#{@game_details[:cover]}") %>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"><%= @game_details[:name] %></h5>
+            <hr id="content-line">
+            <p class="card-text">First Release Date: <strong><%= @game_details[:first_release_date] %></strong></p>
+            <p class="card-text">Platform: <strong><%= @game_details[:platform] %></strong></p>
+            <p class="card-text">Genres: <strong><%= @game_details[:genres] %></strong></p>
+            <p class="card-text">Series: <strong></strong></p>
+            <p class="card-text">Series: <strong></strong></p>
+        </div>
+      </div>
+</div>

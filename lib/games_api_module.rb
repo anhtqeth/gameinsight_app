@@ -10,6 +10,7 @@ module GamesApiModule
   DUMMY_VIDEOS = ["https://www.youtube.com/embed/LVIdmEfiFCk","https://www.youtube.com/embed/OAQm-EzbaHM"]
   DUMMY_GAME_IDS = [{"id"=>2948, "games"=>[2268, 2269, 2271, 5316, 6440, 7075, 9692, 18181, 20427, 23066, 25623, 26901, 36926, 42759, 43668, 58601, 61701, 61752, 65676, 69721, 78626, 78629, 78630, 78631, 78633, 113344]}]
   DUMMY_NEWS = [{:id=>261029, :author=>nil, :summary=>"Sega will apparently continue to remaster the series, with Yakuza 2 the next in line for a remake using the Yakuza 6 engine.", :img=>"https://static.gamespot.com/uploads/screen_kubrick/123/1239113/3277876-yakuza.jpg", :created_at=>1503619200, :title=>"PSN Leak Reveals Yakuza 2 Is Now Getting A PS4 Remake", :url=>"https://www.gamespot.com/articles/psn-leak-reveals-yakuza-2-is-now-getting-a-ps4-rem/1100-6452857/"},{:id=>261029, :author=>nil, :summary=>"Sega will apparently continue to remaster the series, with Yakuza 2 the next in line for a remake using the Yakuza 6 engine.", :img=>"https://static.gamespot.com/uploads/screen_kubrick/123/1239113/3277876-yakuza.jpg", :created_at=>1503619200, :title=>"PSN Leak Reveals Yakuza 2 Is Now Getting A PS4 Remake", :url=>"https://www.gamespot.com/articles/psn-leak-reveals-yakuza-2-is-now-getting-a-ps4-rem/1100-6452857/"}]
+  DUMMY_ARTICLE = {:id=>261029, :author=>nil, :summary=>"Sega will apparently continue to remaster the series, with Yakuza 2 the next in line for a remake using the Yakuza 6 engine.", :img=>"https://static.gamespot.com/uploads/screen_kubrick/123/1239113/3277876-yakuza.jpg", :created_at=>1503619200, :title=>"PSN Leak Reveals Yakuza 2 Is Now Getting A PS4 Remake", :url=>"https://www.gamespot.com/articles/psn-leak-reveals-yakuza-2-is-now-getting-a-ps4-rem/1100-6452857/"}
   DUMMY_GAME_CARDS = [{:id=>2059, :name=>"Yakuza", :summary=>"Just as Kazuma, a former rising star in the Yakuza, emerges from prison after a murder cover-up, 10 billion yen vanishes from the Yakuza vault, forcing him once again into their brutal, lawless world. A mysterious young girl will lead Kazuma to the answers if he can keep her alive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/e3cdy0d77eduopr5en37.jpg"}, {:id=>2060, :name=>"Yakuza 2", :summary=>"Yakuza 2 plunges you once more into the violent Japanese underworld. In intense brutal clashes with rival gangs, the police, and the Korean mafia, you will have opportunities to dole out more brutal punishment. As the heroic Kazuma Kiryu from the original Yakuza, explore Tokyo and now Osaka. Wander through the back alleys of Japan's underworld while trying to prevent an all-out gang war in over 16 complex, cinematic chapters written by Hase Seishu, the famous Japanese author who also wrote the first Yakuza. Endless conflicts and surprise plot twists will immerse you in a dark shadowy world where only the strongest will survive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/ozhhq6bsu5elgkhbraoe.jpg"}, {:id=>2061, :name=>"Yakuza 3", :summary=>"Introducing the next cinematic chapter in the prestigious Yakuza series renowned for it's authentic, gritty and often violent look at modern Japan. Making its first appearance exclusively on the PlayStation 3 computer entertainment system, the rich story and vibrant world of Yakuza 3 lets players engage in intense brutal clashes within the streets of Okinawa, and the vibrant and often dangerous city of Tokyo where only the strongest will survive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/amhmvuaybvl0epgcpfys.jpg"}, {:id=>2062, :name=>"Yakuza 4", :summary=>"Yakuza 4 is the fourth game in Sega's crime drama series, known as 'Ryu ga Gotoku' in Japan. As a first for the series, the story is split between the viewpoints of four different protagonists.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/udb2eilafrf5yujesuq8.jpg"}]
   #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
   #REFACTORING THE STRUCTURE OF CODE FOR REQUEST
@@ -42,13 +43,11 @@ module GamesApiModule
   
   #GAME_NEWS_URI = "https://api-v3.igdb.com/feeds"
   
-  
   MESS_NA_SERIES = "There are no series related to this game. Or did we missed it?"
   
   #Authentication
-  USERKEY = '049d27f7325bcb67768a30d5140fefb7'
+  USERKEY = 'ada77f859e3e4c235b5b6e360c79e249'
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
-  
 
   def gamesRequest(game_id)
     puts "Called to Game Request with parameter: " << game_id.to_s
@@ -61,7 +60,7 @@ module GamesApiModule
     JSON.parse(response.read_body)
   end
   
-   #This is used to query for  Games Series,
+  #This is used to query for  Games Series,
   #result of collection are based on gamesSearchRequest
   def gamesSeriesRequest(collection_id)
     puts "Called to Game Series Request with parameter: " << collection_id.to_s
@@ -73,9 +72,7 @@ module GamesApiModule
     else
       result.first["games"] 
     end
-    
   end
-
   
   #Get Related News from multiple sources for a game
   def gameNewsFeedRequest(game_id)
@@ -84,12 +81,16 @@ module GamesApiModule
     request.body = "fields *; where game = #{game_id};"
     response = HTTP_CNF.request(request)
     result = JSON.parse(response.read_body)
-    
     article_ids = []
-    result.each do |rs|
-      article_ids << rs["pulses"].join(",").to_i
-    end
     
+    if result.empty?
+      DUMMY_NEWS
+    else
+      puts 'Current Result: ' << result.to_s
+      result.each do |rs|
+        article_ids << rs["pulses"].join(",").to_i
+      end
+    end
     puts "This is the list of article ID: " << article_ids.to_s
     
     if article_ids.empty?
@@ -114,8 +115,10 @@ module GamesApiModule
     
     game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil}
     article_meta = JSON.parse(response.read_body).first
-    unless article_meta.nil?
-    #Constructing Article Hashes
+    if article_meta.nil?
+      DUMMY_ARTICLE
+    else
+      #Constructing Article Hashes
       article_id = article_meta['id']
       game_article.store(:id,article_id)
       article_author = article_meta['name']
@@ -303,16 +306,16 @@ module GamesApiModule
   end
   
   def gameCardProcess(game_card,game_detail)
-    game_id = game_detail['id']
-    game_card.store(:id,game_id)
-    game_name = game_detail['name']
-    game_card.store(:name,game_name)
-    game_summary = game_detail['summary']
-    game_card.store(:summary,game_summary)
-    game_storyline = game_detail['storyline']
-    game_card.store(:storyline,game_storyline)
-    game_cover = gameCoverRequest(game_id)
-    game_card.store(:cover,game_cover)
+      game_id = game_detail['id']
+      game_card.store(:id,game_id)
+      game_name = game_detail['name']
+      game_card.store(:name,game_name)
+      game_summary = game_detail['summary']
+      game_card.store(:summary,game_summary)
+      game_storyline = game_detail['storyline']
+      game_card.store(:storyline,game_storyline)
+      game_cover = gameCoverRequest(game_id)
+      game_card.store(:cover,game_cover)
     unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
       game_platform = game_detail["platforms"].map{|x| x["name"]}.join(', ')
       game_card.store(:platform,game_platform)
@@ -334,14 +337,14 @@ module GamesApiModule
     game_card_list = []
     
     if games_id_array.is_a? Array
-        games_id_array[0..7].each do |x|
-          #game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil}
-          game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
-          game_detail = gamesRequest(x).first
-          game_card = gameCardProcess(game_card,game_detail)
-          game_card_list << game_card
-        end
-        game_card_list
+      games_id_array[0..7].each do |x|
+      #game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil}
+      game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
+      game_detail = gamesRequest(x).first
+      game_card = gameCardProcess(game_card,game_detail)
+      game_card_list << game_card
+      end
+      game_card_list
     else 
       game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
       game_detail = gamesRequest(games_id_array).first
