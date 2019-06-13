@@ -1,5 +1,4 @@
 class GamesController < ApplicationController
-  include GamesApiModule
   #Render game detail page
   def show
     
