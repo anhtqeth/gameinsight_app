@@ -99,7 +99,6 @@ module GamesApiModule
     request = Net::HTTP::Get.new(URI(GAME_ARTICLE_URI), {'user-key' => USERKEY})
     request.body = "fields *; where published_at > #{time};"
     response = HTTP_CNF.request(request)
-    
     result = JSON.parse(response.read_body)
     game_article_list = []
     
@@ -112,7 +111,6 @@ module GamesApiModule
       game_article_list << game_article
       end
     end
-  
     game_article_list
   end
   

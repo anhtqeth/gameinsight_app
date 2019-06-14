@@ -77,8 +77,12 @@ a {
 
 footer {
   bottom: 0;
-
   color: #777;
+}
+
+.navbar {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 footer a {
@@ -90,6 +94,7 @@ footer a:hover {
 }
 
 footer ul {
+  padding-top: 10px;
   float: right;
   list-style: none;
 }
@@ -116,7 +121,6 @@ footer ul li {
   padding-top: 65px;
   right: 0;
   height:80%;
-  
 }
 
 
@@ -125,15 +129,6 @@ footer ul li {
     height: 15vw;
     object-fit: cover;
 }
-
-//Testing start here
-
-/*
-    DEMO STYLE
-*/
-/*
-    DEMO STYLE
-*/
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
