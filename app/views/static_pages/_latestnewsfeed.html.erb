@@ -1,0 +1,18 @@
+<div class="card-columns">
+  <% @latest_newsfeed.each do |latest_news| %>
+  <div class="card p-3">
+    <blockquote class="blockquote mb-0 card-body">
+      <a href=<%=latest_news[:url] %> target="_blank"><img class="card-img-top"<%= image_tag("#{latest_news[:img]}") %></a>
+      <div class="card-body">
+      <hr id="content-line">
+      <p><%=latest_news[:summary]%></p>
+      </div>
+      <footer class="blockquote-footer">
+        <small class="text-muted">
+          <%=latest_news[:author]%> <cite title="Source Title"><%=latest_news[:title]%></cite>
+        </small>
+      </footer>
+    </blockquote>
+  </div>
+  <% end %>
+</div>

@@ -74,6 +74,48 @@ module GamesApiModule
     end
   end
   
+  def gameArticleProcess(article_meta)
+    game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil}
+   
+    article_id = article_meta['id']
+    game_article.store(:id,article_id)
+    article_author = article_meta['name']
+    game_article.store(:author,article_author)
+    article_summary = article_meta['summary']
+    game_article.store(:summary,article_summary)
+    article_img = article_meta['image']
+    game_article.store(:img,article_img)
+    article_created_at = article_meta['created_at']
+    game_article.store(:created_at,DateTime.strptime(article_created_at.to_s,'%s').strftime("%A-%d-%b-%Y"))
+    article_title = article_meta['title']
+    game_article.store(:title,article_title)
+    article_url = gameArticleExternalRequest(article_meta["website"])
+    game_article.store(:url,article_url)
+    game_article
+  end
+  
+  def gameLatestNewsRequest(time)
+    puts "Called to Latest Feed Request with parameter: " << DateTime.strptime(time.to_s,'%s').strftime("%A-%d-%b-%Y")
+    request = Net::HTTP::Get.new(URI(GAME_ARTICLE_URI), {'user-key' => USERKEY})
+    request.body = "fields *; where published_at > #{time};"
+    response = HTTP_CNF.request(request)
+    
+    result = JSON.parse(response.read_body)
+    game_article_list = []
+    
+    if result.nil?
+      DUMMY_NEWS
+    else
+      result.each do |article_meta|
+      #Constructing Article Hashes
+      game_article = gameArticleProcess(article_meta)
+      game_article_list << game_article
+      end
+    end
+  
+    game_article_list
+  end
+  
   #Get Related News from multiple sources for a game
   def gameNewsFeedRequest(game_id)
     puts "Called to News Feed Request with parameter: " << game_id.to_s
@@ -119,23 +161,8 @@ module GamesApiModule
       DUMMY_ARTICLE
     else
       #Constructing Article Hashes
-      article_id = article_meta['id']
-      game_article.store(:id,article_id)
-      article_author = article_meta['name']
-      game_article.store(:author,article_author)
-      article_summary = article_meta['summary']
-      game_article.store(:summary,article_summary)
-      article_img = article_meta['image']
-      game_article.store(:img,article_img)
-      article_created_at = article_meta['created_at']
-      game_article.store(:created_at,DateTime.strptime(article_created_at.to_s,'%s').strftime("%A-%d-%b-%Y"))
-      article_title = article_meta['title']
-      game_article.store(:title,article_title)
-      article_url = gameArticleExternalRequest(article_meta["website"])
-      game_article.store(:url,article_url)
-      game_article
+      game_article = gameArticleProcess(article_meta)
     end
-    
   end
   
   def gameArticleExternalRequest(id)
