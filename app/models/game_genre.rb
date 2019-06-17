@@ -1,0 +1,2 @@
+class GameGenre < ApplicationRecord
+end

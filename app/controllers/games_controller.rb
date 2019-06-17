@@ -1,6 +1,9 @@
 class GamesController < ApplicationController
-  #Render game detail page
+  #Show game detail page
+  #TODO: DRY on the cache
+  #TODO: Add logic to saving models
   def show
+    #If this game is not in db, save it. 
     
     @game_details = Rails.cache.fetch("#{params[:id]}/game_detail", expires_in: 1.month) do
         gamesListProcess(params[:id])
@@ -57,6 +60,7 @@ class GamesController < ApplicationController
   
   def update
     
+  
   end
   
 end
