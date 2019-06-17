@@ -46,9 +46,10 @@ module GamesApiModule
   MESS_NA_SERIES = "There are no series related to this game. Or did we missed it?"
   
   #Authentication
-  USERKEY = 'ada77f859e3e4c235b5b6e360c79e249'
+  USERKEY = '931298283bd07e530bad4ab6110dbc9e'
+  #DeviJack 931298283bd07e530bad4ab6110dbc9e
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
-
+  
   def gamesRequest(game_id)
     puts "Called to Game Request with parameter: " << game_id.to_s
     request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
@@ -347,7 +348,8 @@ module GamesApiModule
       game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
       game_card.store(:genres,game_genres)
       game_first_release_date = game_detail["first_release_date"]
-      game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
+      # game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
+      game_card.store(:first_release_date,game_first_release_date)
     else
       game_card.store(:platform,"NA")
       game_card.store(:genres,"NA")
@@ -371,6 +373,7 @@ module GamesApiModule
       end
       game_card_list
     else 
+      puts "Go through here...."
       game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
       game_detail = gamesRequest(games_id_array).first
       game_card = gameCardProcess(game_card,game_detail)
