@@ -18,8 +18,8 @@ class Game < ApplicationRecord
      game.genres = game_detail.genres
      game.first_release_date = DateTime.strptime(game_detail.first_release_date.to_s,'%s')
      game.save
+     game
   end
-  
   
   
 end

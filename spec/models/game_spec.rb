@@ -69,4 +69,10 @@ RSpec.describe Game, type: :model do
     expect(Game.count).not_to eq(before_count)
   end
   
+  it "find by external_id and save" do
+    game = subject.findByExternalId(1877)
+    expect game.not_to be_nil
+    
+  end
+  
 end
