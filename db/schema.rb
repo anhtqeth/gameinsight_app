@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_15_174918) do
+ActiveRecord::Schema.define(version: 2019_06_18_110104) do
 
   create_table "game_genres", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "game_videos", force: :cascade do |t|
+    t.integer "external_id"
+    t.string "url"
+    t.string "name"
+    t.text "description"
+    t.integer "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_videos_on_game_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -30,6 +41,17 @@ ActiveRecord::Schema.define(version: 2019_06_15_174918) do
     t.date "first_release_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "screenshots", force: :cascade do |t|
+    t.integer "external_id"
+    t.string "url"
+    t.integer "width"
+    t.integer "height"
+    t.integer "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_screenshots_on_game_id"
   end
 
 end
