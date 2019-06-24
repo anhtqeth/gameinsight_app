@@ -12,7 +12,7 @@ class Screenshot < ApplicationRecord
     api_game_screenshots.each do |game_screenshot|
       screenshot = Screenshot.new
       screenshot.external_id = id
-      screenshot.url = game_screenshot
+      screenshot.url = game_screenshot["url"]
       screenshot.width = 1920
       screenshot.height = 1080
       if Game.find_by_external_id(id).nil?
