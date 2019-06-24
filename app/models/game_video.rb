@@ -8,11 +8,11 @@ class GameVideo < ApplicationRecord
   
   def saveAPIData(id)
     api_game_videos = fetchAPIData(id)
+    
     api_game_videos.each do |api_video|
     game_videos = GameVideo.new
     game_videos.external_id = id
     game_videos.url = api_video
-    
       if Game.find_by_external_id(id).nil?
         game = Game.new
         game = game.saveAPIData(id)
@@ -26,8 +26,4 @@ class GameVideo < ApplicationRecord
       game_videos.save
     end
   end
-   
-   
-  
-   
 end
