@@ -5,6 +5,4 @@ RSpec.describe GamesController, type: :controller do
   describe "#game" do
     
   end
-  
-  
 end
