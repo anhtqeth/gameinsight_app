@@ -146,11 +146,11 @@ module GamesApiModule
   end
   
   def gameArticleProcess(article_meta)
-    game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil}
+    game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil,:news_source=>nil}
    
     article_id = article_meta['id']
     game_article.store(:id,article_id)
-    article_author = article_meta['name']
+    article_author = article_meta['author']
     game_article.store(:author,article_author)
     article_summary = article_meta['summary']
     game_article.store(:summary,article_summary)
@@ -162,6 +162,9 @@ module GamesApiModule
     game_article.store(:title,article_title)
     article_url = gameArticleExternalRequest(article_meta["website"])
     game_article.store(:url,article_url)
+    news_source = PublicSuffix.parse(URI.parse(article_url).host).sld
+    game_article.store(:news_source,news_source)
+    puts game_article
     game_article
   end
   
@@ -171,6 +174,7 @@ module GamesApiModule
     request.body = "fields *; where published_at > #{time};"
     response = HTTP_CNF.request(request)
     result = JSON.parse(response.read_body)
+    puts result
     game_article_list = []
     
     if result.nil?
@@ -240,6 +244,8 @@ module GamesApiModule
     request.body = "fields *; where id = #{id};"
     
     response = HTTP_CNF.request(request)
+    puts JSON.parse(response.read_body)
+    puts JSON.parse(response.read_body).first["url"]
     JSON.parse(response.read_body).first["url"]
   end
 
