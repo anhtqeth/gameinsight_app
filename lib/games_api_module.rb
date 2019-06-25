@@ -25,8 +25,12 @@ module GamesApiModule
   SCREENSHOTS_URI = 'https://api-v3.igdb.com/screenshots'
   VIDEO_URI = 'https://api-v3.igdb.com/game_videos'
   
-  PLATFORM_LOGO = 'https://api-v3.igdb.com/platform_logos'
-  PLATFORM_URI ='https://api-v3.igdb.com/platforms'
+  INVOLVED_COMS_URI = 'https://api-v3.igdb.com/involved_companies'
+  COMPANIES_URI = 'https://api-v3.igdb.com/companies'
+  
+  # PLATFORM_LOGO = 'https://api-v3.igdb.com/platform_logos'
+  # PLATFORM_URI ='https://api-v3.igdb.com/platforms'
+  
   
   #Specific Info
   RELEASE_URI = 'https://api-v3.igdb.com/release_dates/'
@@ -59,6 +63,76 @@ module GamesApiModule
     #srequest.body = "fields name,summary; where id = #{gameID};";
     response = HTTP_CNF.request(request)
     JSON.parse(response.read_body)
+  end
+  
+  def involvedCompaniesRequest(game_id)
+    puts "Called to Involved Company Request with parameter: " << game_id.to_s
+    request = Net::HTTP::Get.new(URI(INVOLVED_COMS_URI), {'user-key' => USERKEY})
+    
+    companies = []
+    
+    request.body = "fields *; where game = #{game_id};";
+    response = HTTP_CNF.request(request)
+    result = JSON.parse(response.read_body)
+    result.each do |rs|
+      company = {:id => nil, :type => nil}  
+      company[:id] = rs["company"]
+      
+      if rs["developer"]
+        company[:type] = 'Developer'
+        else if rs["publisher"]
+          company[:type] = 'Publisher'
+        end
+      end
+      companies << company
+    end
+    puts companies
+    companies
+  end
+  
+  def gameCompaniesRequest(game_id,company_type) #
+    puts "Called to Game Companies Request with game ID : " << game_id.to_s << " and company type: " << company_type
+    companies = involvedCompaniesRequest(game_id)
+    
+    company_id = nil
+    case company_type
+      when 'Publisher'
+        puts 'PUBLISHER ID QUERY'
+        company_id = companies.select{|c| c[:type] == 'Publisher'}.map{|x| x[:id] }.join.to_i
+        #request.body = "fields *; where published = #{game_id};"
+      when 'Developer'
+        puts 'DEVELOPER ID QUERY'
+        company_id = companies.select{|c| c[:type] == 'Developer'}.map{|x| x[:id] }.join.to_i
+        #request.body = "fields *; where developed = #{game_id};"
+      else
+      "Please specify what company type you wish for #{company_type}"
+    end
+    
+    request = Net::HTTP::Get.new(URI(COMPANIES_URI), {'user-key' => USERKEY})
+    request.body = "fields *; where id = #{company_id};"  #where published = #{game_id};
+    response = HTTP_CNF.request(request)
+    result = JSON.parse(response.read_body)
+    if result.empty? 
+      {:external_id => 'NA', :name => 'NA',:description => 'NA',:websites => 'NA'}
+    else
+      puts "Result here: " << result.to_s
+      gameCompanyProcess(result.first)
+    end
+  end
+  #TODO Add field as needed
+  def gameCompanyProcess(company_meta)
+    company_detail = {:external_id => nil, :name => nil,:description => nil,:websites => nil}
+    
+    external_id = company_meta['id']
+    company_detail.store(:external_id,external_id)
+    company_name = company_meta['name']
+    company_detail.store(:name,company_name)
+    company_description = company_meta['description']
+    company_detail.store(:description,company_description)
+    company_website = company_meta['websites']
+    company_detail.store(:websites,company_website)
+    
+    company_detail
   end
   
   #This is used to query for  Games Series,
