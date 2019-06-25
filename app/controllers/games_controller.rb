@@ -34,7 +34,9 @@ class GamesController < ApplicationController
     #   @game_screenshots = Rails.cache.fetch("#{params[:id]}/game_screenshots", expires_in: 1.month) do
     #     gameScreenshotRequest(params[:id])
     #   end
-      
+    @game_publisher = gameCompaniesRequest(params[:id],'Publisher')
+    @game_developer = gameCompaniesRequest(params[:id],'Developer')
+    
     #TODO: Save this to DB too 
     game_collection_id = gamesRequest(params[:id]).first["collection"]
       
