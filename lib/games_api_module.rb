@@ -30,15 +30,11 @@ module GamesApiModule
   
   # PLATFORM_LOGO = 'https://api-v3.igdb.com/platform_logos'
   # PLATFORM_URI ='https://api-v3.igdb.com/platforms'
-  
-  
   #Specific Info
   RELEASE_URI = 'https://api-v3.igdb.com/release_dates/'
-  
   #Searching 
   GAME_SEARCH_URI = "https://api-v3.igdb.com/search"
   GAME_COLLECTION_URI = "https://api-v3.igdb.com/collections"
-  
   
   #External Sites info
   GAME_NEWS_GROUP_URI = "https://api-v3.igdb.com/pulse_groups"
