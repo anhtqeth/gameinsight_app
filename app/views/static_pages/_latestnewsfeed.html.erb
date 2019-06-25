@@ -5,14 +5,31 @@
       <a href=<%=latest_news[:url] %> target="_blank"><img class="card-img-top"<%= image_tag("#{latest_news[:img]}") %></a>
       <div class="card-body">
       <hr id="content-line">
-      <p><%=latest_news[:summary]%></p>
+      <p><%=latest_news[:title]%></p>
       </div>
       <footer class="blockquote-footer">
-        <small class="text-muted">
-          <%=latest_news[:author]%> <cite title="Source Title"><%=latest_news[:title]%></cite>
-        </small>
+        <cite title="News Source"> <%=latest_news[:news_source] %> </cite>
+        <a href=<%=latest_news[:url] %> target="_blank" class="btn btn-outline-warning float-right">Read More</a>
       </footer>
     </blockquote>
   </div>
   <% end %>
 </div>
+
+<div class="card-group">
+  <div class="card-columns">
+   <% @latest_newsfeed.each do |latest_news| %>
+  <div class="card">
+    <img class="card-img-top"<%= image_tag("#{latest_news[:img]}") %>
+    <div class="card-body">
+      <h5 class="card-title"><%=latest_news[:title]%></h5>
+      <p class="card-text"><%=latest_news[:summary]%></p>
+      <cite title="News Source"> <%=latest_news[:news_source] %> </cite>
+      <a href=<%=latest_news[:url] %> target="_blank" class="btn btn-outline-warning float-right">Read More</a>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+  <% end %>
+  </div>
+</div>
+<!--latest_news[:summary]-->
