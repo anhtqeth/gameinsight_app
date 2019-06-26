@@ -91,22 +91,25 @@ RSpec.feature "Video Games Details", :type => :feature  do
   #   expect(gamecard).to have_key(:storyline)
   # end
   
-  scenario "Showing current latest news sortest by created date" do 
-    time = (Time.current - 6.days).to_time.to_i
-    fresh = (Time.current - 7.days).to_time.to_i
+  # scenario "Showing current latest news sortest by created date" do 
+  #   time = (Time.current - 6.days).to_time.to_i
+  #   fresh = (Time.current - 7.days).to_time.to_i
     
-    news_result = gameLatestNewsRequest(time)
-    expect(news_result).not_to be_nil
-    news_result.each do |news|
-      expect(news).to have_key(:author)
-      expect(news).to have_key(:summary)
-      expect(news).to have_key(:img)
-      expect(news).to have_key(:created_at)
-      expect(news[:created_at]).to be > DateTime.strptime(fresh.to_s,'%s').strftime("%A-%d-%b-%Y")
-      expect(news).to have_key(:title)
-      expect(news).to have_key(:url)
-    end
-  end
+  #   news_result = gameLatestNewsRequest(time)
+  #   expect(news_result).not_to be_nil
+  #   news_result.each do |news|
+  #     expect(news).to have_key(:author)
+  #     expect(news).to have_key(:summary)
+  #     expect(news).to have_key(:img)
+  #     expect(news).to have_key(:created_at)
+  #     convert_time = DateTime.strptime(news[:created_at], '%A-%d-%b-%Y-%R')
+
+  #     puts convert_time
+  #     expect(news[:created_at]).to be > DateTime.strptime(fresh.to_s,'%s').strftime("%A-%d-%b-%Y")
+  #     expect(news).to have_key(:title)
+  #     expect(news).to have_key(:url)
+  #   end
+  # end
   
   # scenario "Return Involved Companies IDs" do 
   #   companies = involvedCompaniesRequest(55090)
@@ -131,4 +134,14 @@ RSpec.feature "Video Games Details", :type => :feature  do
   #   expect(developer_detail).to have_key(:websites)
     
   # end
+  
+  scenario "Showing Latest Release games on platforms " do
+    game_list_ps4 = gameRecentRelease('PlayStation')
+    # game_list_xbox = gameRecentRelease('Microsoft Xbox')
+    # game_list_pc = gameRecentRelease('PC')
+    expect(game_list_ps4).not_to be_nil
+    expect(game_list_ps4.first["platform"]).to eq(48)
+    convert_time = DateTime.strptime(game_list_ps4.first["date"].to_s,'%s')
+    expect(convert_time).to be_between(Time.now - 1.month,Time.now + 8.days).inclusive
+  end
 end
