@@ -1,35 +1,39 @@
-<div class="card-columns">
-  <% @latest_newsfeed.each do |latest_news| %>
-  <div class="card p-3">
-    <blockquote class="blockquote mb-0 card-body">
-      <a href=<%=latest_news[:url] %> target="_blank"><img class="card-img-top"<%= image_tag("#{latest_news[:img]}") %></a>
-      <div class="card-body">
-      <hr id="content-line">
-      <p><%=latest_news[:title]%></p>
-      </div>
-      <footer class="blockquote-footer">
-        <cite title="News Source"> <%=latest_news[:news_source] %> </cite>
-        <a href=<%=latest_news[:url] %> target="_blank" class="btn btn-outline-warning float-right">Read More</a>
-      </footer>
-    </blockquote>
-  </div>
-  <% end %>
-</div>
-
+<span><h4>| Around The Gaming World</h4></span>
+<hr id="content-line">
 <div class="card-group">
   <div class="card-columns">
    <% @latest_newsfeed.each do |latest_news| %>
   <div class="card">
     <img class="card-img-top"<%= image_tag("#{latest_news[:img]}") %>
     <div class="card-body">
+      <% create_time = DateTime.strptime(latest_news[:created_at], '%A-%d-%b-%Y') %>
+      <hr id="content-line">
       <h5 class="card-title"><%=latest_news[:title]%></h5>
-      <p class="card-text"><%=latest_news[:summary]%></p>
+      <p class="card-text"><%= truncate(latest_news[:summary], length: 200)%></p>
       <cite title="News Source"> <%=latest_news[:news_source] %> </cite>
       <a href=<%=latest_news[:url] %> target="_blank" class="btn btn-outline-warning float-right">Read More</a>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      <p class="card-text"><small class="text-muted">Last updated <%= time_ago_in_words(create_time) %> ago</small></p>
     </div>
   </div>
   <% end %>
   </div>
 </div>
+
+<!--<div class="card-columns">-->
+<!--  < @latest_newsfeed.each do |latest_news| %>-->
+<!--  <div class="card p-3">-->
+<!--    <blockquote class="blockquote mb-0 card-body">-->
+<!--      <a href=<=latest_news[:url] %> target="_blank"><img class="card-img-top"<= image_tag("#{latest_news[:img]}") %></a>-->
+<!--      <div class="card-body">-->
+<!--      <hr id="content-line">-->
+<!--      <p><=latest_news[:title]%></p>-->
+<!--      </div>-->
+<!--      <footer class="blockquote-footer">-->
+<!--        <cite title="News Source"> <=latest_news[:news_source] %> </cite>-->
+<!--        <a href=<=latest_news[:url] %> target="_blank" class="btn btn-outline-warning float-right">Read More</a>-->
+<!--      </footer>-->
+<!--    </blockquote>-->
+<!--  </div>-->
+<!--  < end %>-->
+<!--</div>-->
 <!--latest_news[:summary]-->

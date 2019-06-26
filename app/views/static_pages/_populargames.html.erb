@@ -1,0 +1,40 @@
+<span><h4>| Popular Game Right Now</h4></span>
+<hr id="content-line">
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="card-deck">
+                <% @upcoming_popular_games[0..3].each do |gamecard| %>
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
+                  <div class="card-body">
+                    <h5 class="card-title center"><%= gamecard[:name] %></h5>
+                    <a href="<%=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>
+                  </div>
+                </div>
+                 <% end %>
+              </div>  
+          </div>
+          <div class="carousel-item">
+            <div class="card-deck">
+                <% @upcoming_popular_games[4..-1].each do |gamecard| %>
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
+                  <div class="card-body">
+                    <h5 class="card-title center"><%= gamecard[:name] %></h5>
+                    <a href="<%=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>
+                  </div>
+                </div>
+                <% end %>
+              </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+</div>
