@@ -3,10 +3,10 @@ require 'rails_helper'
 
 RSpec.feature "Video Games Details", :type => :feature  do
   include GamesApiModule
-  # scenario "User click game details" do
-  #   detail = gamesRequest(2062)
-  #   expect(detail).not_to be_nil
-  # end
+  scenario "Showing game details" do
+    detail = gamesRequest(55090)
+    expect(detail).not_to be_nil
+  end
   
   # scenario "Showing NewsFeed" do
   #   detail = gameNewsFeedRequest(7442)
@@ -135,13 +135,21 @@ RSpec.feature "Video Games Details", :type => :feature  do
     
   # end
   
-  scenario "Showing Latest Release games on platforms " do
-    game_list_ps4 = gameRecentRelease('PlayStation')
-    # game_list_xbox = gameRecentRelease('Microsoft Xbox')
-    # game_list_pc = gameRecentRelease('PC')
-    expect(game_list_ps4).not_to be_nil
-    expect(game_list_ps4.first["platform"]).to eq(48)
-    convert_time = DateTime.strptime(game_list_ps4.first["date"].to_s,'%s')
-    expect(convert_time).to be_between(Time.now - 1.month,Time.now + 8.days).inclusive
+  # scenario "Showing Latest Release games on platforms " do
+  #   game_list_ps4 = gameRecentRelease('PlayStation')
+  #   # game_list_xbox = gameRecentRelease('Microsoft Xbox')
+  #   # game_list_pc = gameRecentRelease('PC')
+  #   expect(game_list_ps4).not_to be_nil
+  #   expect(game_list_ps4.first["platform"]).to eq(48)
+  #   convert_time = DateTime.strptime(game_list_ps4.first["date"].to_s,'%s')
+  #   expect(convert_time).to be_between(Time.now - 1.month,Time.now + 8.days).inclusive
+  # end
+  
+  it "build request" do
+    uri = 'https://api-v3.igdb.com/games/'
+    request = buildRequest(uri)
+    expect(request).not_to be_nil
+    
+    # expect(response.status).to eq(404)
   end
 end

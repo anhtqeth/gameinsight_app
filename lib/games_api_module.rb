@@ -51,10 +51,15 @@ module GamesApiModule
   #DeviJack 931298283bd07e530bad4ab6110dbc9e
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
   
+  def buildRequest(uri)
+    puts 'Building Request'
+    request = Net::HTTP::Get.new(URI(uri), {'user-key' => USERKEY})
+    request
+  end
+  
   def gamesRequest(game_id)
     puts "Called to Game Request with parameter: " << game_id.to_s
-    request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
-  
+    request = buildRequest(GAME_URI)
     #request.body = "fields *; where id = #{game_id};";
     request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
     #srequest.body = "fields name,summary; where id = #{gameID};";
@@ -64,7 +69,7 @@ module GamesApiModule
   
   def involvedCompaniesRequest(game_id)
     puts "Called to Involved Company Request with parameter: " << game_id.to_s
-    request = Net::HTTP::Get.new(URI(INVOLVED_COMS_URI), {'user-key' => USERKEY})
+    request = buildRequest(INVOLVED_COMS_URI)
     
     companies = []
     
@@ -165,14 +170,15 @@ module GamesApiModule
     game_article.store(:url,article_url)
     news_source = PublicSuffix.parse(URI.parse(article_url).host).sld
     game_article.store(:news_source,news_source)
+    
     puts game_article
     game_article
   end
   
   def gameLatestNewsRequest(time)
     puts "Called to Latest Feed Request with parameter: " << DateTime.strptime(time.to_s,'%s').strftime("%A-%d-%b-%Y")
-    request = Net::HTTP::Get.new(URI(GAME_ARTICLE_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where published_at > #{time};"
+    request = buildRequest(GAME_ARTICLE_URI)
+    request.body = "fields *; where published_at > #{time};limit 12;"
     response = HTTP_CNF.request(request)
     result = JSON.parse(response.read_body)
     puts result
@@ -424,7 +430,6 @@ module GamesApiModule
     game_card
   end
   
-  #
   def gamesListProcess(games_id_array)
     puts "Called to Game List Request with parameter: " << games_id_array.to_s
     game_card_list = []
