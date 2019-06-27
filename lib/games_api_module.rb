@@ -1,7 +1,6 @@
 require 'uri'
 require 'net/http'
 module GamesApiModule
-  
   #Utils Constant
   UNIX_TIME_NOW = Time.current.to_time.to_i
   THIS_MONTH = (Time.now - 1.month).to_i
@@ -52,7 +51,6 @@ module GamesApiModule
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
   
   def buildRequest(uri)
-    puts 'Building Request'
     request = Net::HTTP::Get.new(URI(uri), {'user-key' => USERKEY})
     request
   end
