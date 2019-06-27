@@ -34,9 +34,9 @@ class StaticPagesController < ApplicationController
     end
     #Currently set in controller, better if user can pick this from the view. Will change in 0.3
     time = (Time.current - 6.days).to_time.to_i
-    @latest_newsfeed = gameLatestNewsRequest(time) # = Rails.cache.fetch("latest/news_feed", expires_in: 7.days) do
-      
-   # end
+    @latest_newsfeed = Rails.cache.fetch("latest/news_feed", expires_in: 7.days) do
+      gameLatestNewsRequest(time)
+    end
   end
   
 
