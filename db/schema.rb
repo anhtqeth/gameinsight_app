@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_28_081804) do
+ActiveRecord::Schema.define(version: 2019_07_05_101543) do
 
   create_table "game_articles", force: :cascade do |t|
     t.integer "external_id"
@@ -53,6 +53,22 @@ ActiveRecord::Schema.define(version: 2019_06_28_081804) do
     t.date "first_release_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "platforms", force: :cascade do |t|
+    t.integer "external_id"
+    t.string "abbreviation"
+    t.string "alt_name"
+    t.integer "generation"
+    t.string "name"
+    t.string "platform_logo"
+    t.text "summary"
+    t.text "details"
+    t.string "url"
+    t.integer "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_platforms_on_game_id"
   end
 
   create_table "screenshots", force: :cascade do |t|
