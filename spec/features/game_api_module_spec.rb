@@ -8,10 +8,10 @@ RSpec.feature "Video Games Details", :type => :feature  do
   #   expect(detail).not_to be_nil
   # end
   
-  scenario "Showing game details" do
-    detail = gamesRequest(55090)
-    expect(detail).not_to be_nil
-  end
+  # scenario "Showing game details" do
+  #   detail = gamesRequest(55090)
+  #   expect(detail).not_to be_nil
+  # end
   
   # scenario "Showing NewsFeed" do
   #   detail = gameNewsFeedRequest(7442)
@@ -157,4 +157,8 @@ RSpec.feature "Video Games Details", :type => :feature  do
     
   #   # expect(response.status).to eq(404)
   # end
+  
+  it "get Platforms" do 
+    gamesPlatformRequest
+  end
 end

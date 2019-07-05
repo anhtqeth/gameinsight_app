@@ -9,7 +9,6 @@ module GamesApiModule
     
   HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 443)
   HTTP_CNF.use_ssl = true 
-  # HTTP_CNF.use_ssl = true
   
   DUMMY_SCREENSHOT = [{"id"=>244572, "game"=>55090, "height"=>720, "image_id"=>"iodd6zzceqq5jkufxpcz", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/iodd6zzceqq5jkufxpcz.jpg", "width"=>1280}, {"id"=>208211, "game"=>55090, "height"=>1080, "image_id"=>"wdsb42ukz39ywlzvhro4", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/wdsb42ukz39ywlzvhro4.jpg", "width"=>1920}, {"id"=>244573, "game"=>55090, "height"=>562, "image_id"=>"af8ueznswr8xpdkw9ukf", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/af8ueznswr8xpdkw9ukf.jpg", "width"=>1000}, {"id"=>208214, "game"=>55090, "height"=>1080, "image_id"=>"cxwpickwszhgdxvxdzzh", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/cxwpickwszhgdxvxdzzh.jpg", "width"=>1920}, {"id"=>208212, "game"=>55090, "height"=>1080, "image_id"=>"enex88ekm3se7a3vpqmp", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/enex88ekm3se7a3vpqmp.jpg", "width"=>1920}, {"id"=>208213, "game"=>55090, "height"=>1080, "image_id"=>"ywgv0zxrsocslwbkir8b", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/ywgv0zxrsocslwbkir8b.jpg", "width"=>1920}]
   DUMMY_VIDEOS = ["https://www.youtube.com/embed/LVIdmEfiFCk","https://www.youtube.com/embed/OAQm-EzbaHM"]
@@ -36,7 +35,7 @@ module GamesApiModule
   COMPANIES_URI = 'https://api-v3.igdb.com/companies'
   
   # PLATFORM_LOGO = 'https://api-v3.igdb.com/platform_logos'
-  # PLATFORM_URI ='https://api-v3.igdb.com/platforms'
+  PLATFORM_URI ='https://api-v3.igdb.com/platforms'
   #Specific Info
   RELEASE_URI = 'https://api-v3.igdb.com/release_dates/'
   #Searching 
@@ -491,18 +490,17 @@ module GamesApiModule
   #   img
   # end
   
-  # def gamesPlatformRequest
-  #   request = Net::HTTP::Get.new(URI(PLATFORM_URI), {'user-key' => USERKEY})
-   
-  #   request.body = "fields *;";
-  #   response = HTTP_CNF.request(request)
-  #   result = JSON.parse(response.read_body)
-  #   puts result
-  #   ids = []
+  def gamesPlatformRequest
+    request = Net::HTTP::Get.new(URI(PLATFORM_URI), {'user-key' => USERKEY})
+    request.body = "fields *; where id = 48;";
+    response = HTTP_CNF.request(request)
+    result = JSON.parse(response.read_body)
+    puts result
+    ids = []
     
-  #   result.each do |res|
-  #     ids << res["platform_logo"]
-  #   end
-  #   ids
-  # end
+    result.each do |res|
+      ids << res["platform_logo"]
+    end
+    ids
+  end
 end
