@@ -3,6 +3,11 @@ require 'rails_helper'
 
 RSpec.feature "Video Games Details", :type => :feature  do
   include GamesApiModule
+  # scenario "Postman Test" do
+  #   detail = postmanReq
+  #   expect(detail).not_to be_nil
+  # end
+  
   scenario "Showing game details" do
     detail = gamesRequest(55090)
     expect(detail).not_to be_nil
@@ -145,11 +150,11 @@ RSpec.feature "Video Games Details", :type => :feature  do
   #   expect(convert_time).to be_between(Time.now - 1.month,Time.now + 8.days).inclusive
   # end
   
-  it "build request" do
-    uri = 'https://api-v3.igdb.com/games/'
-    request = buildRequest(uri)
-    expect(request).not_to be_nil
+  # it "build request" do
+  #   uri = 'https://api-v3.igdb.com/games/'
+  #   request = buildRequest(uri)
+  #   expect(request).not_to be_nil
     
-    # expect(response.status).to eq(404)
-  end
+  #   # expect(response.status).to eq(404)
+  # end
 end

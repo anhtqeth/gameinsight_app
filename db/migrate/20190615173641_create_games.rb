@@ -9,7 +9,6 @@ class CreateGames < ActiveRecord::Migration[5.2]
       t.text :platforms, array: true #, default: [].to_yaml
       t.string :genres
       t.date :first_release_date
-
       t.timestamps
     end
   end

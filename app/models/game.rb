@@ -16,7 +16,13 @@ class Game < ApplicationRecord
      game.cover = game_detail.cover
      game.platform = game_detail.platform
      game.genres = game_detail.genres
-     game.first_release_date = DateTime.strptime(game_detail.first_release_date.to_s,'%s')
+     puts game_detail.first_release_date
+     if game_detail.first_release_date = 'NA'
+      game.first_release_date = Time.now - 15.years
+     else
+      game.first_release_date = DateTime.strptime(game_detail.first_release_date.to_s,'%s') 
+     end
+        
      game.save
      game
   end
