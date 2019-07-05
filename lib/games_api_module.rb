@@ -1,10 +1,15 @@
 require 'uri'
+require 'open-uri'
 require 'net/http'
 module GamesApiModule
   #Utils Constant
   UNIX_TIME_NOW = Time.current.to_time.to_i
   THIS_MONTH = (Time.now - 1.month).to_i
-  HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 80)
+  
+    
+  HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 443)
+  HTTP_CNF.use_ssl = true 
+  # HTTP_CNF.use_ssl = true
   
   DUMMY_SCREENSHOT = [{"id"=>244572, "game"=>55090, "height"=>720, "image_id"=>"iodd6zzceqq5jkufxpcz", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/iodd6zzceqq5jkufxpcz.jpg", "width"=>1280}, {"id"=>208211, "game"=>55090, "height"=>1080, "image_id"=>"wdsb42ukz39ywlzvhro4", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/wdsb42ukz39ywlzvhro4.jpg", "width"=>1920}, {"id"=>244573, "game"=>55090, "height"=>562, "image_id"=>"af8ueznswr8xpdkw9ukf", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/af8ueznswr8xpdkw9ukf.jpg", "width"=>1000}, {"id"=>208214, "game"=>55090, "height"=>1080, "image_id"=>"cxwpickwszhgdxvxdzzh", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/cxwpickwszhgdxvxdzzh.jpg", "width"=>1920}, {"id"=>208212, "game"=>55090, "height"=>1080, "image_id"=>"enex88ekm3se7a3vpqmp", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/enex88ekm3se7a3vpqmp.jpg", "width"=>1920}, {"id"=>208213, "game"=>55090, "height"=>1080, "image_id"=>"ywgv0zxrsocslwbkir8b", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/ywgv0zxrsocslwbkir8b.jpg", "width"=>1920}]
   DUMMY_VIDEOS = ["https://www.youtube.com/embed/LVIdmEfiFCk","https://www.youtube.com/embed/OAQm-EzbaHM"]
@@ -15,8 +20,10 @@ module GamesApiModule
   #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
   #REFACTORING THE STRUCTURE OF CODE FOR REQUEST
   
+  BASE_URI = 'https://api-v3.igdb.com/'
+  
   #General Information
-  GAME_URI = "https://api-v3.igdb.com/games/"
+  GAME_URI = 'https://api-v3.igdb.com/games/'
   GAME_FRANCHISE_URI = "https://api-v3.igdb.com/franchises"
   
   #Media (Videos/Photos)
@@ -46,22 +53,32 @@ module GamesApiModule
   MESS_NA_SERIES = "There are no series related to this game. Or did we missed it?"
   
   #Authentication
-  USERKEY = '931298283bd07e530bad4ab6110dbc9e'
-  #DeviJack 931298283bd07e530bad4ab6110dbc9e
+  USERKEY = 'ada77f859e3e4c235b5b6e360c79e249'
+  #DeviJack ec80dc20b6c9b360aab19868b02ed17e
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
   
+  # http = Net::HTTP.new('api-v3.igdb.com', 80)
+  # request = Net::HTTP::Get.new(URI('https://api-v3.igdb.com/achievements'), {'user-key' => YOUR_KEY})
+  # request.body = 'fields *'
+  # puts http.request(request).body
+  
+  #HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 80)
+  
   def buildRequest(uri)
-    request = Net::HTTP::Get.new(URI(uri), {'user-key' => USERKEY})
+    url = URI(uri)
+    request = Net::HTTP::Get.new(url, {'user-key' => USERKEY})
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
     request
   end
+
   
   def gamesRequest(game_id)
     puts "Called to Game Request with parameter: " << game_id.to_s
     request = buildRequest(GAME_URI)
-    #request.body = "fields *; where id = #{game_id};";
     request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
-    #srequest.body = "fields name,summary; where id = #{gameID};";
     response = HTTP_CNF.request(request)
+    puts response.read_body
     JSON.parse(response.read_body)
   end
   
@@ -161,7 +178,8 @@ module GamesApiModule
     article_img = article_meta['image']
     game_article.store(:img,article_img)
     article_created_at = article_meta['created_at']
-    game_article.store(:created_at,DateTime.strptime(article_created_at.to_s,'%s').strftime("%A-%d-%b-%Y-%R"))
+    game_article.store(:created_at,article_created_at)
+    #game_article.store(:created_at,DateTime.strptime(article_created_at.to_s,'%s').strftime("%A-%d-%b-%Y-%R"))
     article_title = article_meta['title']
     game_article.store(:title,article_title)
     article_url = gameArticleExternalRequest(article_meta["website"])
@@ -197,7 +215,7 @@ module GamesApiModule
   #Get Related News from multiple sources for a game
   def gameNewsFeedRequest(game_id)
     puts "Called to News Feed Request with parameter: " << game_id.to_s
-    request = Net::HTTP::Get.new(URI(GAME_NEWS_GROUP_URI), {'user-key' => USERKEY})
+    request = buildRequest(GAME_NEWS_GROUP_URI)
     request.body = "fields *; where game = #{game_id};"
     response = HTTP_CNF.request(request)
     result = JSON.parse(response.read_body)
@@ -245,13 +263,20 @@ module GamesApiModule
   
   def gameArticleExternalRequest(id)
     puts "Called to Game Article External Request with parameter: " << id.to_s
-    request = Net::HTTP::Get.new(URI(GAME_EXTERNAL_ARTICLE_URI), {'user-key' => USERKEY})
+    request = buildRequest(GAME_EXTERNAL_ARTICLE_URI)
     request.body = "fields *; where id = #{id};"
     
     response = HTTP_CNF.request(request)
     puts JSON.parse(response.read_body)
-    puts JSON.parse(response.read_body).first["url"]
-    JSON.parse(response.read_body).first["url"]
+    
+    if JSON.parse(response.read_body).empty?
+     'https://www.nourl.com'
+    else
+      puts JSON.parse(response.read_body)
+      puts JSON.parse(response.read_body).first["url"]
+      JSON.parse(response.read_body).first["url"]
+    end
+    
   end
   
   def gameRecentRelease(platform)
@@ -285,12 +310,13 @@ module GamesApiModule
   
   def gamePopularUpcomingRelease
     puts "Called to Popular Upcoming Release game"
-    request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW} & popularity > 200.0; sort popularity desc;"
+    request = buildRequest(GAME_URI)
+    request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW}; sort popularity desc;"
     #request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW} & hypes > 500; sort hypes desc;"
 
     response = HTTP_CNF.request(request)
-    result = JSON.parse(response.read_body)  
+    puts response.read_body
+    result = JSON.parse(response.read_body)
     ids_array = []
     result.each do |x|
       ids_array << x["id"]
