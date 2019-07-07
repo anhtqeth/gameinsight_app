@@ -6,7 +6,9 @@
   <div class="card">
     <img class="card-img-top"<%= image_tag("#{latest_news[:img]}") %>
     <div class="card-body">
-      <% create_time = DateTime.strptime(latest_news[:created_at], '%A-%d-%b-%Y') %>
+      <!--< create_time = DateTime.strptime(latest_news[:created_at], '%A-%d-%b-%Y') >-->
+      
+      <% create_time = latest_news[:created_at]%>
       <hr id="content-line">
       <h5 class="card-title"><%=latest_news[:title]%></h5>
       <p class="card-text"><%= truncate(latest_news[:summary], length: 200)%></p>
