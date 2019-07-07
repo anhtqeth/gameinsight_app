@@ -121,10 +121,10 @@
     lodash "^4.17.10"
     printf "0.3.0"
 
-"@heroku-cli/plugin-apps-v5@^7.24.0":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@heroku-cli/plugin-apps-v5/-/plugin-apps-v5-7.24.0.tgz#3718cc29eaad6ab98297a5e631d006eed1272d5c"
-  integrity sha512-i2v/TX6s9HV6RkVxg8IpZhmVsqL9rJYZkNY5mzDF4GrhYlhtt8xy9r8+0KJhizqjq+WFwAncGfE4UeNixko6Zg==
+"@heroku-cli/plugin-apps-v5@^7.26.0":
+  version "7.26.0"
+  resolved "https://registry.yarnpkg.com/@heroku-cli/plugin-apps-v5/-/plugin-apps-v5-7.26.0.tgz#b77abf0ce6b7666c3e0d639954dbbc1481ad7001"
+  integrity sha512-dnewwi5W7GTJ4I4cKw2aKj/bBvCt/DRaMHX11RWeWU0MwWwnVo4Fap/doZUAwjmEwJUnHHx0aAXedJKTdnuQ7w==
   dependencies:
     "@heroku-cli/command" "^8.2.10"
     co "^4.6.0"
@@ -285,16 +285,16 @@
     cli-ux "^4.9.3"
     debug "4.1.1"
 
-"@heroku-cli/plugin-local-v5@^7.24.0":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@heroku-cli/plugin-local-v5/-/plugin-local-v5-7.24.0.tgz#69a26bacfe2de0a333954c15896cb7a6a5605e74"
-  integrity sha512-me7QPGTjAhjVZIEBneYkVurLkCerpMG2r8DZmIsd4tj6RLRY5qRFf6cjPJiZb3XaXbhhSzGfqJipAwQqbi6+Rg==
+"@heroku-cli/plugin-local@^7.26.2":
+  version "7.26.2"
+  resolved "https://registry.yarnpkg.com/@heroku-cli/plugin-local/-/plugin-local-7.26.2.tgz#4d65f81613f00e3bb9deac9cb6a06d3636d0e297"
+  integrity sha512-y9oUkghwgu1KAfTQydfU4sUR6nJppGOKlCSFk04kLbM5FADsHq7jpbaUX58ZMP30Cjwx/t0MBGijd+k9GH7gww==
   dependencies:
-    "@heroku-cli/command" "^8.2.10"
-    co "^4.6.0"
+    "@heroku-cli/command" "^8.2.11"
+    "@oclif/command" "^1"
+    "@oclif/config" "^1"
     foreman "^3.0.1"
-    heroku-cli-util "^8.0.11"
-    lodash.flatten "^4.4.0"
+    tslib "^1"
 
 "@heroku-cli/plugin-oauth-v5@^7.24.0":
   version "7.24.0"
@@ -306,10 +306,10 @@
     heroku-cli-util "^8.0.11"
     lodash "^4.17.11"
 
-"@heroku-cli/plugin-orgs-v5@^7.24.0":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@heroku-cli/plugin-orgs-v5/-/plugin-orgs-v5-7.24.0.tgz#6b05f9dc1986938bad6a3c667ad9e3b0507aa294"
-  integrity sha512-SgFh9Na4bN+3JRnbCBLu3lz4acwYioVdf5CB9lrVJcx7s1Uvgl5sywmpemS+yU7YBMnh3KatVA5QPFnBUWg/bA==
+"@heroku-cli/plugin-orgs-v5@^7.26.0":
+  version "7.26.0"
+  resolved "https://registry.yarnpkg.com/@heroku-cli/plugin-orgs-v5/-/plugin-orgs-v5-7.26.0.tgz#3a18fd505bd9a7f2be1c09b1b0e61d6e147fd5bf"
+  integrity sha512-H7NA6Gea/cs71+lPgsJ6ZXcxwwVhcF6PB8pgjgWatpy05wMVSYg1zZ/idLM0A5gg3LgmZ+DcWJNz4UVkROCcqA==
   dependencies:
     "@heroku-cli/command" "^8.2.10"
     co "^4.6.0"
@@ -337,10 +337,10 @@
     strip-eof "^1.0.0"
     tunnel-ssh "^4.1.4"
 
-"@heroku-cli/plugin-pipelines-v5@^7.24.0":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@heroku-cli/plugin-pipelines-v5/-/plugin-pipelines-v5-7.24.0.tgz#c52d54d3aeaae29d5fd1cd65177aeee1b227ebb7"
-  integrity sha512-o815ej4wKOwGc8v7bShQwIXOs9aPAjwFVeTHZpuuTg4hVd6rjlGuBseXN5SBm+T5ODxROcHr76djwMk3V41r4g==
+"@heroku-cli/plugin-pipelines-v5@^7.26.0":
+  version "7.26.0"
+  resolved "https://registry.yarnpkg.com/@heroku-cli/plugin-pipelines-v5/-/plugin-pipelines-v5-7.26.0.tgz#30a58aaba914cbd489273fa7b95030dd1649e28e"
+  integrity sha512-nPK1h7uenw4U49Pdn05I/T/XDTF1a0tgdGOKU2AoQ+2W80kzQe747XauBUkd+fZWqNmKKjGFuKWxTxvTvxLgzg==
   dependencies:
     "@heroku-cli/command" "^8.2.10"
     bluebird "^3.5.3"
@@ -414,10 +414,10 @@
     heroku-cli-util "^8.0.11"
     shellwords "^0.1.1"
 
-"@heroku-cli/plugin-spaces@^7.24.0":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@heroku-cli/plugin-spaces/-/plugin-spaces-7.24.0.tgz#ad8176f47a416d94c63d9469d6b605c60b67eef7"
-  integrity sha512-HwMLBSakbqbBPP5lWDJkRekMJaUaQqzn3v2FC0QGmM0tsgkvpHs/2luscFYim8h2/SNCS14GDS81f6ZL9pMshQ==
+"@heroku-cli/plugin-spaces@^7.26.0":
+  version "7.26.0"
+  resolved "https://registry.yarnpkg.com/@heroku-cli/plugin-spaces/-/plugin-spaces-7.26.0.tgz#b589042280029e06ee0519adf4bf50065bf3ee1e"
+  integrity sha512-mh/G9Ji8IXhCjYCwuKg0xN9TrAWNwP+9/KFJ8EUE3abDY9lZjpqumuRvC5HgkPrzA9KErdhP8RHr5r2Zr5Bl7g==
   dependencies:
     "@heroku-cli/command" "^8.2.10"
     "@heroku-cli/notifications" "^1.2.2"
@@ -1122,6 +1122,16 @@
     debug "^4.1.1"
     semver "^5.6.0"
 
+"@oclif/command@^1":
+  version "1.5.14"
+  resolved "https://registry.yarnpkg.com/@oclif/command/-/command-1.5.14.tgz#cdf6013134abfb5630783f27e78436096ce3ed88"
+  integrity sha512-R9gat0yUjamDVd4trvFgjlx2XYuMz1nM0uEBFP6nR1zOQAwJ3E1zqYbsVlCMWiUDGjU1hYmudmK7IjAxDUoqDw==
+  dependencies:
+    "@oclif/errors" "^1.2.2"
+    "@oclif/parser" "^3.7.3"
+    debug "^4.1.1"
+    semver "^5.6.0"
+
 "@oclif/command@^1.5.1", "@oclif/command@^1.5.10", "@oclif/command@^1.5.8":
   version "1.5.10"
   resolved "https://registry.yarnpkg.com/@oclif/command/-/command-1.5.10.tgz#74696d9d76e1b83c13ec21df98e90ecc99f8482a"
@@ -1146,6 +1156,14 @@
   version "1.12.10"
   resolved "https://registry.yarnpkg.com/@oclif/config/-/config-1.12.10.tgz#08ef278cfad981d618468c969c1a1c64f3a38c98"
   integrity sha512-AQYFA72ktXgmrY4hjRtBQRfKLDKXPG4WGSLUgWn0KencNuqnmbiKS6zfKXf1umfZ26zoDOEfCdqZjm3aNZnIaw==
+  dependencies:
+    debug "^4.1.1"
+    tslib "^1.9.3"
+
+"@oclif/config@^1":
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/@oclif/config/-/config-1.13.0.tgz#fc2bd82a9cb30a73faf7d2aa5ae937c719492bd1"
+  integrity sha512-ttb4l85q7SBx+WlUJY4A9eXLgv4i7hGDNGaXnY9fDKrYD7PBMwNOQ3Ssn2YT2yARAjyOxVE/5LfcwhQGq4kzqg==
   dependencies:
     debug "^4.1.1"
     tslib "^1.9.3"
@@ -1207,6 +1225,15 @@
   dependencies:
     "@oclif/linewrap" "^1.0.0"
     chalk "^2.4.1"
+    tslib "^1.9.3"
+
+"@oclif/parser@^3.7.3":
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/@oclif/parser/-/parser-3.8.1.tgz#3c842ef4a8ce3d1f5bcfa5938d3fbebf1c6a0618"
+  integrity sha512-0OavFuLj6FBTdZDD6DXdNqH4qdLFLQD/PKK1OvNZhUd4/5v/lp6Ftzilwmirf549naNHq0u15uk1YCBvym5tNQ==
+  dependencies:
+    "@oclif/linewrap" "^1.0.0"
+    chalk "^2.4.2"
     tslib "^1.9.3"
 
 "@oclif/plugin-commands@^1.2.2":
