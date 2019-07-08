@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_05_101543) do
+ActiveRecord::Schema.define(version: 2019_07_08_104610) do
 
   create_table "game_articles", force: :cascade do |t|
     t.integer "external_id"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2019_07_05_101543) do
     t.string "url"
     t.string "news_source"
     t.datetime "updated_at", null: false
+    t.integer "publish_at"
   end
 
   create_table "game_genres", force: :cascade do |t|
