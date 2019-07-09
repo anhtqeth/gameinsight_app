@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   #Show game detail page
   #TODO: DRY on the cache
-  #TODO: Add logic to saving models
+  #TODO: Move save logic to model. Just like article
   def show
     #If this game is not in db, save it. 
     if Game.find_by_external_id(params[:id])
@@ -21,19 +21,6 @@ class GamesController < ApplicationController
       @game_screenshots = Screenshot.where(external_id:params[:id])
     end
     
-    # @game_videos = Rails.cache.fetch("#{params[:id]}/game_videos", expires_in: 1.month) do
-    #     gamesVideoRequest(params[:id])
-    #   end
-    #   @game_details = Rails.cache.fetch("#{params[:id]}/game_detail", expires_in: 1.month) do
-    #     gamesListProcess(params[:id])
-    #   end
-    #   @game_cover = Rails.cache.fetch("#{params[:id]}/game_cover", expires_in: 1.month) do
-    #   gameCoverRequest(params[:id])
-    #   end
-    
-    #   @game_screenshots = Rails.cache.fetch("#{params[:id]}/game_screenshots", expires_in: 1.month) do
-    #     gameScreenshotRequest(params[:id])
-    #   end
     @game_publisher = gameCompaniesRequest(params[:id],'Publisher')
     @game_developer = gameCompaniesRequest(params[:id],'Developer')
     

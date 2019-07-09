@@ -71,7 +71,6 @@ module GamesApiModule
     request
   end
 
-  
   def gamesRequest(game_id)
     puts "Called to Game Request with parameter: " << game_id.to_s
     request = buildRequest(GAME_URI)
