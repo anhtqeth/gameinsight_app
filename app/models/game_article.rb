@@ -29,7 +29,7 @@ class GameArticle < ApplicationRecord
   
   def fetchLatestNews(time)
     latest_newsfeed = GameArticle.where("publish_at > ?",time)
-    if latest_newsfeed.nil?
+    if latest_newsfeed.empty?
       latest_newsfeed = fetchAPILatestNews(time)
       #Save to DB
       latest_newsfeed.each do |api_article|
