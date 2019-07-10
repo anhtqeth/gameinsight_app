@@ -27,5 +27,30 @@ class Game < ApplicationRecord
      game
   end
   
+  def fetchLatestRelease(platform)
+    case platform 
+      when 'PlayStation'
+        puts 'List of latest PS Game'
+        platform_id = 48
+      when 'Microsoft Xbox'
+        puts 'List of latest Xbox Game'
+        platform_id = 9
+      when 'PC'
+        puts 'List of latest PC Game'
+        platform_id = 46
+      when 'Nintendo Switch'
+        puts 'List of latest Switch Game'
+        platform_id = 130
+      when 'iOS'
+        platform_id = 39
+      #TODO Add more platforms  
+      else
+        puts "(#{platform}) is not a valid platform"
+    end
+    time = Time.now - 1.month.ago
+    Game.where("first_release_date > ?",time)
+    
+  end
+  
   
 end

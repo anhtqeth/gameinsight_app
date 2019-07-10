@@ -279,31 +279,36 @@ module GamesApiModule
   
   def gameRecentRelease(platform)
     puts "Called to Recent Released Game Request"
-    request = Net::HTTP::Get.new(URI(RELEASE_URI), {'user-key' => USERKEY})
+    request = buildRequest(RELEASE_URI)
     platform_id = nil;
     month = Time.now.month
+    year = Time.now.year
     case platform 
       when 'PlayStation'
+        puts 'List of latest PS Game'
         platform_id = 48
       when 'Microsoft Xbox'
+        puts 'List of latest Xbox Game'
         platform_id = 9
       when 'PC'
+        puts 'List of latest PC Game'
         platform_id = 46
       when 'Nintendo Switch'
+        puts 'List of latest Switch Game'
         platform_id = 130
       when 'iOS'
         platform_id = 39
       #TODO Add more platforms  
       else
-        puts "(#{platform}) is not a valid platform"
+        puts "(#{platform}) is not a valid platform" #  & m =#{month} & y=#{year} 
     end
     
-    request.body = "fields *,game.name; where date < #{UNIX_TIME_NOW} & m =#{month} & y=2019 & game.platforms = #{platform_id}; sort m desc; limit 20;"
+    #Return games released around 1 month
+    request.body = "fields *,game.name; where date > #{1.month.ago.to_i} & date < #{Time.now.to_i}  & game.platforms = #{platform_id}; sort m desc; limit 20;"
     puts request.body
     response = HTTP_CNF.request(request)
-    result = JSON.parse(response.read_body)  
-    puts result
-    result
+    puts JSON.parse(response.read_body) 
+    JSON.parse(response.read_body)
   end
   
   def gamePopularUpcomingRelease
@@ -437,6 +442,7 @@ module GamesApiModule
       game_cover = gameCoverRequest(game_id)
       game_card.store(:cover,game_cover)
     unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
+      #TODO: Refactor this smell
       game_platform = game_detail["platforms"].map{|x| x["name"]}.join(', ')
       game_card.store(:platform,game_platform)
       game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
@@ -457,6 +463,7 @@ module GamesApiModule
     game_card_list = []
     
     if games_id_array.is_a? Array
+      puts "Array of Game Info"
       games_id_array[0..7].each do |x|
       #game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil}
       game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
@@ -466,7 +473,7 @@ module GamesApiModule
       end
       game_card_list
     else 
-      puts "Go through here...."
+      puts "Single Game Info"
       game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
       game_detail = gamesRequest(games_id_array).first
       game_card = gameCardProcess(game_card,game_detail)
