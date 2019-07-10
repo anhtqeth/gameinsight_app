@@ -55,20 +55,26 @@ RSpec.describe Game, type: :model do
     expect(subject).to_not be_valid
   end
   
-  it "fetch data from api" do
-    game = Game.new()
-    details = game.fetchAPIData(55090)
-    expect(details).not_to be_nil
-    expect(details.name).not_to be_nil
-  end
+  # it "fetch data from api" do
+  #   game = Game.new()
+  #   details = game.fetchAPIData(55090)
+  #   expect(details).not_to be_nil
+  #   expect(details.name).not_to be_nil
+  # end
   
-  it "save to db after api call" do
-    #1877
-    #80155 - with NA date
-    game = Game.new()
-    before_count = Game.count
-    game.saveAPIData(80155)
-    expect(Game.count).not_to eq(before_count)
+  # it "save to db after api call" do
+  #   #1877
+  #   #80155 - with NA date
+  #   game = Game.new()
+  #   before_count = Game.count
+  #   game.saveAPIData(80155)
+  #   expect(Game.count).not_to eq(before_count)
+  # end
+  
+  it "can fetch latest release game base on platform" do
+    #Default Time is set within 1 month
+    latest_ps4_games = subject.fetchLatestRelease('PlayStation')
+    expect(latest_ps4_games).not_to be_nil
   end
   
 end

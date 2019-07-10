@@ -1,3 +1,25 @@
 <!--TODO Should have platform picker here-->
 <span><h4>| Latest Release</h4></span>
 <hr id="content-line">
+<div class="dropdown show">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="platformDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Pick a Platform
+  </a>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="#">PlayStation</a>
+    <a class="dropdown-item" href="#">Microsoft Xbox</a>
+    <a class="dropdown-item" href="#">Nintendo Switch</a>
+    <a class="dropdown-item" href="#">PC (Steam)</a>
+  </div>
+</div>
+<% @latest_games.each do |gamecard| %>
+<div class="card" style="width: 10rem;">
+  <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
+  <div class="card-body">
+    <p class="card-text"><%= gamecard[:name] %></p>
+  </div>
+  <a href="<%=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>
+</div>
+<% end%>
+<!--Showing content base on dropdown selection-->
+
