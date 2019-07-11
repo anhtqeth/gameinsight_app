@@ -304,7 +304,7 @@ module GamesApiModule
     end
     
     #Return games released around 1 month
-    request.body = "fields *,game.name; where date > #{1.month.ago.to_i} & date < #{Time.now.to_i}  & game.platforms = #{platform_id}; sort m desc; limit 20;"
+    request.body = "fields *,game.name; where date > #{3.month.ago.to_i} & date < #{Time.now.to_i}  & game.platforms = #{platform_id}; sort m desc; limit 20;"
     puts request.body
     response = HTTP_CNF.request(request)
     puts JSON.parse(response.read_body) 
