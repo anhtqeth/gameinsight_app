@@ -12,14 +12,26 @@
     <a class="dropdown-item" href="#">PC (Steam)</a>
   </div>
 </div>
-<% @latest_games.each do |gamecard| %>
-<div class="card" style="width: 10rem;">
-  <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
-  <div class="card-body">
-    <p class="card-text"><%= gamecard[:name] %></p>
-  </div>
-  <a href="<%=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>
+<!--< @latest_games.each do |gamecard| %>-->
+<!--<div class="card" style="width: 10rem;">-->
+<!--  <img class="card-img-top"<= image_tag("#{gamecard[:cover]}") %>-->
+<!--  <div class="card-body">-->
+<!--    <p class="card-text"><= gamecard[:name] %></p>-->
+<!--  </div>-->
+<!--  <a href="<=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>-->
+<!--</div>-->
+<!--< end%>-->
+
+<div class="row">
+  <% @latest_games.each do |gamecard| %>
+  <div class="card" style="width: 15rem;">
+    <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
+    <div class="card-body">
+    <small class="card-text"><%= gamecard[:name] %></small>
+    </div>
+    <!--<a href="<=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>-->
+    </div>
+  <% end%>
 </div>
-<% end%>
 <!--Showing content base on dropdown selection-->
 
