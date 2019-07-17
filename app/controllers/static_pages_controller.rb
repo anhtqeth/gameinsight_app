@@ -17,7 +17,7 @@ class StaticPagesController < ApplicationController
     game_article = GameArticle.new
     @latest_newsfeed = game_article.fetchLatestNews(time)
     
-    @platforms_list = ['PlayStation','Microsoft Xbox','Nintendo Switch','PC']
+    @platforms_list = ['PlayStation 4','Microsoft Xbox','Nintendo Switch','PC']
     
     if params[:platform_name].nil?
       puts params[:platform_name]
