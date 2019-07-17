@@ -288,7 +288,7 @@ module GamesApiModule
     # month = Time.now.month
     # year = Time.now.year
     case platform 
-      when 'PlayStation'
+      when 'PlayStation 4'
         puts 'List of latest PS Game'
         platform_id = 48
       when 'Microsoft Xbox'
@@ -323,7 +323,7 @@ module GamesApiModule
     platform_id = nil;
     
     case platform 
-      when 'PlayStation'
+      when 'PlayStation 4'
         puts 'List of latest PS Game'
         platform_id = 48
       when 'Microsoft Xbox'
