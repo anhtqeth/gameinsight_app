@@ -1,6 +1,6 @@
 class Game < ApplicationRecord
-  validates :name,:summary,:cover,:genres,:first_release_date, presence: true
-  
+  validates :summary,:cover,:genres,:first_release_date, presence: true
+  validates :name,uniqueness: true
   def fetchAPIData(id)
      game_detail =  OpenStruct.new(gamesListProcess(id))
      game_detail 
@@ -17,7 +17,7 @@ class Game < ApplicationRecord
      game.platform = game_detail.platform
      game.genres = game_detail.genres
      puts game_detail.first_release_date
-     if game_detail.first_release_date = 'NA'
+     if game_detail.first_release_date == 'NA'
       game.first_release_date = Time.now - 15.years
      else
       game.first_release_date = DateTime.strptime(game_detail.first_release_date.to_s,'%s') 
@@ -28,6 +28,7 @@ class Game < ApplicationRecord
   end
   
   def fetchLatestRelease(platform)
+    #TODO - Implement Platform Model & Release model
     case platform 
       when 'PlayStation'
         puts 'List of latest PS Game'
@@ -47,9 +48,18 @@ class Game < ApplicationRecord
       else
         puts "(#{platform}) is not a valid platform"
     end
-    time = Time.now - 1.month.ago
-    Game.where("first_release_date > ?",time)
+    min_time = Date.parse((1.month.ago).to_s)
+    max_time = Date.parse(Time.now.to_s)
+    latest_release = Game.where("first_release_date BETWEEN ? AND ? and platform like ?",min_time,max_time,"%#{platform}%")
     
+    if latest_release.empty?
+      latest_release_ids = gameAltRecentRelease(platform).each.map{|x| x["id"]}.map.to_a
+      latest_release = gamesListProcess(latest_release_ids)
+      latest_release_ids.each do |game_id|
+        saveAPIData(game_id)
+      end
+    end
+    latest_release
   end
   
   

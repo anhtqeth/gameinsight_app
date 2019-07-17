@@ -277,12 +277,16 @@ module GamesApiModule
     
   end
   
+  # def platformCodeConvert(platform)
+  
+  # end
+  
   def gameRecentRelease(platform)
     puts "Called to Recent Released Game Request"
     request = buildRequest(RELEASE_URI)
     platform_id = nil;
-    month = Time.now.month
-    year = Time.now.year
+    # month = Time.now.month
+    # year = Time.now.year
     case platform 
       when 'PlayStation'
         puts 'List of latest PS Game'
@@ -305,6 +309,40 @@ module GamesApiModule
     
     #Return games released around 1 month
     request.body = "fields *,game.name; where date > #{3.month.ago.to_i} & date < #{Time.now.to_i}  & game.platforms = #{platform_id}; sort m desc; limit 20;"
+    puts request.body
+    response = HTTP_CNF.request(request)
+    puts JSON.parse(response.read_body) 
+    JSON.parse(response.read_body)
+  end
+  
+  #TODO Should have release model as well?
+  #Another variant to get latest release by platform. This take out the release region.
+  def gameAltRecentRelease(platform)
+    puts "Called to Altenate Recent Released Game Request"
+    request = buildRequest(GAME_URI)
+    platform_id = nil;
+    
+    case platform 
+      when 'PlayStation'
+        puts 'List of latest PS Game'
+        platform_id = 48
+      when 'Microsoft Xbox'
+        puts 'List of latest Xbox Game'
+        platform_id = 9
+      when 'PC'
+        puts 'List of latest PC Game'
+        platform_id = 46
+      when 'Nintendo Switch'
+        puts 'List of latest Switch Game'
+        platform_id = 130
+      when 'iOS'
+        platform_id = 39
+      #TODO Add more platforms  
+      else
+        puts "(#{platform}) is not a valid platform" #  & m =#{month} & y=#{year} 
+    end
+    
+    request.body = "fields id,name,platforms.name,first_release_date; where first_release_date > #{1.month.ago.to_i} & first_release_date < #{Time.now.to_i} & platforms = {#{platform_id}}; limit 20;"
     puts request.body
     response = HTTP_CNF.request(request)
     puts JSON.parse(response.read_body) 

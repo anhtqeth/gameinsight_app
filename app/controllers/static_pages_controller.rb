@@ -17,10 +17,25 @@ class StaticPagesController < ApplicationController
     game_article = GameArticle.new
     @latest_newsfeed = game_article.fetchLatestNews(time)
     
-    latest_games_ids = gameRecentRelease('PlayStation').each.map{|x| x["game"]["id"]}.map.to_a
-    @latest_games = gamesListProcess(latest_games_ids)
+    @platforms_list = ['PlayStation','Microsoft Xbox','Nintendo Switch','PC']
+    
+    if params[:platform_name].nil?
+      puts params[:platform_name]
+    else
+      puts params[:platform_name]
+      #latest_games_ids = gameAltRecentRelease(params[:platform_name]).each.map{|x| x["game"]["id"]}.map.to_a
+      # latest_games_ids = gameAltRecentRelease(params[:platform_name]).each.map{|x| x["id"]}.map.to_a
+      # @latest_games = gamesListProcess(latest_games_ids)
+      game = Game.new
+      @latest_games = game.fetchLatestRelease(params[:platform_name])
+    end
+    
+    respond_to do |format|
+      #format.html { redirect_to @user }
+      format.html
+      format.js
+    end
   end
-  
 
   def help
     

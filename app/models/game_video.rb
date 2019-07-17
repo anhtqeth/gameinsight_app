@@ -1,5 +1,5 @@
 class GameVideo < ApplicationRecord
-  belongs_to :game
+  belongs_to :game,:dependent => :destroy
   validates :name,:url, presence: true
   
   def fetchAPIData(id)
