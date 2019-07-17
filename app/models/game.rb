@@ -53,7 +53,7 @@ class Game < ApplicationRecord
     
     
     #latest_release = Game.where("first_release_date BETWEEN ? AND ? and platform like ?",min_time,max_time,"%#{platform}%") #DEV Query
-    latest_release = Game.where("first_release_date BETWEEN ? AND ? and ? = ANY(platform)",min_time,max_time,platform)  #PROD Query
+    latest_release = Game.where("first_release_date BETWEEN ? AND ? and ? = ALL (platform)",min_time,max_time,platform)  #PROD Query
     if latest_release.empty?
       latest_release_ids = gameAltRecentRelease(platform).each.map{|x| x["id"]}.map.to_a
       latest_release = gamesListProcess(latest_release_ids)
