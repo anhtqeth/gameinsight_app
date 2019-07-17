@@ -1,5 +1,5 @@
 class Screenshot < ApplicationRecord
-  belongs_to :game
+  belongs_to :game, :dependent => :destroy
   validates :url,:width,:height, presence: true
   
   def fetchAPIData(id)

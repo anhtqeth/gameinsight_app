@@ -10,30 +10,30 @@ RSpec.describe Game, type: :model do
     first_release_date: DateTime.now)
   }
   
-  it "is valid with valid attributes" do
-    expect(subject).to be_valid 
-  end
+  # it "is valid with valid attributes" do
+  #   expect(subject).to be_valid 
+  # end
   
   
-  it "is not valid without a name" do
-    subject.name = nil
-    expect(subject).to_not be_valid
-  end
+  # it "is not valid without a name" do
+  #   subject.name = nil
+  #   expect(subject).to_not be_valid
+  # end
   
-  it "is not valid without a summary" do
-    subject.summary = nil
-    expect(subject).to_not be_valid
-  end
+  # it "is not valid without a summary" do
+  #   subject.summary = nil
+  #   expect(subject).to_not be_valid
+  # end
   
   # it "is not valid without a storyline" do 
   #   subject.storyline = nil
   #   expect(subject).to_not be_valid
   # end
   
-  it "is not valid without a cover" do 
-    subject.cover = nil
-    expect(subject).to_not be_valid
-  end
+  # it "is not valid without a cover" do 
+  #   subject.cover = nil
+  #   expect(subject).to_not be_valid
+  # end
   
   # it "is not valid without a platforms" do 
   #   subject.name = "Game Name"
@@ -43,12 +43,12 @@ RSpec.describe Game, type: :model do
   #   expect(subject).to_not be_valid
   # end
   
-  it "is not valid without a genres" do 
+  # it "is not valid without a genres" do 
     
-    # subject.platforms = ["Stadia","Consoles"]
-    subject.genres = nil
-    expect(subject).to_not be_valid
-  end
+  #   # subject.platforms = ["Stadia","Consoles"]
+  #   subject.genres = nil
+  #   expect(subject).to_not be_valid
+  # end
   
   it "is not valid without a release date" do 
     subject.first_release_date = nil
@@ -62,19 +62,24 @@ RSpec.describe Game, type: :model do
   #   expect(details.name).not_to be_nil
   # end
   
-  # it "save to db after api call" do
-  #   #1877
-  #   #80155 - with NA date
-  #   game = Game.new()
-  #   before_count = Game.count
-  #   game.saveAPIData(80155)
-  #   expect(Game.count).not_to eq(before_count)
-  # end
+  it "save to db after api call" do
+    #1877
+    #80155 - with NA date
+    game = Game.new()
+    before_count = Game.count
+    # game.saveAPIData(80155)
+    game.saveAPIData(100562)
+    expect(Game.count).not_to eq(before_count)
+  end
   
   it "can fetch latest release game base on platform" do
     #Default Time is set within 1 month
     latest_ps4_games = subject.fetchLatestRelease('PlayStation')
-    expect(latest_ps4_games).not_to be_nil
+    latest_switch_games = subject.fetchLatestRelease('Nintendo Switch')
+    puts latest_ps4_games
+    puts latest_switch_games
+    expect(latest_ps4_games).not_to be_empty
+    expect(latest_switch_games).not_to be_empty
   end
   
 end

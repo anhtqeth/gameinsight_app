@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   
-  
   root 'static_pages#home'
 
   get  '/help',    to: 'static_pages#help'
@@ -14,5 +13,7 @@ Rails.application.routes.draw do
   get '/games/:id', to: 'games#show', as: 'game'
 
   get '/search/', to: 'games#find', as: 'search'
+  
+  get '/release_by_platform', to: 'static_pages#latest_releases', as: 'release'
 
 end

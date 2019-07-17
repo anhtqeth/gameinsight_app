@@ -142,19 +142,35 @@ RSpec.feature "Video Games Details", :type => :feature  do
     
   # end
   
-  scenario "Showing Latest Release games on platforms " do
-    game_list_ps4 = gameRecentRelease('PlayStation')
-    game_list_xbox = gameRecentRelease('Microsoft Xbox')
-    game_list_pc = gameRecentRelease('PC')
-    game_list_switch = gameRecentRelease('Nintendo Switch')
+  # scenario "Showing Latest Release games on platforms " do
+  #   game_list_ps4 = gameRecentRelease('PlayStation')
+  #   game_list_xbox = gameRecentRelease('Microsoft Xbox')
+  #   game_list_pc = gameRecentRelease('PC')
+  #   game_list_switch = gameRecentRelease('Nintendo Switch')
+  #   expect(game_list_ps4).not_to be_nil
+  #   expect(game_list_xbox).not_to be_nil
+  #   expect(game_list_pc).not_to be_nil
+  #   expect(game_list_switch).not_to be_nil
+  #   #Check time
+  #   expect(game_list_ps4.first["platform"]).to eq(48)
+  #   convert_time = DateTime.strptime(game_list_ps4.first["date"].to_s,'%s')
+  #   expect(convert_time).to be_between(1.month.ago,Time.now).inclusive
+  # end
+  
+  scenario "Showing first release dates games on platforms" do 
+    game_list_ps4 = gameAltRecentRelease('PlayStation')
+    # game_list_xbox = gameAltRecentRelease('Microsoft Xbox')
+    # game_list_pc = gameAltRecentRelease('PC')
+    # game_list_switch = gameAltRecentRelease('Nintendo Switch')
     expect(game_list_ps4).not_to be_nil
-    expect(game_list_xbox).not_to be_nil
-    expect(game_list_pc).not_to be_nil
-    expect(game_list_switch).not_to be_nil
+    # expect(game_list_xbox).not_to be_nil
+    # expect(game_list_pc).not_to be_nil
+    # expect(game_list_switch).not_to be_nil
     #Check time
-    expect(game_list_ps4.first["platform"]).to eq(48)
-    convert_time = DateTime.strptime(game_list_ps4.first["date"].to_s,'%s')
+    expect(game_list_ps4.first["platforms"].first['id']).to eq(48)
+    convert_time = DateTime.strptime(game_list_ps4.first["first_release_date"].to_s,'%s')
     expect(convert_time).to be_between(1.month.ago,Time.now).inclusive
+  
   end
   
   # it "build request" do
