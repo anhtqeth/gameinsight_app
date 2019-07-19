@@ -15,6 +15,7 @@ class StaticPagesController < ApplicationController
     #Currently set in controller, better if user can pick this from the view. Will change in 0.3
     time = (Time.current - 6.days).to_time.to_i
     game_article = GameArticle.new
+    game = Game.new
     @latest_newsfeed = game_article.fetchLatestNews(time)
     
     @platforms_list = ['PlayStation 4','Microsoft Xbox','Nintendo Switch','PC']
@@ -26,7 +27,7 @@ class StaticPagesController < ApplicationController
       #latest_games_ids = gameAltRecentRelease(params[:platform_name]).each.map{|x| x["game"]["id"]}.map.to_a
       # latest_games_ids = gameAltRecentRelease(params[:platform_name]).each.map{|x| x["id"]}.map.to_a
       # @latest_games = gamesListProcess(latest_games_ids)
-      game = Game.new
+     
       @latest_games = game.fetchLatestRelease(params[:platform_name])
     end
     
@@ -35,6 +36,18 @@ class StaticPagesController < ApplicationController
       format.html
       format.js
     end
+    
+    @nintendo_switch_list = Rails.cache.fetch("popularity/nintendo", expires_in: 15.days) do
+      game.fetchPopularGamebyPlatform('Nintendo Switch')
+    end
+    @ps4_list = Rails.cache.fetch("popularity/ps4", expires_in: 15.days) do
+     game.fetchPopularGamebyPlatform('PlayStation 4')
+    end
+    @xbox_list = Rails.cache.fetch("popularity/xbox", expires_in: 15.days) do
+     game.fetchPopularGamebyPlatform('Microsoft Xbox')
+    end
+    
+    
   end
 
   def help

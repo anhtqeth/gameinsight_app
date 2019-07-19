@@ -157,20 +157,33 @@ RSpec.feature "Video Games Details", :type => :feature  do
   #   expect(convert_time).to be_between(1.month.ago,Time.now).inclusive
   # end
   
-  scenario "Showing first release dates games on platforms" do 
-    game_list_ps4 = gameAltRecentRelease('PlayStation')
-    # game_list_xbox = gameAltRecentRelease('Microsoft Xbox')
-    # game_list_pc = gameAltRecentRelease('PC')
-    # game_list_switch = gameAltRecentRelease('Nintendo Switch')
-    expect(game_list_ps4).not_to be_nil
-    # expect(game_list_xbox).not_to be_nil
-    # expect(game_list_pc).not_to be_nil
-    # expect(game_list_switch).not_to be_nil
-    #Check time
-    expect(game_list_ps4.first["platforms"].first['id']).to eq(48)
-    convert_time = DateTime.strptime(game_list_ps4.first["first_release_date"].to_s,'%s')
-    expect(convert_time).to be_between(1.month.ago,Time.now).inclusive
+  # scenario "Showing first release dates games on platforms" do 
+  #   game_list_ps4 = gameAltRecentRelease('PlayStation')
+  #   # game_list_xbox = gameAltRecentRelease('Microsoft Xbox')
+  #   # game_list_pc = gameAltRecentRelease('PC')
+  #   # game_list_switch = gameAltRecentRelease('Nintendo Switch')
+  #   expect(game_list_ps4).not_to be_nil
+  #   # expect(game_list_xbox).not_to be_nil
+  #   # expect(game_list_pc).not_to be_nil
+  #   # expect(game_list_switch).not_to be_nil
+  #   #Check time
+  #   expect(game_list_ps4.first["platforms"].first['id']).to eq(48)
+  #   convert_time = DateTime.strptime(game_list_ps4.first["first_release_date"].to_s,'%s')
+  #   expect(convert_time).to be_between(1.month.ago,Time.now).inclusive
   
+  # end
+  
+  scenario "Showing popular game by Platform" do
+    ps4_list = popularGamesByPlatform('PlayStation 4')
+    xbox_list = popularGamesByPlatform('Microsoft Xbox')
+    pc_list = popularGamesByPlatform('PC')
+    nintento_list = popularGamesByPlatform('Nintendo Switch')
+    
+    expect(ps4_list).not_to be_nil
+    expect(xbox_list).not_to be_nil
+    expect(pc_list).not_to be_nil
+    expect(nintento_list).not_to be_nil
+    
   end
   
   # it "build request" do

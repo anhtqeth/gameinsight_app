@@ -8,8 +8,8 @@
                 <div class="card" style="width: 18rem;">
                   <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
                   <div class="card-body">
-                    <h5 class="card-title center"><%= gamecard[:name] %></h5>
-                    <a href="<%=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>
+                    <p class="card-title center"><%= gamecard[:name] %></p>
+                    <a href=<%=game_path(gamecard[:id]) %> target="_blank" class="btn btn-outline-warning btn-block">Details</a>
                   </div>
                 </div>
                  <% end %>
@@ -22,7 +22,7 @@
                   <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
                   <div class="card-body">
                     <h5 class="card-title center"><%= gamecard[:name] %></h5>
-                    <a href="<%=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>
+                    <a href=<%=game_path(gamecard[:id]) %> target="_blank" class="btn btn-outline-warning btn-block">Details</a>
                   </div>
                 </div>
                 <% end %>
