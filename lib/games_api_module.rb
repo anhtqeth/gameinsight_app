@@ -289,16 +289,17 @@ module GamesApiModule
     # year = Time.now.year
     case platform 
       when 'PlayStation 4'
-        puts 'List of latest PS Game'
+        puts 'Most Popular PS4 Game'
         platform_id = 48
       when 'Microsoft Xbox'
-        puts 'List of latest Xbox Game'
-        platform_id = 9
+        puts 'Most Popular Xbox Game'
+        platform_id = 49
+        
       when 'PC'
-        puts 'List of latest PC Game'
-        platform_id = 46
+        puts 'Most Popular PC Game'
+        platform_id = 6
       when 'Nintendo Switch'
-        puts 'List of latest Switch Game'
+        puts 'Most Popular Switch Game'
         platform_id = 130
       when 'iOS'
         platform_id = 39
@@ -320,20 +321,21 @@ module GamesApiModule
   def gameAltRecentRelease(platform)
     puts "Called to Altenate Recent Released Game Request"
     request = buildRequest(GAME_URI)
-    platform_id = nil;
+    platform_id = nil
     
     case platform 
       when 'PlayStation 4'
-        puts 'List of latest PS Game'
+        puts 'Most Popular PS4 Game'
         platform_id = 48
       when 'Microsoft Xbox'
-        puts 'List of latest Xbox Game'
-        platform_id = 9
+        puts 'Most Popular Xbox Game'
+        platform_id = 49
+        
       when 'PC'
-        puts 'List of latest PC Game'
-        platform_id = 46
+        puts 'Most Popular PC Game'
+        platform_id = 6
       when 'Nintendo Switch'
-        puts 'List of latest Switch Game'
+        puts 'Most Popular Switch Game'
         platform_id = 130
       when 'iOS'
         platform_id = 39
@@ -365,6 +367,47 @@ module GamesApiModule
     
     puts ids_array
     ids_array
+  end
+  
+  def popularGamesByPlatform(platform)
+    puts "Called to Popular Release by Platform"
+    request = buildRequest(GAME_URI)
+    #request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW} & hypes > 500; sort hypes desc;"
+    platform_id = nil
+    case platform 
+      when 'PlayStation 4'
+        puts 'Most Popular PS4 Game'
+        platform_id = 48
+      when 'Microsoft Xbox'
+        puts 'Most Popular Xbox Game'
+        platform_id = 49
+        
+      when 'PC'
+        puts 'Most Popular PC Game'
+        platform_id = 6
+      when 'Nintendo Switch'
+        puts 'Most Popular Switch Game'
+        platform_id = 130
+      when 'iOS'
+        platform_id = 39
+      #TODO Add more platforms  
+      else
+        puts "(#{platform}) is not a valid platform" #  & m =#{month} & y=#{year} 
+    end
+    
+    request.body = "fields id,name,platforms.name; where platforms = {#{platform_id}}; sort popularity desc;"
+    puts request.body
+    
+    response = HTTP_CNF.request(request)
+    puts response.read_body
+    result = JSON.parse(response.read_body)
+    # ids_array = []
+    # result.each do |x|
+    #   ids_array << x["id"]
+    # end
+    
+    # puts ids_array
+    # ids_array
   end
   
   def gameReleaseDateRequest

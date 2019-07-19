@@ -14,8 +14,8 @@ class Game < ApplicationRecord
      game.summary = game_detail.summary
      game.storyline = game_detail.storyline
      game.cover = game_detail.cover
-     #game.platform = game_detail.platform
-     game.platform = [game_detail.platform] #for PROD Array
+     game.platform = game_detail.platform # for Dev
+     #game.platform = [game_detail.platform] #for PROD Array
      game.genres = game_detail.genres
      puts game_detail.first_release_date
      if game_detail.first_release_date == 'NA'
@@ -31,29 +31,31 @@ class Game < ApplicationRecord
   def fetchLatestRelease(platform)
     #TODO - Implement Platform Model & Release model
     case platform 
-      when 'PlayStation'
-        puts 'List of latest PS Game'
+      when 'PlayStation 4'
+        puts 'Most Popular PS4 Game'
         platform_id = 48
       when 'Microsoft Xbox'
-        puts 'List of latest Xbox Game'
-        platform_id = 9
+        puts 'Most Popular Xbox Game'
+        platform_id = 49
+        
       when 'PC'
-        puts 'List of latest PC Game'
-        platform_id = 46
+        puts 'Most Popular PC Game'
+        platform_id = 6
       when 'Nintendo Switch'
-        puts 'List of latest Switch Game'
+        puts 'Most Popular Switch Game'
         platform_id = 130
       when 'iOS'
         platform_id = 39
       #TODO Add more platforms  
       else
-        puts "(#{platform}) is not a valid platform"
+        puts "(#{platform}) is not a valid platform" #  & m =#{month} & y=#{year} 
     end
+    
     min_time = Date.parse((1.month.ago).to_s)
     max_time = Date.parse(Time.now.to_s)
     
-    #latest_release = Game.where("first_release_date BETWEEN ? AND ? and platform like ?",min_time,max_time,"%#{platform}%") #DEV Query
-    latest_release = Game.where("first_release_date BETWEEN ? AND ? and ? = ANY (platform)",min_time,max_time,platform)  #PROD Query
+    latest_release = Game.where("first_release_date BETWEEN ? AND ? and platform like ?",min_time,max_time,"%#{platform}%") #DEV Query
+    #latest_release = Game.where("first_release_date BETWEEN ? AND ? and ? = ANY (platform)",min_time,max_time,platform)  #PROD Query
     if latest_release.empty?
       latest_release_ids = gameAltRecentRelease(platform).each.map{|x| x["id"]}.map.to_a
       latest_release = gamesListProcess(latest_release_ids)
@@ -62,6 +64,33 @@ class Game < ApplicationRecord
       end
     end
     latest_release
+  end
+  
+  def fetchPopularGamebyPlatform(platform)
+    case platform 
+      when 'PlayStation 4'
+        puts 'Most Popular PS4 Game'
+        platform_id = 48
+      when 'Microsoft Xbox'
+        puts 'Most Popular Xbox Game'
+        platform_id = 49
+        
+      when 'PC'
+        puts 'Most Popular PC Game'
+        platform_id = 6
+      when 'Nintendo Switch'
+        puts 'Most Popular Switch Game'
+        platform_id = 130
+      when 'iOS'
+        platform_id = 39
+      #TODO Add more platforms  
+      else
+        puts "(#{platform}) is not a valid platform" #  & m =#{month} & y=#{year} 
+    end
+    
+    popular_games_id = popularGamesByPlatform(platform).each.map{|x| x["id"]}.map.to_a
+    popular_release = gamesListProcess(popular_games_id)
+    
   end
   
   
