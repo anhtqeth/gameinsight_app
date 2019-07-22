@@ -10,8 +10,6 @@ class CreatePlatforms < ActiveRecord::Migration[5.2]
       t.text :summary
       t.text :details
       t.string :url
-      t.references :game, foreign_key: true
-
       t.timestamps
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_08_104610) do
+ActiveRecord::Schema.define(version: 2019_07_22_083418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2019_07_08_104610) do
     t.string "url"
     t.string "name"
     t.text "description"
-    t.integer "game_id"
+    t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_game_videos_on_game_id"
@@ -52,11 +52,19 @@ ActiveRecord::Schema.define(version: 2019_07_08_104610) do
     t.text "summary"
     t.text "storyline"
     t.string "cover"
-    t.text "platform", default: "--- []\n"
+    t.text "platform", array: true
     t.string "genres"
     t.date "first_release_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "popularity"
+  end
+
+  create_table "games_platforms", id: false, force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "platform_id", null: false
+    t.index ["game_id"], name: "index_games_platforms_on_game_id"
+    t.index ["platform_id"], name: "index_games_platforms_on_platform_id"
   end
 
   create_table "platforms", force: :cascade do |t|
@@ -69,10 +77,8 @@ ActiveRecord::Schema.define(version: 2019_07_08_104610) do
     t.text "summary"
     t.text "details"
     t.string "url"
-    t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_id"], name: "index_platforms_on_game_id"
   end
 
   create_table "screenshots", force: :cascade do |t|
@@ -80,10 +86,12 @@ ActiveRecord::Schema.define(version: 2019_07_08_104610) do
     t.string "url"
     t.integer "width"
     t.integer "height"
-    t.integer "game_id"
+    t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_screenshots_on_game_id"
   end
 
+  add_foreign_key "game_videos", "games"
+  add_foreign_key "screenshots", "games"
 end
