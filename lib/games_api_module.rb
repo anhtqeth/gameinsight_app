@@ -577,17 +577,18 @@ module GamesApiModule
   #   img
   # end
   
-  def gamesPlatformRequest
+  def gamesPlatformRequest(id)
     request = Net::HTTP::Get.new(URI(PLATFORM_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where id = 48;";
+    request.body = "fields *; where id = #{id};";
     response = HTTP_CNF.request(request)
-    result = JSON.parse(response.read_body)
-    puts result
-    ids = []
+    puts JSON.parse(response.read_body).first
+    JSON.parse(response.read_body).first
+   
+    # ids = []
     
-    result.each do |res|
-      ids << res["platform_logo"]
-    end
-    ids
+    # result.each do |res|
+    #   ids << res["platform_logo"]
+    # end
+    # ids
   end
 end

@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
-  #subject {described_class.new}
   subject {
     described_class.new(name: "Game Name",
     summary: "A longer text. This is suppose to be a brief description of the current game",
-    storyline: "A full details on the game story. Even longer than the above,  ",
+    storyline: "A full details on the game story. Even longer than the above",
     cover: "An url of the cover image ",genres: "Action RPG",
     first_release_date: DateTime.now)
   }
