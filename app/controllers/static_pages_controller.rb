@@ -46,7 +46,9 @@ class StaticPagesController < ApplicationController
     @xbox_list = Rails.cache.fetch("popularity/xbox", expires_in: 15.days) do
      game.fetchPopularGamebyPlatform('Microsoft Xbox')
     end
-    
+    @pc_list = Rails.cache.fetch("popularity/pc", expires_in: 15.days) do
+     game.fetchPopularGamebyPlatform('PC')
+    end
     
   end
 
