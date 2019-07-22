@@ -1,4 +1,5 @@
 class Game < ApplicationRecord
+  has_and_belongs_to_many :platforms
   validates :summary,:cover,:genres,:first_release_date, presence: true
   validates :name,uniqueness: true
   def fetchAPIData(id)
