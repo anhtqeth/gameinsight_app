@@ -26,7 +26,7 @@ gem 'capybara', '~> 3.22'
 gem 'ruby-apicalypse'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.13'
+  gem 'pg', '0.18.4'
   gem 'byebug',  '9.0.6', platform: :mri
 end
 

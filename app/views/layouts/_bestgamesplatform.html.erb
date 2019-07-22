@@ -46,7 +46,7 @@
      <div class = "col">
       <i class="fab fa-xbox fa-2x"></i>
       <ul class="list-group list-group-flush">
-      <% @xbox_list.each do |game| %>  
+      <% @pc_list.each do |game| %>  
       
       <li class="list-group-item">
           <div>
@@ -63,24 +63,5 @@
       </ul>
     </div>
     
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-4">
-    <div class="list-group" id="list-tab" role="tablist">
-      <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home"><%= Game.first.name %></a>
-      <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile"><%= Game.second.name %></a>
-      <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages"><%= Game.third.name %></a>
-      <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings"><%= Game.fourth.name %></a>
-    </div>
-  </div>
-  <div class="col-8">
-    <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"><%= Game.first.summary %></div>
-      <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list"><%= Game.second.summary %></div>
-      <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list"><%= Game.third.summary %></div>
-      <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list"><%= Game.fourth.summary %></div>
-    </div>
   </div>
 </div>

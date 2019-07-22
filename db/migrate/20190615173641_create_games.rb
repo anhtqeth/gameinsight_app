@@ -6,7 +6,7 @@ class CreateGames < ActiveRecord::Migration[5.2]
       t.text :summary
       t.text :storyline
       t.string :cover
-      t.text :platforms, array: true #, default: [].to_yaml
+      t.text :platforms, array: true
       t.string :genres
       t.date :first_release_date
       t.timestamps
