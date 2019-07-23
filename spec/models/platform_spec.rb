@@ -46,6 +46,12 @@ RSpec.describe Platform, type: :model do
     before_count = Platform.count
     subject.saveAPIData(48)
     expect(Platform.count).not_to eq(before_count)
+    subject.saveAPIData(130)
+    expect(Platform.count).not_to eq(before_count)
+    subject.saveAPIData(6)
+    subject.saveAPIData(49)
+    subject.saveAPIData(39)
+    
   end
   
   

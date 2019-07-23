@@ -10,13 +10,20 @@ class Game < ApplicationRecord
   def saveAPIData(id)
      game_detail = fetchAPIData(id)
      game=Game.new
+     
      game.external_id = game_detail.id
      game.name = game_detail.name
      game.summary = game_detail.summary
      game.storyline = game_detail.storyline
      game.cover = game_detail.cover
      #game.platform = game_detail.platform # for Dev
-     game.platform = [game_detail.platform] #for PROD Array
+     puts game_detail.platform.is_a? Array
+     puts game_detail.platform
+     game.platform = []
+     game_detail.platform.each do |x|
+      platform = Platform.find_by(name: x)
+      game.platform << platform
+     end
      game.genres = game_detail.genres
      puts game_detail.first_release_date
      if game_detail.first_release_date == 'NA'
