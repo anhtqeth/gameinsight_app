@@ -524,7 +524,10 @@ module GamesApiModule
       game_card.store(:cover,game_cover)
     unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
       #TODO: Refactor this smell
-      game_platform = game_detail["platforms"].map{|x| x["name"]}.join(', ')
+      game_platform = []
+      game_detail["platforms"].map{|x| x["name"]}.each do |name|
+        game_platform << name
+      end
       game_card.store(:platform,game_platform)
       game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
       game_card.store(:genres,game_genres)
