@@ -19,10 +19,9 @@ class Game < ApplicationRecord
      #game.platform = game_detail.platform # for Dev
      puts game_detail.platform.is_a? Array
      puts game_detail.platform
-     game.platform = []
      game_detail.platform.each do |x|
       platform = Platform.find_by(name: x)
-      game.platform << platform
+      game.platforms << platform
      end
      game.genres = game_detail.genres
      puts game_detail.first_release_date

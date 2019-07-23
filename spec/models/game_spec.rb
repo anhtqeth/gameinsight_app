@@ -67,7 +67,6 @@ RSpec.describe Game, type: :model do
     game = Game.new()
     before_count = Game.count
     # game.saveAPIData(80155)
-    game.fetchAPIData(26950)
     game.saveAPIData(26950)
     
     expect(Game.count).not_to eq(before_count)
