@@ -277,25 +277,15 @@ module GamesApiModule
     
   end
   
-  # def platformCodeConvert(platform)
-  
-  # end
-  
-  def gameRecentRelease(platform)
-    puts "Called to Recent Released Game Request"
-    request = buildRequest(RELEASE_URI)
-    platform_id = nil;
-    # month = Time.now.month
-    # year = Time.now.year
+  def platformCodeConvert(platform)
+    puts "Call to platforms convert with #{platform}"
+    platform_id = nil
     case platform 
       when 'PlayStation 4'
-        puts 'Most Popular PS4 Game'
         platform_id = 48
-      when 'Microsoft Xbox'
-        puts 'Most Popular Xbox Game'
+      when 'Xbox One'
         platform_id = 49
-        
-      when 'PC'
+      when 'PC (Microsoft Windows)'
         puts 'Most Popular PC Game'
         platform_id = 6
       when 'Nintendo Switch'
@@ -307,6 +297,15 @@ module GamesApiModule
       else
         puts "(#{platform}) is not a valid platform" #  & m =#{month} & y=#{year} 
     end
+    platform_id
+  end
+  
+  def gameRecentRelease(platform)
+    puts "Called to Recent Released Game Request"
+    request = buildRequest(RELEASE_URI)
+    platform_id = platformCodeConvert(platform)
+    # month = Time.now.month
+    # year = Time.now.year
     
     #Return games released around 1 month
     request.body = "fields *,game.name; where date > #{3.month.ago.to_i} & date < #{Time.now.to_i}  & game.platforms = #{platform_id}; sort m desc; limit 20;"
@@ -321,29 +320,7 @@ module GamesApiModule
   def gameAltRecentRelease(platform)
     puts "Called to Altenate Recent Released Game Request"
     request = buildRequest(GAME_URI)
-    platform_id = nil
-    
-    case platform 
-      when 'PlayStation 4'
-        puts 'Most Popular PS4 Game'
-        platform_id = 48
-      when 'Microsoft Xbox'
-        puts 'Most Popular Xbox Game'
-        platform_id = 49
-        
-      when 'PC'
-        puts 'Most Popular PC Game'
-        platform_id = 6
-      when 'Nintendo Switch'
-        puts 'Most Popular Switch Game'
-        platform_id = 130
-      when 'iOS'
-        platform_id = 39
-      #TODO Add more platforms  
-      else
-        puts "(#{platform}) is not a valid platform" #  & m =#{month} & y=#{year} 
-    end
-    
+    platform_id = platformCodeConvert(platform)
     request.body = "fields id,name,platforms.name,first_release_date; where first_release_date > #{1.month.ago.to_i} & first_release_date < #{Time.now.to_i} & platforms = {#{platform_id}}; limit 20;"
     puts request.body
     response = HTTP_CNF.request(request)
@@ -373,34 +350,15 @@ module GamesApiModule
     puts "Called to Popular Release by Platform"
     request = buildRequest(GAME_URI)
     #request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW} & hypes > 500; sort hypes desc;"
-    platform_id = nil
-    case platform 
-      when 'PlayStation 4'
-        puts 'Most Popular PS4 Game'
-        platform_id = 48
-      when 'Microsoft Xbox'
-        puts 'Most Popular Xbox Game'
-        platform_id = 49
-        
-      when 'PC'
-        puts 'Most Popular PC Game'
-        platform_id = 6
-      when 'Nintendo Switch'
-        puts 'Most Popular Switch Game'
-        platform_id = 130
-      when 'iOS'
-        platform_id = 39
-      #TODO Add more platforms  
-      else
-        puts "(#{platform}) is not a valid platform" #  & m =#{month} & y=#{year} 
-    end
+    platform_id = platformCodeConvert(platform)
+    platformCodeConvert(platform)
     
-    request.body = "fields id,name,platforms.name; where platforms = {#{platform_id}}; sort popularity desc;"
+    request.body = "fields id,name,platforms.name; where platforms = {#{platform_id}}; sort popularity desc; limit 10;"
     puts request.body
     
     response = HTTP_CNF.request(request)
     puts response.read_body
-    result = JSON.parse(response.read_body)
+    JSON.parse(response.read_body)
     # ids_array = []
     # result.each do |x|
     #   ids_array << x["id"]
@@ -511,7 +469,10 @@ module GamesApiModule
     end
   end
   
-  def gameCardProcess(game_card,game_detail)
+  def gameCardProcess(game_detail)
+      
+      game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:popularity=>nil,:platform=>nil,:genres=>nil}
+      
       game_id = game_detail['id']
       game_card.store(:id,game_id)
       game_name = game_detail['name']
@@ -522,6 +483,8 @@ module GamesApiModule
       game_card.store(:storyline,game_storyline)
       game_cover = gameCoverRequest(game_id)
       game_card.store(:cover,game_cover)
+      game_popularity = game_detail['popularity']
+      game_card.store(:popularity,game_popularity)
     unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
       #TODO: Refactor this smell
       game_platform = []
@@ -549,18 +512,15 @@ module GamesApiModule
     if games_id_array.is_a? Array
       puts "Array of Game Info"
       games_id_array[0..7].each do |x|
-      #game_card = {:id =>nil,:name=>nil, :summary=> nil,:cover=>nil}
-      game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
       game_detail = gamesRequest(x).first
-      game_card = gameCardProcess(game_card,game_detail)
+      game_card = gameCardProcess(game_detail)
       game_card_list << game_card
       end
       game_card_list
     else 
       puts "Single Game Info"
-      game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:platform=>nil,:genres=>nil}
       game_detail = gamesRequest(games_id_array).first
-      game_card = gameCardProcess(game_card,game_detail)
+      game_card = gameCardProcess(game_detail)
       game_card
     end
   end
