@@ -24,6 +24,7 @@ gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
 gem 'capybara', '~> 3.22'
 #For API Development of IGDB
 gem 'ruby-apicalypse'
+gem 'contentful'
 
 group :development, :test do
   gem 'pg', '0.18.4'
