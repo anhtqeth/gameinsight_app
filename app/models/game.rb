@@ -1,5 +1,7 @@
 class Game < ApplicationRecord
   has_and_belongs_to_many :platforms
+  has_and_belongs_to_many :game_genres
+  
   validates :summary,:cover,:genres,:first_release_date, presence: true
   validates :name,uniqueness: true
   def fetchAPIData(id)
@@ -54,10 +56,13 @@ class Game < ApplicationRecord
     latest_release
   end
   
+  #Fetch popular and sort by popularity desc. 
+  #If result is empty, get data from API, saved to db for subsequence call.
+  #Params: platform - name of the platform
   def fetchPopularGamebyPlatform(platform)
-    #Get the id from API
+    
     popular_games = Game.order(popularity: :desc).joins("INNER JOIN games_platforms p ON p.game_id = games.id").where("p.platform_id = ?",Platform.find_by(name: platform).id).limit(10)
-    if popular_games.empty? or popular_games.size < 10
+    if popular_games.empty?
       popular_games_id = popularGamesByPlatform(platform).each.map{|x| x["id"]}.map.to_a
       popular_games_id.each do |id|
         saveAPIData(id)
