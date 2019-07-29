@@ -15,5 +15,8 @@ Rails.application.routes.draw do
   get '/search/', to: 'games#find', as: 'search'
   
   get '/release_by_platform', to: 'static_pages#latest_releases', as: 'release'
+  
+  get '/game_genres/', to: 'game_genre#show', as: 'game_genres'
+  
 
 end
