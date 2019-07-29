@@ -3,6 +3,19 @@ class GameGenre < ApplicationRecord
   validates :name,:description, presence: true
   validates :name,uniqueness: true
   
+  def fetchAPIData
+   gameGenreRequest
+  end
   
+  def saveAPIData
+   genre_list = fetchAPIData
+   
+   genre_list.each do |api_detail|
+    genre = GameGenre.new
+    genre.name = api_detail["name"]
+    genre.description = 'Define by another CMS'
+    genre.save
+   end
+  end
   
 end

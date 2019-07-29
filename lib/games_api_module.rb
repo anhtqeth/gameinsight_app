@@ -24,6 +24,7 @@ module GamesApiModule
   #General Information
   GAME_URI = 'https://api-v3.igdb.com/games/'
   GAME_FRANCHISE_URI = "https://api-v3.igdb.com/franchises"
+  GAME_GENRE = 'https://api-v3.igdb.com/genres'
   
   #Media (Videos/Photos)
   COVER_URI = 'https://api-v3.igdb.com/covers'
@@ -75,6 +76,15 @@ module GamesApiModule
     puts "Called to Game Request with parameter: " << game_id.to_s
     request = buildRequest(GAME_URI)
     request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
+    response = HTTP_CNF.request(request)
+    puts response.read_body
+    JSON.parse(response.read_body)
+  end
+  
+  def gameGenreRequest
+    puts "Called to Genre Request..."
+    request = buildRequest(GAME_GENRE)
+    request.body = "fields *; limit 25; offset 10;";
     response = HTTP_CNF.request(request)
     puts response.read_body
     JSON.parse(response.read_body)

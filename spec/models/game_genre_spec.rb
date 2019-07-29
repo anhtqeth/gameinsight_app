@@ -21,6 +21,16 @@ RSpec.describe GameGenre, type: :model do
     expect(subject).to_not be_valid
   end
   
+  it "can fetch API data" do 
+    genres_list = subject.fetchAPIData
+    puts genres_list
+    expect(genres_list).not_to be_nil
+  end
   
+  it "can save API data" do
+    before_count = GameGenre.count
+    subject.saveAPIData
+    expect(GameGenre.count).not_to eq(before_count)
+  end
   
 end
