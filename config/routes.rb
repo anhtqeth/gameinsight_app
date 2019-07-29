@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   
   get '/game_genres/', to: 'game_genre#show', as: 'game_genres'
   
+  
 
 end

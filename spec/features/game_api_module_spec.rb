@@ -173,17 +173,22 @@ RSpec.feature "Video Games Details", :type => :feature  do
   
   # end
   
-  scenario "Showing popular game by Platform" do
-    ps4_list = popularGamesByPlatform('PlayStation 4')
-    #xbox_list = popularGamesByPlatform('Xbox One')
-    #pc_list = popularGamesByPlatform('PC (Microsoft Windows)')
-    #nintento_list = popularGamesByPlatform('Nintendo Switch')
+  # scenario "Showing popular game by Platform" do
+  #   ps4_list = popularGamesByPlatform('PlayStation 4')
+  #   #xbox_list = popularGamesByPlatform('Xbox One')
+  #   #pc_list = popularGamesByPlatform('PC (Microsoft Windows)')
+  #   #nintento_list = popularGamesByPlatform('Nintendo Switch')
     
-    expect(ps4_list).not_to be_nil
-    #expect(xbox_list).not_to be_nil
-    #expect(pc_list).not_to be_nil
-    #expect(nintento_list).not_to be_nil
+  #   expect(ps4_list).not_to be_nil
+  #   #expect(xbox_list).not_to be_nil
+  #   #expect(pc_list).not_to be_nil
+  #   #expect(nintento_list).not_to be_nil
     
+  # end
+  
+  it "get all genres from API" do 
+    genre_list = gameGenreRequest
+    expect(genre_list).not_to be_nil
   end
   
   # it "build request" do

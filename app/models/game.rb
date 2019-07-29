@@ -2,7 +2,7 @@ class Game < ApplicationRecord
   has_and_belongs_to_many :platforms
   has_and_belongs_to_many :game_genres
   
-  validates :summary,:cover,:genres,:first_release_date, presence: true
+  validates :summary,:cover,:first_release_date, presence: true
   validates :name,uniqueness: true
   def fetchAPIData(id)
      game_detail =  OpenStruct.new(gamesListProcess(id))
@@ -21,16 +21,25 @@ class Game < ApplicationRecord
      
      puts game_detail.platform
      unless game_detail.platform == 'NA'
-       game_detail.platform.each do |x|
+        game_detail.platform.each do |x|
         platform = Platform.find_by(name: x)
         game.platforms << platform
         end
      else
         
      end
-    
-     game.genres = game_detail.genres
-     puts game_detail.first_release_date
+     
+     puts 'GENRES'
+     puts game_detail.genres.split(',')
+     unless game_detail.genres == 'NA'
+        game_detail.genres.split(',').map(&:strip).each do |x|
+          genre = GameGenre.find_by(name: x)
+          game.game_genres << genre
+        end
+     else
+        
+     end
+     
      if game_detail.first_release_date == 'NA'
       game.first_release_date = Time.now - 15.years
      else
@@ -38,6 +47,7 @@ class Game < ApplicationRecord
      end
      game.popularity = game_detail.popularity
      game.save
+     
      game
   end
   
