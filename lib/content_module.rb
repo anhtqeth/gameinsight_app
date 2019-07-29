@@ -20,4 +20,9 @@ module ContentModule
     renderer = RichTextRenderer::Renderer.new
     renderer.render(entryRequest)
   end
+  
+  def renderSnippet
+    
+  end
+  
 end
