@@ -36,19 +36,6 @@ class StaticPagesController < ApplicationController
       format.js
     end
     
-    # @nintendo_switch_list = Rails.cache.fetch("popularity/nintendo", expires_in: 15.days) do
-    #   game.fetchPopularGamebyPlatform('Nintendo Switch')
-    # end
-    # @ps4_list = Rails.cache.fetch("popularity/ps4", expires_in: 15.days) do
-    # game.fetchPopularGamebyPlatform('PlayStation 4')
-    # end
-    # @xbox_list = Rails.cache.fetch("popularity/xbox", expires_in: 15.days) do
-    # game.fetchPopularGamebyPlatform('Microsoft Xbox')
-    # end
-    # @pc_list = Rails.cache.fetch("popularity/pc", expires_in: 15.days) do
-    # game.fetchPopularGamebyPlatform('PC')
-    # end
-    
     @nintendo_switch_list = game.fetchPopularGamebyPlatform('Nintendo Switch')
     @ps4_list = game.fetchPopularGamebyPlatform('PlayStation 4')
     @xbox_list = game.fetchPopularGamebyPlatform('Xbox One')

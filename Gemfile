@@ -22,11 +22,12 @@ gem 'jbuilder',     '2.7.0'
 gem 'rspec', '~> 3.8'
 gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
 gem 'capybara', '~> 3.22'
-#For API Development of IGDB
-gem 'ruby-apicalypse'
 
 gem 'contentful'
 gem 'rich_text_renderer', '~> 0.2.2'
+
+#Slug
+gem 'friendly_id', '~> 5.2', '>= 5.2.5'
 
 group :development, :test do
   gem 'pg', '0.18.4'
