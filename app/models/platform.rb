@@ -3,6 +3,9 @@ class Platform < ApplicationRecord
   validates :name,:summary,:abbreviation,:generation, presence: true
   validates :external_id,uniqueness: true
   
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+  
   def fetchAPIData(id)
     OpenStruct.new(gamesPlatformRequest(id))
   end

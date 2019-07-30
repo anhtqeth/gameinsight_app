@@ -16,8 +16,9 @@ Rails.application.routes.draw do
   
   get '/release_by_platform', to: 'static_pages#latest_releases', as: 'release'
   
-  get '/game_genres/', to: 'game_genre#show', as: 'game_genres'
+  get '/genres/', to: 'game_genre#show', as: 'game_genres'
   
+  get '/platforms/', to: 'platforms#show', as: 'platform'
   
 
 end
