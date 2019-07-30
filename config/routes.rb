@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   
   get '/genres/', to: 'game_genre#show', as: 'game_genres'
   
-  get '/platforms/', to: 'platforms#show', as: 'platform'
+  get '/platforms/:id', to: 'platforms#show', as: 'platform'
   
 
 end
