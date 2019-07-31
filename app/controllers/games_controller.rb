@@ -1,31 +1,32 @@
 class GamesController < ApplicationController
   #Show game detail page
-  #TODO: DRY on the cache
   #TODO: Move save logic to model. Just like article
   def show
     #If this game is not in db, save it. 
-    if Game.find_by_external_id(params[:id])
-      @game_details = Game.find_by_external_id(params[:id])
-      @game_videos = GameVideo.where(external_id:params[:id])
-      @game_screenshots = Screenshot.where(external_id:params[:id])
+    game =  Game.friendly.find(params[:id])
+    
+    if Game.friendly.find(params[:id])
+      @game_details = Game.friendly.find(params[:id])
+      @game_videos = GameVideo.where(external_id: game.external_id)
+      @game_screenshots = Screenshot.where(external_id: game.external_id)
     else
       game = Game.new
       @game_details = game.saveAPIData(params[:id])
       
       game_videos = GameVideo.new
-      game_videos.saveAPIData(params[:id])
-      @game_videos = GameVideo.where(external_id:params[:id])
+      game_videos.saveAPIData(game.external_id)
+      @game_videos = GameVideo.where(external_id: game.external_id)
       
       game_screenshot = Screenshot.new
-      game_screenshot.saveAPIData(params[:id])
-      @game_screenshots = Screenshot.where(external_id:params[:id])
+      game_screenshot.saveAPIData(game.external_id)
+      @game_screenshots = Screenshot.where(external_id: game.external_id)
     end
     
-    @game_publisher = gameCompaniesRequest(params[:id],'Publisher')
-    @game_developer = gameCompaniesRequest(params[:id],'Developer')
+    @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
+    @game_developer = gameCompaniesRequest(game.external_id,'Developer')
     
     #TODO: Save this to DB too 
-    game_collection_id = gamesRequest(params[:id]).first["collection"]
+    game_collection_id = gamesRequest(game.external_id).first["collection"]
       
     if game_collection_id.nil?
       @game_card_carousel_list =  [{:id=>2059, :name=>"Yakuza", :summary=>"Just as Kazuma, a former rising star in the Yakuza, emerges from prison after a murder cover-up, 10 billion yen vanishes from the Yakuza vault, forcing him once again into their brutal, lawless world. A mysterious young girl will lead Kazuma to the answers if he can keep her alive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/e3cdy0d77eduopr5en37.jpg"}, {:id=>2060, :name=>"Yakuza 2", :summary=>"Yakuza 2 plunges you once more into the violent Japanese underworld. In intense brutal clashes with rival gangs, the police, and the Korean mafia, you will have opportunities to dole out more brutal punishment. As the heroic Kazuma Kiryu from the original Yakuza, explore Tokyo and now Osaka. Wander through the back alleys of Japan's underworld while trying to prevent an all-out gang war in over 16 complex, cinematic chapters written by Hase Seishu, the famous Japanese author who also wrote the first Yakuza. Endless conflicts and surprise plot twists will immerse you in a dark shadowy world where only the strongest will survive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/ozhhq6bsu5elgkhbraoe.jpg"}, {:id=>2061, :name=>"Yakuza 3", :summary=>"Introducing the next cinematic chapter in the prestigious Yakuza series renowned for it's authentic, gritty and often violent look at modern Japan. Making its first appearance exclusively on the PlayStation 3 computer entertainment system, the rich story and vibrant world of Yakuza 3 lets players engage in intense brutal clashes within the streets of Okinawa, and the vibrant and often dangerous city of Tokyo where only the strongest will survive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/amhmvuaybvl0epgcpfys.jpg"}, {:id=>2062, :name=>"Yakuza 4", :summary=>"Yakuza 4 is the fourth game in Sega's crime drama series, known as 'Ryu ga Gotoku' in Japan. As a first for the series, the story is split between the viewpoints of four different protagonists.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/udb2eilafrf5yujesuq8.jpg"}]
@@ -39,7 +40,7 @@ class GamesController < ApplicationController
     end
       
     @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newfeed", expires_in: 1.month) do
-      gameNewsFeedRequest(params[:id])
+      gameNewsFeedRequest(game.external_id)
     end
     #dummy_game_ids = [2268, 2269, 2271, 5316, 6440, 7075, 9692, 18181]
     

@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   
   get  '/signup',  to: 'user#new'
   
-  get '/games/:id', to: 'games#show', as: 'game'
 
   get '/search/', to: 'games#find', as: 'search'
   
@@ -19,6 +18,8 @@ Rails.application.routes.draw do
   get '/genres/', to: 'game_genre#show', as: 'game_genres'
   
   get '/platforms/:id', to: 'platforms#show', as: 'platform'
+  
+  get '/games/:id', to: 'games#show', as: 'game'
   
 
 end
