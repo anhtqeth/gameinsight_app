@@ -2,7 +2,6 @@ class Platform < ApplicationRecord
   has_and_belongs_to_many :games
   validates :name,:summary,:abbreviation,:generation, presence: true
   validates :external_id,uniqueness: true
-  
   extend FriendlyId
   friendly_id :name, use: :slugged
   

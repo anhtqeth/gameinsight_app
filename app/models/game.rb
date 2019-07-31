@@ -4,6 +4,10 @@ class Game < ApplicationRecord
   
   validates :summary,:cover,:first_release_date, presence: true
   validates :name,uniqueness: true
+  
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+  
   def fetchAPIData(id)
      game_detail =  OpenStruct.new(gamesListProcess(id))
      game_detail 
@@ -80,6 +84,20 @@ class Game < ApplicationRecord
       popular_games = gamesListProcess(popular_games_id)
     end
     popular_games
+  end
+  
+  def fetchPopularUpcomingRelease
+    time = Date.parse(Time.now.to_s)
+    popular_upcoming_games = Game.order(popularity: :desc).where("first_release_date > ?",time)
+    
+    if popular_upcoming_games.empty?
+      id_array = gamePopularUpcomingRelease
+      id_array.each do |id|
+        saveAPIData(id)
+      end
+      popular_upcoming_games = gamesListProcess(gamePopularUpcomingRelease)
+    end
+    popular_upcoming_games
   end
   
   

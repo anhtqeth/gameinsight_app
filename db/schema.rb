@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_30_065921) do
+ActiveRecord::Schema.define(version: 2019_07_31_035919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 2019_07_30_065921) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_game_genres_on_slug", unique: true
   end
 
   create_table "game_genres_games", id: false, force: :cascade do |t|
@@ -76,6 +78,8 @@ ActiveRecord::Schema.define(version: 2019_07_30_065921) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "popularity"
+    t.string "slug"
+    t.index ["slug"], name: "index_games_on_slug", unique: true
   end
 
   create_table "games_platforms", id: false, force: :cascade do |t|

@@ -27,8 +27,9 @@ class GameArticle < ApplicationRecord
     game_article.save
   end      
   
+  #TODO Currently filter out article with no img url. Need to have something to work with the nil ones.
   def fetchLatestNews(time)
-    latest_newsfeed = GameArticle.where("publish_at > ?",time)
+    latest_newsfeed = GameArticle.where("publish_at > ? AND img IS NOT NULL",time)
     if latest_newsfeed.empty?
       latest_newsfeed = fetchAPILatestNews(time)
       #Save to DB
@@ -38,6 +39,7 @@ class GameArticle < ApplicationRecord
     end
     latest_newsfeed
   end
+  
 
   
 end
