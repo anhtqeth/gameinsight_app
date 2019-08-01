@@ -1,5 +1,5 @@
 class Screenshot < ApplicationRecord
-  belongs_to :game, :dependent => :destroy
+  belongs_to :game
   validates :url,:width,:height, presence: true
   def fetchAPIData(id)
     screenshots = gameScreenshotRequest(id)
@@ -7,22 +7,15 @@ class Screenshot < ApplicationRecord
   end
   
   def saveAPIData(id)
+    puts 'Called to Screenshot saveAPIData'
     api_game_screenshots = fetchAPIData(id)
     api_game_screenshots.each do |game_screenshot|
-      screenshot = Screenshot.new
-      screenshot.external_id = id
-      screenshot.url = game_screenshot["url"]
-      screenshot.width = 1920
-      screenshot.height = 1080
-      if Game.find_by_external_id(id).nil?
-        game = Game.new
-        game = game.saveAPIData(id)
-        screenshot.game = game
-      else
+      if Game.find_by_external_id(id)
         game = Game.find_by_external_id(id)
-        screenshot.game = game
+        game.screenshots.create(external_id: id, url: game_screenshot["url"],width: 1920,height:1080)
+      else
+        puts 'Cannot save screenshot data!'
       end
-      screenshot.save
     end
   end
   

@@ -84,7 +84,7 @@ module GamesApiModule
   def gameGenreRequest
     puts "Called to Genre Request..."
     request = buildRequest(GAME_GENRE)
-    request.body = "fields *; limit 25; offset 10;";
+    request.body = "fields *; limit 25;";
     response = HTTP_CNF.request(request)
     puts response.read_body
     JSON.parse(response.read_body)
