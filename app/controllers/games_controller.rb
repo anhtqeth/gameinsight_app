@@ -7,19 +7,13 @@ class GamesController < ApplicationController
     
     if Game.friendly.find(params[:id])
       @game_details = Game.friendly.find(params[:id])
-      @game_videos = GameVideo.where(external_id: game.external_id)
-      @game_screenshots = Screenshot.where(external_id: game.external_id)
+      @game_videos = @game_details.game_videos
+      @game_screenshots = @game_details.screenshots
     else
       game = Game.new
       @game_details = game.saveAPIData(params[:id])
-      
-      game_videos = GameVideo.new
-      game_videos.saveAPIData(game.external_id)
-      @game_videos = GameVideo.where(external_id: game.external_id)
-      
-      game_screenshot = Screenshot.new
-      game_screenshot.saveAPIData(game.external_id)
-      @game_screenshots = Screenshot.where(external_id: game.external_id)
+      @game_videos = @game_details.game_videos
+      @game_screenshots = @game_details.screenshots
     end
     
     @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')

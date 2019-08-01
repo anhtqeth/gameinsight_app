@@ -12,7 +12,6 @@ class GameGenre < ApplicationRecord
   
   def saveAPIData
    genre_list = fetchAPIData
-   
    genre_list.each do |api_detail|
     genre = GameGenre.new
     genre.name = api_detail["name"]

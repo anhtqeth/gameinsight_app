@@ -1,6 +1,8 @@
 class Game < ApplicationRecord
   has_and_belongs_to_many :platforms
   has_and_belongs_to_many :game_genres
+  has_many :screenshots, dependent: :destroy
+  has_many :game_videos, dependent: :destroy
   
   validates :summary,:cover,:first_release_date, presence: true
   validates :name,uniqueness: true
@@ -44,6 +46,8 @@ class Game < ApplicationRecord
         
      end
      
+     
+     
      if game_detail.first_release_date == 'NA'
       game.first_release_date = Time.now - 15.years
      else
@@ -51,7 +55,10 @@ class Game < ApplicationRecord
      end
      game.popularity = game_detail.popularity
      game.save
-     
+     screenshot = Screenshot.new
+     screenshot.saveAPIData(id)
+     videos = GameVideo.new
+     videos.saveAPIData(id)
      game
   end
   
@@ -90,7 +97,7 @@ class Game < ApplicationRecord
     time = Date.parse(Time.now.to_s)
     popular_upcoming_games = Game.order(popularity: :desc).where("first_release_date > ?",time)
     
-    if popular_upcoming_games.empty?
+    if popular_upcoming_games.empty? or popular_upcoming_games.size < 4
       id_array = gamePopularUpcomingRelease
       id_array.each do |id|
         saveAPIData(id)
