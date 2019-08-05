@@ -36,8 +36,6 @@ class GamesController < ApplicationController
     @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newfeed", expires_in: 1.month) do
       gameNewsFeedRequest(game.external_id)
     end
-    #dummy_game_ids = [2268, 2269, 2271, 5316, 6440, 7075, 9692, 18181]
-    
     render 'games/game_detail'
   end
   
