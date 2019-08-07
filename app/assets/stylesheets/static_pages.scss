@@ -10,6 +10,21 @@
   text-align: center;
 }
 
+.platform-scrollspy{
+    position: relative;
+    height: 350px;
+    overflow: auto;
+}
+
+.nav-pills .pill-1 .nav-link {
+    background-color: #ffc107;
+    color: white;
+}
+
+// .nav-link.active{
+//     color: #fff;
+//     background-color: #ffc107;
+// }
 
 h2 {
   font-family: 'Poppins', sans-serif !important;
@@ -83,7 +98,7 @@ footer {
   color: #777;
 }
 
-.navbar {
+#header-menu {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }

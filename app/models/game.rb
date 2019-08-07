@@ -81,8 +81,8 @@ class Game < ApplicationRecord
   #If result is empty, get data from API, saved to db for subsequence call.
   #Params: platform - name of the platform
   def fetchPopularGamebyPlatform(platform)
-    
-    popular_games = Game.order(popularity: :desc).joins("INNER JOIN games_platforms p ON p.game_id = games.id").where("p.platform_id = ?",Platform.find_by(name: platform).id).limit(10)
+    time = Date.parse(Time.now.to_s)
+    popular_games = Game.where("first_release_date < ?",time).order(popularity: :desc).joins("INNER JOIN games_platforms p ON p.game_id = games.id").where("p.platform_id = ?",Platform.find_by(name: platform).id).limit(10)
     if popular_games.empty?
       popular_games_id = popularGamesByPlatform(platform).each.map{|x| x["id"]}.map.to_a
       popular_games_id.each do |id|
@@ -91,6 +91,14 @@ class Game < ApplicationRecord
       popular_games = gamesListProcess(popular_games_id)
     end
     popular_games
+  end
+  
+  #This is to get the correct popular game
+  def savePopularGame(platform)
+    popular_games_id = popularGamesByPlatform(platform).each.map{|x| x["id"]}.map.to_a
+    popular_games_id.each do |id|
+        saveAPIData(id)
+    end
   end
   
   def fetchPopularUpcomingRelease
