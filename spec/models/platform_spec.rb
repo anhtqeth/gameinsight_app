@@ -52,6 +52,7 @@ RSpec.describe Platform, type: :model do
     subject.saveAPIData(49)
     subject.saveAPIData(39)
     
+    
   end
   
   
