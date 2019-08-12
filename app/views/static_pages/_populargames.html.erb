@@ -4,11 +4,11 @@
         <div class="carousel-inner">
           <div class="carousel-item active">
             <div class="card-deck">
-                <% @upcoming_popular_games[0..4].each do |gamecard| %>
+                <% @upcoming_popular_games[0..3].each do |gamecard| %>
                 <div class="card" style="width: 18rem;">
                   <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
                   <div class="card-body">
-                    <p class="card-title center"><%= gamecard[:name] %></p>
+                    <!--<p class="card-title center"><= gamecard[:name] %></p>-->
                     <a href=<%=game_path(gamecard[:slug]) %> target="_blank" class="btn btn-outline-warning btn-block">Details</a>
                   </div>
                 </div>
@@ -17,11 +17,11 @@
           </div>
           <div class="carousel-item">
             <div class="card-deck">
-                <% @upcoming_popular_games[5..-1].each do |gamecard| %>
+                <% @upcoming_popular_games[4..-1].each do |gamecard| %>
                 <div class="card" style="width: 18rem;">
                   <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
                   <div class="card-body">
-                    <h5 class="card-title center"><%= gamecard[:name] %></h5>
+                    <!--<p class="card-title center"><= gamecard[:name] %></p>-->
                     <a href=<%=game_path(gamecard[:slug]) %> target="_blank" class="btn btn-outline-warning btn-block">Details</a>
                   </div>
                 </div>

@@ -1,5 +1,6 @@
+<span><h4>| <%= @game_details[:name] %> Screenshots</h4></span>
+<hr id="new-content-line">
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
-   <hr>
     <ol class="carousel-indicators">
       <% @game_screenshots.each do |img| %>
       <li data-target="#carouselExampleIndicators" data-slide-to=<% img %> </li>

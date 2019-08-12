@@ -26,11 +26,7 @@
 //     background-color: #ffc107;
 // }
 
-h2 {
-  font-family: 'Poppins', sans-serif !important;
-}
-
-h1 {
+h1,h2,h3,h4,h5 {
   font-family: 'Poppins', sans-serif !important;
 }
 
@@ -75,13 +71,15 @@ a {
   font-weight: bold;
 }
 
+
+
 #content-line{
   border: 1px solid #FFC107;
 }
 
-#home-content{
-  padding-top: 70px;
-}
+// #home-content{
+//   padding-top: 70px;
+// }
 
 #logo:hover {
   color: #fff;
@@ -100,7 +98,7 @@ footer {
 
 #header-menu {
   padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  
 }
 
 footer a {

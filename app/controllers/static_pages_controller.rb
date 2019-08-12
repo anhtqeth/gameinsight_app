@@ -13,7 +13,7 @@ class StaticPagesController < ApplicationController
     #   gamesListProcess(gamePopularUpcomingRelease)
       
     # end
-    @upcoming_popular_games = game.fetchPopularUpcomingRelease[1..10]
+    @upcoming_popular_games = game.fetchPopularUpcomingRelease[1..8]
     
     
     #Currently set in controller, better if user can pick this from the view. Will change in 0.3

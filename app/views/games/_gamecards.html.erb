@@ -1,45 +1,44 @@
-<div class="row">
-<div class="card text-white" style="background-color: black;">
-        <h5 align="center" class="card-title"><%= @game_details[:name] %></h5>
-        <img class="card-img-top"<%= image_tag("#{@game_details[:cover]}") %>
-    </div>
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-            <h5 class="card-title"><%= @game_details[:name] %></h5>
-            <hr id="content-line">
-            <p class="card-text">First Release Date: <strong><%= @game_details[:first_release_date] %></strong></p>
-            <p class="card-text">Platform: <% @game_details.platforms.each do |platform| %>
-            <strong><%=platform.name %></strong>
-            <%end%>
-            </p>
-            <p class="card-text">Platform: <% @game_details.game_genres.each do |genre| %>
-            <strong><%=genre.name %></strong>
-            <%end%>
-            <p class="card-text">Developers: <strong><%= @game_developer[:name] %> </strong></p>
-            <p class="card-text">Publisher: <strong><%= @game_publisher[:name] %> </strong></p>
-        </div>
-      </div>
-</div>
-</div>
-<br>
-<div class="row">
-    <div class="col">
-     <div class="card" >
-        <div class="card-body">
-          <div class="card-header">
-            <h1><%= @game_details[:name] %></h1>
-          </div>
-          <hr>
+<span><h4>| Details</h4></span>
+<hr id="new-content-line">
+<div class="container">
+  <div class="row">
+        <div class="card">
+			<div class="row">
+				<div class="col-md-auto">
+				 <img <%= image_tag("#{@game_details[:cover]}") %>
+				</div>
+				<div class="col-md-auto">
+				  <div class="card-body">
+					  <h5 class="card-title"><%= @game_details[:name] %></h5>
+					  <hr id="content-line">
+					  <p class="card-text">First Release Date: <strong><%= @game_details[:first_release_date] %></strong></p>
+					  <p class="card-text">Platform: <% @game_details.platforms.each do |platform| %>
+					  <strong><%=platform.name %></strong>
+					  <%end%>
+					  </p>
+					  <p class="card-text">Genres: <% @game_details.game_genres.each do |genre| %>
+					  <strong><%=genre.name %></strong>
+					  <%end%>
+					  <p class="card-text">Developers: <strong><%= @game_developer[:name] %> </strong></p>
+					  <p class="card-text">Publisher: <strong><%= @game_publisher[:name] %> </strong></p>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+  <br>
+  <div class="row">
+       <div class="card" >
           <div class="card-body">
-            <h5 class="card-title">Summary</h5>
-            <hr id="content-line">
-            <p class="card-text"><%=@game_details[:summary] %></p>
-            <h5 class="card-title">Storyline</h5>
-            <hr id="content-line">
-            <p class="card-text"><%=@game_details[:storyline] %></p>
+            <div class="card-body">
+              <h5 class="card-title">Summary</h5>
+              <hr id="new-content-line">
+              <p class="card-text"><%=@game_details[:summary] %></p>
+              <h5 class="card-title">Storyline</h5>
+              <hr id="new-content-line">
+              <p class="card-text"><%=@game_details[:storyline] %></p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+  </div>
 </div>
