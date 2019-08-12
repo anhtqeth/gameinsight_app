@@ -1,42 +1,39 @@
-<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-  <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="card">
-          <div class="card-header"><%= @game_newsfeed_list.first[:title]%></div>
-          <img class="card-img-top"<%= image_tag("#{@game_newsfeed_list.first[:img]}") %>
-          <div class="card-body">
-            <h5 class="card-title">Summary</h5>
-            <p class="card-text"><%= @game_newsfeed_list.first[:summary] %></p>
-            <a href=<%= @game_newsfeed_list.first[:url] %> target="_blank" class="btn btn-outline-warning">View more</a>
-          </div>
-          <div class="card-footer text-muted">
-           <%= @game_newsfeed_list.first[:created_at] %>
-          </div>
-        </div>
+<span><h4>| Recent News on <%= @game_details[:name] %></h4></span>
+<hr id="new-content-line">
+<div class="card-deck">
+<% @game_newsfeed_list[1..2].each do |news| %>
+  <% if news[:img].nil? %>
+    <!--Do no thing-->
+  <% else%>
+    <div class="card">
+     <img class="card-img-top"<%= image_tag("#{news[:img]}") %>
+      <div class="card-body">
+        <h5 class="card-title"><%= news[:title] %></h5>
+       <p class="card-text"><%= truncate(news[:summary], length: 200)%></p>
       </div>
-        <% @game_newsfeed_list[1..-1].each do |news| %>
-      <div class="carousel-item">
-          <div class="card">
-          <div class="card-header"><%= news[:title] %></div>
-          <img class="card-img-top"<%= image_tag("#{news[:img]}") %>
-          <div class="card-body">
-            <h5 class="card-title">Summary</h5>
-            <p class="card-text"><%= news[:summary] %></p>
-            <a href=<%= news[:url] %> target="_blank" class="btn btn-outline-warning">View more</a>
-          </div>
-          <div class="card-footer text-muted">
-           <%= news[:created_at] %>
-          </div>
-        </div>
+       <% create_time = news[:created_at] %>
+      <div class="card-footer">
+        <small class="text-muted">Last updated <%= time_ago_in_words(create_time) %> ago</small>
       </div>
-      <%end%>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+      <a href=<%=news[:url] %> target="_blank" class="btn btn-outline-warning float-right">Read More</a>
+    </div>
+  <%end%>
+  <%end%>
 </div>
+<br>
+<% @game_newsfeed_list[3..-1].each do |news| %>
+  <% if news[:img].nil? %>
+    <!--Do no thing-->
+  <% else%>
+  <div class="media">
+  <img class="mr-3" id="news-image" <%= image_tag("#{news[:img]}")  %>
+  <div class="media-body">
+    <h5 class="mt-0"><%= news[:title] %></h5>
+    <% create_time = news[:created_at] %>
+     <p class="card-text"><%= truncate(news[:summary], length: 200)%></p>
+    Last updated <%= time_ago_in_words(create_time) %> ago
+  </div>
+  </div>
+   <hr>
+<%end%>
+<%end%>

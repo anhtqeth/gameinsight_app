@@ -10,7 +10,7 @@
       
       <li class="list-group-item">
           <div>
-            <h6><i class="fas fa-circle fa-sm"></i> <%= game[:name] %>
+            <a href=<%=game_path(game[:slug]) %> target="_blank"> <h6><%= game[:name] %></h6></a>
             <img src=<%= game[:cover] %> alt="..." style="width:60px !important;height:60px" class="rounded-circle float-right"></h6>
           </div>
           <div>
@@ -32,7 +32,7 @@
       <% @nintendo_switch_list.each do |game| %>  
         <li class="list-group-item">
           <div>
-            <h6><i class="fas fa-circle fa-sm"></i> <%= game[:name] %>
+           <a href=<%=game_path(game[:slug]) %> target="_blank"> <h6><%= game[:name] %></h6></a>
             <img src=<%= game[:cover] %> alt="..." style="width:60px !important;height:60px" class="rounded-circle float-right"></h6>
           </div>
           <div>
@@ -48,10 +48,9 @@
       <i class="fab fa-xbox fa-2x"></i>
       <ul class="list-group list-group-flush">
       <% @xbox_list.each do |game| %>  
-      
       <button class="list-group-item">
           <div>
-            <h6><i class="fas fa-circle fa-sm"></i> <%= game[:name] %>
+            <a href=<%=game_path(game[:slug]) %> target="_blank"> <h6><%= game[:name] %></h6></a>
             <img src=<%= game[:cover] %> alt="..." style="width:60px !important;height:60px" class="rounded-circle float-right"></h6>
           </div>
           <div>
