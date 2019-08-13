@@ -19,6 +19,7 @@ class GamesController < ApplicationController
     @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
     @game_developer = gameCompaniesRequest(game.external_id,'Developer')
     
+    #TODO: Move this to Model
     if game.game_collection.nil?
       game_collection = GameCollection.new
       game_collection.saveAPIData(game.external_id)
