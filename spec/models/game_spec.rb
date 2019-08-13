@@ -64,7 +64,7 @@ RSpec.describe Game, type: :model do
   it "save to db after api call" do
     #1877
     #80155 - with NA date
-    game = Game.new()
+    game = Game.new
     before_count = Game.count
     # game.saveAPIData(80155)
     game.saveAPIData(26950)

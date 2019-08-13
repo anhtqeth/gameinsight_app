@@ -165,12 +165,12 @@ module GamesApiModule
   def gamesSeriesRequest(collection_id)
     puts "Called to Game Series Request with parameter: " << collection_id.to_s
     request = Net::HTTP::Get.new(URI(GAME_COLLECTION_URI), {'user-key' => USERKEY})
-    request.body = "fields games; where id = (#{collection_id}); limit 5;"
+    request.body = "fields *; where id = (#{collection_id});"
     result= JSON.parse(HTTP_CNF.request(request).read_body)
     if result.empty?
       MESS_NA_SERIES
     else
-      result.first["games"] 
+      result.first
     end
   end
   

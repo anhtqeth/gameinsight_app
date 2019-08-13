@@ -3,6 +3,7 @@ class Game < ApplicationRecord
   has_and_belongs_to_many :game_genres
   has_many :screenshots, dependent: :destroy
   has_many :game_videos, dependent: :destroy
+  belongs_to :game_collection
   
   validates :summary,:cover,:first_release_date, presence: true
   validates :name,uniqueness: true
@@ -61,7 +62,7 @@ class Game < ApplicationRecord
      videos.saveAPIData(id)
      game
   end
-  
+
   def fetchLatestRelease(platform)
     min_time = Date.parse((1.month.ago).to_s)
     max_time = Date.parse(Time.now.to_s)
