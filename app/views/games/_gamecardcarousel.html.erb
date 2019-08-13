@@ -8,11 +8,11 @@
           <div class="carousel-inner">
             <div class="carousel-item active">
               <div class="card-deck">
-                  <% @game_card_carousel_list[0..@size].each do |gamecard| %>
+                  <% @game_card_carousel_list[0..5].each do |gamecard| %>
                   <div class="card" style="width: 18rem;">
                     <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
                     <div class="card-body">
-                      <a href="<%=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>
+                      <a href="<%=game_path(gamecard[:slug]) %>" class="btn btn-outline-warning btn-block">Details</a>
                     </div>
                   </div>
                    <% end %>
@@ -20,11 +20,11 @@
             </div>
             <div class="carousel-item">
               <div class="card-deck">
-                  <% @game_card_carousel_list[@size..-1].each do |gamecard| %>
+                  <% @game_card_carousel_list[6..-1].each do |gamecard| %>
                   <div class="card" style="width: 18rem;">
                     <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
                     <div class="card-body">
-                      <a href="<%=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>
+                      <a href="<%=game_path(gamecard[:slug]) %>" class="btn btn-outline-warning btn-block">Details</a>
                     </div>
                   </div>
                   <% end %>

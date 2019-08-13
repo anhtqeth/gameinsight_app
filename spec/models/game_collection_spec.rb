@@ -27,19 +27,25 @@ RSpec.describe GameCollection, type: :model do
   #2. get games list from gameSeriesRequest
   #3. Processed games list and shown.
   
-  it "can fetch collection from API" do 
-    collection_id = 7331
-    game_in_collection = subject.fetchAPIData(collection_id)
-    expect(game_in_collection).not_to be_nil
-  end
+  # it "can fetch collection from API" do 
+  #   collection_id = 7331
+  #   game_in_collection = subject.fetchAPIData(collection_id)
+  #   expect(game_in_collection).not_to be_nil
+  # end
   
-  it "can save API data" do 
-    game_collection = GameCollection.new
-    before_count = GameCollection.count
-    game_collection.saveAPIData(7331)
-    puts "COLLECTION SAVE DEBUG"
-    puts game_collection.errors.messages
-    expect(GameCollection.count).not_to eq(before_count)
+  # it "can save API data" do 
+  #   game_collection = GameCollection.new
+  #   before_count = GameCollection.count
+  #   game_collection.saveAPIData(7331)
+  #   puts "COLLECTION SAVE DEBUG"
+  #   puts game_collection.errors.messages
+  #   expect(GameCollection.count).not_to eq(before_count)
+  # end
+  
+  it "can get list of games from a collection" do
+    games_list = subject.fetchGameCollection
+    expect(games_list).not_to be_empty
+    
   end
   
 end

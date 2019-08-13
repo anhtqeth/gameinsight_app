@@ -128,9 +128,4 @@ class Game < ApplicationRecord
     popular_upcoming_games
   end
   
-  def fetchGameCollection
-    
-  end
-  
-  
 end
