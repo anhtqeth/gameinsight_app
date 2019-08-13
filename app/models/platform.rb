@@ -30,7 +30,7 @@ class Platform < ApplicationRecord
       platform.summary = platform_detail.summary
     end
     platform.save
-    
+
     platform
   end
   
