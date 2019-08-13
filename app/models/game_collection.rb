@@ -27,5 +27,4 @@ class GameCollection < ApplicationRecord
     puts game_collection.errors.messages
   end
   
-  
 end

@@ -61,16 +61,16 @@ RSpec.describe Game, type: :model do
   #   expect(details.name).not_to be_nil
   # end
   
-  it "save to db after api call" do
-    #1877
-    #80155 - with NA date
-    game = Game.new
-    before_count = Game.count
-    # game.saveAPIData(80155)
-    game.saveAPIData(26950)
+  # it "save to db after api call" do
+  #   #1877
+  #   #80155 - with NA date
+  #   game = Game.new
+  #   before_count = Game.count
+  #   # game.saveAPIData(80155)
+  #   game.saveAPIData(26950)
     
-    expect(Game.count).not_to eq(before_count)
-  end
+  #   expect(Game.count).not_to eq(before_count)
+  # end
   
   # it "can fetch latest release game base on platform" do
   #   #Default Time is set within 1 month
@@ -91,5 +91,12 @@ RSpec.describe Game, type: :model do
   #   expect(latest_ps4_games).not_to be_empty
   #   expect(latest_switch_games).not_to be_empty
   # end
+  
+  it "can get game collection" do
+    games_list = subject.fetchGameCollection
+    
+    expect(games_list).not_to be_empty
+    
+  end
   
 end
