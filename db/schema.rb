@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_31_035919) do
+ActiveRecord::Schema.define(version: 2019_08_13_040722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(version: 2019_07_31_035919) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "game_article_collections", force: :cascade do |t|
+    t.integer "external_id"
+    t.string "name"
+    t.bigint "game_id"
+    t.bigint "game_article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_article_id"], name: "index_game_article_collections_on_game_article_id"
+    t.index ["game_id"], name: "index_game_article_collections_on_game_id"
+  end
+
   create_table "game_articles", force: :cascade do |t|
     t.integer "external_id"
     t.string "author"
@@ -37,6 +48,17 @@ ActiveRecord::Schema.define(version: 2019_07_31_035919) do
     t.string "news_source"
     t.datetime "updated_at", null: false
     t.integer "publish_at"
+  end
+
+  create_table "game_collections", force: :cascade do |t|
+    t.integer "external_id"
+    t.string "name"
+    t.string "url"
+    t.text "description"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_collections_on_game_id"
   end
 
   create_table "game_genres", force: :cascade do |t|
@@ -116,6 +138,9 @@ ActiveRecord::Schema.define(version: 2019_07_31_035919) do
     t.index ["game_id"], name: "index_screenshots_on_game_id"
   end
 
+  add_foreign_key "game_article_collections", "game_articles"
+  add_foreign_key "game_article_collections", "games"
+  add_foreign_key "game_collections", "games"
   add_foreign_key "game_videos", "games"
   add_foreign_key "screenshots", "games"
 end
