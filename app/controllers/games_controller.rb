@@ -19,6 +19,8 @@ class GamesController < ApplicationController
     @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
     @game_developer = gameCompaniesRequest(game.external_id,'Developer')
     
+    
+    
     game_collection_id = gamesRequest(game.external_id).first["collection"]
       
     if game_collection_id.nil?

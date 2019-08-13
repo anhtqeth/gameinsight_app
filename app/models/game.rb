@@ -3,7 +3,8 @@ class Game < ApplicationRecord
   has_and_belongs_to_many :game_genres
   has_many :screenshots, dependent: :destroy
   has_many :game_videos, dependent: :destroy
-  belongs_to :game_collection
+  
+  belongs_to :game_collection,  optional: true
   
   validates :summary,:cover,:first_release_date, presence: true
   validates :name,uniqueness: true
@@ -15,6 +16,8 @@ class Game < ApplicationRecord
      OpenStruct.new(gamesListProcess(id))
   end
   
+  #rails g migration AddGameCollectionToGames game_collection:references
+  
   def saveAPIData(id)
      game_detail = fetchAPIData(id)
      game=Game.new
@@ -22,8 +25,8 @@ class Game < ApplicationRecord
      game.external_id = game_detail.id
      game.name = game_detail.name
      game.summary = game_detail.summary
-     game.storyline = game_detail.storyline
      game.cover = game_detail.cover
+     game.storyline = game_detail.storyline
      
      puts game_detail.platform
      
@@ -68,6 +71,7 @@ class Game < ApplicationRecord
      screenshot.saveAPIData(id)
      videos = GameVideo.new
      videos.saveAPIData(id)
+     
      game
   end
 
@@ -122,6 +126,10 @@ class Game < ApplicationRecord
       popular_upcoming_games = gamesListProcess(gamePopularUpcomingRelease)
     end
     popular_upcoming_games
+  end
+  
+  def fetchGameCollection
+    
   end
   
   
