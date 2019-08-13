@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_13_070336) do
+ActiveRecord::Schema.define(version: 2019_08_13_084627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,8 @@ ActiveRecord::Schema.define(version: 2019_08_13_070336) do
     t.datetime "updated_at", null: false
     t.decimal "popularity"
     t.string "slug"
+    t.bigint "game_collection_id"
+    t.index ["game_collection_id"], name: "index_games_on_game_collection_id"
     t.index ["slug"], name: "index_games_on_slug", unique: true
   end
 
@@ -143,5 +145,6 @@ ActiveRecord::Schema.define(version: 2019_08_13_070336) do
   add_foreign_key "game_article_collections", "games"
   add_foreign_key "game_collections", "games"
   add_foreign_key "game_videos", "games"
+  add_foreign_key "games", "game_collections"
   add_foreign_key "screenshots", "games"
 end

@@ -78,7 +78,7 @@ module GamesApiModule
     #request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
     request.body = "fields *; where id = #{game_id};"
     response = HTTP_CNF.request(request)
-    puts response.read_body
+    #puts response.read_body
     JSON.parse(response.read_body)
   end
   
@@ -168,10 +168,10 @@ module GamesApiModule
   
   #This is used to query for  Games Series,
   #result of collection are based on gamesSearchRequest
-  def gamesSeriesRequest(collection_id)
-    puts "Called to Game Series Request with parameter: " << collection_id.to_s
+  def gamesSeriesRequest(game_id)
+    puts "Called to Game Series Request with parameter: " << game_id.to_s
     request = Net::HTTP::Get.new(URI(GAME_COLLECTION_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where id = (#{collection_id});"
+    request.body = "fields *; where games = [#{game_id}];"
     result= JSON.parse(HTTP_CNF.request(request).read_body)
     if result.empty?
       MESS_NA_SERIES
@@ -407,7 +407,7 @@ module GamesApiModule
       response = HTTP_CNF.request(request)
         
       if JSON.parse(response.read_body).empty?
-          nil
+          'NA'
         else
           result = JSON.parse(response.read_body)
           result.first['url'].sub! 't_thumb','t_cover_big'
@@ -486,6 +486,7 @@ module GamesApiModule
   end
   
   def gameCardProcess(game_detail)
+      #TODO Refactor this. There is surely a better way to handle hash here...
       
       game_card = {:id =>nil,:name=>nil, :summary=> nil,:storyline => nil,:cover=>nil,:first_release_date=>nil,:popularity=>nil,:platform=>nil,:genres=>nil}
       
@@ -493,15 +494,21 @@ module GamesApiModule
       game_card.store(:id,game_id)
       game_name = game_detail['name']
       game_card.store(:name,game_name)
-      game_summary = game_detail['summary']
-      game_card.store(:summary,game_summary)
+      
       game_storyline = game_detail['storyline']
       game_card.store(:storyline,game_storyline)
+      
+      if game_detail.key?("summary")
+        game_summary = game_detail['summary']
+        game_card.store(:summary,game_summary)
+      else
+        game_card.store(:summary,'NA')
+      end
       game_cover = gameCoverRequest(game_id)
       game_card.store(:cover,game_cover)
       game_popularity = game_detail['popularity']
       game_card.store(:popularity,game_popularity)
-    unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
+    unless (game_detail["platforms"].nil? || game_detail["genres"].nil? || game_detail["first_release_date"].nil? )
       #TODO: Refactor this smell
       game_platform = []
       game_platform = game_detail["platforms"]
@@ -510,6 +517,8 @@ module GamesApiModule
       # game_detail["platforms"].map{|x| x["name"]}.each do |name|
       #   game_platform << name
       # end
+      
+      #TODO: Inspecting... ['platforms', 'genres', 'first_release_date'].any? do |key| game_detail.key?(key) end
       
       game_genres = []
       game_genres = game_detail["genres"]
@@ -524,6 +533,8 @@ module GamesApiModule
       game_card.store(:genres,"NA")
       game_card.store(:first_release_date,"NA")
     end
+    
+    
     game_card
   end
   

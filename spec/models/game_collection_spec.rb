@@ -28,7 +28,7 @@ RSpec.describe GameCollection, type: :model do
   #3. Processed games list and shown.
   
   it "can fetch collection from API" do 
-    collection_id = 380
+    collection_id = 7331
     game_in_collection = subject.fetchAPIData(collection_id)
     expect(game_in_collection).not_to be_nil
   end
@@ -36,8 +36,9 @@ RSpec.describe GameCollection, type: :model do
   it "can save API data" do 
     game_collection = GameCollection.new
     before_count = GameCollection.count
-    game_collection.saveAPIData(380)
-    
+    game_collection.saveAPIData(7331)
+    puts "COLLECTION SAVE DEBUG"
+    puts game_collection.errors.messages
     expect(GameCollection.count).not_to eq(before_count)
   end
   
