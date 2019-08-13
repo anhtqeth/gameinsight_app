@@ -42,17 +42,20 @@ class Game < ApplicationRecord
      end
     
      puts 'GENRES'
-     puts game_detail.genres.split(',')
+     puts game_detail.genres
      unless game_detail.genres == 'NA'
-        game_detail.genres.split(',').map(&:strip).each do |x|
-          genre = GameGenre.find_by(name: x)
-          game.game_genres << genre
+        game_detail.genres.each do |x|
+          if GameGenre.find_by(external_id: x).nil?
+            genres = GameGenre.new
+            game.game_genres << genres.saveAPIData(x)
+          else
+            genres = GameGenre.find_by(external_id: x)
+            game.game_genres << genres
+          end
         end
      else
-        
+        #Need something meaninful here
      end
-     
-     
      
      if game_detail.first_release_date == 'NA'
       game.first_release_date = Time.now - 15.years

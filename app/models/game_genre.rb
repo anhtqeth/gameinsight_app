@@ -1,24 +1,37 @@
 class GameGenre < ApplicationRecord
   has_and_belongs_to_many :games
-  validates :name,:description, presence: true
+  validates :name,:description,:external_id, presence: true
   validates :name,uniqueness: true
+  validates :external_id, uniqueness: true
   
   extend FriendlyId
   friendly_id :name, use: :slugged
   
-  def fetchAPIData
-   gameGenreRequest
+  def fetchAPIData(id)
+   gameGenreRequest(id)
   end
   
-  def saveAPIData
-   genre_list = fetchAPIData
-   genre_list.each do |api_detail|
+  def saveAPIData(id)
+    genre_detail = fetchAPIData(id)
     genre = GameGenre.new
-    genre.name = api_detail["name"]
+    genre.external_id = genre_detail["id"]
+    genre.name = genre_detail["name"]
     genre.description = 'Define by another CMS'
     genre.save
-   end
+    
+    genre
   end
+  
+  def getAllApiData
+    genre_ids = fetchAPIData(nil)
+    genre_ids = genre_ids.map{|x| x["id"]}
+    
+    genre_ids.each do |x|
+    saveAPIData(x)
+   end
+  
+  end
+  
   
 end
 

@@ -76,19 +76,24 @@ module GamesApiModule
     puts "Called to Game Request with parameter: " << game_id.to_s
     request = buildRequest(GAME_URI)
     #request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
-    request.body = "fields *,genres.name; where id = #{game_id};"
+    request.body = "fields *; where id = #{game_id};"
     response = HTTP_CNF.request(request)
     puts response.read_body
     JSON.parse(response.read_body)
   end
   
-  def gameGenreRequest
+  def gameGenreRequest(id)
     puts "Called to Genre Request..."
     request = buildRequest(GAME_GENRE)
-    request.body = "fields *; limit 25;";
+    if id.nil?
+      request.body = "fields id; limit 25;";
+    else
+      request.body = "fields *; where id = #{id};"
+    end
+    
     response = HTTP_CNF.request(request)
     puts response.read_body
-    JSON.parse(response.read_body)
+    JSON.parse(response.read_body).first
   end
   
   def involvedCompaniesRequest(game_id)
@@ -501,12 +506,15 @@ module GamesApiModule
       game_platform = []
       game_platform = game_detail["platforms"]
       game_card.store(:platform,game_platform)
-      #Below was used when getting name from API
+      #LEGACY: Below was used when getting name from API
       # game_detail["platforms"].map{|x| x["name"]}.each do |name|
       #   game_platform << name
       # end
       
-      game_genres = game_detail["genres"].map{|x| x["name"]}.join(',')
+      game_genres = []
+      game_genres = game_detail["genres"]
+      #LEGACY: Below was used when getting name from API
+      # game_genres = game_detail["genres"].map{|x| x["name"]}.join(',')
       game_card.store(:genres,game_genres)
       game_first_release_date = game_detail["first_release_date"]
       # game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
