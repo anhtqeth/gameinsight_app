@@ -75,7 +75,8 @@ module GamesApiModule
   def gamesRequest(game_id)
     puts "Called to Game Request with parameter: " << game_id.to_s
     request = buildRequest(GAME_URI)
-    request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
+    #request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
+    request.body = "fields *,genres.name; where id = #{game_id};"
     response = HTTP_CNF.request(request)
     puts response.read_body
     JSON.parse(response.read_body)
@@ -498,11 +499,14 @@ module GamesApiModule
     unless (game_detail["platforms"].nil? or game_detail["genres"].nil? or game_detail["first_release_date"].nil? )
       #TODO: Refactor this smell
       game_platform = []
-      game_detail["platforms"].map{|x| x["name"]}.each do |name|
-        game_platform << name
-      end
+      game_platform = game_detail["platforms"]
       game_card.store(:platform,game_platform)
-      game_genres = game_detail["genres"].map{|x| x["name"]}.join(', ')
+      #Below was used when getting name from API
+      # game_detail["platforms"].map{|x| x["name"]}.each do |name|
+      #   game_platform << name
+      # end
+      
+      game_genres = game_detail["genres"].map{|x| x["name"]}.join(',')
       game_card.store(:genres,game_genres)
       game_first_release_date = game_detail["first_release_date"]
       # game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
@@ -556,12 +560,5 @@ module GamesApiModule
     response = HTTP_CNF.request(request)
     puts JSON.parse(response.read_body).first
     JSON.parse(response.read_body).first
-   
-    # ids = []
-    
-    # result.each do |res|
-    #   ids << res["platform_logo"]
-    # end
-    # ids
   end
 end

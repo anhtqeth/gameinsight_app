@@ -12,8 +12,7 @@ class Game < ApplicationRecord
   friendly_id :name, use: :slugged
   
   def fetchAPIData(id)
-     game_detail =  OpenStruct.new(gamesListProcess(id))
-     game_detail 
+     OpenStruct.new(gamesListProcess(id))
   end
   
   def saveAPIData(id)
@@ -27,15 +26,21 @@ class Game < ApplicationRecord
      game.cover = game_detail.cover
      
      puts game_detail.platform
+     
      unless game_detail.platform == 'NA'
         game_detail.platform.each do |x|
-        platform = Platform.find_by(name: x)
-        game.platforms << platform
+          if Platform.find_by(external_id: x).nil?
+            platform = Platform.new
+            game.platforms << platform.saveAPIData(x)
+          else
+            platform = Platform.find_by(external_id: x)
+            game.platforms << platform
+          end
         end
      else
         
      end
-     
+    
      puts 'GENRES'
      puts game_detail.genres.split(',')
      unless game_detail.genres == 'NA'

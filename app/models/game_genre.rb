@@ -21,3 +21,10 @@ class GameGenre < ApplicationRecord
   end
   
 end
+
+# Fighting
+ # Role-playing (RPG)
+ # Simulator
+ # Sport
+ # Hack and slash/Beat 'em up
+ # Adventure
