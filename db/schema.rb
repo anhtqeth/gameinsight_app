@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_13_084627) do
+ActiveRecord::Schema.define(version: 2019_08_14_025920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,20 @@ ActiveRecord::Schema.define(version: 2019_08_13_084627) do
     t.bigint "game_genre_id", null: false
     t.index ["game_genre_id"], name: "index_game_genres_games_on_game_genre_id"
     t.index ["game_id"], name: "index_game_genres_games_on_game_id"
+  end
+
+  create_table "game_release_dates", force: :cascade do |t|
+    t.date "date"
+    t.bigint "game_id"
+    t.bigint "platform_id"
+    t.integer "region"
+    t.integer "month"
+    t.integer "year"
+    t.integer "date_format_category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_release_dates_on_game_id"
+    t.index ["platform_id"], name: "index_game_release_dates_on_platform_id"
   end
 
   create_table "game_videos", force: :cascade do |t|
@@ -144,6 +158,8 @@ ActiveRecord::Schema.define(version: 2019_08_13_084627) do
   add_foreign_key "game_article_collections", "game_articles"
   add_foreign_key "game_article_collections", "games"
   add_foreign_key "game_collections", "games"
+  add_foreign_key "game_release_dates", "games"
+  add_foreign_key "game_release_dates", "platforms"
   add_foreign_key "game_videos", "games"
   add_foreign_key "games", "game_collections"
   add_foreign_key "screenshots", "games"

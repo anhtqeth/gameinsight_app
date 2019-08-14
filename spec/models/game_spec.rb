@@ -92,11 +92,6 @@ RSpec.describe Game, type: :model do
   #   expect(latest_switch_games).not_to be_empty
   # end
   
-  it "can get game collection" do
-    games_list = subject.fetchGameCollection
-    
-    expect(games_list).not_to be_empty
-    
-  end
+  
   
 end

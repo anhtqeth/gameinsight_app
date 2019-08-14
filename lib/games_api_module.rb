@@ -384,19 +384,25 @@ module GamesApiModule
     # ids_array
   end
   
-  def gameReleaseDateRequest
+  def gameReleaseDateRequest(id)
     puts "Called to Release Date Request with parameter: "
     request = Net::HTTP::Get.new(URI(RELEASE_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where date > #{UNIX_TIME_NOW}"
+    
+    if id.nil?
+      request.body = "fields *; where date > #{UNIX_TIME_NOW};"
+    else
+      request.body = "fields *; where game = #{id};"
+    end
+    
     response = HTTP_CNF.request(request)
     
-    result = JSON.parse(response.read_body)  
+    JSON.parse(response.read_body)
     #releaseTime = result.first['date']
     
-    result.each do |x|
-      x['date'] = DateTime.strptime(x['date'].to_s,'%s').strftime("%A-%d-%b-%Y")
-    end
-    result
+    # result.each do |x|
+    #   x['date'] = DateTime.strptime(x['date'].to_s,'%s').strftime("%A-%d-%b-%Y")
+    # end
+    # result
   end
       
   def gameCoverRequest(game_id)
