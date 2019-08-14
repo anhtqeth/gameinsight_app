@@ -19,14 +19,17 @@ class GamesController < ApplicationController
     @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
     @game_developer = gameCompaniesRequest(game.external_id,'Developer')
     
-    #TODO: Move this to Model
+    
     if game.game_collection.nil?
       game_collection = GameCollection.new
       game_collection.saveAPIData(game.external_id)
       @game_card_carousel_list = game.game_collection.games
+      @size = @game_card_carousel_list.size/2
     else
       @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10]
+      @size = @game_card_carousel_list.size/2
     end
+    
     
     # game_collection_id = gamesRequest(game.external_id).first["collection"]
       

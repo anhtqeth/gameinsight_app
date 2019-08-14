@@ -13,13 +13,16 @@ class GameCollection < ApplicationRecord
     
     game_collection.name = api_collection.name
     game_collection.external_id = api_collection.id
+    puts 'DEBUG --  LIST OF GAME IDS'
+    puts api_collection.games
     api_collection.games.each do |id|
-      
+    
       game = Game.find_by_external_id(id)
       if game.nil?
         game = Game.new
         game_collection.games << game.saveAPIData(id)
       else
+        game = Game.find_by_external_id(id)
         game_collection.games << game
       end
     end

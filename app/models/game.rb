@@ -28,6 +28,8 @@ class Game < ApplicationRecord
      game.cover = game_detail.cover
      game.storyline = game_detail.storyline
      
+     
+     puts 'DEBUG --- LIST OF PLATFORM IDS'
      puts game_detail.platform
      
      unless game_detail.platform == 'NA'
@@ -43,9 +45,11 @@ class Game < ApplicationRecord
      else
         
      end
+     
+     
     
-     puts 'GENRES'
-     puts game_detail.genres
+    # puts 'GENRES'
+    # puts game_detail.genres
      unless game_detail.genres == 'NA'
         game_detail.genres.each do |x|
           if GameGenre.find_by(external_id: x).nil?
@@ -67,6 +71,10 @@ class Game < ApplicationRecord
      end
      game.popularity = game_detail.popularity
      game.save
+     
+     puts "DEBUG --- GAME SAVE ERRORS"
+     puts game.errors.messages
+     
      screenshot = Screenshot.new
      screenshot.saveAPIData(id)
      videos = GameVideo.new
