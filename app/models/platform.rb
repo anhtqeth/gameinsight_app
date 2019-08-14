@@ -1,5 +1,6 @@
 class Platform < ApplicationRecord
   has_and_belongs_to_many :games
+  #Need to remove some validation below for platform save
   validates :name, presence: true
   validates :external_id,uniqueness: true
   extend FriendlyId
