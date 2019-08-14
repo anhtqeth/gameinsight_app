@@ -51,6 +51,7 @@ class GameReleaseDate < ApplicationRecord
       game_release_dates.year = release_date.y
       
       game_release_dates.save
+      game_release_dates
     end
   
   end

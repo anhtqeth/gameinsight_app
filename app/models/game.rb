@@ -4,10 +4,11 @@ class Game < ApplicationRecord
   has_many :screenshots, dependent: :destroy
   has_many :game_videos, dependent: :destroy
   
+  has_many :game_release_dates
+  
   belongs_to :game_collection,  optional: true
   
-  validates :summary,:cover,:first_release_date, presence: true
-  validates :name,uniqueness: true
+  validates :name,:summary,:cover,:first_release_date, presence: true
   
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -28,8 +29,6 @@ class Game < ApplicationRecord
      game.cover = game_detail.cover
      game.storyline = game_detail.storyline
      
-     
-     puts 'DEBUG --- LIST OF PLATFORM IDS'
      puts game_detail.platform
      
      unless game_detail.platform == 'NA'
@@ -45,11 +44,9 @@ class Game < ApplicationRecord
      else
         
      end
-     
-     
     
-    # puts 'GENRES'
-    # puts game_detail.genres
+     puts 'GENRES'
+     puts game_detail.genres
      unless game_detail.genres == 'NA'
         game_detail.genres.each do |x|
           if GameGenre.find_by(external_id: x).nil?
@@ -64,6 +61,7 @@ class Game < ApplicationRecord
         #Need something meaninful here
      end
      
+     
      if game_detail.first_release_date == 'NA'
       game.first_release_date = Time.now - 15.years
      else
@@ -72,9 +70,8 @@ class Game < ApplicationRecord
      game.popularity = game_detail.popularity
      game.save
      
-     puts "DEBUG --- GAME SAVE ERRORS"
-     puts game.errors.messages
-     
+     release_date = GameReleaseDate.new
+     release_date = saveAPIData(id)
      screenshot = Screenshot.new
      screenshot.saveAPIData(id)
      videos = GameVideo.new
