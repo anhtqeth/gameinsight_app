@@ -56,4 +56,8 @@ class GameReleaseDate < ApplicationRecord
   
   end
   
+  def getReleaseDatebyRegion
+  
+  end
+  
 end
