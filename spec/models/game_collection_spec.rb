@@ -45,7 +45,6 @@ RSpec.describe GameCollection, type: :model do
   it "can get list of games from a collection" do
     games_list = subject.fetchGameCollection
     expect(games_list).not_to be_empty
-    
   end
   
 end
