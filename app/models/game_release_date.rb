@@ -17,9 +17,7 @@ class GameReleaseDate < ApplicationRecord
   #Check if game & platform exist before save
   #Save to db with data from API
   def saveAPIData(id)
-    
     release_data = fetchAPIData(id)
-    
     release_data.each do |release_date|
       
       puts 'DEBUG --- Release data here'

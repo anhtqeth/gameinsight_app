@@ -16,9 +16,6 @@ class GamesController < ApplicationController
       @game_screenshots = @game_details.screenshots
     end
     
-    @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
-    @game_developer = gameCompaniesRequest(game.external_id,'Developer')
-    
     
     if game.game_collection.nil?
       game_collection = GameCollection.new
@@ -31,12 +28,18 @@ class GamesController < ApplicationController
       @size = @game_card_carousel_list.size/2
     end
     
+    @game_newsfeed_list 
+    
     @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newfeed", expires_in: 1.month) do
       gameNewsFeedRequest(game.external_id)
     end
     
     @game_newsfeed_list = @game_newsfeed_list.sort_by{|e| -e[:created_at]}
     
+    @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
+    @game_developer = gameCompaniesRequest(game.external_id,'Developer')
+    
+   
     render 'games/game_detail'
   end
   

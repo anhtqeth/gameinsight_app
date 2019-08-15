@@ -1,5 +1,5 @@
 class GameCollection < ApplicationRecord
-  has_many :games
+  has_many :games, dependent: :destroy
   validates :name, presence: true,uniqueness: true
   
   
