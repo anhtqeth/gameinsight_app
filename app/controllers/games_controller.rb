@@ -22,6 +22,7 @@ class GamesController < ApplicationController
     
     if game.game_collection.nil?
       game_collection = GameCollection.new
+      #TODO: THere is a bug when API request no data for serie (NEW IP)
       game_collection.saveAPIData(game.external_id)
       @game_card_carousel_list = game.game_collection.games
       @size = @game_card_carousel_list.size/2
@@ -30,19 +31,6 @@ class GamesController < ApplicationController
       @size = @game_card_carousel_list.size/2
     end
     
-    
-    # game_collection_id = gamesRequest(game.external_id).first["collection"]
-      
-    # if game_collection_id.nil?
-    #   nil
-    # else
-    #   game_series_ids = gamesSeriesRequest(game_collection_id)
-    #   @game_card_carousel_list = Rails.cache.fetch("#{game_collection_id}/game_series", expires_in: 1.month) do
-    #   gamesListProcess(game_series_ids)
-    # end
-    #   @size = @game_card_carousel_list.size/2
-    # end
-      
     @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newfeed", expires_in: 1.month) do
       gameNewsFeedRequest(game.external_id)
     end

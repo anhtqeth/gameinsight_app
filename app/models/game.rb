@@ -61,7 +61,6 @@ class Game < ApplicationRecord
         #Need something meaninful here
      end
      
-     
      if game_detail.first_release_date == 'NA'
       game.first_release_date = Time.now - 15.years
      else
@@ -71,7 +70,7 @@ class Game < ApplicationRecord
      game.save
      
      release_date = GameReleaseDate.new
-     release_date = saveAPIData(id)
+     release_date.saveAPIData(id)
      screenshot = Screenshot.new
      screenshot.saveAPIData(id)
      videos = GameVideo.new
