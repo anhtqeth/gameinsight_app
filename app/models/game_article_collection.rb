@@ -1,6 +1,6 @@
 class GameArticleCollection < ApplicationRecord
   belongs_to :game
-  belongs_to :game_article
+  has_many :game_article
   
   def fetchAPIData(id)
     result = gameNewsFeedRequest(id)

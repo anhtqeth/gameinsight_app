@@ -1,10 +1,12 @@
 class Game < ApplicationRecord
   has_and_belongs_to_many :platforms
   has_and_belongs_to_many :game_genres
+  
   has_many :screenshots, dependent: :destroy
   has_many :game_videos, dependent: :destroy
+  has_many :game_article_collection, dependent: :destroy
   
-  has_many :game_release_dates
+  has_many :game_release_dates, dependent: :destroy
   
   belongs_to :game_collection,  optional: true
   
