@@ -236,27 +236,29 @@ module GamesApiModule
     article_ids = []
     
     if result.empty?
-      DUMMY_NEWS
+      'There are no news related to this Game yet'
     else
       puts 'Current Result: ' << result.to_s
       result.each do |rs|
         article_ids << rs["pulses"].join(",").to_i
       end
     end
-    puts "This is the list of article ID: " << article_ids.to_s
     
-    if article_ids.empty?
-      DUMMY_NEWS
-    else
-      game_article_list = []
-      article_ids.each do |id|
-        game_article = gameArticleRequest(id)
-        unless game_article.nil?
-          game_article_list << game_article
-        end
-      end
-      game_article_list
-    end
+    result
+    # puts "This is the list of article ID: " << article_ids.to_s
+    
+    # if article_ids.empty?
+    #   DUMMY_NEWS
+    # else
+    #   game_article_list = []
+    #   article_ids.each do |id|
+    #     game_article = gameArticleRequest(id)
+    #     unless game_article.nil?
+    #       game_article_list << game_article
+    #     end
+    #   end
+    #   game_article_list
+    # end
   end
     
   def gameArticleRequest(id)
@@ -268,7 +270,7 @@ module GamesApiModule
     game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil}
     article_meta = JSON.parse(response.read_body).first
     if article_meta.nil?
-      DUMMY_ARTICLE
+      nil
     else
       #Constructing Article Hashes
       game_article = gameArticleProcess(article_meta)
@@ -331,8 +333,6 @@ module GamesApiModule
     JSON.parse(response.read_body)
   end
   
-  #TODO Should have release model as well?
-  #Another variant to get latest release by platform. This take out the release region.
   def gameAltRecentRelease(platform)
     puts "Called to Altenate Recent Released Game Request"
     request = buildRequest(GAME_URI)
@@ -563,7 +563,15 @@ module GamesApiModule
       game_card
     end
   end
-  
+
+  def gamesPlatformRequest(id)
+    request = Net::HTTP::Get.new(URI(PLATFORM_URI), {'user-key' => USERKEY})
+    request.body = "fields *; where id = #{id};";
+    response = HTTP_CNF.request(request)
+    puts JSON.parse(response.read_body).first
+    JSON.parse(response.read_body).first
+  end
+    
    # def gamesPlatformLogoRequest(logo_id)
   #   request = Net::HTTP::Get.new(URI(PLATFORM_LOGO), {'user-key' => USERKEY})
    
@@ -579,11 +587,4 @@ module GamesApiModule
   #   img
   # end
   
-  def gamesPlatformRequest(id)
-    request = Net::HTTP::Get.new(URI(PLATFORM_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where id = #{id};";
-    response = HTTP_CNF.request(request)
-    puts JSON.parse(response.read_body).first
-    JSON.parse(response.read_body).first
-  end
 end

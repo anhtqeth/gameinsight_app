@@ -14,17 +14,23 @@ class GameArticle < ApplicationRecord
     DateTime.strptime(time, '%A-%d-%b-%Y')
   end
   
-  def saveAPIData(api_article)
+  def saveAPIData(article_id)
     game_article = GameArticle.new
-    game_article.external_id = api_article[:id]
-    game_article.author = api_article[:author]
-    game_article.summary = api_article[:summary]
-    game_article.title = api_article[:title]
-    game_article.img = api_article[:img]
-    game_article.url = api_article[:url]
-    game_article.publish_at = api_article[:created_at]
-    game_article.news_source = api_article[:news_source]
-    game_article.save
+    api_article = fetchAPIData(article_id)
+    if api_article.nil?
+      nil
+    else
+      game_article.external_id = api_article.id
+      game_article.author = api_article.author
+      game_article.summary = api_article.summary
+      game_article.title = api_article.title
+      game_article.img = api_article.img
+      game_article.url = api_article.url
+      game_article.publish_at = api_article.created_at
+      game_article.news_source = api_article.news_source
+      game_article.save
+      game_article
+    end
   end      
   
   #TODO Currently filter out article with no img url. Need to have something to work with the nil ones.
