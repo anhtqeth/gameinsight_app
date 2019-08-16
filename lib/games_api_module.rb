@@ -204,7 +204,7 @@ module GamesApiModule
     puts game_article
     game_article
   end
-  
+  #
   def gameLatestNewsRequest(time)
     puts "Called to Latest Feed Request with parameter: " << DateTime.strptime(time.to_s,'%s').strftime("%A-%d-%b-%Y")
     request = buildRequest(GAME_ARTICLE_URI)

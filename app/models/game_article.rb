@@ -37,13 +37,14 @@ class GameArticle < ApplicationRecord
   end      
   
   #TODO Currently filter out article with no img url. Need to have something to work with the nil ones.
+  #TODO This is smell! It call request 2 times!
   def fetchLatestNews(time)
     latest_newsfeed = GameArticle.where("publish_at > ? AND img IS NOT NULL",time)
     if latest_newsfeed.empty?
       latest_newsfeed = fetchAPILatestNews(time)
       #Save to DB
       latest_newsfeed.each do |api_article|
-      saveAPIData(api_article)
+      saveAPIData(api_article[:id])
       end
     end
     latest_newsfeed
