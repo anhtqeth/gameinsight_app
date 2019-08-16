@@ -1,9 +1,10 @@
-<% provide(:title, "Contact") %>
-<!DOCTYPE html>
+
 <html>
   <head>
-    <title><%= yield(:title) %> | Get in Touch!</title>
+    <% provide(:title, "Get In Touch!") %>
+    <title><%= yield(:title) %></title>
   </head>
+  <div class="container">
   <body>
     <h1>GameInsight</h1>
     <form>
@@ -20,4 +21,5 @@
         
     </form>
   </body>
+  </div>
 </html>
