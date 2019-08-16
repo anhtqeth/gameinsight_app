@@ -11,7 +11,7 @@
         <h5 class="card-title"><%= news[:title] %></h5>
        <p class="card-text"><%= truncate(news[:summary], length: 200)%></p>
       </div>
-       <% create_time = news[:created_at] %>
+       <% create_time = DateTime.strptime(news[:publish_at].to_s,'%s') %>
       <div class="card-footer">
         <small class="text-muted">Last updated <%= time_ago_in_words(create_time) %> ago</small>
       </div>
@@ -29,7 +29,7 @@
   <img class="mr-3" id="news-image" <%= image_tag("#{news[:img]}")  %>
   <div class="media-body">
     <h5 class="mt-0"><%= news[:title] %></h5>
-    <% create_time = news[:created_at] %>
+    <% create_time = DateTime.strptime(news[:publish_at].to_s,'%s') %>
      <p class="card-text"><%= truncate(news[:summary], length: 200)%></p>
     Last updated <%= time_ago_in_words(create_time) %> ago
   </div>

@@ -28,7 +28,13 @@ class GameReleaseDate < ApplicationRecord
       
       game_release_dates = GameReleaseDate.new
       game_release_dates.date_format_category = release_date.category
-      game_release_dates.date =  DateTime.strptime(release_date.date.to_s,'%s') 
+      
+      if release_date.date.nil?
+        game_release_dates.date = nil
+      else
+        game_release_dates.date =  DateTime.strptime(release_date.date.to_s,'%s') 
+      end
+      
       game_release_dates.region = release_date.region
       
       if Game.find_by_external_id(release_date.game).nil?
@@ -40,7 +46,7 @@ class GameReleaseDate < ApplicationRecord
       
       if Platform.find_by_external_id(release_date.platform).nil?
         platform = Platform.new
-        game_release_dates.game = platform.saveAPIData(release_date.platform)
+        game_release_dates.platform = platform.saveAPIData(release_date.platform)
       else
         game_release_dates.platform = Platform.find_by_external_id(release_date.platform) 
       end

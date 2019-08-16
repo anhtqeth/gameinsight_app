@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_14_025920) do
+ActiveRecord::Schema.define(version: 2019_08_15_103959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 2019_08_14_025920) do
     t.string "news_source"
     t.datetime "updated_at", null: false
     t.integer "publish_at"
+    t.bigint "game_article_collection_id"
+    t.index ["game_article_collection_id"], name: "index_game_articles_on_game_article_collection_id"
   end
 
   create_table "game_collections", force: :cascade do |t|
@@ -157,6 +159,7 @@ ActiveRecord::Schema.define(version: 2019_08_14_025920) do
 
   add_foreign_key "game_article_collections", "game_articles"
   add_foreign_key "game_article_collections", "games"
+  add_foreign_key "game_articles", "game_article_collections"
   add_foreign_key "game_collections", "games"
   add_foreign_key "game_release_dates", "games"
   add_foreign_key "game_release_dates", "platforms"

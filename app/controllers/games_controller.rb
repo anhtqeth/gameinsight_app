@@ -16,25 +16,37 @@ class GamesController < ApplicationController
       @game_screenshots = @game_details.screenshots
     end
     
-    
     if game.game_collection.nil?
       game_collection = GameCollection.new
       #TODO: THere is a bug when API request no data for serie (NEW IP)
-      game_collection.saveAPIData(game.external_id)
-      @game_card_carousel_list = game.game_collection.games
-      @size = @game_card_carousel_list.size/2
+      if game_collection.saveAPIData(game.external_id).nil?
+        @game_card_carousel_list = nil
+      else
+        @game_card_carousel_list = game.game_collection.games
+        @size = @game_card_carousel_list.size/2 #TODO - Move this to helper
+      end
     else
       @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10]
       @size = @game_card_carousel_list.size/2
     end
+    #19164
+     #gc = GameArticleCollection.new
+     #gc.saveAPIData(19164)
     
-    @game_newsfeed_list 
-    
-    @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newfeed", expires_in: 1.month) do
-      gameNewsFeedRequest(game.external_id)
+    if game.game_article_collection.empty?
+      game_article_collection = GameArticleCollection.new
+      game_article_collection.saveAPIData(game.external_id)
+      game_article_collection = GameArticleCollection.where(game_id: game.id).take
+      @game_newsfeed_list = game_article_collection.game_articles
+    else
+      game_article_collection = GameArticleCollection.where(game_id: game.id).take
+      @game_newsfeed_list = game_article_collection.game_articles
     end
     
-    @game_newsfeed_list = @game_newsfeed_list.sort_by{|e| -e[:created_at]}
+    # @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newfeed", expires_in: 1.month) do
+    #   gameNewsFeedRequest(game.external_id)
+    # end
+    
     
     @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
     @game_developer = gameCompaniesRequest(game.external_id,'Developer')

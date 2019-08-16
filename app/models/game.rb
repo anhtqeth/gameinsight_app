@@ -4,11 +4,11 @@ class Game < ApplicationRecord
   
   has_many :screenshots, dependent: :destroy
   has_many :game_videos, dependent: :destroy
-  has_many :game_article_collection, dependent: :destroy
-  
   has_many :game_release_dates, dependent: :destroy
   
   belongs_to :game_collection,  optional: true
+  
+  has_many :game_article_collection, dependent: :destroy
   
   validates :name,:summary,:cover,:first_release_date, presence: true
   

@@ -174,7 +174,7 @@ module GamesApiModule
     request.body = "fields *; where games = [#{game_id}];"
     result= JSON.parse(HTTP_CNF.request(request).read_body)
     if result.empty?
-      MESS_NA_SERIES
+      nil
     else
       result.first
     end
@@ -244,21 +244,20 @@ module GamesApiModule
       end
     end
     
-    result
-    # puts "This is the list of article ID: " << article_ids.to_s
+    puts "This is the list of article ID: " << article_ids.to_s
     
-    # if article_ids.empty?
-    #   DUMMY_NEWS
-    # else
-    #   game_article_list = []
-    #   article_ids.each do |id|
-    #     game_article = gameArticleRequest(id)
-    #     unless game_article.nil?
-    #       game_article_list << game_article
-    #     end
-    #   end
-    #   game_article_list
-    # end
+    if article_ids.empty?
+      DUMMY_NEWS
+    else
+      game_article_list = []
+      article_ids.each do |id|
+        game_article = gameArticleRequest(id)
+        unless game_article.nil?
+          game_article_list << game_article
+        end
+      end
+      game_article_list
+    end
   end
     
   def gameArticleRequest(id)
