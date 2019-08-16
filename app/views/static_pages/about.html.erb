@@ -1,15 +1,14 @@
-<!-- %>-->
-<!--<!DOCTYPE html>-->
-<!--  <head>-->
-<!--  <title><= yield(:title) %> | About GameInsight</title>-->
-<!--</head>-->
-<provide(:title, "About")
+<head>
+    <% provide(:title, "About") %>
+    <title><%= yield(:title) %></title>
+</head>
 <div class="container">
-  <p>
-  The gamedb project is created purely on passion of a gaming enthusiastic   
-  In our country, there was no thing like this before.
-  During my little project at <a href="https://ethugamer.com">Enthusiastic Gamer</a>
-  I found IGDB, a huge database services that provide information of the gaming world. 
-  Leverage their API, I created this one.
-  </p>
+    <provide(:title, "About")
+    <p>
+    The gamedb project is created purely on passion of a gaming enthusiastic   
+    In our country, there was no thing like this before.
+    During my little project at <a href="https://ethugamer.com">Enthusiastic Gamer</a>
+    I found IGDB, a huge database services that provide information of the gaming world. 
+    Leverage their API, I created this one.
+    </p>
 </div>
