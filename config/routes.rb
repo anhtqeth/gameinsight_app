@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   
   get  '/signup',  to: 'user#new'
   
+  get '/discover', to: 'games#discover'
+  
 
   get '/search/', to: 'games#find', as: 'search'
   
