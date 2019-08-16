@@ -70,6 +70,12 @@ class GamesController < ApplicationController
     end
   end
   
+  def discover
+    
+    
+    render 'games/game_discover'
+  end
+  
   def update
     #Should show all current game detail in db 
     #Should show assocciated screenshots and videos for update

@@ -9,7 +9,6 @@ class GameCollection < ApplicationRecord
   
   def saveAPIData(game_id)
     api_collection = fetchAPIData(game_id)
-    
     if api_collection.nil?
       nil
     else

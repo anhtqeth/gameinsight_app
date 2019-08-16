@@ -35,5 +35,5 @@ class Platform < ApplicationRecord
     puts platform.errors.messages
     platform
   end
-  
+
 end
