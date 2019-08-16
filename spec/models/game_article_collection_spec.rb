@@ -1,19 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe GameArticleCollection, type: :model do
-  subject {
-    described_class.new(external_id: 1,
-    game: Game.new,game_article: GameArticle.new,
+  
+  subject {described_class.new(external_id: 1,
+    game: Game.new,
     name: "Collection News")
   }
-  
   
   it "is valid with valid attributes" do
     expect(subject).to be_valid 
   end
   
   it  "can fetch API data " do 
-    id = 55090
+    id = 19164
     article_collection = subject.fetchAPIData(id)
     puts 'NEWS DATA'
     puts article_collection
@@ -22,7 +21,7 @@ RSpec.describe GameArticleCollection, type: :model do
   
   it "can save API data " do
     before_count = GameArticleCollection.count
-    subject.saveAPIData(55090)
+    subject.saveAPIData(19164)
     expect(GameArticleCollection.count).not_to eq(before_count)
   end
 end

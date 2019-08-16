@@ -1,6 +1,5 @@
 class GameArticle < ApplicationRecord
   validates :author,:url,:title,:news_source,:publish_at,  presence: true
-  
   belongs_to :game_article_collection,  optional: true
   
   def fetchAPILatestNews(date)
@@ -31,6 +30,8 @@ class GameArticle < ApplicationRecord
       game_article.publish_at = api_article.created_at
       game_article.news_source = api_article.news_source
       game_article.save
+      puts '---DEBUG- ARTICLE SAVE ERRORS'
+      puts game_article.errors.messages
       game_article
     end
   end      
