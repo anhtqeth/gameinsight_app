@@ -70,7 +70,7 @@ class Game < ApplicationRecord
      end
      game.popularity = game_detail.popularity
      game.save
-     
+     #TODO - Move below to a function
      release_date = GameReleaseDate.new
      release_date.saveAPIData(id)
      screenshot = Screenshot.new
