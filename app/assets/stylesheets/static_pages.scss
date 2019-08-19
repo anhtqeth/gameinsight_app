@@ -92,13 +92,11 @@ a {
 
 
 footer {
-  position: absolute;
   width: 100%;
   //bottom: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  color: #777;
 }
 
 #header-menu {
@@ -110,7 +108,9 @@ footer a {
   color: white;
 }
 
-
+footer p{
+  color: white;
+}
 
 footer h5 {
   font-family: 'Arial', sans-serif !important;
@@ -124,19 +124,34 @@ footer a:hover {
 
 footer ul {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-footer ul li {
-  float: left;
-  margin-left: 15px;
+footer li {
+  margin: 0;
 }
+
+#footer-column{
+  border-left: 1px solid;
+  color: #FFC107;
+}
+
+#footer-menu {
+  font-weight: 500;
+}
+
+// footer ul li {
+//   float: left;
+//   //margin-left: 15px;
+// }
 
 .leftSidebar {
   position: fixed;
   padding-left: 15px;
   left: 0;
   height:100%;
-
+  
 }
 
 .rightSidebar {
