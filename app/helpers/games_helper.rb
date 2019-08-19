@@ -47,6 +47,7 @@ module GamesHelper
   end
   
   #Not used yet
+  #TODO - Working Carousel Helper for Games Detail
   def carousel_for(model)
     images = []
     model.each do |img|
