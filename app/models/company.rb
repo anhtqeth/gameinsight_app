@@ -5,10 +5,8 @@ class Company < ApplicationRecord
   has_many :involved_companies
   has_many :games, :through => :involved_companies
   
-  
   enum start_date_category: [:YYYYMMMMDD, :YYYYMMMM, 
   :YYYY, :YYYYQ1, :YYYYQ2, :YYYYQ3, :YYYYQ4, :TBD]
-  
   
   #id is game_exernal_id
   def fetchAPIData(id,company_type)
@@ -33,7 +31,6 @@ class Company < ApplicationRecord
     updateInvolvedCompanies(company.id,company_type)
     company
   end
-
   
   private
   def updateInvolvedCompanies(id,company_type)

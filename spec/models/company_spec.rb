@@ -13,18 +13,30 @@ RSpec.describe Company, type: :model do
   
   #19560: God Of War
   #19565: Spiderman
-  it  "can fetch API data " do 
-    result = subject.fetchAPIData(19560,'Publisher')
-    puts result
-    expect(result).not_to be_nil
-  end
+  # it  "can fetch API data " do 
+  #   result = subject.fetchAPIData(19560,'Publisher')
+  #   puts result
+  #   expect(result).not_to be_nil
+  # end
   
-  it "can save API data " do
-    before_count = Company.count
+  # it "can save API data " do
+  #   before_count = Company.count
     
-    subject.saveAPIData(19560,'Publisher')
+  #   subject.saveAPIData(19560,'Publisher')
     
-    expect(Company.count).not_to eq(before_count)
+  #   expect(Company.count).not_to eq(before_count)
+  # end
+  
+   
+  it "can find company name" do 
+    game_id = 13
+    publisher = subject.findCompany(game_id,'Publisher')
+    #developer = subject.findCompany(game_id,'Developer')
+    
+    expect(publisher).not_to be_nil
+    #expect(developer).not_to be_nil
+    expect(publisher.name).not_to be_nil
+    expect(developer.name).not_to be_nil
   end
   
   # it "can update involved_company" do
