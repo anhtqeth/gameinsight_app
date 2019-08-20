@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   #Show game detail page
   #TODO: Move save logic to model. Just like article
+  #TODO: This is a fat controller. 
   def show
     #If this game is not in db, save it. 
     game =  Game.friendly.find(params[:id])
@@ -50,7 +51,6 @@ class GamesController < ApplicationController
     
     @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
     @game_developer = gameCompaniesRequest(game.external_id,'Developer')
-    
    
     render 'games/game_detail'
   end

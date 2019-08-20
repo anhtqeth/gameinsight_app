@@ -1,6 +1,10 @@
 require 'uri'
 require 'open-uri'
 require 'net/http'
+#GamesApiModule - Used to handle request to fetch API data of video games.
+#Author - Anh Truong
+#Date Added - 17 - May - 2019
+
 module GamesApiModule
   #Utils Constant
   UNIX_TIME_NOW = Time.current.to_time.to_i
@@ -121,6 +125,9 @@ module GamesApiModule
     companies
   end
   
+  #gameCompaniesRequest
+  #Fetch data base on game_external_id & company_type
+  #Using company_type to get the id for Company Detail request
   def gameCompaniesRequest(game_id,company_type) #
     puts "Called to Game Companies Request with game ID : " << game_id.to_s << " and company type: " << company_type
     companies = involvedCompaniesRequest(game_id)
@@ -140,7 +147,7 @@ module GamesApiModule
     end
     
     request = Net::HTTP::Get.new(URI(COMPANIES_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where id = #{company_id};"  #where published = #{game_id};
+    request.body = "fields *; where id = #{company_id};"
     response = HTTP_CNF.request(request)
     result = JSON.parse(response.read_body)
     if result.empty? 
@@ -151,6 +158,8 @@ module GamesApiModule
     end
   end
   #TODO Add field as needed
+  #gameCompanyProcess
+  #Using data from api to constructing hashes for game company
   def gameCompanyProcess(company_meta)
     company_detail = {:external_id => nil, :name => nil,:description => nil,:websites => nil}
     
