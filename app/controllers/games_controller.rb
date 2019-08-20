@@ -47,9 +47,17 @@ class GamesController < ApplicationController
     # @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newfeed", expires_in: 1.month) do
     #   gameNewsFeedRequest(game.external_id)
     # end
-  
-    @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
-    @game_developer = gameCompaniesRequest(game.external_id,'Developer')
+    game_dev = InvolvedCompany.where(game_id: game.id).publisher.take
+    game_pub = InvolvedCompany.where(game_id: game.id).developer.take
+    
+    game_dev.nil? ? game_dev = Company.new.saveAPIData(game.external_id,'Developer') : game_dev = game_dev.company
+    game_pub.nil? ? game_pub = Company.new.saveAPIData(game.external_id,'Publisher') : game_pub = game_pub.company
+    
+    @game_publisher = game_dev
+    @game_developer = game_pub
+    
+    # @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
+    # @game_developer = gameCompaniesRequest(game.external_id,'Developer')
    
     render 'games/game_detail'
   end

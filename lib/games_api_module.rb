@@ -111,6 +111,7 @@ module GamesApiModule
     result = JSON.parse(response.read_body)
     result.each do |rs|
       company = {:id => nil, :type => nil}  
+      
       company[:id] = rs["company"]
       
       if rs["developer"]

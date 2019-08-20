@@ -63,7 +63,7 @@ class Game < ApplicationRecord
           end
         end
      else
-        #Need something meaninful here
+        #TODO - Need something meaninful here
      end
      
      if game_detail.first_release_date == 'NA'
@@ -73,6 +73,7 @@ class Game < ApplicationRecord
      end
      game.popularity = game_detail.popularity
      game.save
+     
      #TODO - Move below to a function
      release_date = GameReleaseDate.new
      release_date.saveAPIData(id)
@@ -80,6 +81,9 @@ class Game < ApplicationRecord
      screenshot.saveAPIData(id)
      videos = GameVideo.new
      videos.saveAPIData(id)
+     company = Company.new
+     company.saveAPIData(id,'Publisher')
+     company.saveAPIData(id,'Developer')
      
      game
   end
