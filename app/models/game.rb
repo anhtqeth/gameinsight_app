@@ -18,6 +18,7 @@ class Game < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
   
+  #TODO - Refactor this model
   def fetchAPIData(id)
      OpenStruct.new(gamesListProcess(id))
   end
