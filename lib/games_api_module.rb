@@ -10,7 +10,6 @@ module GamesApiModule
   UNIX_TIME_NOW = Time.current.to_time.to_i
   THIS_MONTH = (Time.now - 1.month).to_i
   
-    
   HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 443)
   HTTP_CNF.use_ssl = true 
   
@@ -66,7 +65,7 @@ module GamesApiModule
   # request.body = 'fields *'
   # puts http.request(request).body
   
-  #HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 80)
+  #http_construct = Net::HTTP.new('api-v3.igdb.com', 80)
   
   def buildRequest(uri)
     url = URI(uri)
@@ -81,9 +80,15 @@ module GamesApiModule
     request = buildRequest(GAME_URI)
     #request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
     request.body = "fields *; where id = #{game_id};"
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     #puts response.read_body
     JSON.parse(response.read_body)
+  end
+  
+  def http_construct
+    http_cnf = Net::HTTP.new('api-v3.igdb.com', 443)
+    http_cnf.use_ssl = true 
+    http_cnf
   end
   
   def gameGenreRequest(id)
@@ -95,7 +100,7 @@ module GamesApiModule
       request.body = "fields *; where id = #{id};"
     end
     
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     puts response.read_body
     JSON.parse(response.read_body).first
   end
@@ -107,7 +112,7 @@ module GamesApiModule
     companies = []
     
     request.body = "fields *; where game = #{game_id};";
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     result = JSON.parse(response.read_body)
     result.each do |rs|
       company = {:id => nil, :type => nil}  
@@ -149,7 +154,7 @@ module GamesApiModule
     
     request = Net::HTTP::Get.new(URI(COMPANIES_URI), {'user-key' => USERKEY})
     request.body = "fields *; where id = #{company_id};"
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     result = JSON.parse(response.read_body)
     if result.empty? 
       {:external_id => 'NA', :name => 'NA',:description => 'NA',:websites => 'NA'}
@@ -183,7 +188,7 @@ module GamesApiModule
     puts "Called to Game Series Request with parameter: " << game_id.to_s
     request = Net::HTTP::Get.new(URI(GAME_COLLECTION_URI), {'user-key' => USERKEY})
     request.body = "fields *; where games = [#{game_id}];"
-    result= JSON.parse(HTTP_CNF.request(request).read_body)
+    result= JSON.parse(http_construct.request(request).read_body)
     if result.empty?
       nil
     else
@@ -220,7 +225,7 @@ module GamesApiModule
     puts "Called to Latest Feed Request with parameter: " << DateTime.strptime(time.to_s,'%s').strftime("%A-%d-%b-%Y")
     request = buildRequest(GAME_ARTICLE_URI)
     request.body = "fields *; where published_at > #{time};limit 12;"
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     result = JSON.parse(response.read_body)
     puts result
     game_article_list = []
@@ -242,7 +247,7 @@ module GamesApiModule
     puts "Called to News Feed Request with parameter: " << game_id.to_s
     request = buildRequest(GAME_NEWS_GROUP_URI)
     request.body = "fields *; where game = #{game_id};"
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     result = JSON.parse(response.read_body)
     article_ids = []
     
@@ -275,7 +280,7 @@ module GamesApiModule
     puts "Called to Game Article Request with parameter: " << id.to_s
     request = Net::HTTP::Get.new(URI(GAME_ARTICLE_URI), {'user-key' => USERKEY})
     request.body = "fields *; where id = #{id};"
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     
     game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil}
     article_meta = JSON.parse(response.read_body).first
@@ -292,7 +297,7 @@ module GamesApiModule
     request = buildRequest(GAME_EXTERNAL_ARTICLE_URI)
     request.body = "fields *; where id = #{id};"
     
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     puts JSON.parse(response.read_body)
     
     if JSON.parse(response.read_body).empty?
@@ -338,7 +343,7 @@ module GamesApiModule
     #Return games released around 1 month
     request.body = "fields *,game.name; where date > #{3.month.ago.to_i} & date < #{Time.now.to_i}  & game.platforms = #{platform_id}; sort m desc; limit 20;"
     puts request.body
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     puts JSON.parse(response.read_body) 
     JSON.parse(response.read_body)
   end
@@ -349,7 +354,7 @@ module GamesApiModule
     platform_id = platformCodeConvert(platform)
     request.body = "fields id,name,platforms.name,first_release_date; where first_release_date > #{1.month.ago.to_i} & first_release_date < #{Time.now.to_i} & platforms = {#{platform_id}}; limit 20;"
     puts request.body
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     puts JSON.parse(response.read_body) 
     JSON.parse(response.read_body)
   end
@@ -360,7 +365,7 @@ module GamesApiModule
     request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW}; sort popularity desc;"
     #request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW} & hypes > 500; sort hypes desc;"
 
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     puts response.read_body
     result = JSON.parse(response.read_body)
     ids_array = []
@@ -382,7 +387,7 @@ module GamesApiModule
     request.body = "fields id,name,platforms.name; where platforms = {#{platform_id}}; sort popularity desc; limit 10;"
     puts request.body
     
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     puts response.read_body
     JSON.parse(response.read_body)
     # ids_array = []
@@ -404,7 +409,7 @@ module GamesApiModule
       request.body = "fields *; where game = #{id};"
     end
     
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     
     JSON.parse(response.read_body)
     #releaseTime = result.first['date']
@@ -420,7 +425,7 @@ module GamesApiModule
       request = Net::HTTP::Get.new(URI(COVER_URI), {'user-key' => USERKEY})
       #request.body = "fields name,summary; where id = #{gameID};";
       request.body = "fields url; where game = (#{game_id});"
-      response = HTTP_CNF.request(request)
+      response = http_construct.request(request)
         
       if JSON.parse(response.read_body).empty?
           'NA'
@@ -435,7 +440,7 @@ module GamesApiModule
       puts "Called to Game Artwork Request with parameter: " << game_id.to_s
       request = Net::HTTP::Get.new(URI(ARTWORK_URI), {'user-key' => USERKEY})
       request.body = "fields *; where game = (#{game_id});"
-      response = HTTP_CNF.request(request)
+      response = http_construct.request(request)
       
       if JSON.parse(response.read_body).empty?
          ' '
@@ -453,7 +458,7 @@ module GamesApiModule
     #request.body = 'fields *; where name = "' << game_string << '";' QUERY FOR GAME_SEARCH_URI
     request.body  = 'search " '<< game_string << '";'
     puts request.body
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     #puts JSON.parse(response.read_body)
     result = JSON.parse(response.read_body)
     game_ids = []
@@ -467,7 +472,7 @@ module GamesApiModule
       puts "Called to Game Screenshots Request with parameter: " << game_id.to_s
       request = Net::HTTP::Get.new(URI(SCREENSHOTS_URI), {'user-key' => USERKEY})
       request.body = "fields *; where game = (#{game_id});"
-      response = HTTP_CNF.request(request)
+      response = http_construct.request(request)
   
       if JSON.parse(response.read_body).empty?
           DUMMY_SCREENSHOT
@@ -484,7 +489,7 @@ module GamesApiModule
     puts "Called to Game Video Request with parameter: " << game_id.to_s
     request = Net::HTTP::Get.new(URI(VIDEO_URI), {'user-key' => USERKEY})
     request.body = "fields *; where game = (#{game_id});"
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     
     game_videos_url = []
     
@@ -577,7 +582,7 @@ module GamesApiModule
   def gamesPlatformRequest(id)
     request = Net::HTTP::Get.new(URI(PLATFORM_URI), {'user-key' => USERKEY})
     request.body = "fields *; where id = #{id};";
-    response = HTTP_CNF.request(request)
+    response = http_construct.request(request)
     puts JSON.parse(response.read_body).first
     JSON.parse(response.read_body).first
   end
@@ -587,7 +592,7 @@ module GamesApiModule
    
   #   # request.body = "fields alpha_channel,animated,height,image_id,url,width;";
   #   request.body = 'fields *; where image_id = ' << logo_id << ';';
-  #   response = HTTP_CNF.request(request)
+  #   response = http_construct.request(request)
   #   result = JSON.parse(response.read_body)
   #   img = []
     
