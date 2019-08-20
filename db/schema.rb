@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_15_103959) do
+ActiveRecord::Schema.define(version: 2019_08_20_034212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "companies", force: :cascade do |t|
+    t.integer "external_id"
+    t.string "name"
+    t.string "description"
+    t.string "logo"
+    t.integer "start_date"
+    t.integer "start_date_category"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
@@ -130,6 +142,19 @@ ActiveRecord::Schema.define(version: 2019_08_15_103959) do
     t.index ["platform_id"], name: "index_games_platforms_on_platform_id"
   end
 
+  create_table "involved_companies", force: :cascade do |t|
+    t.boolean "developer"
+    t.boolean "publisher"
+    t.boolean "supporting"
+    t.boolean "porting"
+    t.bigint "game_id"
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_involved_companies_on_company_id"
+    t.index ["game_id"], name: "index_involved_companies_on_game_id"
+  end
+
   create_table "platforms", force: :cascade do |t|
     t.integer "external_id"
     t.string "abbreviation"
@@ -165,5 +190,7 @@ ActiveRecord::Schema.define(version: 2019_08_15_103959) do
   add_foreign_key "game_release_dates", "platforms"
   add_foreign_key "game_videos", "games"
   add_foreign_key "games", "game_collections"
+  add_foreign_key "involved_companies", "companies"
+  add_foreign_key "involved_companies", "games"
   add_foreign_key "screenshots", "games"
 end

@@ -9,6 +9,9 @@ class Game < ApplicationRecord
   belongs_to :game_collection,  optional: true
   
   has_many :game_article_collection, dependent: :destroy
+  has_many :involved_companies
+  has_many :companies, :through => :involved_companies
+  
   
   validates :name,:summary,:cover,:first_release_date, presence: true
   

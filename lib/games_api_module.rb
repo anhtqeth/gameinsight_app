@@ -114,7 +114,7 @@ module GamesApiModule
       company[:id] = rs["company"]
       
       if rs["developer"]
-        company[:type] = 'Developer'
+          company[:type] = 'Developer'
         else if rs["publisher"]
           company[:type] = 'Publisher'
         end
@@ -153,8 +153,9 @@ module GamesApiModule
     if result.empty? 
       {:external_id => 'NA', :name => 'NA',:description => 'NA',:websites => 'NA'}
     else
-      puts "Result here: " << result.to_s
-      gameCompanyProcess(result.first)
+      # puts "Result here: " << result.to_s
+      result.first
+      #gameCompanyProcess(result.first)
     end
   end
   #TODO Add field as needed
