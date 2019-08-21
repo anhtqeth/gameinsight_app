@@ -482,7 +482,7 @@ module GamesApiModule
     end
     game_ids
   end
-  
+  #TODO - Handle empty image here
   def gameScreenshotRequest(game_id)
       puts "Called to Game Screenshots Request with parameter: " << game_id.to_s
       request = Net::HTTP::Get.new(URI(SCREENSHOTS_URI), {'user-key' => USERKEY})

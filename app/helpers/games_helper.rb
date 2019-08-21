@@ -46,6 +46,110 @@ module GamesHelper
     end
   end
   
+  
+  #Used to render bootstrap carousel
+  #This include a small div overlay on top of the image
+  #and show text on the image
+  def carousel_render(data)
+    if data_verify(data)
+      #TODO - Render Carousel here
+      Carousel.new(self,data).html
+    else
+      content_tag(:p, "We found no news source related to this game yet. 
+      Do you have ones? Consider contributing it!")
+    end
+  end
+  
+  class Carousel
+    # def initialize(view, images)
+    #   @view, @images = view, images
+    #   @uid = SecureRandom.hex(6)
+    # end
+    #TODO - Check if you need to put method on private and use delegate?
+    
+    def initialize(view,media)
+      @view, @media_data, @size = view,media,media.size
+    end
+    
+    def html
+      carousel = safe_join([carousel_indicator(@size),carousel_inner(@media_data)])
+      content_tag(:div,carousel,id: "carouselIndicators",class: "carousel slide","data-ride": "carousel")
+    end
+    
+    private
+    attr_accessor :view, :media
+    #what is delegate?
+    delegate :link_to, :content_tag, :image_tag, :safe_join, to: :view
+    
+    def carousel_indicator(size)
+      content_tag(:ol,data_slide(size),class: "carousel-indicators")
+    end
+    
+    #This is the indicator of the current slide
+    #Need
+    def data_slide(size)
+      content = []
+      #TODO - Change the data-target (and id of the carousel wrapper)
+      i = 1
+      content << content_tag(:li,"","data-target": "#carouselIndicators","data-slide-to": 0, class: "active")
+      size.times.each do |li|
+        content << content_tag(:li,"","data-target": "#carouselIndicators","data-slide-to": i)
+        i+=1
+      end
+      safe_join(content)
+    end
+    
+    def carousel_inner(media_data)
+      content = safe_join([carousel_item(media_data),carousel_control])
+      content_tag(:div,content,class: "carousel-inner")
+    end
+    
+    #Render carousel-item div. 
+    #Input is an array of media_url
+    def carousel_item(media_data)
+      items = []
+      #Render the first img (active) media
+      first_media = image_tag(media_data.first, class: "d-block w-100")
+      items << content_tag(:div, first_media, class: "carousel-item active")
+      
+      media_data.each do |media_url|
+        next if media_url.nil?
+        remaining_media = image_tag(media_url, class: "d-block w-100")
+        items << content_tag(:div, remaining_media, class: "carousel-item")
+      end
+      safe_join(items)
+    end
+    
+    def carousel_control
+      control = []
+      control << content_tag(:a,direction("prev"),href: "#carouselIndicators",class: "carousel-control-prev","role": "button", "data-slide": "prev")
+      control << content_tag(:a,direction("next"),href: "#carouselIndicators",class: "carousel-control-next","role": "button", "data-slide": "next")
+      safe_join(control)
+    end
+    
+    def direction(data)
+      content = []
+      content << content_tag(:span,"",class: "carousel-control-#{data}-icon","aria-hidden": "true")
+      content << content_tag(:span,data, class: "sr-only")
+      safe_join(content)
+    end
+    
+    def getMediaUrl(model,data_type)
+      media = []
+      model.each do |x|
+        case data_type
+        when 'vid'
+          media << model.videos.url
+        when 'img'
+          media << model.screenshots.url
+        else
+          puts 'Please set correct data type'
+        end
+      end
+      media
+    end
+  end
+  
   #Not used yet
   #TODO - Working Carousel Helper for Games Detail
   # def carousel_for(model)
@@ -117,6 +221,4 @@ module GamesHelper
   #     control = link_to(icon, "#{@uid}", options)
   #   end
   # end
-  
-  
 end

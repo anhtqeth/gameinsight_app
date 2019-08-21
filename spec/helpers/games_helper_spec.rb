@@ -1,5 +1,6 @@
 require 'rails_helper'
 include GamesHelper
+#include ActionView::Helpers::AssetTagHelper
 # Specs in this file have access to a helper object that includes
 # the GameGenreHelper. For example:
 #
@@ -35,6 +36,26 @@ RSpec.describe GamesHelper, type: :helper do
       
     end
     
+    
+  end
+  
+  describe "render media carousel" do
+    it "can create new carousel" do 
+      
+    end
+    
+    it "can render carousel items" do 
+      carousel = Carousel.new
+      game = Game.find(13)
+      
+      media_data = []
+      game.screenshots.each do |media|
+        media_data << media.url
+      end
+      carousel.carousel_item(media_data)
+      putscarousel.carousel_item(media_data)
+      
+    end
     
   end
 end
