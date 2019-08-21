@@ -348,6 +348,8 @@ module GamesApiModule
     JSON.parse(response.read_body)
   end
   
+  #This is to get the release date using GAME_URI instead of release date enpoint
+  #This is a workaround I used for limiting the result of regions
   def gameAltRecentRelease(platform)
     puts "Called to Altenate Recent Released Game Request"
     request = buildRequest(GAME_URI)
@@ -359,10 +361,23 @@ module GamesApiModule
     JSON.parse(response.read_body)
   end
   
+  #This will be used to get games that released base on a date.
+  def gameReleaseRequest(time)
+    # puts "Called to Recent Released Game Request"
+    # request = buildRequest(GAME_URI)
+    # platform_id = platformCodeConvert(platform)
+    # request.body = "fields id,name,platforms.name,first_release_date; where first_release_date > #{1.month.ago.to_i} & first_release_date < #{Time.now.to_i} & platforms = {#{platform_id}}; limit 20;"
+    # puts request.body
+    # response = http_construct.request(request)
+    # puts JSON.parse(response.read_body) 
+    # JSON.parse(response.read_body)
+  end
+  
+  
   def gamePopularUpcomingRelease
     puts "Called to Popular Upcoming Release game"
     request = buildRequest(GAME_URI)
-    request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW}; sort popularity desc;"
+    request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW}; sort popularity desc; limit 25;"
     #request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW} & hypes > 500; sort hypes desc;"
 
     response = http_construct.request(request)

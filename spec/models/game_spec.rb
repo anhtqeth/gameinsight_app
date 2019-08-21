@@ -49,10 +49,10 @@ RSpec.describe Game, type: :model do
   #   expect(subject).to_not be_valid
   # end
   
-  it "is not valid without a release date" do 
-    subject.first_release_date = nil
-    expect(subject).to_not be_valid
-  end
+  # it "is not valid without a release date" do 
+  #   subject.first_release_date = nil
+  #   expect(subject).to_not be_valid
+  # end
   
   # it "fetch data from api" do
   #   game = Game.new()
@@ -92,6 +92,8 @@ RSpec.describe Game, type: :model do
   #   expect(latest_switch_games).not_to be_empty
   # end
   
-  
-  
+  it "can fetch upcoming release base on time" do 
+    time = Date.today.at_beginning_of_month.next_month
+    time = Date.parse(time.to_s)
+  end
 end

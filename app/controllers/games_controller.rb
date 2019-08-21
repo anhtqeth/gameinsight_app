@@ -5,7 +5,6 @@ class GamesController < ApplicationController
   def show
     #If this game is not in db, save it. 
     game =  Game.friendly.find(params[:id])
-    
     if Game.friendly.find(params[:id])
       @game_details = Game.friendly.find(params[:id])
       @game_videos = @game_details.game_videos
@@ -56,9 +55,6 @@ class GamesController < ApplicationController
     @game_publisher = game_dev
     @game_developer = game_pub
     
-    # @game_publisher = gameCompaniesRequest(game.external_id,'Publisher')
-    # @game_developer = gameCompaniesRequest(game.external_id,'Developer')
-   
     render 'games/game_detail'
   end
   
@@ -78,9 +74,18 @@ class GamesController < ApplicationController
   end
   
   def discover
+    @ps4_hottest
     
+    @game_by_platform
+    
+    @just_released
     
     render 'games/game_discover'
+  end
+  
+  def releases
+    
+    
   end
   
   def update

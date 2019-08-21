@@ -74,20 +74,11 @@ class Game < ApplicationRecord
      end
      game.popularity = game_detail.popularity
      game.save
-     
-     #TODO - Move below to a function
-     release_date = GameReleaseDate.new
-     release_date.saveAPIData(id)
-     screenshot = Screenshot.new
-     screenshot.saveAPIData(id)
-     videos = GameVideo.new
-     videos.saveAPIData(id)
-     company = Company.new
-     company.saveAPIData(id,'Publisher')
-     company.saveAPIData(id,'Developer')
-     
+     saveGameRelatedData
      game
   end
+  
+  
 
   def fetchLatestRelease(platform)
     min_time = Date.parse((1.month.ago).to_s)
@@ -133,13 +124,33 @@ class Game < ApplicationRecord
     popular_upcoming_games = Game.order(popularity: :desc).where("first_release_date > ?",time)
     
     if popular_upcoming_games.empty? or popular_upcoming_games.size < 4
-      id_array = gamePopularUpcomingRelease
-      id_array.each do |id|
-        saveAPIData(id)
-      end
-      popular_upcoming_games = gamesListProcess(gamePopularUpcomingRelease)
+      saveAPIPopularGame
     end
     popular_upcoming_games
+  end
+  
+  def saveAPIPopularGame
+    id_array = gamePopularUpcomingRelease
+      id_array.each do |id|
+        saveAPIData(id)
+    end
+  end
+  
+  private
+  #After a new game is added, an update to other model is also required. 
+  #As these model reference back to game. This need to be executed after a game is saved.
+  #Private method
+  def saveGameRelatedData
+     #TODO - Move below to a function
+     release_date = GameReleaseDate.new
+     release_date.saveAPIData(id)
+     screenshot = Screenshot.new
+     screenshot.saveAPIData(id)
+     videos = GameVideo.new
+     videos.saveAPIData(id)
+     company = Company.new
+     company.saveAPIData(id,'Publisher')
+     company.saveAPIData(id,'Developer')
   end
   
 end

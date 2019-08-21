@@ -1,7 +1,16 @@
 <head>
     <% provide(:title, "Find a game to play") %>
     <title><%= yield(:title) %></title>
-  </head>
+</head>
+
+<!--Most discussed/hottest game popover for more detail-->
+<%= render "games/layouts/hotgames" %>
+
+<!--Upcoming Release (Around next month)-->
 
 
- <%= render "games/layouts/hotgames" %>
+<!---->
+
+
+
+

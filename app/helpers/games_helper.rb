@@ -48,75 +48,75 @@ module GamesHelper
   
   #Not used yet
   #TODO - Working Carousel Helper for Games Detail
-  def carousel_for(model)
-    images = []
-    model.each do |img|
-      images << img.url
-    end
-    Carousel.new(self, images).html
-  end
+  # def carousel_for(model)
+  #   images = []
+  #   model.each do |img|
+  #     images << img.url
+  #   end
+  #   Carousel.new(self, images).html
+  # end
 
-  class Carousel
-    def initialize(view, images)
-      @view, @images = view, images
-      @uid = SecureRandom.hex(6)
-    end
+  # class Carousel
+  #   def initialize(view, images)
+  #     @view, @images = view, images
+  #     @uid = SecureRandom.hex(6)
+  #   end
 
-    def html
-      content = view.safe_join([indicators, slides, controls])
-      view.content_tag(:div, content, class: 'carousel slide')
-    end
+  #   def html
+  #     content = view.safe_join([indicators, slides, controls])
+  #     view.content_tag(:div, content, class: 'carousel slide')
+  #   end
 
-    private
-    attr_accessor :view, :images
-    #what is delegate?
-    delegate :link_to, :content_tag, :image_tag, :safe_join, to: :view
+  #   private
+  #   attr_accessor :view, :images
+  #   #what is delegate?
+  #   delegate :link_to, :content_tag, :image_tag, :safe_join, to: :view
     
-    def indicators
-      items = images.count.times.map { |index| indicator_tag(index) }
-      #need to see what this does...
-      content_tag(:ol, safe_join(items), class: 'carousel-indicators')
-    end
+  #   def indicators
+  #     items = images.count.times.map { |index| indicator_tag(index) }
+  #     #need to see what this does...
+  #     content_tag(:ol, safe_join(items), class: 'carousel-indicators')
+  #   end
     
-    def indicator_tag(index)
-      options = {
-        class: (index.zero? ? 'active' : ''),
-        data: { 
-          target: @uid, 
-          slide_to: index 
-        }
-      }
+  #   def indicator_tag(index)
+  #     options = {
+  #       class: (index.zero? ? 'active' : ''),
+  #       data: { 
+  #         target: @uid, 
+  #         slide_to: index 
+  #       }
+  #     }
 
-      content_tag(:li, '', options)
-    end
+  #     content_tag(:li, '', options)
+  #   end
 
-    def slides
-      items = images.map.with_index { |image, index| slide_tag(image, index.zero?) }
-      content_tag(:div, safe_join(items), class: 'carousel-inner')
-    end
+  #   def slides
+  #     items = images.map.with_index { |image, index| slide_tag(image, index.zero?) }
+  #     content_tag(:div, safe_join(items), class: 'carousel-inner')
+  #   end
     
-    def slide_tag(image, is_active)
-      options = {
-        class: (is_active ? 'carousel-item active' : 'carousel-item'),
-      }
+  #   def slide_tag(image, is_active)
+  #     options = {
+  #       class: (is_active ? 'carousel-item active' : 'carousel-item'),
+  #     }
 
-      content_tag(:div, image_tag(image), options)
-    end
+  #     content_tag(:div, image_tag(image), options)
+  #   end
 
-    def controls
-      safe_join([control_tag('prev'), control_tag('next')])
-    end
+  #   def controls
+  #     safe_join([control_tag('prev'), control_tag('next')])
+  #   end
 
-    def control_tag(direction)
-      options = {
-        class: "carousel-control-#{direction} ",
-        data: { slide: direction == 'prev' ? 'prev' : 'next' }
-      }
+  #   def control_tag(direction)
+  #     options = {
+  #       class: "carousel-control-#{direction} ",
+  #       data: { slide: direction == 'prev' ? 'prev' : 'next' }
+  #     }
 
-      icon = content_tag(:i, nil, class: "carousel-control-#{direction}-icon")
-      control = link_to(icon, "#{@uid}", options)
-    end
-  end
+  #     icon = content_tag(:i, nil, class: "carousel-control-#{direction}-icon")
+  #     control = link_to(icon, "#{@uid}", options)
+  #   end
+  # end
   
   
 end
