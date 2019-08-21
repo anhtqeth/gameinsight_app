@@ -20,5 +20,4 @@ RSpec.describe InvolvedCompany, type: :model do
     expect(developer.name).not_to be_nil
   end
   
-  
 end
