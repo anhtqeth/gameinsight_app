@@ -74,7 +74,7 @@ class Game < ApplicationRecord
      end
      game.popularity = game_detail.popularity
      game.save
-     saveGameRelatedData
+     saveGameRelatedData(id)
      game
   end
   
@@ -140,7 +140,7 @@ class Game < ApplicationRecord
   #After a new game is added, an update to other model is also required. 
   #As these model reference back to game. This need to be executed after a game is saved.
   #Private method
-  def saveGameRelatedData
+  def saveGameRelatedData(id)
      #TODO - Move below to a function
      release_date = GameReleaseDate.new
      release_date.saveAPIData(id)

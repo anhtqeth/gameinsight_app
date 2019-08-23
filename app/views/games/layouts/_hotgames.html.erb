@@ -4,6 +4,7 @@
     <hr id="new-content-line">
     <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>
   </body>
+
 <% if @hotgames.nil? %>
   
 <% else %>
@@ -22,10 +23,20 @@
       <img class="d-block w-100" src=<%= @hotgames.first.screenshots.first.url %> alt="First slide">
     </div>
     
-    <% @hotgames.each do |game| %>
+    
+    <% @hotgames[1..-1].each do |game| %>
     <%  next if game.screenshots.empty? %> 
     <div class="carousel-item">
       <img class="d-block w-100" src=<%= game.screenshots.first.url %> alt="Second slide">
+      <div class="card-img-overlay" id="game-discover-overlay">
+        <h1 class="card-title"><a href=<%=game_path(game.slug) %> target="_blank"><%= game.name %></a></h1>
+        <p class="card-text"><%= truncate(game.summary, length: 300)%></p>
+        <p class="card-text">Release Date: <%= date_format(game.first_release_date) %></p>
+        <span class="badge badge-warning">Action</span>
+        <span class="badge badge-warning">Role-playing</span>
+        <br>  
+        <a href=<%=game_path(game.slug) %> target="_blank" class="btn btn-dark" id="discover-btn">Details</a>
+      </div>
     </div>
     <% end %>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -40,4 +51,5 @@
 <% end %>
 </div>
 <br>
-<%= carousel_render(@data)  %>
+
+<%= carousel_render(@hotgames,'img')  %>

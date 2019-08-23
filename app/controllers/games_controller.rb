@@ -76,12 +76,11 @@ class GamesController < ApplicationController
   def discover
     game = Game.new
     @hotgames = game.fetchPopularUpcomingRelease
-    @data = ["//images.igdb.com/igdb/image/upload/t_1080p/ywrkjcrbeemmb51flsfj.jpg", "//images.igdb.com/igdb/image/upload/t_1080p/rm35ytrytuka9qkylqyk.jpg", "//images.igdb.com/igdb/image/upload/t_1080p/qseegzssgetrybgbplrv.jpg", "//images.igdb.com/igdb/image/upload/t_1080p/nee23o7rtpaqbu8g7byx.jpg", "//images.igdb.com/igdb/image/upload/t_1080p/r7hpzsqic1bjwyzn1bnq.jpg", "//images.igdb.com/igdb/image/upload/t_1080p/wunlbofh23trw0u67gms.jpg", "//images.igdb.com/igdb/image/upload/t_1080p/o4mg2wvhlcikaogvvzqe.jpg", "//images.igdb.com/igdb/image/upload/t_1080p/gpt3d0gpue5mat4kkso6.jpg", "//images.igdb.com/igdb/image/upload/t_1080p/s2zdtxopibrfjbxvpj5h.jpg", "//images.igdb.com/igdb/image/upload/t_1080p/mzg7f3xx57sf8rt7tja8.jpg"]
     
     
-    @game_by_platform
+    # @game_by_platform
     
-    @just_released
+    # @just_released
     
     render 'games/game_discover'
   end

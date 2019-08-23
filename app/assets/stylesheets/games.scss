@@ -36,3 +36,37 @@
   border-radius: 50%!important;
   background-color: #ffc107!important;
 }
+
+#game-discover-overlay{
+  opacity:0;
+}
+
+
+#game-discover-overlay:hover {
+    h1 {
+      color: #ffc107;
+    }
+    
+    a {
+      text-decoration: none;
+      color: #ffc107;
+    }
+    
+    p {
+      color: white;
+    }
+    opacity: 0.8;
+    background: black;
+}
+
+#game-detail-feature{
+  opacity: 0.8;
+  background: black;
+   h1 {
+      color: #ffc107;
+   }
+}
+
+#discover-btn{
+  float: right;
+}
