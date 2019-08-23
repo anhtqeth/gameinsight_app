@@ -493,6 +493,7 @@ module GamesApiModule
           DUMMY_SCREENSHOT
         else
           result = JSON.parse(response.read_body)
+          puts result
           #Construct image format
           result.each do |screenshot|
             screenshot['url'].sub! 't_thumb','t_1080p'

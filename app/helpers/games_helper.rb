@@ -7,6 +7,31 @@ module GamesHelper
     data.nil? ? false : true
   end
   
+  #Handle formatting for field that require specific date format
+  #Example: game release date
+  #Para: date to be format
+  def date_format(date)
+    date.strftime("%d-%B-%Y")
+  end
+  
+  
+  def getMediaUrl(model,data_type)
+    media = []
+    model.each do |game|
+      case data_type
+      when 'vid'
+        next if game.videos.empty?
+        media << game.game_videos.first.url
+      when 'img'
+        next if game.screenshots.empty?
+        media << game.screenshots.first.url
+      else
+        puts 'Please set correct data type'
+      end
+    end
+    media
+  end
+  
   #Newsfeed render for a specific game
   #Input is newsfeed from controller
   #If data is nil, render a simple content tag.
@@ -16,7 +41,7 @@ module GamesHelper
       content = []
       newsfeed.each do |news|
         #Put news data to media to render for each element
-        content << content_tag(:div,media(news),class: "media") << content_tag(:hr)
+        content << content_tag(:div,media(news),class: "media")
       end
       #Rendering html
       safe_join(content)
@@ -40,7 +65,7 @@ module GamesHelper
       #Wrap media-body
       media_body = content_tag(:div,safe_join([news_title, news_summary, news_published_time]),class: "media-body")
       #Return the media element
-      safe_join([news_img,media_body])
+      safe_join([news_img,media_body,content_tag(:hr)])
     else
       puts "IMG is not there!"
     end
@@ -50,23 +75,25 @@ module GamesHelper
   #Used to render bootstrap carousel
   #This include a small div overlay on top of the image
   #and show text on the image
-  def carousel_render(data)
+  def carousel_render(data,type)
     if data_verify(data)
-      #TODO - Render Carousel here
-      Carousel.new(self,data).html
+      Carousel.new(self,getMediaUrl(data,type)).html
     else
       content_tag(:p, "We found no news source related to this game yet. 
       Do you have ones? Consider contributing it!")
     end
   end
   
+  #Carousel class for handling Carousel
+  #There will be a check for media type (img/videos) 
+  #The input is an array of url
   class Carousel
     # def initialize(view, images)
     #   @view, @images = view, images
     #   @uid = SecureRandom.hex(6)
     # end
-    #TODO - Check if you need to put method on private and use delegate?
     
+    #TODO - The id is hard-coded! This still cannot be used widely!
     def initialize(view,media)
       @view, @media_data, @size = view,media,media.size
     end
@@ -109,12 +136,12 @@ module GamesHelper
     def carousel_item(media_data)
       items = []
       #Render the first img (active) media
-      first_media = image_tag(media_data.first, class: "d-block w-100")
+      first_media = image_tag(media_data.first, class: "d-block w-100", id: "hot-games")
       items << content_tag(:div, first_media, class: "carousel-item active")
       
-      media_data.each do |media_url|
+      media_data[1..-1].each do |media_url|
         next if media_url.nil?
-        remaining_media = image_tag(media_url, class: "d-block w-100")
+        remaining_media = image_tag(media_url, class: "d-block w-100",  id: "hot-games")
         items << content_tag(:div, remaining_media, class: "carousel-item")
       end
       safe_join(items)
@@ -134,91 +161,5 @@ module GamesHelper
       safe_join(content)
     end
     
-    def getMediaUrl(model,data_type)
-      media = []
-      model.each do |x|
-        case data_type
-        when 'vid'
-          media << model.videos.url
-        when 'img'
-          media << model.screenshots.url
-        else
-          puts 'Please set correct data type'
-        end
-      end
-      media
-    end
   end
-  
-  #Not used yet
-  #TODO - Working Carousel Helper for Games Detail
-  # def carousel_for(model)
-  #   images = []
-  #   model.each do |img|
-  #     images << img.url
-  #   end
-  #   Carousel.new(self, images).html
-  # end
-
-  # class Carousel
-  #   def initialize(view, images)
-  #     @view, @images = view, images
-  #     @uid = SecureRandom.hex(6)
-  #   end
-
-  #   def html
-  #     content = view.safe_join([indicators, slides, controls])
-  #     view.content_tag(:div, content, class: 'carousel slide')
-  #   end
-
-  #   private
-  #   attr_accessor :view, :images
-  #   #what is delegate?
-  #   delegate :link_to, :content_tag, :image_tag, :safe_join, to: :view
-    
-  #   def indicators
-  #     items = images.count.times.map { |index| indicator_tag(index) }
-  #     #need to see what this does...
-  #     content_tag(:ol, safe_join(items), class: 'carousel-indicators')
-  #   end
-    
-  #   def indicator_tag(index)
-  #     options = {
-  #       class: (index.zero? ? 'active' : ''),
-  #       data: { 
-  #         target: @uid, 
-  #         slide_to: index 
-  #       }
-  #     }
-
-  #     content_tag(:li, '', options)
-  #   end
-
-  #   def slides
-  #     items = images.map.with_index { |image, index| slide_tag(image, index.zero?) }
-  #     content_tag(:div, safe_join(items), class: 'carousel-inner')
-  #   end
-    
-  #   def slide_tag(image, is_active)
-  #     options = {
-  #       class: (is_active ? 'carousel-item active' : 'carousel-item'),
-  #     }
-
-  #     content_tag(:div, image_tag(image), options)
-  #   end
-
-  #   def controls
-  #     safe_join([control_tag('prev'), control_tag('next')])
-  #   end
-
-  #   def control_tag(direction)
-  #     options = {
-  #       class: "carousel-control-#{direction} ",
-  #       data: { slide: direction == 'prev' ? 'prev' : 'next' }
-  #     }
-
-  #     icon = content_tag(:i, nil, class: "carousel-control-#{direction}-icon")
-  #     control = link_to(icon, "#{@uid}", options)
-  #   end
-  # end
 end
