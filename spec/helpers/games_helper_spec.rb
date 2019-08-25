@@ -72,5 +72,12 @@ RSpec.describe GamesHelper, type: :helper do
       puts "Time output #{date_format(time)}"
     end
     
+    it "can render badge" do 
+      time = Time.now
+      puts "Time input #{time}"
+      expect(date_format(time)).not_to be_nil
+      puts "Time output #{date_format(time)}"
+    end
+    
   end
 end
