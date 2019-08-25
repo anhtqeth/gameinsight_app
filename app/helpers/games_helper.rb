@@ -14,7 +14,6 @@ module GamesHelper
     date.strftime("%d-%B-%Y")
   end
   
-  
   #Newsfeed render for a specific game
   #Input is newsfeed from controller
   #If data is nil, render a simple content tag.
