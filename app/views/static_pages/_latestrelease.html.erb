@@ -4,8 +4,12 @@
     <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
     <div class="card-body">
     <small class="card-text"><%= gamecard[:name] %></small>
+    <br>
+    <small class="card-text"><%= date_format(gamecard[:first_release_date]) %></small>
+    <div class="card-img-overlay" id="release-overlay">
+    <h5 class="card-text-center"><%= gamecard[:name] %></h5>
+    </div>
     </div>
     <!--<a href="<=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>-->
   </div>
 <% end%>
-
