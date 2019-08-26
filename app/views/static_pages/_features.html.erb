@@ -1,5 +1,5 @@
 
-<!--Legacy @game_newsfeed_list rendered-->
+<!--Legacy @game_newsfeed_list rendered currently handled in helper->
 <div class="card-deck">
 <% @game_newsfeed_list[1..2].each do |news| %>
   <% if news[:img].nil? %>
@@ -37,3 +37,49 @@
    <hr>
 <%end%>
 <%end%>
+<!--Legacy hot games, currently handled in helper-->
+<% if @hotgames.nil? %>
+  
+<% else %>
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <!--width: 10px;
+    height: 10px;
+    border-radius: 10px; CSS to make round indicator-->
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    
+    <div class="carousel-item active">
+      <img class="d-block w-100" src=<%= @hotgames.first.screenshots.first.url %> alt="First slide">
+    </div>
+    
+    
+    <% @hotgames[1..-1].each do |game| %>
+    <%  next if game.screenshots.empty? %> 
+    <div class="carousel-item">
+      <img class="d-block w-100" src=<%= game.screenshots.first.url %> alt="Second slide">
+      <div class="card-img-overlay" id="game-discover-overlay">
+        <h1 class="card-title"><a href=<%=game_path(game.slug) %> target="_blank"><%= game.name %></a></h1>
+        <p class="card-text"><%= truncate(game.summary, length: 300)%></p>
+        <p class="card-text">Release Date: <%= date_format(game.first_release_date) %></p>
+        <!--<= badge_render(game.game_genres) %>-->
+        <br>  
+        <a href=<%=game_path(game.slug) %> target="_blank" class="btn btn-dark" id="discover-btn">Details</a>
+      </div>
+    </div>
+    <% end %>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+    </div>
+<% end %>
+</div>
+<br>

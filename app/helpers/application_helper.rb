@@ -8,4 +8,12 @@ module ApplicationHelper
       page_title + " | " + base_title
     end
   end
+
+  #Used to check data before render stuff to view. 
+  #All helpers need to check this
+  def data_verify(data)
+    data.nil? ? false : true
+  end
+  
+  
 end
