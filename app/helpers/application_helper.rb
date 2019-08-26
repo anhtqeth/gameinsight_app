@@ -15,5 +15,10 @@ module ApplicationHelper
     data.nil? ? false : true
   end
   
+  def date_format(date)
+    date.strftime("%d-%B-%Y")
+  end
+  
+  
   
 end

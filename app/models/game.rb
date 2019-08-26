@@ -79,7 +79,6 @@ class Game < ApplicationRecord
   end
   
   
-
   def fetchLatestRelease(platform)
     min_time = Date.parse((1.month.ago).to_s)
     max_time = Date.parse(Time.now.to_s)
