@@ -9,17 +9,22 @@ Rails.application.routes.draw do
   
   get  '/signup',  to: 'user#new'
   
+  #GamesController
   get '/games/:id', to: 'games#show', as: 'game'
-  get '/discover', to: 'games#discover'
   get 'games/new-releases', to: 'games#newrelease'
+  get 'games/:id/guides', to: 'games#guides'
+  
   get '/genres/', to: 'game_genre#show', as: 'game_genres'
   
+  get '/hot', to: 'static_pages#hot'
+  get '/discover', to: 'games#discover'
+  
+  #PlatformsController
   get '/platforms/:id', to: 'platforms#show', as: 'platform'
   
+  #??Controller
   get '/reviews', to: 'reviews#show'
   
-  get 'games/:id/guides', to: 'games#guides'
-
   get '/search/', to: 'games#find', as: 'search'
   
 end

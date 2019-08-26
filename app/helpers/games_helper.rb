@@ -2,11 +2,7 @@ module GamesHelper
   #GamesHelper - Helper class to render view for GamesController
   #Date Added - 19 - August - 2019
   #Authors - Anh Truong
-  
-  def data_verify(data)
-    data.nil? ? false : true
-  end
-  
+
   #Handle formatting for field that require specific date format
   #Example: game release date
   #Para: date to be format

@@ -22,7 +22,9 @@ class StaticPagesController < ApplicationController
     
     @latest_newsfeed = game_article.fetchLatestNews(time)
     
-    @platforms_list = Platform.pluck(:name)
+    #TODO - Removing the platofmr list later on
+    data = ['PlayStation 4','PC (Microsoft Windows)','Nintendo Switch','Xbox One']
+    @platforms_list = Platform.where("name IN (?)",data).pluck(:name)
     
     if params[:platform_name].nil?
       puts params[:platform_name]
