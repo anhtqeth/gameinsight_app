@@ -14,6 +14,7 @@ class Game < ApplicationRecord
   
   
   validates :name,:summary,:cover,:first_release_date, presence: true
+  validates :external_id, uniqueness: true
   
   extend FriendlyId
   friendly_id :name, use: :slugged
