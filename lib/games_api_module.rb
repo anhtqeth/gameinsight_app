@@ -208,7 +208,11 @@ module GamesApiModule
     end
   end
   
+  
+  #[680100, 680050, 680839, 297836, 289079, 289058, 725471, 682094, 766504, 764468]
   def gameArticleProcess(article_meta)
+    
+    puts "Processing Article"
     game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil,:news_source=>nil}
    
     article_id = article_meta['id']
@@ -219,20 +223,26 @@ module GamesApiModule
     game_article.store(:summary,article_summary)
     article_img = article_meta['image']
     game_article.store(:img,article_img)
-    article_created_at = article_meta['created_at']
+    article_created_at = article_meta['published_at']
     game_article.store(:created_at,article_created_at)
-    #game_article.store(:created_at,DateTime.strptime(article_created_at.to_s,'%s').strftime("%A-%d-%b-%Y-%R"))
     article_title = article_meta['title']
     game_article.store(:title,article_title)
+    
     article_url = gameArticleExternalRequest(article_meta["website"])
+    #TODO - Fix new source error (get the newssource from api as well)
+    puts article_url
     game_article.store(:url,article_url)
-    news_source = PublicSuffix.parse(URI.parse(article_url).host).sld
+    if URI.parse(article_url)
+      news_source = PublicSuffix.parse(URI.parse(article_url).host).sld
+    else
+      news_source = 'NA'
+    end
     game_article.store(:news_source,news_source)
     
     puts game_article
     game_article
   end
-  #
+  #TODO - The newsfeed feature look spagetti! 
   def gameLatestNewsRequest(time)
     puts "Called to Latest Feed Request with parameter: " << DateTime.strptime(time.to_s,'%s').strftime("%A-%d-%b-%Y")
     request = buildRequest(GAME_ARTICLE_URI)
@@ -280,15 +290,18 @@ module GamesApiModule
       game_article_list = []
       article_ids.each do |id|
         game_article = gameArticleRequest(id)
-        unless game_article.nil?
-          game_article_list << game_article
-        end
+        next if game_article.nil?
+        game_article_list << game_article
+        
       end
       game_article_list
     end
   end
+  
+  #[680100, 680050, 680839, 297836, 289079, 289058, 725471, 682094, 766504, 764468]
     
   def gameArticleRequest(id)
+    #{:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil,:news_source=>nil}
     puts "Called to Game Article Request with parameter: " << id.to_s
     request = Net::HTTP::Get.new(URI(GAME_ARTICLE_URI), {'user-key' => USERKEY})
     request.body = "fields *; where id = #{id};"
@@ -296,11 +309,16 @@ module GamesApiModule
     
     game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil}
     article_meta = JSON.parse(response.read_body).first
-    if article_meta.nil?
+    
+    if article_meta.nil? 
       nil
     else
       #Constructing Article Hashes
-      game_article = gameArticleProcess(article_meta)
+      unless article_meta.key?("websites")
+        nil
+      else
+        game_article = gameArticleProcess(article_meta)
+      end
     end
   end
   

@@ -22,3 +22,24 @@ $(document).on 'ajax:before ajaxStart page:fetch', (event) ->
 $(document).on 'ajax:complete ajaxComplete page:change', (event) ->
   $('#loadingSpinner').hide()
   $('#releaseByPlatform').show()
+  
+$(document).on 'turbolinks:load', ->
+  $('#sidebarCollapse').on 'click', ->
+    $('#sidebar').toggleClass 'active'
+    return
+  return
+
+  
+# $(document).on 'turbolinks:load', ->
+#   # $('#sidebar').mCustomScrollbar theme: 'minimal'
+#   $('#dismiss, .overlay').on 'click', ->
+#     $('#sidebar').removeClass 'active'
+#     $('.overlay').removeClass 'active'
+#     return
+#   $('#sidebarCollapse').on 'click', ->
+#     $('#sidebar').addClass 'active'
+#     # $('.overlay').addClass('active');
+#     $('.collapse.in').toggleClass 'in'
+#     $('a[aria-expanded=true]').attr 'aria-expanded', 'false'
+#     return
+#   return
