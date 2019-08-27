@@ -1,5 +1,8 @@
 <span><h4>| <%= @game_details[:name] %> Trailers & Gameplay</h4></span>
 <hr id="new-content-line">
+<% if @game_videos.empty? %>
+  <p>We don't have any gameplay video for  <%= @game_details[:name] %> yet! Consider add one. </p>
+<%else%>
 <div id="video-carousel-example2" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false">
       <div class="carousel-inner">
       
@@ -27,3 +30,4 @@
         <span class="sr-only">Next</span>
       </a>
 </div>
+<%end%>

@@ -1,3 +1,18 @@
+<% if @game_screenshots.empty? %>
+<div id="game-feature-img"  class="card bg-dark text-white">
+  <div class="card-img-overlay" id="game-detail-feature">
+    <div class="row">
+      <div class="col-md-auto">
+        
+      </div>  
+      <div class="col">  
+         <h1 style="float:right;"><%=@game_details[:name] %></h1>
+      </div>
+    </div>
+  </div>
+</div>  
+</div>
+<% else%>
 <div id="game-feature-img"  class="card bg-dark text-white">
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
     <ol class="carousel-indicators">
@@ -39,3 +54,4 @@
     </div>
   </div>
 </div>  
+<% end%>
