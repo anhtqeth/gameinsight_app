@@ -16,7 +16,7 @@ module GamesHelper
       content = []
       newsfeed.each do |news|
         #Put news data to media to render for each element
-        content << content_tag(:div,media(news),class: "media")
+        content << content_tag(:div,media(news),class: "media") << content_tag(:hr)
       end
       #Rendering html
       safe_join(content)

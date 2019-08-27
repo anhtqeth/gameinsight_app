@@ -1,17 +1,29 @@
 require 'uri'
 require 'open-uri'
 require 'net/http'
+
 #GamesApiModule - Used to handle request to fetch API data of video games.
 #Author - Anh Truong
 #Date Added - 17 - May - 2019
+#Each request will send a call to an api enpoint. 
+#On some occasion, the response will be constructed to a hash
+#The request data will then be processed by Active Model
+
+#TODO - Store constant in another file
+#TODO - Refactor code
+#TODO - Reduce code smell
+#TODO - Handle nil result or empty image within this lib
+#TODO - Integrated asset to be empty placeholder for media like vid/img
+#TODO - Remove DUMMY values
+#TODO - Store API authorization somewhere safe
 
 module GamesApiModule
   #Utils Constant
   UNIX_TIME_NOW = Time.current.to_time.to_i
   THIS_MONTH = (Time.now - 1.month).to_i
   
-  HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 443)
-  HTTP_CNF.use_ssl = true 
+  # HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 443)
+  # HTTP_CNF.use_ssl = true 
   
   DUMMY_SCREENSHOT = [{"id"=>244572, "game"=>55090, "height"=>720, "image_id"=>"iodd6zzceqq5jkufxpcz", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/iodd6zzceqq5jkufxpcz.jpg", "width"=>1280}, {"id"=>208211, "game"=>55090, "height"=>1080, "image_id"=>"wdsb42ukz39ywlzvhro4", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/wdsb42ukz39ywlzvhro4.jpg", "width"=>1920}, {"id"=>244573, "game"=>55090, "height"=>562, "image_id"=>"af8ueznswr8xpdkw9ukf", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/af8ueznswr8xpdkw9ukf.jpg", "width"=>1000}, {"id"=>208214, "game"=>55090, "height"=>1080, "image_id"=>"cxwpickwszhgdxvxdzzh", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/cxwpickwszhgdxvxdzzh.jpg", "width"=>1920}, {"id"=>208212, "game"=>55090, "height"=>1080, "image_id"=>"enex88ekm3se7a3vpqmp", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/enex88ekm3se7a3vpqmp.jpg", "width"=>1920}, {"id"=>208213, "game"=>55090, "height"=>1080, "image_id"=>"ywgv0zxrsocslwbkir8b", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/ywgv0zxrsocslwbkir8b.jpg", "width"=>1920}]
   DUMMY_VIDEOS = ["https://www.youtube.com/embed/LVIdmEfiFCk","https://www.youtube.com/embed/OAQm-EzbaHM"]
