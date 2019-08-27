@@ -84,7 +84,9 @@ class Game < ApplicationRecord
     min_time = Date.parse((1.month.ago).to_s)
     max_time = Date.parse(Time.now.to_s)
     #latest_release = Game.where("first_release_date BETWEEN ? AND ? and platform like ?",min_time,max_time,"%#{platform}%") #DEV Query
-    latest_release = Game.where("first_release_date BETWEEN ? AND ?",min_time,max_time).joins("INNER JOIN games_platforms p ON p.game_id = games.id").where("p.platform_id = ?",Platform.find_by(name: platform).id) 
+    latest_release = Game.where("first_release_date BETWEEN ? AND ?",
+    min_time,max_time).joins("INNER JOIN games_platforms p ON p.game_id = games.id")
+    .where("p.platform_id = ?",Platform.find_by(name: platform).id) 
     if latest_release.empty?
       latest_release_ids = gameAltRecentRelease(platform).each.map{|x| x["id"]}.map.to_a
       latest_release = gamesListProcess(latest_release_ids)
