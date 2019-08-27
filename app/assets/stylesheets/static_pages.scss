@@ -1,7 +1,5 @@
-// Place all the styles related to the StaticPages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap";
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 .container {
   position: relative;
 }
@@ -72,7 +70,7 @@ a {
 }
 
 
-
+// Styling for hr
 #content-line{
   border: 1px solid #FFC107;
 }
@@ -80,6 +78,7 @@ a {
 // #home-content{
 //   padding-top: 70px;
 // }
+
 
 #logo:hover {
   color: #fff;
@@ -169,7 +168,7 @@ footer li {
     object-fit: cover;
 }
 
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
 
 a,
 a:hover,
@@ -205,42 +204,41 @@ a:focus {
 ----------------------------------------------------- */
 
 #sidebar {
-    width: 250px;
+    // width: 250px;
+    min-width: 80px;
+    max-width: 80px;
+
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.85em;
     position: fixed;
     top: 0;
-    left: -250px;
+    left: 0px;
     height: 100vh;
     z-index: 999;
     background: #343A40;
     color: #fff;
     transition: all 0.3s;
-    overflow-y: scroll;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+    // overflow-y: scroll;
+    // box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
+/*// #sidebar.active {
+//     left: 0;
+// }*/
 
 #sidebar.active {
     left: 0;
-}
-
-#dismiss {
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
+    min-width: 250px;
+    max-width: 250px;
+    font-size: 1.1em;
     text-align: center;
-    background: #343A40;
-    float: right;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    -webkit-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
 }
 
-#dismiss:hover {
-    
-    color: #FFC107;
+#sidebar.active ul li a {
+    text-align: center;
+    font-size: 1.1em;
 }
+
 
 .overlay {
     display: none;
@@ -277,7 +275,7 @@ a:focus {
 
 #sidebar ul li a {
     padding: 10px;
-    font-size: 1.1em;
+    font-size: 0.8em;
     display: block;
     color: white;
 }
@@ -323,6 +321,11 @@ ul.CTAs a {
     margin-bottom: 5px;
 }
 
+
+
+// END OF SIDEBAR
+
+//Spinner styling for Ajax request 
 #loadingSpinner {
   text-align: center !important;
 }
@@ -332,7 +335,7 @@ ul.CTAs a {
   opacity:0;
 }
 
-
+//Overlay for new release
 #release-overlay:hover {
     h5 {
       color: #ffc107;
@@ -350,7 +353,10 @@ ul.CTAs a {
     background: black;
 }
 
+
+// Handling footer and body proportion
 body {
+  padding-top: 70px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;

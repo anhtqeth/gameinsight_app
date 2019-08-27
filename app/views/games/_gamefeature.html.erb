@@ -31,10 +31,10 @@
   <div class="card-img-overlay" id="game-detail-feature">
     <div class="row">
       <div class="col-md-auto">
-        <h1><%=@game_details[:name] %></h1>
+        
       </div>  
       <div class="col">  
-         <p class="card-text"><%= truncate(@game_details[:summary], length: 300)%></p>
+         <h1 style="float:right;"><%=@game_details[:name] %></h1>
       </div>
     </div>
   </div>
