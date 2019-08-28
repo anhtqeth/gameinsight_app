@@ -46,7 +46,6 @@ module GamesHelper
     end
   end
   
-   
   #Used to render bootstrap carousel
   #This include a small div overlay on top of the image
   #and show text on the image
