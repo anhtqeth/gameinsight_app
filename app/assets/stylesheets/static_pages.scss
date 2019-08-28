@@ -176,6 +176,9 @@ a:hover,
 a:focus {
     color: #FFC107;
     text-decoration: none;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
     transition: all 0.3s;
 }
 
