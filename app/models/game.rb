@@ -155,4 +155,9 @@ class Game < ApplicationRecord
      company.saveAPIData(id,'Developer')
   end
   
+  def findGamesbyGenre(game_genre)
+    
+    
+  end
+  
 end

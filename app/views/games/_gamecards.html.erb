@@ -11,9 +11,9 @@
 				  <div class="card-body">
 					  <h5 class="card-title"><%= @game_details[:name] %></h5>
 					  <hr id="content-line">
-					  <p class="card-text">First Release Date: <strong><%= @game_details[:first_release_date] %></strong></p>
+					  <p class="card-text">First Release Date: <strong><%= date_format(@game_details[:first_release_date]) %></strong></p>
 					  <p class="card-text">Platform: <% @game_details.platforms.each do |platform| %>
-					  <strong><%=platform.name %></strong>
+					  <strong><%=platform.name %>,</strong>
 					  <%end%>
 					  </p>
 					  <p class="card-text">Genres: <% @game_details.game_genres.each do |genre| %>

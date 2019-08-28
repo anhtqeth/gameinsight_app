@@ -208,60 +208,32 @@ module GamesApiModule
     end
   end
   
-  
-  #[680100, 680050, 680839, 297836, 289079, 289058, 725471, 682094, 766504, 764468]
   def gameArticleProcess(article_meta)
-    
     puts "Processing Article"
-    game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil,:news_source=>nil}
-   
-    article_id = article_meta['id']
-    game_article.store(:id,article_id)
-    article_author = article_meta['author']
-    game_article.store(:author,article_author)
-    article_summary = article_meta['summary']
-    game_article.store(:summary,article_summary)
-    article_img = article_meta['image']
-    game_article.store(:img,article_img)
-    article_created_at = article_meta['published_at']
-    game_article.store(:created_at,article_created_at)
-    article_title = article_meta['title']
-    game_article.store(:title,article_title)
-    
-    article_url = gameArticleExternalRequest(article_meta["website"])
-    #TODO - Fix new source error (get the newssource from api as well)
-    puts article_url
-    game_article.store(:url,article_url)
-    if URI.parse(article_url)
-      news_source = PublicSuffix.parse(URI.parse(article_url).host).sld
-    else
-      news_source = 'NA'
-    end
-    game_article.store(:news_source,news_source)
-    
-    puts game_article
+    game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,
+    :created_at=>nil,:title=>nil,:url=>nil,:news_source=>nil}
+    game_article.store(:id,article_meta['id'])
+    game_article.store(:author,article_meta['author'])
+    game_article.store(:summary,article_meta['summary'])
+    game_article.store(:img,article_meta['image'])
+    game_article.store(:published_at,article_meta['published_at'])
+    game_article.store(:title,article_meta['title'])
+    game_article.store(:news_source,article_meta['pulse_source']['name'])
+    game_article.store(:url,article_meta['website']['url'])
     game_article
   end
-  #TODO - The newsfeed feature look spagetti! 
+  #TODO Refactor this for similar to the above
   def gameLatestNewsRequest(time)
     puts "Called to Latest Feed Request with parameter: " << DateTime.strptime(time.to_s,'%s').strftime("%A-%d-%b-%Y")
     request = buildRequest(GAME_ARTICLE_URI)
-    request.body = "fields *; where published_at > #{time};limit 12;"
+    request.body = "fields id,author,summary,title,image,published_at,pulse_source.name,website.url; where published_at > #{time};limit 12;"
     response = http_construct.request(request)
     result = JSON.parse(response.read_body)
-    puts result
-    game_article_list = []
-    
-    if result.nil?
-      DUMMY_NEWS
-    else
-      result.each do |article_meta|
-      #Constructing Article Hashes
-      game_article = gameArticleProcess(article_meta)
-      game_article_list << game_article
-      end
+    latest_news = []
+    result.each do |article|
+      latest_news << OpenStruct.new(gameArticleProcess(article))
     end
-    game_article_list
+    latest_news
   end
   
   #Get Related News from multiple sources for a game
@@ -310,6 +282,7 @@ module GamesApiModule
     game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil}
     article_meta = JSON.parse(response.read_body).first
     
+    puts article_meta
     if article_meta.nil? 
       nil
     else

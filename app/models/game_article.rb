@@ -2,22 +2,16 @@ class GameArticle < ApplicationRecord
   validates :author,:url,:title,:news_source,:publish_at,  presence: true
   belongs_to :game_article_collection,  optional: true
   
-  def fetchAPILatestNews(date)
-     gameLatestNewsRequest(date)
-  end
-  
   def fetchAPIData(id)
     OpenStruct.new(gameArticleRequest(id))
   end
   
   def timeCoversion(time)
-    #DateTime.strptime(time.to_s,'%s') 
     DateTime.strptime(time, '%A-%d-%b-%Y')
   end
   
-  def saveAPIData(article_id)
+  def saveAPIData(api_article)
     game_article = GameArticle.new
-    api_article = fetchAPIData(article_id)
     if api_article.nil?
       nil
     else
@@ -27,7 +21,7 @@ class GameArticle < ApplicationRecord
       game_article.title = api_article.title
       game_article.img = api_article.img
       game_article.url = api_article.url
-      game_article.publish_at = api_article.created_at
+      game_article.publish_at = api_article.published_at
       game_article.news_source = api_article.news_source
       game_article.save
       puts '---DEBUG- ARTICLE SAVE ERRORS'
@@ -41,15 +35,13 @@ class GameArticle < ApplicationRecord
   def fetchLatestNews(time)
     latest_newsfeed = GameArticle.where("publish_at > ? AND img IS NOT NULL",time)
     if latest_newsfeed.empty?
-      latest_newsfeed = fetchAPILatestNews(time)
+      latest_newsfeed = gameLatestNewsRequest(time)
       #Save to DB
       latest_newsfeed.each do |api_article|
-      saveAPIData(api_article[:id])
+      saveAPIData(api_article)
       end
     end
     latest_newsfeed
   end
-  
-
   
 end

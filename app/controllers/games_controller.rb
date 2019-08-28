@@ -76,7 +76,9 @@ class GamesController < ApplicationController
   def discover
     game = Game.new
     @hotgames = game.fetchPopularUpcomingRelease
+    @genres = GameGenre.all
     
+    @game_by_genres = Game.where
     
     # @game_by_platform
     
