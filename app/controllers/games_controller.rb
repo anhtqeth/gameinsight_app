@@ -18,7 +18,7 @@ class GamesController < ApplicationController
     
     if game.game_collection.nil?
       game_collection = GameCollection.new
-      #TODO: THere is a bug when API request no data for serie (NEW IP)
+      
       if game_collection.saveAPIData(game.external_id).nil?
         @game_card_carousel_list = nil
       else
@@ -29,9 +29,6 @@ class GamesController < ApplicationController
       @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10]
       @size = @game_card_carousel_list.size/2
     end
-    #19164
-     #gc = GameArticleCollection.new
-     #gc.saveAPIData(19164)
     
     if game.game_article_collection.empty?
       game_article_collection = GameArticleCollection.new

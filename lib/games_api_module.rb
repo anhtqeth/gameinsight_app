@@ -243,76 +243,47 @@ module GamesApiModule
     request.body = "fields *; where game = #{game_id};"
     response = http_construct.request(request)
     result = JSON.parse(response.read_body)
+    puts result
     article_ids = []
     
     if result.empty?
-      'There are no news related to this Game yet'
+      nil
     else
-      puts 'Current Result: ' << result.to_s
       result.each do |rs|
         article_ids << rs["pulses"].join(",").to_i
       end
     end
-    
-    puts "This is the list of article ID: " << article_ids.to_s
-    
-    if article_ids.empty?
-      DUMMY_NEWS
-    else
-      game_article_list = []
-      article_ids.each do |id|
+
+    game_article_list = []
+    article_ids.each do |id|
         game_article = gameArticleRequest(id)
         next if game_article.nil?
         game_article_list << game_article
-        
-      end
-      game_article_list
     end
+    game_article_list
   end
-  
-  #[680100, 680050, 680839, 297836, 289079, 289058, 725471, 682094, 766504, 764468]
-    
+   
   def gameArticleRequest(id)
-    #{:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil,:news_source=>nil}
     puts "Called to Game Article Request with parameter: " << id.to_s
     request = Net::HTTP::Get.new(URI(GAME_ARTICLE_URI), {'user-key' => USERKEY})
-    request.body = "fields *; where id = #{id};"
+    request.body = "fields id,author,summary,title,image,published_at,pulse_source.name,website.url; where id = #{id};"
     response = http_construct.request(request)
-    
-    game_article = {:id =>nil,:author=>nil,:summary=> nil,:img=>nil,:created_at=>nil,:title=>nil,:url=>nil}
-    article_meta = JSON.parse(response.read_body).first
-    
-    puts article_meta
-    if article_meta.nil? 
-      nil
-    else
-      #Constructing Article Hashes
-      unless article_meta.key?("websites")
-        nil
-      else
-        game_article = gameArticleProcess(article_meta)
-      end
-    end
-  end
-  
-  def gameArticleExternalRequest(id)
-    puts "Called to Game Article External Request with parameter: " << id.to_s
-    request = buildRequest(GAME_EXTERNAL_ARTICLE_URI)
-    request.body = "fields *; where id = #{id};"
-    
-    response = http_construct.request(request)
-    puts JSON.parse(response.read_body)
+    game_article = nil
     
     if JSON.parse(response.read_body).empty?
-     'https://www.nourl.com'
+      nil
     else
-      puts JSON.parse(response.read_body)
-      puts JSON.parse(response.read_body).first["url"]
-      JSON.parse(response.read_body).first["url"]
+      article = JSON.parse(response.read_body).first
+      #Constructing Article Hashes
+      unless article.key?("website")
+        nil
+      else
+        game_article = OpenStruct.new(gameArticleProcess(article))
+      end
     end
-    
+    game_article
   end
-  
+ 
   def platformCodeConvert(platform)
     puts "Call to platforms convert with #{platform}"
     platform_id = nil

@@ -3,8 +3,7 @@ class GameArticleCollection < ApplicationRecord
   has_many :game_articles,  dependent: :destroy
   
   def fetchAPIData(id)
-    result = gameNewsFeedRequest(id)
-    result.map{|news_data| news_data = OpenStruct.new(news_data)}
+    gameNewsFeedRequest(id)
   end
   
   def saveAPIData(id)
@@ -24,7 +23,7 @@ class GameArticleCollection < ApplicationRecord
       game_arc = GameArticle.find_by_external_id(arc.id)
       if game_arc.nil?
         game_arc = GameArticle.new
-        arc_collection.game_articles << game_arc.saveAPIData(arc.id)
+        arc_collection.game_articles << game_arc.saveAPIData(arc)
       else
         arc_collection.game_articles << game_arc
       end
