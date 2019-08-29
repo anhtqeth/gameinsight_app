@@ -115,6 +115,12 @@ module GamesHelper
     safe_join(content)
   end
   
+  #Used to render search result page
+  #TODO - Implement after search work correctly
+  def search_result
+  
+  end
+  
   #Carousel class for handling Carousel
   #There will be a check for media type (img/videos) 
   #The input is an array of url

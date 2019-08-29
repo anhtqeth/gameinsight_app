@@ -2,6 +2,7 @@ class GamesController < ApplicationController
   #Show game detail page
   #TODO: Move save logic to model. Just like article
   #TODO: This is a fat controller. 
+  #TODO: Implement caching 
   def show
     #If this game is not in db, save it. 
     game =  Game.friendly.find(params[:id])
@@ -55,6 +56,7 @@ class GamesController < ApplicationController
     render 'games/game_detail'
   end
   
+  #TODO - Add more way to search, currently search by name.
   def find
     #dummy_game_ids = [76253, 134, 112, 135, 1254, 76843, 62352, 20734, 111750, 20022] #Devil May Cry
     
@@ -62,10 +64,12 @@ class GamesController < ApplicationController
       flash[:info] = "Please specify a name"
       redirect_to(root_path)
     else
-      game_id_result = Rails.cache.fetch("#{params[:name]}/game_name_search", expires_in: 1.month) do
-      gamesSearchRequest(params[:name])
-      end
-      @game_card_result = gamesListProcess(game_id_result).paginate(:page =>params[:page], :per_page => 4)
+      # game_id_result = Rails.cache.fetch("#{params[:name]}/game_name_search", expires_in: 1.month) do
+      # gamesSearchRequest(params[:name])
+      # end
+      result = Game.where("name LIKE ?","%#{params[:name]}%")
+      @game_card_result = result.paginate(:page =>params[:page], :per_page => 4)
+      #@game_card_result = gamesListProcess(game_id_result).paginate(:page =>params[:page], :per_page => 4)
       render 'games/search_result'
     end
   end
@@ -75,7 +79,7 @@ class GamesController < ApplicationController
     @hotgames = game.fetchPopularUpcomingRelease
     @genres = GameGenre.all
     
-    @game_by_genres = Game.where
+    # @game_by_genres = Game.where
     
     # @game_by_platform
     

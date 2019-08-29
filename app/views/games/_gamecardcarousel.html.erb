@@ -10,13 +10,13 @@
               <div class="card-deck">
                   <% @game_card_carousel_list[0..@size].each do |gamecard| %>
                   <div class="card" style="width: 18rem;">
-                    <% if gamecard[:cover].nil? || gamecard[:cover] = 'NA'%>
+                    <% if gamecard[:cover].nil? || gamecard[:cover] == 'NA'%>
                     <!--<img class="card-img-top">-->
                     <div class="card-img-top">
                       <h5 class="card-title"><%= gamecard[:title]%></h5>
                     </div>
                     <%else%>
-                    <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
+                       <%= image_tag(gamecard[:cover],class:"card-img-top") %>
                     <%end%>
                     <div class="card-body">
                       <a href="<%=game_path(gamecard[:slug]) %>" class="btn btn-outline-warning btn-block">Details</a>
@@ -27,18 +27,15 @@
             </div>
             <div class="carousel-item">
               <div class="card-deck">
-                 
                   <% @game_card_carousel_list[@size+1..-1].each do |gamecard| %>
                   <div class="card" style="width: 18rem;">
-                    <% if gamecard[:cover].nil? || gamecard[:cover] = 'NA'%>
-                       <!--Render an overlay displaying title-->
-                      <!--<img class="card-img-top">-->
+                    <% if gamecard[:cover].nil? || gamecard[:cover] == 'NA'%>
                       <div class="card-img-top">
                       <h5 class="card-title"><%= gamecard[:title]%></h5>
                     </div>
                     <%else%>
                        <!--Render game card normally-->
-                       <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
+                       <%= image_tag(gamecard[:cover],class:"card-img-top") %>
                     <%end%>
                     <div class="card-body">
                       <a href="<%=game_path(gamecard[:slug]) %>" class="btn btn-outline-warning btn-block">Details</a>
