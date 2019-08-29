@@ -1,30 +1,46 @@
 <div class="container">
-<%@game_card_result.each do |result| %>
-  <div class="row">
-    <% if result.cover.nil? || result.cover == 'NA' %> 
-       <div class="card" style="width: 12rem;">
-        <%= image_tag("//:0",class:"card-img-top") %>
-       </div>
-    <% else %>
-      <div class="card" style="width: 12rem;">
-      <%= image_tag(result.cover,class:"card-img-top") %>
-      </div>
-  <% end %>
-    <div class="col">
-     <div class="card text-white" style="background-color: black;">
-        <div class="card-body">
-          <h5 class="card-title"><%= result[:name] %></h5>
-          <hr id="content-line">
-          <p class="card-text">Release Date: <strong><%= date_format(result.first_release_date) %></strong></p>
-          <p class="card-text">Platform: <strong><%= result.platforms.map(&:name) %></strong></p>
-          <p class="card-text">Genres: <strong><%= result.game_genres.map(&:name) %></strong></p>
-          <p class="card-text">Series: <strong><%= result.game_collection.nil? ? 'NA' : result.game_collection.name %></strong></p>
-          <a href="<%=game_path(result.slug) %>" class="btn btn-outline-warning btn-block">More Detail</a>
+  <div id="search-option">
+  <div class="btn-group">
+    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Result per page
+    </button>
+     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button">10</button>
+      <button class="dropdown-item" type="button">20</button>
+      <button class="dropdown-item" type="button">30</button>
+    </div>
+  </div>
+  </div>
+  <hr>
+  
+  <%@game_card_result.each do |result| %>
+    <div class="row">
+      <% if result.cover.nil? || result.cover == 'NA' %> 
+         <div class="card" style="width: 12rem;">
+          <%= image_tag("//:0",class:"card-img-top") %>
+         </div>
+      <% else %>
+        <div class="card" style="width: 12rem;">
+        <%= image_tag(result.cover,class:"card-img-top") %>
+        </div>
+    <% end %>
+      <div class="col">
+       <div class="card text-white" style="background-color: black;">
+          <div class="card-body">
+            <h5 class="card-title"><%= result[:name] %></h5>
+            <hr id="content-line">
+            <p class="card-text">Release Date: <strong><%= date_format(result.first_release_date) %></strong></p>
+            <p class="card-text">Platform: <strong><%= result.platforms.map(&:name).join(',') %></strong></p>
+            <p class="card-text">Genres: <strong><%= result.game_genres.map(&:name).join(',') %></strong></p>
+            <p class="card-text">Series: <strong><%= result.game_collection.nil? ? 'NA' : result.game_collection.name %></strong></p>
+            <a href="<%=game_path(result.slug) %>" class="btn btn-outline-warning" style="float: right;">More Detail</a>
+          </div>
         </div>
       </div>
-    </div>
-   </div>
-  <hr>
-<% end %>
-<%= will_paginate @game_card_result %>
+     </div>
+  <% end %>
+  <br>
+  <div class="my_pagination">     
+    <%= will_paginate @game_card_result %>
+  </div>
 </div>
