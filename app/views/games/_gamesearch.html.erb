@@ -28,7 +28,7 @@
        <div class="card text-white" style="background-color: black;">
           <div class="card-body">
             <h5 class="card-title"><%= result[:name] %></h5>
-            <hr id="content-line">
+            <hr id="new-content-line">
             <p class="card-text">Release Date: <strong><%= date_format(result.first_release_date) %></strong></p>
             <p class="card-text">Platform: <strong><%= result.platforms.map(&:name).join(',') %></strong></p>
             <p class="card-text">Genres: <strong><%= result.game_genres.map(&:name).join(',') %></strong></p>
@@ -38,8 +38,10 @@
         </div>
       </div>
      </div>
+     <hr>
   <% end %>
   <br>
+ 
   <div class="my_pagination">     
     <%= will_paginate @game_card_result %>
   </div>
