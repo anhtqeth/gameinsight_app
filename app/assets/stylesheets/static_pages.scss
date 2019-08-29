@@ -376,3 +376,43 @@ body {
 .container {
     padding-top: 20px;
 }
+
+
+.my_pagination {
+  justify-content: center !important;
+  padding: 0.3em;
+  cursor: pointer; }
+  .my_pagination a, .my_pagination span, .my_pagination em {
+    padding: 0.2em 0.5em; }
+  .my_pagination li {
+    padding: 2px;
+  }
+  .my_pagination .disabled {
+    color: #aaaaaa; }
+  .my_pagination .active a{
+    font-style: normal;
+    font-weight: bold;
+    ackground: black;
+    background: #ffc107;}
+  .my_pagination a {
+    border: 1px solid #dddddd;
+    color: black;
+    text-decoration: none; }
+    .my_pagination a:hover, .my_pagination a:focus {
+      border-color: #ffc107;
+      background: #ffc107;
+      color: white; }
+  .my_pagination .page_info {
+    color: #aaaaaa;
+    padding-top: 0.8em; }
+  .my_pagination .previous_page, .my_pagination .next_page {
+    border-width: 2px; }
+  .my_pagination .previous_page {
+    margin-right: 1em; }
+  .my_pagination .next_page {
+    margin-left: 1em; }
+
+
+.pagination {
+   place-content: center;
+}
