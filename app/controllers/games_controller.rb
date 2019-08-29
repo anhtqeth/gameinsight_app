@@ -56,7 +56,7 @@ class GamesController < ApplicationController
   end
   
   def find
-    @dummy_game_ids = [76253, 134, 112, 135, 1254, 76843, 62352, 20734, 111750, 20022] #Devil May Cry
+    #dummy_game_ids = [76253, 134, 112, 135, 1254, 76843, 62352, 20734, 111750, 20022] #Devil May Cry
     
     if params[:name].blank?  
       flash[:info] = "Please specify a name"

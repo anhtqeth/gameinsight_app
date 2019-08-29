@@ -231,6 +231,7 @@ a:focus {
 // }*/
 
 #sidebar.active {
+    
     left: 0;
     min-width: 250px;
     max-width: 250px;
@@ -239,7 +240,7 @@ a:focus {
     transition: all 0.3s;
 }
 
-#sidebar.active ul li a {
+#sidebar.active ul li a  {
     text-align: left;
     font-size: 1.1em;
 }

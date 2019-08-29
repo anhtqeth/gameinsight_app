@@ -13,7 +13,7 @@ class Game < ApplicationRecord
   has_many :companies, :through => :involved_companies
   
   
-  validates :name,:summary,:cover,:first_release_date, presence: true
+  validates :name,:summary,:first_release_date, presence: true
   validates :external_id, uniqueness: true
   
   extend FriendlyId
@@ -34,6 +34,7 @@ class Game < ApplicationRecord
      game.name = game_detail.name
      game.summary = game_detail.summary
      game.cover = game_detail.cover
+     
      game.storyline = game_detail.storyline
      
      puts game_detail.platform
