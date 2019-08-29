@@ -58,20 +58,18 @@ class GamesController < ApplicationController
   
   #TODO - Add more way to search, currently search by name.
   def find
-    #dummy_game_ids = [76253, 134, 112, 135, 1254, 76843, 62352, 20734, 111750, 20022] #Devil May Cry
-    
+    #TODO - Seach game from api as well.
     if params[:name].blank?  
       flash[:info] = "Please specify a name"
       redirect_to(root_path)
     else
-      # game_id_result = Rails.cache.fetch("#{params[:name]}/game_name_search", expires_in: 1.month) do
-      # gamesSearchRequest(params[:name])
-      # end
       result = Game.where("name LIKE ?","%#{params[:name]}%")
+      #TODO - Probably check empty here and call API?
       @game_card_result = result.paginate(:page =>params[:page], :per_page => 4)
       #@game_card_result = gamesListProcess(game_id_result).paginate(:page =>params[:page], :per_page => 4)
       render 'games/search_result'
     end
+    
   end
   
   def discover
@@ -80,9 +78,7 @@ class GamesController < ApplicationController
     @genres = GameGenre.all
     
     # @game_by_genres = Game.where
-    
     # @game_by_platform
-    
     # @just_released
     
     render 'games/game_discover'
