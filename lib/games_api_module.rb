@@ -417,7 +417,7 @@ module GamesApiModule
       response = http_construct.request(request)
         
       if JSON.parse(response.read_body).empty?
-          'NA'
+          nil
         else
           result = JSON.parse(response.read_body)
           result.first['url'].sub! 't_thumb','t_cover_big'
@@ -440,7 +440,8 @@ module GamesApiModule
       end
   end
 
-  #This is used to search for a specific game. Initially, this just a hardcoded string to return details of a game
+  #This is used to search for a specific game. 
+  #Initially, this just a hardcoded string to return details of a game
   def gamesSearchRequest(game_string)
     puts "Called to Game Search Request with parameter: " << game_string
     request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
