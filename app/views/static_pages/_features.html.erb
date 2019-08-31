@@ -83,3 +83,32 @@
 <% end %>
 </div>
 <br>
+
+<!--For Search Page-->
+<%@game_card_result.each do |result| %>
+    <div class="row">
+      <% if result.cover.nil? || result.cover == 'NA' %> 
+         <div class="card" style="width: 12rem;">
+          <%= image_tag("//:0",class:"card-img-top") %>
+         </div>
+      <% else %>
+        <div class="card" style="width: 12rem;">
+        <%= image_tag(result.cover,class:"card-img-top") %>
+        </div>
+    <% end %>
+      <div class="col">
+       <div class="card text">
+          <div class="card-body">
+            <h5 class="card-title"><%= result[:name] %></h5>
+            <hr id="new-content-line">
+            <p class="card-text">Release Date: <strong><%= result.first_release_date.nil? ? 'TBD' : date_format(result.first_release_date) %></strong></p>
+            <p class="card-text">Platform: <strong><%= result.platforms.map(&:name).join(',') %></strong></p>
+            <p class="card-text">Genres: <strong><%= result.genres.nil? ? 'NA' : result.genres.map(&:name).join(',') %></strong></p>
+            <p class="card-text">Series: <strong><%= result.game_collection.nil? ? 'NA' : result.game_collection.name %></strong></p>
+            <a href="<%=game_path(result.slug) %>" class="btn btn-outline-warning" style="float: right;">More Detail</a>
+          </div>
+        </div>
+      </div>
+     </div>
+     <hr>
+  <% end %>

@@ -5,8 +5,9 @@ class GamesController < ApplicationController
   #TODO: Implement caching 
   def show
     #If this game is not in db, save it. 
-    game =  Game.friendly.find(params[:id])
+    game = nil
     if Game.friendly.find(params[:id])
+      game =  Game.friendly.find(params[:id])
       @game_details = Game.friendly.find(params[:id])
       @game_videos = @game_details.game_videos
       @game_screenshots = @game_details.screenshots
@@ -63,10 +64,19 @@ class GamesController < ApplicationController
       flash[:info] = "Please specify a name"
       redirect_to(root_path)
     else
-      result = Game.where("name LIKE ?","%#{params[:name]}%")
-      #TODO - Probably check empty here and call API?
-      @game_card_result = result.paginate(:page =>params[:page], :per_page => 4)
-      #@game_card_result = gamesListProcess(game_id_result).paginate(:page =>params[:page], :per_page => 4)
+      #TODO - Move this to games.rb
+      game = Game.new
+      #result = game.findGames(params[:name])
+      
+      @rs = game.findGames(params[:name])[0]
+      puts 'DEBUG CONTROLLER GAME'
+      puts @rs.count
+      @api_rs = game.findGames(params[:name])[1]
+      puts 'DEBUG CONTROLLER GAME'
+      puts @api_rs.count
+     
+      #@game_card_result = result.paginate(:page =>params[:page], :per_page => 5)
+      #@game_card_result = result.paginate(:page =>params[:page], :per_page => 5)
       render 'games/search_result'
     end
     

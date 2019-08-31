@@ -391,11 +391,13 @@ body {
     color: #aaaaaa; }
   .my_pagination .active a{
     font-style: normal;
+    border-radius: 2em;
     font-weight: bold;
     ackground: black;
     background: #ffc107;}
   .my_pagination a {
     border: 1px solid #dddddd;
+    border-radius: 2em;
     color: black;
     text-decoration: none; }
     .my_pagination a:hover, .my_pagination a:focus {

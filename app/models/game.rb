@@ -20,6 +20,7 @@ class Game < ApplicationRecord
   friendly_id :name, use: :slugged
   
   #TODO - Refactor this model
+  #TODO - Put all API request to private?
   def fetchAPIData(id)
      OpenStruct.new(gamesListProcess(id))
   end
@@ -139,10 +140,50 @@ class Game < ApplicationRecord
     end
   end
   
+  #Result from API data does not response to most view code
+  #Need this to reformat the result one more time
+  #Input: game_data(OpenStruct)
+  #TODO - Make this a little generic
+  #TODO - This look ugly, refactor this code
+  def formatApiResult(game_data)
+    #Hashes -> OpenStruct
+    #Map name to Array
+    game_data.platforms.nil? ?  game_data.platforms = [] : game_data.platforms = game_data.platforms.map{|x| OpenStruct.new(x)} #.map{|z| z.name}
+    game_data.genres.nil? ? game_data.genres = nil  : game_data.genres = game_data.genres.map{|x| OpenStruct.new(x)} #.map{|z| z.name}
+    game_data.cover.nil? ? game_data.cover = nil : game_data.cover = game_data.cover["url"].sub('t_thumb','t_cover_big')
+    game_data.collection.nil? ? game_data.collection = [] : game_data.collection = game_data.collection["name"]
+    game_data.first_release_date.nil? ? game_data.first_release_date = nil : game_data.first_release_date = DateTime.strptime(game_data.first_release_date.to_s,'%s')
+    game_data
+  end
+  
+  #Call to API to search for game
+  #Input: game name
+  #Output: list of game
+  def findApiGames(name)
+    gamesSearchRequest(name).map{|x| formatApiResult(OpenStruct.new(x))}
+    #gamesSearchRequest(name).map{|x| OpenStruct.new(x)}
+  end
+  
+  
+
+  #TODO - Make this more flexible
+  #TODO - Probably duplicate with api result
+  def findGames(name) 
+    rs = Game.where("name LIKE ?","%#{name}%")
+    saved_ex_ids = rs.map(&:external_id)
+    
+    #Add rs external_id to an array
+    #Use this array as a filter for the api call
+    api_rs = findApiGames(name)
+    #rs.empty? ? findApiGames(name) : rs
+    [rs,api_rs]
+  end
+  
   private
   #After a new game is added, an update to other model is also required. 
   #As these model reference back to game. This need to be executed after a game is saved.
   #Private method
+  #TODO - Can Refactor this using before_save or after_save?
   def saveGameRelatedData(id)
      #TODO - Move below to a function
      release_date = GameReleaseDate.new
@@ -160,5 +201,8 @@ class Game < ApplicationRecord
     
     
   end
+  
+ 
+  
   
 end

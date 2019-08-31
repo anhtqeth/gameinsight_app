@@ -423,7 +423,6 @@ module GamesApiModule
           result.first['url'].sub! 't_thumb','t_cover_big'
       end
   end
-
   
   def gameArtworkRequest(game_id)
       puts "Called to Game Artwork Request with parameter: " << game_id.to_s
@@ -446,16 +445,16 @@ module GamesApiModule
     puts "Called to Game Search Request with parameter: " << game_string
     request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
     #request.body = 'fields *; where name = "' << game_string << '";' QUERY FOR GAME_SEARCH_URI
-    request.body  = 'search " '<< game_string << '";'
+    request.body  = 'fields id,name,slug,first_release_date,cover.url,platforms.name,genres.name,collection.name;search "'<< game_string << '";limit 25;'
     puts request.body
     response = http_construct.request(request)
     #puts JSON.parse(response.read_body)
-    result = JSON.parse(response.read_body)
-    game_ids = []
-    result.each do |x|
-      game_ids << x["id"]
-    end
-    game_ids
+    JSON.parse(response.read_body)
+    # game_ids = []
+    # result.each do |x|
+    #   game_ids << x["id"]
+    # end
+    # game_ids
   end
   #TODO - Handle empty image here
   def gameScreenshotRequest(game_id)
