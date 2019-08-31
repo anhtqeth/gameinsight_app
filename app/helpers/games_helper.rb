@@ -117,9 +117,93 @@ module GamesHelper
   
   #Used to render search result page
   #TODO - Implement after search work correctly
-  def search_result
-  
+  def search_result(result,api_result)
+    result_list = []
+    app_rs = []
+    result.each do |x|
+      #Show result from app
+      result_list << x
+      app_rs << render_result(x)
+    end
+    puts 'DEBUG GAMES HELPER APP RESULT'
+    puts app_rs
+    
+    api_rs = []
+    api_result.each do |x|
+      #Show result from api
+      result_list << x
+      api_rs << render_api_result(x)
+    end
+    puts 'DEBUG GAMES HELPER APP RESULT'
+    puts api_rs
+    
+    html = []
+    html << safe_join(app_rs) << safe_join(api_rs)
+    content = safe_join(html)
+    
+    puts 'DEBUG PAGINGATION'
+    puts result_list.count
+    
+    pagination = result_list.paginate(:page =>params[:page], :per_page => 5)
+    
+    [content,pagination]
   end
+  
+    
+  #Render games from app's model
+  def render_result(data)
+    content = []
+    content << content_tag(:div,card_row_data(data,'app'),class: 'row') << content_tag(:hr)
+    safe_join(content)
+  end
+  
+  #Render result from api
+  def render_api_result(data)
+    content = []
+    content << content_tag(:div,card_row_data(data,'api'),class: 'row') << content_tag(:hr)
+    safe_join(content)
+  end
+  
+  def card_row_data(data,rs_type)
+    content = []
+    if data.cover.nil? || data.cover == 'NA' 
+      content << content_tag(:div,image_tag("//:0",class:"card-img-top"),
+      class: 'card',style: 'width: 12rem;')
+    else
+      content << content_tag(:div,image_tag(data.cover,class:"card-img-top"),
+      class: 'card',style: 'width: 12rem;')
+    end
+    #
+    content << content_tag(:div,card_detail(data,rs_type),class: 'col')
+    safe_join(content)
+  end
+  
+  def card_detail(data,rs_type)
+    r_date = data.first_release_date.nil? ? 'TBD' : date_format(data.first_release_date)
+    platforms = data.platforms.nil? ? 'NA' : data.platforms.map(&:name).join(',')
+    
+    if rs_type == 'api'
+      @genres = data.genres.nil? ? 'NA' : data.genres.map(&:name).join(',')
+    else
+      @genres = data.game_genres.nil? ? 'NA' : data.game_genres.map(&:name).join(',')
+    end
+      
+    series = data.game_collection.nil? ? 'NA' : data.game_collection.name
+    
+    card_body_content = []
+    card_body_content << content_tag(:h5,data.name,class: 'card-title')
+    card_body_content << content_tag(:hr,'',id: 'new-content-line')
+    card_body_content << content_tag(:p,"Release Date: #{r_date} ",class: 'card-text')
+    card_body_content << content_tag(:p,"Platform: #{platforms}",class: 'card-text')
+    card_body_content << content_tag(:p,"Genres: #{@genres}",class: 'card-text')
+    card_body_content << content_tag(:p,"Series: #{series}",class: 'card-text')
+    card_body_content << content_tag(:a,'More Details',class:"btn btn-outline-warning",style: "float: right;",href: game_path(data.slug))
+    card_text = []
+    card_text << content_tag(:div,safe_join(card_body_content),class: "card-body")
+    safe_join(card_text)
+  end
+  
+  
   
   #Carousel class for handling Carousel
   #There will be a check for media type (img/videos) 

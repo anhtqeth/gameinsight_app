@@ -92,8 +92,24 @@ RSpec.describe Game, type: :model do
   #   expect(latest_switch_games).not_to be_empty
   # end
   
-  it "can fetch upcoming release base on time" do 
-    time = Date.today.at_beginning_of_month.next_month
-    time = Date.parse(time.to_s)
+  # it "can fetch upcoming release base on time" do 
+  #   time = Date.today.at_beginning_of_month.next_month
+  #   time = Date.parse(time.to_s)
+  # end
+  
+  it "can find game from api" do
+    name = "Devil"
+    rs = subject.findApiGames(name)
+    expect(rs).not_to be_empty
+    expect(rs.first.name).to include("Devil ")
+    puts rs
   end
+  
+  # it "can search from api if no data" do
+  #   name = "God"
+  #   rs = subject.findApiGames(name)
+  #   expect(rs).not_to be_empty
+  #   expect(rs.first.name).to include("God")
+  # end
+  
 end
