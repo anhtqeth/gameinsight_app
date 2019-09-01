@@ -1,7 +1,7 @@
 class GameArticle < ApplicationRecord
   validates :url,:title,:news_source,:publish_at,  presence: true
   belongs_to :game_article_collection,  optional: true
-  
+  #TODO Add uniqueness constraint
   def fetchAPIData(id)
     OpenStruct.new(gameArticleRequest(id))
   end
