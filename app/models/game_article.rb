@@ -1,5 +1,5 @@
 class GameArticle < ApplicationRecord
-  validates :author,:url,:title,:news_source,:publish_at,  presence: true
+  validates :url,:title,:news_source,:publish_at,  presence: true
   belongs_to :game_article_collection,  optional: true
   
   def fetchAPIData(id)

@@ -6,17 +6,22 @@ class GamesController < ApplicationController
   def show
     #If this game is not in db, save it. 
     game = nil
-    if Game.friendly.find(params[:id])
-      game =  Game.friendly.find(params[:id])
-      @game_details = Game.friendly.find(params[:id])
-      @game_videos = @game_details.game_videos
-      @game_screenshots = @game_details.screenshots
-    else
+    if Game.friendly.find_by(slug: params[:id]).nil?
       game = Game.new
       @game_details = game.saveAPIData(params[:id])
       @game_videos = @game_details.game_videos
       @game_screenshots = @game_details.screenshots
+      game = Game.find_by(external_id: params[:id])
+    else
+      game =  Game.friendly.find(params[:id])
+      @game_details = Game.friendly.find(params[:id])
+      @game_videos = @game_details.game_videos
+      @game_screenshots = @game_details.screenshots
     end
+   
+    puts 'DEBUG --- GAME CONTROLLER'
+    puts game
+    puts game.external_id
     
     if game.game_collection.nil?
       game_collection = GameCollection.new
@@ -69,10 +74,11 @@ class GamesController < ApplicationController
       #result = game.findGames(params[:name])
       
       @rs = game.findGames(params[:name])[0]
-      puts 'DEBUG CONTROLLER GAME'
+      puts 'DEBUG --- GAME CONTROLLER'
+      puts 'Result from own model'
       puts @rs.count
       @api_rs = game.findGames(params[:name])[1]
-      puts 'DEBUG CONTROLLER GAME'
+      puts 'Result from api'
       puts @api_rs.count
      
       #@game_card_result = result.paginate(:page =>params[:page], :per_page => 5)

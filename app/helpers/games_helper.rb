@@ -111,7 +111,7 @@ module GamesHelper
     content << content_tag(:p,truncate(game_data.summary,length: 300), class: "card-text")
     content << content_tag(:p,date_format(game_data.first_release_date),class: "card-text")
     content << badge_render(game_data.game_genres)
-    content << content_tag(:a,"Details",class: "btn btn-dark", id: "discover-btn", "href": game_path(game_data.slug))
+    content << content_tag(:a,"Details",class: "btn btn-dark", id: "discover-btn", "href": game_path(game_data.slug,game_data.id))
     safe_join(content)
   end
   
@@ -125,23 +125,20 @@ module GamesHelper
       result_list << x
       app_rs << render_result(x)
     end
-    puts 'DEBUG GAMES HELPER APP RESULT'
-    puts app_rs
-    
+
     api_rs = []
     api_result.each do |x|
       #Show result from api
       result_list << x
       api_rs << render_api_result(x)
     end
-    puts 'DEBUG GAMES HELPER APP RESULT'
-    puts api_rs
-    
+
     html = []
     html << safe_join(app_rs) << safe_join(api_rs)
     content = safe_join(html)
     
-    puts 'DEBUG PAGINGATION'
+    puts 'DEBUG ---- PAGINGATION'
+    puts 'Total result count'
     puts result_list.count
     
     pagination = result_list.paginate(:page =>params[:page], :per_page => 5)
@@ -189,6 +186,7 @@ module GamesHelper
     end
       
     series = data.game_collection.nil? ? 'NA' : data.game_collection.name
+    #slug = data.slug.nil? ? 'NA' : content_tag(:a,'More Details',class:"btn btn-outline-warning",style: "float: right;",href: game_path(data.slug))
     
     card_body_content = []
     card_body_content << content_tag(:h5,data.name,class: 'card-title')
@@ -197,7 +195,15 @@ module GamesHelper
     card_body_content << content_tag(:p,"Platform: #{platforms}",class: 'card-text')
     card_body_content << content_tag(:p,"Genres: #{@genres}",class: 'card-text')
     card_body_content << content_tag(:p,"Series: #{series}",class: 'card-text')
-    card_body_content << content_tag(:a,'More Details',class:"btn btn-outline-warning",style: "float: right;",href: game_path(data.slug))
+    if data.slug.nil?
+      
+    else
+      if rs_type == 'api'
+        card_body_content << content_tag(:a,'More Details',class:"btn btn-outline-warning",style: "float: right;",href: game_path(data.id))
+      else
+        card_body_content << content_tag(:a,'More Details',class:"btn btn-outline-warning",style: "float: right;",href: game_path(data.slug))
+      end
+    end
     card_text = []
     card_text << content_tag(:div,safe_join(card_body_content),class: "card-body")
     safe_join(card_text)
