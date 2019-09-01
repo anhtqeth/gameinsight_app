@@ -159,8 +159,8 @@ class Game < ApplicationRecord
   #Call to API to search for game
   #Input: game name
   #Output: list of game
-  def findApiGames(name)
-    gamesSearchRequest(name).map{|x| formatApiResult(OpenStruct.new(x))}
+  def findApiGames(name,saved_ex_ids)
+    gamesSearchRequest(name,saved_ex_ids).map{|x| formatApiResult(OpenStruct.new(x))}
     #gamesSearchRequest(name).map{|x| OpenStruct.new(x)}
   end
   
@@ -171,10 +171,9 @@ class Game < ApplicationRecord
   def findGames(name) 
     rs = Game.where("name LIKE ?","%#{name}%")
     saved_ex_ids = rs.map(&:external_id)
-    
     #Add rs external_id to an array
     #Use this array as a filter for the api call
-    api_rs = findApiGames(name)
+    api_rs = findApiGames(name,saved_ex_ids)
     #rs.empty? ? findApiGames(name) : rs
     [rs,api_rs]
   end

@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   get  '/signup',  to: 'user#new'
   
   #GamesController
-  get '/games/:id', to: 'games#show', as: 'game'
+  #get '/games/:id', to: 'games#show', as: 'game'
+  get '/games/(/:id)(/:external_id)', to: 'games#show', as: 'game'
+  
   get 'games/new-releases', to: 'games#newrelease'
   get 'games/:id/guides', to: 'games#guides'
   

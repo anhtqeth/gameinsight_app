@@ -87,6 +87,25 @@ module GamesApiModule
     request
   end
 
+  # #
+  # def gamesRequest(game_id)
+  #   puts "Called to Game Request with parameter: " << game_id.to_s
+  #   id_request = "fields *; where id = #{game_id};"
+  #   slug_request = 'fields *; where slug = "' << "#{game_id}" << '";'
+  #   request = buildRequest(GAME_URI)
+    
+  #   if (game_id.is_a? Integer) 
+  #     request.body = id_request
+  #   else
+  #     request.body = slug_request
+  #   end
+  #   puts request.body
+  #   #request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
+  #   response = http_construct.request(request)
+  #   #puts response.read_body
+  #   JSON.parse(response.read_body)
+  # end
+  
   def gamesRequest(game_id)
     puts "Called to Game Request with parameter: " << game_id.to_s
     request = buildRequest(GAME_URI)
@@ -441,11 +460,21 @@ module GamesApiModule
 
   #This is used to search for a specific game. 
   #Initially, this just a hardcoded string to return details of a game
-  def gamesSearchRequest(game_string)
+  #TODO - Probably need to upgrade the service
+  def gamesSearchRequest(game_string,saved_ex_ids)
     puts "Called to Game Search Request with parameter: " << game_string
     request = Net::HTTP::Get.new(URI(GAME_URI), {'user-key' => USERKEY})
-    #request.body = 'fields *; where name = "' << game_string << '";' QUERY FOR GAME_SEARCH_URI
-    request.body  = 'fields id,name,slug,first_release_date,cover.url,platforms.name,genres.name,collection.name;search "'<< game_string << '";limit 25;'
+    
+    if saved_ex_ids.empty?
+     request.body  = 'fields id,name,slug,first_release_date,cover.url,platforms.name,genres.name,collection.name;search "'<< game_string << '";limit 25;'
+    else
+      if saved_ex_ids.count < 10
+        request.body = 'fields id,name,slug,first_release_date,cover.url,platforms.name,genres.name,collection.name;' << "where id != (#{saved_ex_ids.join(",")})" << ' & name ~ *"' "#{game_string}" << '"*;limit 25;'
+      else
+        request.body = 'fields id,name,slug,first_release_date,cover.url,platforms.name,genres.name,collection.name;' << "where id != (#{saved_ex_ids[1..10].join(",")})" << ' & name ~ *"' "#{game_string}" << '"*;limit 25;'  
+      end
+    end
+    
     puts request.body
     response = http_construct.request(request)
     #puts JSON.parse(response.read_body)
