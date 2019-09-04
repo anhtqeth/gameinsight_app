@@ -3,6 +3,8 @@ class GamesController < ApplicationController
   #TODO: Move save logic to model. Just like article
   #TODO: This is a fat controller. 
   #TODO: Implement caching 
+  #TODO: Add more feature to controller
+  #TODO: 
   def show
     #If this game is not in db, save it. 
     game = nil
@@ -23,6 +25,7 @@ class GamesController < ApplicationController
     puts game
     puts game.external_id
     
+    #TODO - Handle this collection. Currently fecth all data and save. This reduce performance by 10x
     if game.game_collection.nil?
       game_collection = GameCollection.new
       
