@@ -493,7 +493,7 @@ module GamesApiModule
       response = http_construct.request(request)
   
       if JSON.parse(response.read_body).empty?
-          DUMMY_SCREENSHOT
+          nil
         else
           result = JSON.parse(response.read_body)
           puts result
