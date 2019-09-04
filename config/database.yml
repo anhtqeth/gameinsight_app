@@ -25,3 +25,13 @@ production:
   <<: *default
   #database: db/production.sqlite3 #before
   database: db/ethugamedb_production
+
+production:
+  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  database: <%= ENV['gamedb-dev'] %>
+  username: <%= ENV['ethudev'] %>
+  password: <%= ENV['!!Tqa241192'] %>
+  host: <%= ENV['gamedb-dev.chz79wa1dbhn.us-west-2.rds.amazonaws.com'] %>
+  port: <%= ENV['5432'] %>
