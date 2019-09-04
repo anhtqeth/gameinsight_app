@@ -26,6 +26,8 @@ gem 'capybara', '~> 3.22'
 gem 'contentful'
 gem 'rich_text_renderer', '~> 0.2.2'
 
+gem 'rails-i18n'
+
 #Slug
 gem 'friendly_id', '~> 5.2', '>= 5.2.5'
 
