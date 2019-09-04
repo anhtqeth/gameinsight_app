@@ -14,26 +14,15 @@ require 'net/http'
 #TODO - Reduce code smell
 #TODO - Handle nil result or empty image within this lib
 #TODO - Integrated asset to be empty placeholder for media like vid/img
-#TODO - Remove DUMMY values
 #TODO - Store API authorization somewhere safe
 
 module GamesApiModule
   #Utils Constant
   UNIX_TIME_NOW = Time.current.to_time.to_i
   THIS_MONTH = (Time.now - 1.month).to_i
-  
-  # HTTP_CNF = Net::HTTP.new('api-v3.igdb.com', 443)
-  # HTTP_CNF.use_ssl = true 
-  
-  DUMMY_SCREENSHOT = [{"id"=>244572, "game"=>55090, "height"=>720, "image_id"=>"iodd6zzceqq5jkufxpcz", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/iodd6zzceqq5jkufxpcz.jpg", "width"=>1280}, {"id"=>208211, "game"=>55090, "height"=>1080, "image_id"=>"wdsb42ukz39ywlzvhro4", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/wdsb42ukz39ywlzvhro4.jpg", "width"=>1920}, {"id"=>244573, "game"=>55090, "height"=>562, "image_id"=>"af8ueznswr8xpdkw9ukf", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/af8ueznswr8xpdkw9ukf.jpg", "width"=>1000}, {"id"=>208214, "game"=>55090, "height"=>1080, "image_id"=>"cxwpickwszhgdxvxdzzh", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/cxwpickwszhgdxvxdzzh.jpg", "width"=>1920}, {"id"=>208212, "game"=>55090, "height"=>1080, "image_id"=>"enex88ekm3se7a3vpqmp", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/enex88ekm3se7a3vpqmp.jpg", "width"=>1920}, {"id"=>208213, "game"=>55090, "height"=>1080, "image_id"=>"ywgv0zxrsocslwbkir8b", "url"=>"//images.igdb.com/igdb/image/upload/t_1080p/ywgv0zxrsocslwbkir8b.jpg", "width"=>1920}]
-  DUMMY_VIDEOS = ["https://www.youtube.com/embed/LVIdmEfiFCk","https://www.youtube.com/embed/OAQm-EzbaHM"]
-  DUMMY_GAME_IDS = [{"id"=>2948, "games"=>[2268, 2269, 2271, 5316, 6440, 7075, 9692, 18181, 20427, 23066, 25623, 26901, 36926, 42759, 43668, 58601, 61701, 61752, 65676, 69721, 78626, 78629, 78630, 78631, 78633, 113344]}]
-  DUMMY_NEWS = [{:id=>261029, :author=>nil, :summary=>"Sega will apparently continue to remaster the series, with Yakuza 2 the next in line for a remake using the Yakuza 6 engine.", :img=>"https://static.gamespot.com/uploads/screen_kubrick/123/1239113/3277876-yakuza.jpg", :created_at=>1503619200, :title=>"PSN Leak Reveals Yakuza 2 Is Now Getting A PS4 Remake", :url=>"https://www.gamespot.com/articles/psn-leak-reveals-yakuza-2-is-now-getting-a-ps4-rem/1100-6452857/"},{:id=>261029, :author=>nil, :summary=>"Sega will apparently continue to remaster the series, with Yakuza 2 the next in line for a remake using the Yakuza 6 engine.", :img=>"https://static.gamespot.com/uploads/screen_kubrick/123/1239113/3277876-yakuza.jpg", :created_at=>1503619200, :title=>"PSN Leak Reveals Yakuza 2 Is Now Getting A PS4 Remake", :url=>"https://www.gamespot.com/articles/psn-leak-reveals-yakuza-2-is-now-getting-a-ps4-rem/1100-6452857/"}]
-  DUMMY_ARTICLE = {:id=>261029, :author=>nil, :summary=>"Sega will apparently continue to remaster the series, with Yakuza 2 the next in line for a remake using the Yakuza 6 engine.", :img=>"https://static.gamespot.com/uploads/screen_kubrick/123/1239113/3277876-yakuza.jpg", :created_at=>1503619200, :title=>"PSN Leak Reveals Yakuza 2 Is Now Getting A PS4 Remake", :url=>"https://www.gamespot.com/articles/psn-leak-reveals-yakuza-2-is-now-getting-a-ps4-rem/1100-6452857/"}
-  DUMMY_GAME_CARDS = [{:id=>2059, :name=>"Yakuza", :summary=>"Just as Kazuma, a former rising star in the Yakuza, emerges from prison after a murder cover-up, 10 billion yen vanishes from the Yakuza vault, forcing him once again into their brutal, lawless world. A mysterious young girl will lead Kazuma to the answers if he can keep her alive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/e3cdy0d77eduopr5en37.jpg"}, {:id=>2060, :name=>"Yakuza 2", :summary=>"Yakuza 2 plunges you once more into the violent Japanese underworld. In intense brutal clashes with rival gangs, the police, and the Korean mafia, you will have opportunities to dole out more brutal punishment. As the heroic Kazuma Kiryu from the original Yakuza, explore Tokyo and now Osaka. Wander through the back alleys of Japan's underworld while trying to prevent an all-out gang war in over 16 complex, cinematic chapters written by Hase Seishu, the famous Japanese author who also wrote the first Yakuza. Endless conflicts and surprise plot twists will immerse you in a dark shadowy world where only the strongest will survive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/ozhhq6bsu5elgkhbraoe.jpg"}, {:id=>2061, :name=>"Yakuza 3", :summary=>"Introducing the next cinematic chapter in the prestigious Yakuza series renowned for it's authentic, gritty and often violent look at modern Japan. Making its first appearance exclusively on the PlayStation 3 computer entertainment system, the rich story and vibrant world of Yakuza 3 lets players engage in intense brutal clashes within the streets of Okinawa, and the vibrant and often dangerous city of Tokyo where only the strongest will survive.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/amhmvuaybvl0epgcpfys.jpg"}, {:id=>2062, :name=>"Yakuza 4", :summary=>"Yakuza 4 is the fourth game in Sega's crime drama series, known as 'Ryu ga Gotoku' in Japan. As a first for the series, the story is split between the viewpoints of four different protagonists.", :cover=>"//images.igdb.com/igdb/image/upload/t_cover_big/udb2eilafrf5yujesuq8.jpg"}]
+
   #NEED TO CATCH HTTP RESPONSE CODE BEFORE PROCEEDING!
   #REFACTORING THE STRUCTURE OF CODE FOR REQUEST
-  
   BASE_URI = 'https://api-v3.igdb.com/'
   
   #General Information
@@ -71,13 +60,6 @@ module GamesApiModule
   USERKEY = 'ada77f859e3e4c235b5b6e360c79e249'
   #DeviJack ec80dc20b6c9b360aab19868b02ed17e
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
-  
-  # http = Net::HTTP.new('api-v3.igdb.com', 80)
-  # request = Net::HTTP::Get.new(URI('https://api-v3.igdb.com/achievements'), {'user-key' => YOUR_KEY})
-  # request.body = 'fields *'
-  # puts http.request(request).body
-  
-  #http_construct = Net::HTTP.new('api-v3.igdb.com', 80)
   
   def buildRequest(uri)
     url = URI(uri)
@@ -513,7 +495,7 @@ module GamesApiModule
     game_videos_url = []
     
     if JSON.parse(response.read_body).empty?
-          DUMMY_VIDEOS
+          nil
         else
           #Construct YTB Embed url
           result = JSON.parse(response.read_body)
@@ -620,5 +602,11 @@ module GamesApiModule
   #   end
   #   img
   # end
+  
+  # Implement this when earning pass 500$
+  # http = Net::HTTP.new('api-v3.igdb.com', 80)
+  # request = Net::HTTP::Get.new(URI('https://api-v3.igdb.com/achievements'), {'user-key' => YOUR_KEY})
+  # request.body = 'fields *'
+  # puts http.request(request).body
   
 end
