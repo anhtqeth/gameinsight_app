@@ -1,6 +1,7 @@
 <% provide(:title, "Home ") %>
+
 <div class="container">
-  
+  <h1><%= t '.welcome' %></h1>
   <div class="container" >
     <%= render "featureguides" %>
   </div>
@@ -16,7 +17,7 @@
   <br>
    
   <div class="container">
-    <span><h4>| Latest Release</h4></span>
+    <span><h4>| <%= t '.latest_games' %></h4></span>
    
     <div class="dropdown">
       <button id="platform-select-btn" class="btn btn-secondary dropdown-toggle" type="button" aria-expanded="false" data-toggle="dropdown">Pick a Platform</button>
@@ -42,7 +43,7 @@
   <br>
   
   <div class="container" >
-    <%= render "layouts/bestgamesplatform" %>
+    <%= render "bestgamesplatform" %>
   </div>
 </div>
 

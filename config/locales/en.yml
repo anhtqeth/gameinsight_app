@@ -1,33 +1,37 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  static_pages:
+    home:
+      welcome: "Hello world"
+      latest_games: "Latest Release"
+    latestnewsfeed:
+      gaming_news: "Latest Gaming News"
+    featureguides:
+      latest_guide: "Latest Guide"
+    populargames:
+      popular_games: "Popular Games Right Now"
+    bestgamesplatform:
+      platform_popular: "Most popular by platform"
+    
+    help:
+    about:
+    contact_us:
+  sidebar:
+    home: "Home"
+    about: "About Us"
+    help: "Help"
+    discover: "Discover"
+    hot: "Hot"
+    release_schedule: "Release Schedule"
+    count_down: "Countdown!"
+    platforms: "Platforms"
+# activerecord:
+#     attributes:
+#           name: "Game's Name"
+#       summary: "Brief Summary on Game"
+#       soryline: "A plot sypnosis of the game"
+#         cover: "Link to an cover image"
+#     platforms: "Pick the platform this game belong to"
+#         genres: "Pick the genres of this game"
+#           date: "Enter the release date of this game"
+
+#TODO - Add all interface element translation here

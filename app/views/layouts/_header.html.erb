@@ -8,6 +8,11 @@
   </button>
   GameInsight</p>
   
+  <ul>
+    <li><%= link_to 'English', root_path(locale: :en) %></li>
+    <li><%= link_to 'Tiếng Việt', root_path(locale: :vi) %></li>
+  </ul>
+  
   <%= form_tag(search_path, :method => "get",   
     class: 'form-inline', id: 'search-bar') do %>  
     <%= search_field_tag :name, params[:name], placeholder: " ", class: "form-control mr-sm-2" %>  
