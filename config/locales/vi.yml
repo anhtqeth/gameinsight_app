@@ -1,0 +1,26 @@
+vi:
+  static_pages:
+    home:
+      welcome: "Xin Chào!"
+      latest_games: "Game mới nhất"
+    latestnewsfeed:
+      gaming_news: "Bản Tin Game"
+    featureguides:
+      latest_guide: "Hướng Dẫn Mới Nhất"
+    populargames:
+      popular_games: "Tựa Game Phổ Biến"
+    bestgamesplatform:
+      platform_popular: "Các game hot trên từng hệ máy"
+    
+    help:
+    about:
+    contact_us:
+  sidebar:
+    home: "Trang Chủ"
+    about: "Về Chúng Tôi"
+    help: "Trợ Giúp"
+    discover: "Khám Phá"
+    hot: "Hot"
+    release_schedule: "Lịch Phát Hành"
+    count_down: "Đếm Ngược!"
+    platforms: "Hệ Máy"
