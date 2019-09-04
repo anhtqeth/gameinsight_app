@@ -418,3 +418,12 @@ body {
 .pagination {
    place-content: center;
 }
+
+#best-platform-games-list li:hover {
+  background-color: #ffc107 !important;
+  border-radius: 15px !important;
+}
+
+#best-platform-games-list a {
+   color: black;
+}

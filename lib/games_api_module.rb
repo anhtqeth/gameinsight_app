@@ -68,25 +68,6 @@ module GamesApiModule
     http.use_ssl = true
     request
   end
-
-  # #
-  # def gamesRequest(game_id)
-  #   puts "Called to Game Request with parameter: " << game_id.to_s
-  #   id_request = "fields *; where id = #{game_id};"
-  #   slug_request = 'fields *; where slug = "' << "#{game_id}" << '";'
-  #   request = buildRequest(GAME_URI)
-    
-  #   if (game_id.is_a? Integer) 
-  #     request.body = id_request
-  #   else
-  #     request.body = slug_request
-  #   end
-  #   puts request.body
-  #   #request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
-  #   response = http_construct.request(request)
-  #   #puts response.read_body
-  #   JSON.parse(response.read_body)
-  # end
   
   def gamesRequest(game_id)
     puts "Called to Game Request with parameter: " << game_id.to_s

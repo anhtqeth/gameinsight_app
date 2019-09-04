@@ -5,7 +5,7 @@
     
     <div class = "col">
       <i class="fab fa-playstation fa-2x"></i>
-      <ul class="list-group list-group-flush">
+      <ul class="list-group list-group-flush" id ="best-platform-games-list">
       <% @ps4_list.each do |game| %>  
       
       <li class="list-group-item">
@@ -26,8 +26,7 @@
     <div class = "col">
       <!--TODO: Should pick from platform model, include link to platform-->
       <h5>Nintendo Switch</h5> 
-      
-      <ul class="list-group list-group-flush">
+      <ul class="list-group list-group-flush" id ="best-platform-games-list">
       <% @nintendo_switch_list.each do |game| %>  
         <li class="list-group-item">
           <div>
@@ -45,9 +44,9 @@
     
      <div class = "col">
       <i class="fab fa-xbox fa-2x"></i>
-      <ul class="list-group list-group-flush">
+      <ul class="list-group list-group-flush" id ="best-platform-games-list">
       <% @xbox_list.each do |game| %>  
-      <button class="list-group-item">
+      <li class="list-group-item">
           <div>
             <a href=<%=game_path(game[:slug]) %> target="_blank"> <h6><%= game[:name] %></h6></a>
             <img src=<%= game[:cover] %> alt="..." style="width:60px !important;height:60px" class="rounded-circle float-right"></h6>
@@ -57,8 +56,7 @@
            <span>Release on: </span>
            <span class="badge badge-pill badge-warning"><%= date_format(game[:first_release_date]) %></span>
           </div>
-        </button>
-      
+        </li>
       <% end %>
       </ul>
     </div>
