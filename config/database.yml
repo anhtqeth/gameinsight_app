@@ -21,10 +21,10 @@ test:
   <<: *default
   #database: db/test.sqlite3 #before 
   database: db/ethugamedb_test
-production:
-  <<: *default
-  #database: db/production.sqlite3 #before
-  database: db/ethugamedb_production
+# production:
+#   <<: *default
+#   #database: db/production.sqlite3 #before
+#   database: db/ethugamedb_production
 
 production:
   <<: *default
