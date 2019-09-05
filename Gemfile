@@ -5,7 +5,7 @@ gem 'rails',        '5.2'
 gem 'bootstrap', '~> 4.3.1'
 
 
-gem 'bcrypt',       '3.1.12'
+gem 'bcrypt',       '3.1.13'
 gem 'faker',          '1.7.3'
 gem 'carrierwave',             '1.2.2'
 gem 'mini_magick',             '4.7.0'
@@ -30,6 +30,9 @@ gem 'rails-i18n'
 
 #Slug
 gem 'friendly_id', '~> 5.2', '>= 5.2.5'
+
+#Authentication
+gem 'devise'
 
 group :development, :test do
   gem 'pg', '0.18.4'
