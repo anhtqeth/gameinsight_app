@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  #TODO - Utilize Devise feature when things are done for USER
   #TODO - Add Index to other model as well
   #TODO - Check to see if uiqueness is needed on other model as well
   #TODO - Utilize before_save on other models
