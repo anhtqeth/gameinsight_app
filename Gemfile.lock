@@ -49,7 +49,7 @@ GEM
     arel (9.0.0)
     autoprefixer-rails (9.5.1.1)
       execjs
-    bcrypt (3.1.12)
+    bcrypt (3.1.13)
     bindex (0.7.0)
     bootstrap (4.3.1)
       autoprefixer-rails (>= 9.1.0)
@@ -84,6 +84,12 @@ GEM
       http (> 0.8, < 5.0)
       multi_json (~> 1)
     crass (1.0.4)
+    devise (4.6.2)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 6.0)
+      responders
+      warden (~> 1.2.3)
     diff-lcs (1.3)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
@@ -324,6 +330,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     optimist (3.0.0)
+    orm_adapter (0.5.0)
     ovirt-engine-sdk (4.3.0)
       json (>= 1, < 3)
     pg (0.18.4)
@@ -380,6 +387,9 @@ GEM
       nokogiri (~> 1.5)
       optimist (~> 3.0)
     regexp_parser (1.5.1)
+    responders (2.4.1)
+      actionpack (>= 4.2.0, < 6.0)
+      railties (>= 4.2.0, < 6.0)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
@@ -454,6 +464,8 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.6)
+    warden (1.2.8)
+      rack (>= 2.0.6)
     web-console (3.5.1)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -472,7 +484,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt (= 3.1.12)
+  bcrypt (= 3.1.13)
   bootstrap (~> 4.3.1)
   bootstrap-will_paginate (= 1.0.0)
   byebug (= 9.0.6)
@@ -480,6 +492,7 @@ DEPENDENCIES
   carrierwave (= 1.2.2)
   coffee-rails (= 4.2.2)
   contentful
+  devise
   faker (= 1.7.3)
   fog (= 1.42)
   friendly_id (~> 5.2, >= 5.2.5)
