@@ -7,6 +7,7 @@
       </div>  
       <div class="col">  
          <h1 style="float:right;"><%=@game_details[:name] %></h1>
+         
       </div>
     </div>
   </div>
@@ -25,6 +26,7 @@
         <img id="img-slide" src=<%= @game_screenshots.first.url %> alt="First slide">
         <div class="carousel-caption d-none d-md-block">
           <h5> <%= @game_details[:name] %></h5>
+         
         </div>
       </div>
         <% @game_screenshots[1..-1].each do |img| %>
@@ -51,6 +53,10 @@
       <div class="col">  
          <h1 style="float:right;"><%=@game_details[:name] %></h1>
       </div>
+    </div>
+    <div class"row">
+      <hr style="float:right;" id="new-content-line">
+      <!--TODO - Add Affiliate here-->
     </div>
   </div>
 </div>  

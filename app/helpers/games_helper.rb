@@ -16,7 +16,11 @@ module GamesHelper
       content = []
       newsfeed.each do |news|
         #Put news data to media to render for each element
-        content << content_tag(:div,media(news),class: "media") << content_tag(:hr)
+        unless news[:img].nil?
+          content << content_tag(:div,media(news),class: "media") << content_tag(:hr)
+        else
+          puts "IMG is not there!"
+        end
       end
       #Rendering html
       safe_join(content)
@@ -30,20 +34,19 @@ module GamesHelper
   #News with empty img will be skipped
   #For wrapper div, like media-body, the conent need to be safe_join first, and put inside the content_tag
   def media(news)
-    unless news[:img].nil?
+    #unless news[:img].nil?
       news_img = image_tag(news[:img], class: "mr-3",id: "news-image")
-      news_title = content_tag(:h5, news[:title], class:"mt-0")
+      news_title = content_tag(:a,content_tag(:h5, news[:title], class:"mt-0"),class:"mt-0",href: news[:url])
       create_time = DateTime.strptime(news[:publish_at].to_s,'%s')
       news_summary = content_tag(:p, truncate(news[:summary],length:200), class: "card-text")
       news_published_time = content_tag(:p, "Last updated " << time_ago_in_words(create_time) << " ago", class: "card-text")
-      
       #Wrap media-body
       media_body = content_tag(:div,safe_join([news_title, news_summary, news_published_time]),class: "media-body")
       #Return the media element
-      safe_join([news_img,media_body,content_tag(:hr)])
-    else
-      puts "IMG is not there!"
-    end
+      safe_join([news_img,media_body])
+    #else
+      #puts "IMG is not there!"
+    #end
   end
   
   #Used to render bootstrap carousel
