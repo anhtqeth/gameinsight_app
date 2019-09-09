@@ -1,10 +1,8 @@
 Rails.application.routes.draw do
-  
-  # scope "(:locale)", "locale: /#{I18n.available_locales.join("|")}/" do
-    
-  # end
-  
- 
+
+  get    '/login',   to: 'sessions#new'
+  post   '/login',   to: 'sessions#create'
+  delete '/logout',  to: 'sessions#destroy'
   
   scope "(:locale)", locale: /en|vi/ do
     root 'static_pages#home'
@@ -13,7 +11,7 @@ Rails.application.routes.draw do
     get  '/contact', to: 'static_pages#contact'
     get '/release_by_platform', to: 'static_pages#latest_releases', as: 'release'
   
-    get  '/signup',  to: 'user#new'
+    get  '/signup',  to: 'users#new'
   
   #GamesController
   #get '/games/:id', to: 'games#show', as: 'game'
@@ -34,7 +32,7 @@ Rails.application.routes.draw do
     get '/reviews', to: 'reviews#show'
   
     get '/search/', to: 'games#find', as: 'search'
-  
     end
- 
+    resources :users
+  
 end
