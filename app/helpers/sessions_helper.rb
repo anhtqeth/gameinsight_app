@@ -22,4 +22,9 @@ module SessionsHelper
     @current_user = nil #release current user
   end
   
+  def admin?
+    #TODO - Check if current user is admin
+    current_user.admin?
+  end
+  
 end
