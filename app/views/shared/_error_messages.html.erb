@@ -1,0 +1,16 @@
+<!--TODO - Translate error message as well-->
+<!--Check if any message on submission of user-->
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
+      <!--A helper to display error count - pluralize-->
+      The form contains <%= pluralize(@user.errors.count, "error") %>.
+    </div>
+    <ul>
+      <!--Display each message lopp-->
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
