@@ -8,13 +8,13 @@ class UsersController < ApplicationController
   end
   
   def new
-    @user = User.newe
+    @user = User.new
   end
   
   def create
     @user = User.new(user_params)    # Not the final implementation!
     if @user.save
-      log_in(user)
+      log_in(@user)
       flash.now[:success] = "Welcome to Game Database!"
       redirect_to @user
     else

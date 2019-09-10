@@ -1,10 +1,26 @@
 class GamesController < ApplicationController
+  before_action :logged_in_user, only: [:index, :edit, :update]
   #Show game detail page
   #TODO: Move save logic to model. Just like article
   #TODO: This is a fat controller. 
   #TODO: Implement caching 
   #TODO: Add more feature to controller
   #TODO: 
+  
+    
+  def index
+    @games = Game.all.paginate(:page =>params[:page], :per_page => 15)
+    #@game_card_result = result
+    
+  end
+  
+  def destroy
+    Game.friendly.find(params[:id]).destroy
+    flash[:success] = "Game deleted!"
+    redirect_back(fallback_location: root_path)
+  end
+  
+ 
   def show
     #If this game is not in db, save it. 
     game = nil
@@ -107,7 +123,12 @@ class GamesController < ApplicationController
   def update
     #Should show all current game detail in db 
     #Should show assocciated screenshots and videos for update
-  
   end
-  
+ 
+  def logged_in_user
+      unless logged_in?
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
+  end
 end
