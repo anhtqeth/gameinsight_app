@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   
   #GamesController
   #get '/games/:id', to: 'games#show', as: 'game'
-    get '/games/(/:id)(/:external_id)', to: 'games#show', as: 'game'
+  
+    #get '/games/(/:id)(/:external_id)', to: 'games#show'
+  
   
     get 'games/new-releases', to: 'games#newrelease'
     get 'games/:id/guides', to: 'games#guides'
@@ -34,5 +36,5 @@ Rails.application.routes.draw do
     get '/search/', to: 'games#find', as: 'search'
     end
     resources :users
-  
+    resources :games
 end

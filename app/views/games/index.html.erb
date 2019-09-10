@@ -1,0 +1,86 @@
+<% provide(:title, 'All Games in Database') %>
+<div class="container">
+    
+<h1>All Games <span class="badge badge-secondary"><%=Game.count%></span></h1>
+<hr>
+<small>MANAGED BY ADMIN</small>
+<form class="form-inline">
+ <div class="input-group">
+     
+     <div class="input-group-prepend">
+         <input type="text" class="form-control" placeholder="Game Name" aria-label="Game Name" aria-describedby="basic-addon1"> 
+     </div>
+ </div>
+</form>
+<% flash.each do |message_type, message| %>
+   <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+<% end %>
+<hr>
+    <%@games.each do |x|%>
+    <div class="row">
+        <div class = "col">
+        <%if x.cover.nil? || x.cover == 'NA' %>
+          <div class="card" style="width: 18rem;">
+             <%=image_tag("//:0",class:"card-img-top")%>
+          </div>
+        <%else%>
+          <div class="card" style="width: 18rem;">
+             <%=image_tag(x.cover,class:"card-img-top")%>
+          </div>
+        <%end%>
+        </div>
+        <div class = "col-sm-8">
+          <!--<div class="card">-->
+             <div class="card-body">
+             <h5 class="card-title">Title - <%= x.name %></h5>
+             <p class="card-text">Summary -<%= x.summary%></p>
+             <p class="card-text">Storyline - <%= x.storyline%></p>
+             <p class="card-text">Release Date -<%= x.first_release_date%></p>
+             <p class="card-text">Slug: <%= x.slug%></p>
+             <p class="card-text">Cover Image Url -<%= x.cover%></p>
+            <a href="#" class="btn btn-primary">Edit</a>
+             <%= link_to "Delete", x, method: :delete,
+                                  data: { confirm: "You sure?" }, class: "btn btn-danger" %>
+          </div>
+         <!--</div>    -->
+        </div>
+    </div>
+     <hr>
+    <%end%>
+    <div class="my_pagination">     
+        <%= will_paginate @games %>
+    </div>
+</div>
+
+<div class="container">
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+</div>
