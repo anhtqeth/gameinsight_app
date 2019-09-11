@@ -18,33 +18,48 @@
 <hr>
     <%@games.each do |x|%>
     <div class="row">
-        <div class = "col">
+        <div class = "col-3">
         <%if x.cover.nil? || x.cover == 'NA' %>
-          <div class="card" style="width: 18rem;">
+          <div class="card">
              <%=image_tag("//:0",class:"card-img-top")%>
           </div>
         <%else%>
-          <div class="card" style="width: 18rem;">
+          <div class="card">
              <%=image_tag(x.cover,class:"card-img-top")%>
           </div>
         <%end%>
         </div>
-        <div class = "col-sm-8">
-          <!--<div class="card">-->
-             <div class="card-body">
-             <h5 class="card-title">Title - <%= x.name %></h5>
-             <p class="card-text">Summary -<%= x.summary%></p>
-             <p class="card-text">Storyline - <%= x.storyline%></p>
-             <p class="card-text">Release Date -<%= x.first_release_date%></p>
-             <p class="card-text">Slug: <%= x.slug%></p>
-             <p class="card-text">Cover Image Url -<%= x.cover%></p>
-            <a href="#" class="btn btn-primary">Edit</a>
-             <%= link_to "Delete", x, method: :delete,
-                                  data: { confirm: "You sure?" }, class: "btn btn-danger" %>
-          </div>
-         <!--</div>    -->
+        <div class = "col-3">
+          <h5>Game Info</h5>
+          <hr>
+          <h5 class="card-title"><%= x.name %></h5>
+          <p class="card-text">Created <span class="badge badge-info"><%= x.created_at%></span></p>
+          <p class="card-text">Updated <span class="badge badge-info"><%= x.updated_at%></span></p>
+          <p class="card-text">Release Date <span class="badge badge-info"><%= x.first_release_date%></span></p>
+          <p class="card-text">Slug: <span class="badge badge-info"><%= x.slug%></span></p>
         </div>
-    </div>
+        <div class = "col-3">
+          <h5>Companies Details</h5>
+          <hr>
+          <p class="card-title">Publisher: <%= %></p>
+          <p class="card-text">Developer: <%= %></p>
+          <p class="card-text">Platforms - <%= x.platforms.map{|i| i[:name] }.join(",")%></p>
+          <p class="card-text">Genres -<%= x.game_genres.map{|i| i[:name] }.join(",")%></p>
+        </div>
+        <div class = "col-3">
+          <h5>Media Details</h5>
+          <hr>
+          <p class="card-title">Screenshots Count: <span class="badge badge-info"><%= x.screenshots.count %></span></p>
+          <p class="card-text">Videos Count: <span class="badge badge-info"><%= x.game_videos.count %></span></p>
+          <p class="card-text">Articles Count: <span class="badge badge-info"><%= 0 %></span></p>
+          <p class="card-text">Reviews <%= %></p>
+        </div>
+     </div>
+     <br>
+     <div>
+      <%= link_to "Edit", edit_game_path(x), class: "btn btn-warning" %>
+      <%= link_to "Delete", x, method: :delete, data: { confirm: "You sure?" },class: "btn btn-danger" %>
+    </div>    
      <hr>
     <%end%>
     <div class="my_pagination">     
