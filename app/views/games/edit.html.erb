@@ -1,0 +1,70 @@
+<% provide(:title, "Edit Game") %>
+
+<div class="container">
+<h1>Update Game Details</h1>
+<hr>
+<div class="row">
+  <div class="col-5">
+    <h5>Cover Preview</h5>
+<%if @game.cover.nil? || @game.cover == 'NA' %>
+    <div class="card" style="width: 18rem;">
+       <%=image_tag("//:0",class:"card-img-top")%>
+    </div>
+  <%else%>
+    <div class="card" style="width: 18rem;">
+      <%=image_tag(@game.cover,class:"card-img-top")%>
+    </div>
+<%end%>
+<h5><%=@game.name%> details</h5>
+<hr>
+<%= form_for(@game) do |f| %>
+  <!--<= render 'shared/error_messages', object: @game %>-->
+  <% if @game.errors.any? %>
+    <div id="error_explanation">
+    <div class="alert alert-danger">
+      <!--A helper to display error count - pluralize-->
+      The form contains <%= pluralize(@game.errors.count, "error") %>.
+    </div>
+    <ul>
+      <!--Display each message lopp-->
+    <% @game.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+  
+  <%= f.label :cover %>
+  <%= f.text_field :cover, class: 'form-control' %>
+  
+  <%= f.label :external_id %>
+  <%= f.text_field :external_id, class: 'form-control',:readonly => true%>
+
+  <%= f.label :name %>
+  <%= f.text_field :name, class: 'form-control' %>
+
+  <%= f.label :slug %>
+  <%= f.text_field :slug, class: 'form-control' %>
+  
+  <%= f.label :summary %>
+  <%= f.text_area :summary, class: 'form-control', rows: 15 %>
+  
+  <%= f.label :storyline %>
+  <%= f.text_area :storyline, class: 'form-control',rows: 20%>
+  
+  <%= f.label :first_release_date %>
+  <%= f.date_field :first_release_date, class: 'form-control' %>
+
+  <%= f.submit "SAVE", class: "btn btn-warning" %>
+<% end %>
+
+</div>
+    
+  </div>
+  <div class="col">
+    Additional text
+    
+  </div>
+  
+  
+</div>
