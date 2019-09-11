@@ -16,24 +16,24 @@
   <br>
    
   <div class="container">
-    <span><h4>| <%= t '.latest_games' %></h4></span>
-   
-    <div class="dropdown">
-      <button id="platform-select-btn" class="btn btn-secondary dropdown-toggle" type="button" aria-expanded="false" data-toggle="dropdown">Pick a Platform</button>
+    <h4>| <%= t '.latest_games' %><button style="float:right;" id="platform-select-btn" class="btn btn-secondary dropdown-toggle" type="button" aria-expanded="false" data-toggle="dropdown">Pick a Platform</button>
       <div class="dropdown-menu">
           <% @platforms_list.each do |platform| %>
             <%= content_tag(:a, link_to(platform, root_path(platform_name: platform), remote: true,class: "dropdown-item")) %>
           <% end %>
-      </div>
+      </div></h4>
+   
+      
+    
     </div>
     <hr id="content-line">
         
     <div class="d-flex justify-content-center">
-      <div id="loadingSpinner" class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+      <div id="loadingSpinner" class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
       <span class="sr-only">Loading...</span>
       </div>
     </div>
-    <div id="releaseByPlatform" class="row">
+    <div id="releaseByPlatform" class="row justify-content-center">
     </div>
   </div>
   

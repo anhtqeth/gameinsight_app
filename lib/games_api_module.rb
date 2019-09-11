@@ -73,7 +73,7 @@ module GamesApiModule
     puts "Called to Game Request with parameter: " << game_id.to_s
     request = buildRequest(GAME_URI)
     #request.body = "fields *,platforms.name,genres.name; where id = #{game_id};";
-    request.body = "fields *; where id = #{game_id};"
+    request.body = "fields *,cover.url; where id = #{game_id};"
     response = http_construct.request(request)
     #puts response.read_body
     JSON.parse(response.read_body)
@@ -507,12 +507,14 @@ module GamesApiModule
       else
         game_card.store(:summary,'NA')
       end
-      game_cover = gameCoverRequest(game_id)
+      #REMOVE COVER REQUEST
+      game_cover = game_detail["cover"]["url"]
       game_card.store(:cover,game_cover)
       game_popularity = game_detail['popularity']
       game_card.store(:popularity,game_popularity)
     unless (game_detail["platforms"].nil? || game_detail["genres"].nil? || game_detail["first_release_date"].nil? )
       #TODO: Refactor this smell
+      #TODO - Refactor the unless here genres nil make other info not save
       game_platform = []
       game_platform = game_detail["platforms"]
       game_card.store(:platform,game_platform)
@@ -521,15 +523,13 @@ module GamesApiModule
       #   game_platform << name
       # end
       
-      #TODO: Inspecting... ['platforms', 'genres', 'first_release_date'].any? do |key| game_detail.key?(key) end
-      
+
       game_genres = []
       game_genres = game_detail["genres"]
       #LEGACY: Below was used when getting name from API
       # game_genres = game_detail["genres"].map{|x| x["name"]}.join(',')
       game_card.store(:genres,game_genres)
       game_first_release_date = game_detail["first_release_date"]
-      # game_card.store(:first_release_date,DateTime.strptime(game_first_release_date.to_s,'%s').strftime("%A-%d-%b-%Y"))
       game_card.store(:first_release_date,game_first_release_date)
     else
       game_card.store(:platform,"NA")
@@ -547,10 +547,10 @@ module GamesApiModule
     
     if games_id_array.is_a? Array
       puts "Array of Game Info"
-      games_id_array[0..7].each do |x|
-      game_detail = gamesRequest(x).first
-      game_card = gameCardProcess(game_detail)
-      game_card_list << game_card
+      games_id_array.each do |x|
+        game_detail = gamesRequest(x).first
+        game_card = gameCardProcess(game_detail)
+        game_card_list << game_card
       end
       game_card_list
     else 
