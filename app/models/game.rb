@@ -24,11 +24,9 @@ class Game < ApplicationRecord
   def fetchAPIData(id)
      OpenStruct.new(gamesListProcess(id))
   end
-  
-  #rails g migration AddGameCollectionToGames game_collection:references
-  
+
   def saveAPIData(id)
-     game_detail = fetchAPIData(id)
+     game_detail = 3(id)
      game=Game.new
      
      game.external_id = game_detail.id
@@ -83,20 +81,33 @@ class Game < ApplicationRecord
   
   
   def fetchLatestRelease(platform)
-    min_time = Date.parse((1.month.ago).to_s)
+    min_time = Date.parse((3.weeks.ago).to_s)
     max_time = Date.parse(Time.now.to_s)
     #latest_release = Game.where("first_release_date BETWEEN ? AND ? and platform like ?",min_time,max_time,"%#{platform}%") #DEV Query
-    latest_release = Game.where("first_release_date BETWEEN ? AND ?",
-    min_time,max_time).joins("INNER JOIN games_platforms p ON p.game_id = games.id")
-    .where("p.platform_id = ?",Platform.find_by(name: platform).id) 
-    if latest_release.empty?
+    # latest_release = Game.where("first_release_date BETWEEN ? AND ?",
+    # min_time,max_time).joins("INNER JOIN games_platforms p ON p.game_id = games.id")
+    # .where("p.platform_id = ?",Platform.find_by(name: platform).id) 
+    # if latest_release.empty?
+    #   latest_release_ids = gameAltRecentRelease(platform).each.map{|x| x["id"]}.map.to_a
+    #   latest_release = gamesListProcess(latest_release_ids)
+    #   latest_release_ids.each do |game_id|
+    #     saveAPIData(game_id)
+    #   end
+    # end
+    # latest_release
+    
+    Rails.cache.fetch("#{platform}/latest_releases", expires_in: 7.days) do
       latest_release_ids = gameAltRecentRelease(platform).each.map{|x| x["id"]}.map.to_a
-      latest_release = gamesListProcess(latest_release_ids)
-      latest_release_ids.each do |game_id|
-        saveAPIData(game_id)
+      latest_release_ids.each do |id|
+         if Game.find_by(external_id: id).nil?
+          saveAPIData(id)
+         else
+          #Update popularity here?
+         end
       end
     end
-    latest_release
+    
+    Game.where("first_release_date BETWEEN ? AND ?",min_time,max_time).joins("INNER JOIN games_platforms p ON p.game_id = games.id").where("p.platform_id = ?",Platform.find_by(name: platform).id)
   end
   
   #Fetch popular and sort by popularity desc. 
@@ -104,39 +115,45 @@ class Game < ApplicationRecord
   #Params: platform - name of the platform
   def fetchPopularGamebyPlatform(platform)
     time = Date.parse(Time.now.to_s)
-    popular_games = Game.where("first_release_date < ?",time).order(popularity: :desc).joins("INNER JOIN games_platforms p ON p.game_id = games.id").where("p.platform_id = ?",Platform.find_by(name: platform).id).limit(10)
-    if popular_games.empty?
-      popular_games_id = popularGamesByPlatform(platform).each.map{|x| x["id"]}.map.to_a
-      popular_games_id.each do |id|
-        saveAPIData(id)
-      end
-      popular_games = gamesListProcess(popular_games_id)
+    
+    Rails.cache.fetch("#{time}_#{platform}/popular_upcoming_releases", expires_in: 7.days) do
+      savePopularGame(platform)
     end
-    popular_games
+    
+    Game.where("first_release_date < ?",time).order(popularity: :desc).joins("INNER JOIN games_platforms p ON p.game_id = games.id").where("p.platform_id = ?",Platform.find_by(name: platform).id).limit(10)
+    
   end
   
   #This is to get the correct popular game
   def savePopularGame(platform)
     popular_games_id = popularGamesByPlatform(platform).each.map{|x| x["id"]}.map.to_a
     popular_games_id.each do |id|
+      if Game.find_by(external_id: id).nil?
         saveAPIData(id)
+      else
+        #Update popularity here?
+      end
     end
   end
   
   def fetchPopularUpcomingRelease
     time = Date.parse(Time.now.to_s)
-    popular_upcoming_games = Game.order(popularity: :desc).where("first_release_date > ?",time)
     
-    if popular_upcoming_games.empty? or popular_upcoming_games.size < 4
+    Rails.cache.fetch("#{time}/popular_upcoming_releases", expires_in: 7.days) do
       saveAPIPopularGame
     end
-    popular_upcoming_games
+    
+    Game.order(popularity: :desc).where("first_release_date > ?",time)
   end
   
   def saveAPIPopularGame
     id_array = gamePopularUpcomingRelease
       id_array.each do |id|
-        saveAPIData(id)
+        if Game.find_by(external_id: id).nil?
+          saveAPIData(id)
+        else
+        #Update popularity here?
+        end
     end
   end
   
@@ -176,6 +193,14 @@ class Game < ApplicationRecord
     api_rs = findApiGames(name,saved_ex_ids)
     #rs.empty? ? findApiGames(name) : rs
     [rs,api_rs]
+  end
+  
+  def duplicatesDestroy(title)
+    dup_list = Game.where(name: title).group_by(&:name)
+    dup_list.values.each do |dup|
+      dup.pop #leave one
+      dup.each(&:destroy) #destroy other
+    end
   end
   
   private

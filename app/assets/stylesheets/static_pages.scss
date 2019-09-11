@@ -163,6 +163,24 @@ footer li {
     object-fit: cover;
 }
 
+#header-nav-ul{
+  display: -webkit-inline-box;
+  list-style: none;
+}
+
+#header-nav-ul li a{
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  color: white;
+}
+
+#header-nav-ul ul li a:hover {
+    // color: black;
+    text-decoration: none;
+    background: #FFC107 !important;
+}
+
 a,
 a:hover,
 a:focus {

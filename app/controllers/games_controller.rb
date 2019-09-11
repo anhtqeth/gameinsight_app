@@ -9,7 +9,7 @@ class GamesController < ApplicationController
   
     
   def index
-    @games = Game.all.paginate(:page =>params[:page], :per_page => 15)
+    @games = Game.all.order(:name).paginate(:page =>params[:page], :per_page => 15)
     #@game_card_result = result
     
   end
