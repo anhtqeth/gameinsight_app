@@ -5,8 +5,6 @@ class GamesController < ApplicationController
   #TODO: This is a fat controller. 
   #TODO: Implement caching 
   #TODO: Add more feature to controller
-  #TODO: 
-  
     
   def index
     @games = Game.all.order(:name).paginate(:page =>params[:page], :per_page => 15)

@@ -275,10 +275,10 @@ module GamesApiModule
       when 'Xbox One'
         platform_id = 49
       when 'PC (Microsoft Windows)'
-        puts 'Most Popular PC Game'
+        puts 'PC Game'
         platform_id = 6
       when 'Nintendo Switch'
-        puts 'Most Popular Switch Game'
+        puts 'Switch Game'
         platform_id = 130
       when 'iOS'
         platform_id = 39
@@ -289,6 +289,9 @@ module GamesApiModule
     platform_id
   end
   
+  # gameAltRecentRelease('PlayStation 4')
+  # gameRecentRelease('PlayStation 4')
+  
   def gameRecentRelease(platform)
     puts "Called to Recent Released Game Request"
     request = buildRequest(RELEASE_URI)
@@ -297,7 +300,8 @@ module GamesApiModule
     # year = Time.now.year
     
     #Return games released around 1 month
-    request.body = "fields *,game.name; where date > #{3.month.ago.to_i} & date < #{Time.now.to_i}  & game.platforms = #{platform_id}; sort m desc; limit 20;"
+    request.body = "fields *,game.name; where date > #{Time.now.beginning_of_month.to_i} & m = #{Time.now.month}& game.platforms = #{platform_id}; limit 25;" # & date < #{Time.now.to_i} 
+  
     puts request.body
     response = http_construct.request(request)
     puts JSON.parse(response.read_body) 
@@ -310,7 +314,8 @@ module GamesApiModule
     puts "Called to Altenate Recent Released Game Request"
     request = buildRequest(GAME_URI)
     platform_id = platformCodeConvert(platform)
-    request.body = "fields id,name,platforms.name,first_release_date; where first_release_date > #{1.month.ago.to_i} & first_release_date < #{Time.now.to_i} & platforms = {#{platform_id}}; limit 20;"
+    request.body = "fields id,name,platforms.name,first_release_date; where first_release_date > 
+    #{3.weeks.ago.to_i} & first_release_date < #{Time.now.to_i} & platforms = [#{platform_id}];sort popularity desc; limit 25;"
     puts request.body
     response = http_construct.request(request)
     puts JSON.parse(response.read_body) 
@@ -507,37 +512,38 @@ module GamesApiModule
       else
         game_card.store(:summary,'NA')
       end
-      #REMOVE COVER REQUEST
       game_cover = game_detail["cover"]["url"]
-      game_card.store(:cover,game_cover)
+      game_card.store(:cover,game_cover.sub('t_thumb','t_cover_big'))
       game_popularity = game_detail['popularity']
       game_card.store(:popularity,game_popularity)
-    unless (game_detail["platforms"].nil? || game_detail["genres"].nil? || game_detail["first_release_date"].nil? )
       #TODO: Refactor this smell
       #TODO - Refactor the unless here genres nil make other info not save
-      game_platform = []
-      game_platform = game_detail["platforms"]
-      game_card.store(:platform,game_platform)
-      #LEGACY: Below was used when getting name from API
-      # game_detail["platforms"].map{|x| x["name"]}.each do |name|
-      #   game_platform << name
-      # end
       
-
-      game_genres = []
-      game_genres = game_detail["genres"]
-      #LEGACY: Below was used when getting name from API
-      # game_genres = game_detail["genres"].map{|x| x["name"]}.join(',')
-      game_card.store(:genres,game_genres)
-      game_first_release_date = game_detail["first_release_date"]
-      game_card.store(:first_release_date,game_first_release_date)
-    else
-      game_card.store(:platform,"NA")
-      game_card.store(:genres,"NA")
-      game_card.store(:first_release_date,"NA")
-    end
-    
-    
+      if game_detail["platforms"].nil?
+        game_card.store(:platform,"NA")
+        
+      else
+        game_platform = []
+        game_platform = game_detail["platforms"]
+        game_card.store(:platform,game_platform)
+      end
+      
+      if game_detail["genres"].nil?
+        game_card.store(:genres,"NA")
+      else
+        game_genres = []
+        game_genres = game_detail["genres"]
+        game_card.store(:genres,game_genres)
+        
+      end
+      
+      if game_detail["first_release_date"].nil? 
+        game_card.store(:first_release_date,"NA")
+      else
+        game_first_release_date = game_detail["first_release_date"]
+        game_card.store(:first_release_date,game_first_release_date)
+      end
+   
     game_card
   end
   
