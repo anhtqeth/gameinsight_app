@@ -26,7 +26,7 @@ class Game < ApplicationRecord
   end
 
   def saveAPIData(id)
-     game_detail = 3(id)
+     game_detail = fetchAPIData(id)
      game=Game.new
      
      game.external_id = game_detail.id
@@ -83,19 +83,6 @@ class Game < ApplicationRecord
   def fetchLatestRelease(platform)
     min_time = Date.parse((3.weeks.ago).to_s)
     max_time = Date.parse(Time.now.to_s)
-    #latest_release = Game.where("first_release_date BETWEEN ? AND ? and platform like ?",min_time,max_time,"%#{platform}%") #DEV Query
-    # latest_release = Game.where("first_release_date BETWEEN ? AND ?",
-    # min_time,max_time).joins("INNER JOIN games_platforms p ON p.game_id = games.id")
-    # .where("p.platform_id = ?",Platform.find_by(name: platform).id) 
-    # if latest_release.empty?
-    #   latest_release_ids = gameAltRecentRelease(platform).each.map{|x| x["id"]}.map.to_a
-    #   latest_release = gamesListProcess(latest_release_ids)
-    #   latest_release_ids.each do |game_id|
-    #     saveAPIData(game_id)
-    #   end
-    # end
-    # latest_release
-    
     Rails.cache.fetch("#{platform}/latest_releases", expires_in: 7.days) do
       latest_release_ids = gameAltRecentRelease(platform).each.map{|x| x["id"]}.map.to_a
       latest_release_ids.each do |id|
@@ -106,7 +93,6 @@ class Game < ApplicationRecord
          end
       end
     end
-    
     Game.where("first_release_date BETWEEN ? AND ?",min_time,max_time).joins("INNER JOIN games_platforms p ON p.game_id = games.id").where("p.platform_id = ?",Platform.find_by(name: platform).id)
   end
   
@@ -180,8 +166,6 @@ class Game < ApplicationRecord
     gamesSearchRequest(name,saved_ex_ids).map{|x| formatApiResult(OpenStruct.new(x))}
     #gamesSearchRequest(name).map{|x| OpenStruct.new(x)}
   end
-  
-  
 
   #TODO - Make this more flexible
   #TODO - Probably duplicate with api result

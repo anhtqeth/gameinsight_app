@@ -7,7 +7,6 @@ class GameReleaseDate < ApplicationRecord
   enum date_format_category: [:YYYYMMMMDD, :YYYYMMMM, 
   :YYYY, :YYYYQ1, :YYYYQ2, :YYYYQ3, :YYYYQ4, :TBD]
   
-  
   def fetchAPIData(id)
     result = gameReleaseDateRequest(id)
     result.map{|release_data| release_data = OpenStruct.new(release_data)}
@@ -19,12 +18,11 @@ class GameReleaseDate < ApplicationRecord
   def saveAPIData(id)
     release_data = fetchAPIData(id)
     release_data.each do |release_date|
-      
-      puts 'DEBUG --- Release data here'
-      puts release_date
-      puts 'release category...'
-      puts release_date.category
-      puts release_date.created_at
+      # puts 'DEBUG --- Release data here'
+      # puts release_date
+      # puts 'release category...'
+      # puts release_date.category
+      # puts release_date.created_at
       
       game_release_dates = GameReleaseDate.new
       game_release_dates.date_format_category = release_date.category
