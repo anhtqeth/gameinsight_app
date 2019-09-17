@@ -6,69 +6,49 @@
     <i class="fas fa-bars"></i>
   </button>
   GameInsight</p>
-  
-   <ul id="header-nav-ul">
-    <li>
-      <a href=<%=root_path %>><i class="fas fa-globe-asia"></i>
-      Language</a>
-    </li>
-    
-    <li>
-      <a href=<%=root_path %>><i class="fas fa-user-circle"></i>
-      Account</a>
-    </li>
-    
-    <li>
-      <a href=<%=root_path %>><i class="fas fa-cogs"></i>
-      Admin</a>
-    </li>
-    
-    </ul>
  
   <div class="btn-group">
-    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" id ="header-menu-button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Language<i class="fas fa-globe-asia"></i>
     </button>
     <div class="dropdown-menu">
-    <a class="dropdown-item"><%= link_to 'English', root_path(locale: :en) %></a>
-    <a class="dropdown-item"><%= link_to 'Tiếng Việt', root_path(locale: :vi) %></a>
+    <%= link_to 'English', root_path(locale: :en), class:"dropdown-item"%>
+    <%= link_to 'Tiếng Việt', root_path(locale: :vi), class:"dropdown-item" %>
     </div>
-  </div>
-  <!--Handling logged in-->
-  <% if logged_in? %>
+    <% if logged_in? %>
     <div class="btn-group">
-      <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      <button type="button" id ="header-menu-button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
       Account<i class="fas fa-user-circle"></i></button>
       <div class="dropdown-menu">
-          <a class="dropdown-item"><%= link_to "Profile", current_user %></a>
-          <a class="dropdown-item"><%= link_to "Settings", '#' %></a>
+          <%= link_to "Profile", current_user, class:"dropdown-item"%>
+          <%= link_to "Settings", '#' ,class:"dropdown-item"%>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item"><%= link_to "Log out", logout_path, method: :delete %></a>
+          <%= link_to "Log out", logout_path, method: :delete,class:"dropdown-item"%>
       </div>
       </div>
     <% if current_user.admin? %>
       <i class="fas fa-tools"></i>
       <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        GAME DB <i class="fas fa-cogs"></i>
+        <button type="button" id ="header-menu-button"  class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Admin<i class="fas fa-cogs"></i>
       </button>
       <div class="dropdown-menu">
         <a class="dropdown-item" href=<%=games_path %>>Games <span class="badge badge-warning badge-pill"><%=Game.count%></span> </a>
-        <a class="dropdown-item" href="#">Platform <span class="badge badge-warning badge-pill">14</span> </a>
-        <a class="dropdown-item" href="#">Genres<span class="badge badge-warning badge-pill">14</span> </a>
-        <a class="dropdown-item" href="#">Articles <span class="badge badge-warning badge-pill">14</span> </a>
-        
-      <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Upgraded</a>
+        <a class="dropdown-item" href="#">Platform <span class="badge badge-warning badge-pill"><%=Platform.count%></span> </a>
+        <a class="dropdown-item" href="#">Genres<span class="badge badge-warning badge-pill"><%=GameGenre.count%></span> </a>
+        <a class="dropdown-item" href="#">Articles <span class="badge badge-warning badge-pill"><%=GameArticle.count%></span> </a>
+        <a class="dropdown-item" href="#">Articles <span class="badge badge-warning badge-pill"><%=InvolvedCompany.count%></span> </a>
       </div>
       </div>
     <%else%>
     
     <%end%>
         <!--<li><= link_to "Users", '#' %></li>-->
-  <% else %>
-    <button type="button" class="btn btn-warning"><%= link_to "Log in", login_path %></button>
-  <% end %>
+    <% else %>
+    <button type="button" id ="header-menu-button"  class="btn btn-warning"><%= link_to "Log in", login_path %></button>
+    <% end %>
+    
+  </div>
  
   <%= form_tag(search_path, :method => "get",   
     class: 'form-inline', id: 'search-bar') do %>  

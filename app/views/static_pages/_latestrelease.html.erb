@@ -1,15 +1,32 @@
-<!--Showing content base on dropdown selection-->
-<% @latest_games.each do |gamecard| %>
-  <div class="card" style="width: 15rem;">
-    <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
-    <div class="card-body">
-    <small class="card-text"><%= gamecard[:name] %></small>
-    <br>
-    <small class="card-text"><%= date_format(gamecard[:first_release_date]) %></small>
-    <div class="card-img-overlay" id="release-overlay">
-    <h5 class="card-text-center"><%= gamecard[:name] %></h5>
+<!--TODO Styling this list, smooth out ajax call -->
+<div class="row">
+<hr>
+<ul class="list-unstyled">
+  <% @latest_games.each do |gamecard| %>
+  <div id="game-media-img"  class="card bg-dark text-white">
+    <li class="media">
+      <%if gamecard.screenshots.empty?%>
+        <div class="card-img-overlay" id="game-detail-feature">
+          <div class="media-body">
+          <h5 class="mt-0 mb-1"><%= gamecard[:name] %></h5>
+          <h4><span class="badge badge-warning"><%= date_format(gamecard[:first_release_date]) %></span></h4>
+          <br>
+          <%= link_to "Details", game_path(gamecard), class: "h5", style:"float:right;" %>
+          </div>
+        </div>
+      <%else%>
+        <%= image_tag(gamecard.screenshots.first.url,class:"mr-3",id:"game-media-cover") %>
+      <%end%>
+    </li>
+    <div class="card-img-overlay" id="game-detail-feature">
+      <div class="media-body">
+        <h5 class="mt-0 mb-1"><%= gamecard[:name] %></h5>
+     <h4><span class="badge badge-warning"><%= date_format(gamecard[:first_release_date]) %></span></h4>        
+        <br>
+        <%= link_to "Details", game_path(gamecard), class: "h5",style:"float:right;" %>
+      </div>
     </div>
-    </div>
-    <!--<a href="<=game_path(gamecard[:id]) %>" class="btn btn-outline-warning btn-block">Details</a>-->
   </div>
-<% end%>
+  <% end %>
+</ul>
+</div>
