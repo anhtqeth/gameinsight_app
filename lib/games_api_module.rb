@@ -512,8 +512,14 @@ module GamesApiModule
       else
         game_card.store(:summary,'NA')
       end
-      game_cover = game_detail["cover"]["url"]
-      game_card.store(:cover,game_cover.sub('t_thumb','t_cover_big'))
+      
+      if game_detail["cover"].nil?
+        game_cover = 'NA'
+      else
+        game_cover = game_detail["cover"]["url"]
+        game_card.store(:cover,game_cover.sub('t_thumb','t_cover_big'))
+      end
+      
       game_popularity = game_detail['popularity']
       game_card.store(:popularity,game_popularity)
       #TODO: Refactor this smell

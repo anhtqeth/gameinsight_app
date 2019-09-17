@@ -16,9 +16,8 @@ class StaticPagesController < ApplicationController
     
     if params[:platform_name].nil?
     else
-      @latest_games = game.fetchLatestRelease(params[:platform_name])
+      @latest_games = game.fetchLatestRelease(params[:platform_name]) #.paginate(:page =>params[:page], :per_page => 5)
     end
-    
     respond_to do |format|
       format.html
       format.js

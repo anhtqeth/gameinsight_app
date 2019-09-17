@@ -133,3 +133,39 @@
         <% else %>
           <li><%= link_to "Log in", login_path %></li>
        <% end %>
+       
+<!--Header menu old-->
+ <% if logged_in? %>
+    <div class="btn-group">
+      <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      Account<i class="fas fa-user-circle"></i></button>
+      <div class="dropdown-menu">
+          <%= link_to "Profile", current_user, class:"dropdown-item"%>
+          <%= link_to "Settings", '#' ,class:"dropdown-item"%>
+          <div class="dropdown-divider"></div>
+          <%= link_to "Log out", logout_path, method: :delete,class:"dropdown-item"%>
+      </div>
+      </div>
+    <% if current_user.admin? %>
+      <i class="fas fa-tools"></i>
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        GAME DB <i class="fas fa-cogs"></i>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href=<%=games_path %>>Games <span class="badge badge-warning badge-pill"><%=Game.count%></span> </a>
+        <a class="dropdown-item" href="#">Platform <span class="badge badge-warning badge-pill">14</span> </a>
+        <a class="dropdown-item" href="#">Genres<span class="badge badge-warning badge-pill">14</span> </a>
+        <a class="dropdown-item" href="#">Articles <span class="badge badge-warning badge-pill">14</span> </a>
+        
+      <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Upgraded</a>
+      </div>
+      </div>
+    <%else%>
+    
+    <%end%>
+        <!--<li><= link_to "Users", '#' %></li>-->
+    <% else %>
+    <button type="button" class="btn btn-warning"><%= link_to "Log in", login_path %></button>
+    <% end %>

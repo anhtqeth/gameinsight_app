@@ -9,7 +9,6 @@ class GamesController < ApplicationController
   def index
     @games = Game.all.order(:name).paginate(:page =>params[:page], :per_page => 15)
     #@game_card_result = result
-    
   end
   
   def destroy
@@ -20,6 +19,10 @@ class GamesController < ApplicationController
   
   def edit
     @game = Game.friendly.find(params[:id])
+    puts '@game ID'
+    puts @game.id
+    game_article_collection = GameArticleCollection.where(game_id: @game.id).take
+    game_article_collection.nil? ? @game_articles = nil : @game_articles = game_article_collection.game_articles
   end
 
   def update

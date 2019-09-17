@@ -93,7 +93,13 @@ class Game < ApplicationRecord
          end
       end
     end
-    Game.where("first_release_date BETWEEN ? AND ?",min_time,max_time).joins("INNER JOIN games_platforms p ON p.game_id = games.id").where("p.platform_id = ?",Platform.find_by(name: platform).id)
+    
+    
+    
+    Game.where("first_release_date BETWEEN ? AND ?",min_time,max_time).
+    joins("INNER JOIN games_platforms p ON p.game_id = games.id").
+    where("p.platform_id = ?",Platform.find_by(name: platform).id)
+    .order(first_release_date: :desc)
   end
   
   #Fetch popular and sort by popularity desc. 

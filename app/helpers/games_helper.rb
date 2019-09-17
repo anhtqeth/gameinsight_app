@@ -262,29 +262,7 @@ module GamesHelper
       content = safe_join([carousel_item(data),carousel_control])
       content_tag(:div,content,class: "carousel-inner")
     end
-    
-    #Render carousel-item div. 
-    #Input is an array of media_url
-    
-    # def carousel_item(media_data,data)
-    #   items = []
-    #   #Render the first img (active) media
-    #   first_media = image_tag(media_data.first, class: "d-block w-100", id: "hot-games")
-    #   items << content_tag(:div, first_media, class: "carousel-item active")
-    #   items << view.overlay_render("game-discover-overlay",data[0])
-      
-    #   data[1..-1].each do |game|
-    #     remaining_media = []
-    #     media_data[1..-1].each do |media|
-    #       remaining_media << image_tag(media, class: "d-block w-100",  id: "hot-games")
-    #       remaining_media << view.overlay_render("game-discover-overlay",game)
-    #     end
-    #     items << content_tag(:div, safe_join(remaining_media), class: "carousel-item")
-    #   end
-      
-    #   safe_join(items)
-    # end
-    
+
     def carousel_item(data)
       items = []
       #Render the first img (active) media

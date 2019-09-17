@@ -1,70 +1,155 @@
 <% provide(:title, "Edit Game") %>
-
+<!--TODO Create partial for element in this page-->
 <div class="container">
-<h1>Update Game Details</h1>
-<hr>
-<div class="row">
-  <div class="col-5">
-    <h5>Cover Preview</h5>
-<%if @game.cover.nil? || @game.cover == 'NA' %>
-    <div class="card" style="width: 18rem;">
-       <%=image_tag("//:0",class:"card-img-top")%>
-    </div>
-  <%else%>
-    <div class="card" style="width: 18rem;">
-      <%=image_tag(@game.cover,class:"card-img-top")%>
-    </div>
-<%end%>
-<h5><%=@game.name%> details</h5>
-<hr>
-<%= form_for(@game) do |f| %>
-  <!--<= render 'shared/error_messages', object: @game %>-->
-  <% if @game.errors.any? %>
-    <div id="error_explanation">
-    <div class="alert alert-danger">
-      <!--A helper to display error count - pluralize-->
-      The form contains <%= pluralize(@game.errors.count, "error") %>.
-    </div>
-    <ul>
-      <!--Display each message lopp-->
-    <% @game.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
+  <h1>Update Game Details</h1>
+  <hr>
+  <div class="row">
+    <div class="col-5">
+      <h5>Cover Preview</h5>
+      <%if @game.cover.nil? || @game.cover == 'NA' %>
+      <div class="card" style="width: 18rem;">
+         <%=image_tag("//:0",class:"card-img-top")%>
+      </div>
+      <%else%>
+      <div class="card" style="width: 18rem;">
+        <%=image_tag(@game.cover,class:"card-img-top")%>
+      </div>
+      <%end%>
+      <h5><%=@game.name%> details</h5>
+      <hr>
+      <%= form_for(@game) do |f| %>
+      <% if @game.errors.any? %>
+      <div id="error_explanation">
+        <div class="alert alert-danger">
+        <!--A helper to display error count - pluralize-->
+        The form contains <%= pluralize(@game.errors.count, "error") %>.
+        </div>
+      </div>
+      <ul>
+        <!--Display each message lopp-->
+        <% @game.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
     <% end %>
-    </ul>
-  </div>
+    
+    <%= f.label :cover %>
+    <%= f.text_field :cover, class: 'form-control' %>
+    
+    <%= f.label :external_id %>
+    <%= f.text_field :external_id, class: 'form-control',:readonly => true%>
+  
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
+  
+    <%= f.label :slug %>
+    <%= f.text_field :slug, class: 'form-control' %>
+    
+    <%= f.label :summary %>
+    <%= f.text_area :summary, class: 'form-control', rows: 15 %>
+    
+    <%= f.label :storyline %>
+    <%= f.text_area :storyline, class: 'form-control',rows: 20%>
+    
+    <%= f.label :first_release_date %>
+    <%= f.date_field :first_release_date, class: 'form-control' %>
+  
+    <%= f.submit "SAVE", class: "btn btn-warning" %>
   <% end %>
-  
-  <%= f.label :cover %>
-  <%= f.text_field :cover, class: 'form-control' %>
-  
-  <%= f.label :external_id %>
-  <%= f.text_field :external_id, class: 'form-control',:readonly => true%>
-
-  <%= f.label :name %>
-  <%= f.text_field :name, class: 'form-control' %>
-
-  <%= f.label :slug %>
-  <%= f.text_field :slug, class: 'form-control' %>
-  
-  <%= f.label :summary %>
-  <%= f.text_area :summary, class: 'form-control', rows: 15 %>
-  
-  <%= f.label :storyline %>
-  <%= f.text_area :storyline, class: 'form-control',rows: 20%>
-  
-  <%= f.label :first_release_date %>
-  <%= f.date_field :first_release_date, class: 'form-control' %>
-
-  <%= f.submit "SAVE", class: "btn btn-warning" %>
-<% end %>
-
-</div>
-    
   </div>
-  <div class="col">
-    Additional text
+      
+  <div class="col-5">
+    <h5><%=@game.name%> Screenshots</h5>
+    <% if @game.screenshots.empty? %>
+      <p>There are no screenshots in db for this game</p>
+    <% else%>
+      <h5>Total screenshots: <span class="badge badge-warning"><%= @game.screenshots.count %> </span></h5>
+      
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">URL</th>
+            <th scope="col">Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+        <%@game.screenshots.each.with_index do |ss,index|%>
+        <tr>
+          <th scope="row"><%=index%></th>
+          <td><%=ss.url%></td>
+          <td><%=image_tag(ss.url,id: "preview-img")%></td>
+          <td><div>
+          <%= link_to "Edit",'#', class: "btn btn-warning" %>
+          <%= link_to "Delete",'#',class: "btn btn-danger" %>
+          </div> </td>
+        </tr>
+        <%end%>
+        
+      </tbody>
+      </table>
+      <%= link_to "Add",'#',class: "btn btn-success" %>
+    <% end %>
     
+    <h5>Video Preview</h5>
+    <% if @game.game_videos.empty? %>
+      <p>There are no videos in db for this game</p>
+    <% else%>
+      <h5>Total Videos: <span class="badge badge-warning"><%= @game.game_videos.count %></span></h5>
+      
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">URL</th>
+            <!--<th scope="col">Preview</th>-->
+          </tr>
+        </thead>
+        <tbody>
+        <%@game.game_videos.each.with_index do |vid,index|%>
+        <tr>
+          <th scope="row"><%=index%></th>
+          <td><%=vid.url%></td>
+          
+        </tr>
+        <%end%>
+      </tbody>
+      </table>
+    <% end %>
+      
+    <h5>Articles Preview</h5>
+    <% if @game_articles.nil? %>
+      <hr>
+      <p>There are no articles related to this game in db</p>
+    <% else %>
+       <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Feature</th>
+            <th scope="col">Title</th>
+            <th scope="col">Summary</th>
+            <th scope="col">Source</th>
+            <th scope="col">Author</th>
+            <th scope="col">Published At</th>
+          </tr>
+        </thead>
+        <tbody>
+        <%@game_articles.each.with_index do |arc,index|%>
+        <tr>
+          <th scope="row"><%=index%></th>
+          <td></td>
+          <td><%=arc.img%></td>
+          <td><%=arc.title%></td>
+          <td><%=arc.summary%></td>
+          <td><%=arc.news_source%></td>
+          <td><%=arc.author%></td>
+          <td><%=arc.publish_at%></td>
+        </tr>
+        <% end %>
+      </tbody>
+      </table>
+    <% end %>
+   
   </div>
-  
-  
 </div>
