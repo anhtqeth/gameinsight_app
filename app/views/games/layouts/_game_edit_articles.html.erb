@@ -1,4 +1,7 @@
 <div class="row">
+    <% flash.each do |message_type, message| %>
+       <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+    <% end %>
     <h5>Articles Preview</h5>
     <% if @game_articles.nil? %>
       <hr>
@@ -14,18 +17,22 @@
             <th scope="col">Source</th>
             <th scope="col">Author</th>
             <th scope="col">Published At</th>
+            <th scope="col">url</th>
           </tr>
         </thead>
         <tbody>
         <%@game_articles.each.with_index do |arc,index|%>
         <tr>
           <th scope="row"><%=index%></th>
+          <% unless arc.img.nil?%>
           <td><%=image_tag(arc.img,class: "mr-3",id: "news-image")%></td>
+          <%end %>
           <td><%=arc.title%></td>
           <td><%=arc.summary%></td>
           <td><%=arc.news_source%></td>
           <td><%=arc.author%></td>
           <td><%=date_format(DateTime.strptime(arc.publish_at.to_s,'%s'))%></td>
+          <td><%=link_to("View Source",arc.url)%></td>
           <td>
           <div>
           <%= link_to "Edit",'#', class: "btn btn-warning" %>
@@ -36,5 +43,33 @@
         <% end %>
       </tbody>
       </table>
+      <table>
+        <tr>
+          <%= form_for(@game_article) do |f| %>
+            <%= f.label :title %>
+            <%= f.text_field :title,class: 'form-control' %>
+            <%= f.label "Article URL" %>
+            <%= f.text_field :url,class: 'form-control' %>
+            <%= f.label "Feature img URL" %>
+            <%= f.text_field :img,class: 'form-control' %>
+            <%= f.label :external_id %>
+            <%= f.text_field :external_id,class: 'form-control',value: @game.external_id, :readonly => true%>
+            <%= f.label :summary %>
+             <%= f.text_area :summary, class: 'form-control', rows: 15 %>
+            <%= f.label :author %>
+            <%= f.text_field :author,class: 'form-control' %>
+            <%= f.label :news_source %>
+            <%= f.text_field :news_source,class: 'form-control' %>
+            <%= f.label :publish_at %>
+            <%= f.date_field :publish_at,class: 'form-control' %>
+            
+            <%= f.label :game_article_collection_id %>
+            <%= f.text_field :game_article_collection_id,class: 'form-control',value: @game.game_article_collection.take.id,:readonly => true %>
+            
+            <%= f.submit "Add", class: "btn btn-success" %>
+          <% end %>
+      </tr>
+      </table>
     <% end %>
+    
   </div>
