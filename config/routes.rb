@@ -38,4 +38,7 @@ Rails.application.routes.draw do
     resources :users
     resources :games
     resources :screenshots
+    resources :game_videos
+    resources :game_article_collections
+    resources :game_articles
 end

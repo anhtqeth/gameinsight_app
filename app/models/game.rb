@@ -6,6 +6,9 @@ class Game < ApplicationRecord
   has_many :game_videos, dependent: :destroy
   has_many :game_release_dates, dependent: :destroy
   
+  #Allow update on associated model
+  accepts_nested_attributes_for :screenshots
+  
   belongs_to :game_collection,  optional: true
   
   has_many :game_article_collection, dependent: :destroy
@@ -18,6 +21,8 @@ class Game < ApplicationRecord
   
   extend FriendlyId
   friendly_id :name, use: :slugged
+  
+  
   
   #TODO - Refactor this model
   #TODO - Put all API request to private?

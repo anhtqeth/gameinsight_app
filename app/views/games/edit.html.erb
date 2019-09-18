@@ -8,7 +8,7 @@
   <% end %>
   <hr>
   <div class="row">
-    <div class="col-5">
+    <div class="col-5" id="game-edit-column">
       <h5>Cover Preview</h5>
       <%if @game.cover.nil? || @game.cover == 'NA' %>
       <div class="card" style="width: 18rem;">
@@ -62,19 +62,19 @@
   <% end %>
   </div>
       
-  <div class="col-5">
+  <div class="col-sm" id="game-edit-column">
     <h5><%=@game.name%> Screenshots</h5>
     <% if @game.screenshots.empty? %>
       <p>There are no screenshots in db for this game</p>
     <% else%>
       <h5>Total screenshots: <span class="badge badge-warning"><%= @game.screenshots.count %> </span></h5>
       
-      <table class="table table-hover">
+      <table class="table table-hover table-dark">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">URL</th>
-            <th scope="col">Action</th>
+            <th scope="col-4">#</th>
+            <th scope="col-sm">URL</th>
+            <th scope="col-sm">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -98,14 +98,28 @@
          <!--Add new screenshot-->
         
         <%end%>
-        <tr>
-          <td></td>
-          <td><%=text_field_tag("url")%></td>
-          <td><%= link_to "Add",'#',class: "btn btn-success" %></td>
-        </tr>
+        
         
       </tbody>
       
+      </table>
+      <table>
+        <tr>
+          <%= form_for(@screenshot) do |f| %>
+            <%= render 'screenshots/error_messages' %>
+            <%= f.label "Screenshot URL" %>
+            <%= f.text_field :url,class: 'form-control' %>
+            <%= f.label :external_id %>
+            <%= f.text_field :external_id,class: 'form-control',value: @game.external_id, :readonly => true%>
+            <%= f.label :width %>
+            <%= f.text_field :width,class: 'form-control' %>
+            <%= f.label :height %>
+            <%= f.text_field :height,class: 'form-control' %>
+            <%= f.label :game_id, "Game ID" %>
+            <%= f.text_field :game_id,class: 'form-control',value: @game.id,:readonly => true %>
+            <%= f.submit "Add", class: "btn btn-success" %>
+          <% end %>
+      </tr>
       </table>
       
     
@@ -117,11 +131,13 @@
     <% else%>
       <h5>Total Videos: <span class="badge badge-warning"><%= @game.game_videos.count %></span></h5>
       
-      <table class="table table-hover">
+      <table class="table table-hover table-dark">
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">URL</th>
+            <th scope="col">Action</th>
+            
             <!--<th scope="col">Preview</th>-->
           </tr>
         </thead>
@@ -130,19 +146,33 @@
         <tr>
           <th scope="row"><%=index%></th>
           <td><%=vid.url%></td>
-          
+          <td>
+          <div>
+          <%= link_to "Edit",'#', class: "btn btn-warning" %>
+          <%= link_to "Delete", vid, method: :delete, data: { confirm: "You sure?" },class: "btn btn-danger" %>
+          </div> 
+          </td>
         </tr>
         <%end%>
+        <tr>
+        <td></td>
+        <td><%=text_field_tag("url")%></td>
+        <td><%= link_to "Add",'#',class: "btn btn-success" %></td>
+      </tr>
+      
       </tbody>
       </table>
     <% end %>
-      
+     
+    </div>
+  
+  <div class="row">
     <h5>Articles Preview</h5>
     <% if @game_articles.nil? %>
       <hr>
       <p>There are no articles related to this game in db</p>
     <% else %>
-       <table class="table table-hover">
+      <table class="table table-hover table-dark">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -158,18 +188,23 @@
         <%@game_articles.each.with_index do |arc,index|%>
         <tr>
           <th scope="row"><%=index%></th>
-          <td></td>
-          <td><%=arc.img%></td>
+          <td><%=image_tag(arc.img,class: "mr-3",id: "news-image")%></td>
           <td><%=arc.title%></td>
           <td><%=arc.summary%></td>
           <td><%=arc.news_source%></td>
           <td><%=arc.author%></td>
-          <td><%=arc.publish_at%></td>
+          <td><%=date_format(DateTime.strptime(arc.publish_at.to_s,'%s'))%></td>
+          <td>
+          <div>
+          <%= link_to "Edit",'#', class: "btn btn-warning" %>
+          <%= link_to "Delete", arc, method: :delete, data: { confirm: "You sure?" },class: "btn btn-danger" %>
+          </div> 
+          </td>
         </tr>
         <% end %>
       </tbody>
       </table>
     <% end %>
-   
   </div>
+  
 </div>

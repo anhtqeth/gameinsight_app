@@ -22,8 +22,22 @@ class ScreenshotsController < ApplicationController
     
   end
   
-  def new
-    @screenshot = Screenshot.new
+  def create
+    @screenshot = Screenshot.new(screenshot_params)
+    if @screenshot.save
+      flash.now[:success] = "Screenshot added!"
+      redirect_back(fallback_location: root_path)
+    else
+      puts @screenshot.errors.full_messages
+      redirect_back(fallback_location: root_path)
+    end
   end
+  
+  private 
+  
+    def screenshot_params
+      params.require(:screenshot).permit(:url,:width,:height,:game_id)
+    end
+  
   
 end
