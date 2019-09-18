@@ -1,6 +1,16 @@
 class GameArticle < ApplicationRecord
   validates :url,:title,:news_source,:publish_at,  presence: true
   belongs_to :game_article_collection,  optional: true
+  
+  # before_save :time_convert
+  
+  # protected
+  # def time_convert
+  #   puts 'DEBUG CONVERT'
+  #   puts self.publish_at
+  #   self.publish_at.to_time.to_i
+  # end
+  
   #TODO Add uniqueness constraint
   def fetchAPIData(id)
     OpenStruct.new(gameArticleRequest(id))
