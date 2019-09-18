@@ -19,6 +19,7 @@ class GamesController < ApplicationController
   
   def edit
     @game = Game.friendly.find(params[:id])
+    @screenshot = Screenshot.new
     puts '@game ID'
     puts @game.id
     game_article_collection = GameArticleCollection.where(game_id: @game.id).take
@@ -139,6 +140,10 @@ class GamesController < ApplicationController
     def game_params
       params.require(:game).permit(:cover, :name,
                                    :slug,:summary, :storyline, :first_release_date)
+    end
+    
+    def screenshot_params
+      params.require(:screenshot).permit(:url,:width,:height,:game_id)
     end
     
     def logged_in_user
