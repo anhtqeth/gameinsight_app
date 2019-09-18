@@ -1,0 +1,40 @@
+<div class="row">
+    <h5>Articles Preview</h5>
+    <% if @game_articles.nil? %>
+      <hr>
+      <p>There are no articles related to this game in db</p>
+    <% else %>
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Feature</th>
+            <th scope="col">Title</th>
+            <th scope="col">Summary</th>
+            <th scope="col">Source</th>
+            <th scope="col">Author</th>
+            <th scope="col">Published At</th>
+          </tr>
+        </thead>
+        <tbody>
+        <%@game_articles.each.with_index do |arc,index|%>
+        <tr>
+          <th scope="row"><%=index%></th>
+          <td><%=image_tag(arc.img,class: "mr-3",id: "news-image")%></td>
+          <td><%=arc.title%></td>
+          <td><%=arc.summary%></td>
+          <td><%=arc.news_source%></td>
+          <td><%=arc.author%></td>
+          <td><%=date_format(DateTime.strptime(arc.publish_at.to_s,'%s'))%></td>
+          <td>
+          <div>
+          <%= link_to "Edit",'#', class: "btn btn-warning" %>
+          <%= link_to "Delete", arc, method: :delete, data: { confirm: "You sure?" },class: "btn btn-danger" %>
+          </div> 
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+      </table>
+    <% end %>
+  </div>

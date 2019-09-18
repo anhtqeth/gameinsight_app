@@ -30,6 +30,11 @@ module GamesHelper
     end
   end
   
+  #Display error message for various games associated models
+  def error_messages(model)
+  
+  end
+  
   #Render media type for news
   #News with empty img will be skipped
   #For wrapper div, like media-body, the conent need to be safe_join first, and put inside the content_tag
