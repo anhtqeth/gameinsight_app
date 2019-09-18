@@ -20,6 +20,7 @@ class GamesController < ApplicationController
   def edit
     @game = Game.friendly.find(params[:id])
     @screenshot = Screenshot.new
+    @video = GameVideo.new
     puts '@game ID'
     puts @game.id
     game_article_collection = GameArticleCollection.where(game_id: @game.id).take

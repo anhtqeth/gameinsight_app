@@ -1,0 +1,61 @@
+<!--Partial for game videos edit-->
+<!--TODO Modify alignment-->
+<div class ="row">
+    <h5>Video Preview</h5>
+    <% if @game.game_videos.empty? %>
+      <p>There are no videos in db for this game</p>
+    <% else%>
+      <h5>Total Videos: <span class="badge badge-warning"><%= @game.game_videos.count %></span></h5>
+      
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th class="col-xs-4">#</th>
+            <th class="col-sm">URL</th>
+            <th class="col">Preview</th>
+            <th class="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        <%@game.game_videos.each.with_index do |vid,index|%>
+        <tr>
+          <th scope="row"><%=index%></th>
+          <td><%=vid.url%></td>
+          <td><iframe class="embed-responsive-item" src=<%= vid.url %> allowfullscreen></iframe></td>
+          <td>
+          <div>
+          <%= link_to "Edit",'#', class: "btn btn-warning" %>
+          <%= link_to "Delete", vid, method: :delete, data: { confirm: "You sure?" },class: "btn btn-danger" %>
+          </div> 
+          </td>
+        </tr>
+        <%end%>
+        <tr>
+        <td></td>
+        <td><%=text_field_tag("url")%></td>
+        <td><%= link_to "Add",'#',class: "btn btn-success" %></td>
+      </tr>
+      
+      </tbody>
+      </table>
+    <% end %>
+     <table>
+        <tr>
+          <%= form_for(@video) do |f| %>
+            <%= render 'screenshots/error_messages' %>
+            <%= f.label "Video id" %>
+            <%= f.text_field :url,class: 'form-control', value: "https://www.youtube.com/embed/"%>
+            <%= f.label :external_id %>
+            <%= f.text_field :external_id,class: 'form-control',value: @game.external_id, :readonly => true%>
+            <%= f.label :description %>
+            <%= f.text_field :description,class: 'form-control' %>
+            <%= f.label :name %>
+            <%= f.text_field :name,class: 'form-control' %>
+            <%= f.label :game_id, "Game ID" %>
+            <%= f.text_field :game_id,class: 'form-control',value: @game.id,:readonly => true %>
+            <%= f.submit "Add", class: "btn btn-success" %>
+          <% end %>
+      </tr>
+      </table>
+</div>
+  

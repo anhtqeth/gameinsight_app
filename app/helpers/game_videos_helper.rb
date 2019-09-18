@@ -1,0 +1,2 @@
+module GameVideosHelper
+end
