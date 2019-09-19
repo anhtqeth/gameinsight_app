@@ -22,6 +22,13 @@ class GamesController < ApplicationController
     @screenshot = Screenshot.new
     @video = GameVideo.new
     @game_article = GameArticle.new
+    
+    publisher = @game.involve_companies.where(developer: true).take
+    @game.involve_companies.where(publisher: true).take
+    
+    @game_publisher
+    @game_deve
+    
     puts '@game ID'
     puts @game.id
     game_article_collection = GameArticleCollection.where(game_id: @game.id).take

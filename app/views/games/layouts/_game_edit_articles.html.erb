@@ -3,9 +3,10 @@
        <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
     <% end %>
     <h5>Articles Preview</h5>
+    <hr>
     <% if @game_articles.nil? %>
       <hr>
-      <p>There are no articles related to this game in db</p>
+      <p>There are no articles related to this game in db</p><br>
     <% else %>
       <table class="table table-hover table-dark">
         <thead>
@@ -43,7 +44,9 @@
         <% end %>
       </tbody>
       </table>
-      <table>
+      
+    <% end %>
+    <table>
         <tr>
           <%= form_for(@game_article) do |f| %>
             <%= f.label :title %>
@@ -64,12 +67,14 @@
             <%= f.date_field :publish_at,class: 'form-control' %>
             
             <%= f.label :game_article_collection_id %>
-            <%= f.text_field :game_article_collection_id,class: 'form-control',value: @game.game_article_collection.take.id,:readonly => true %>
+            <% unless @game_articles.nil?%>
+              <%= f.text_field :game_article_collection_id,class: 'form-control',value: @game.game_article_collection.take.id,:readonly => true %>
+            <% else %>
             
+            <%end%>
             <%= f.submit "Add", class: "btn btn-success" %>
           <% end %>
       </tr>
       </table>
-    <% end %>
     
   </div>
