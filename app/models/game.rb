@@ -21,7 +21,10 @@ class Game < ApplicationRecord
   
   extend FriendlyId
   friendly_id :name, use: :slugged
+
   
+  scope :publisher, ->(game) { Company.find(game.involved_companies.publisher.id) }
+  scope :developer, ->(game) { Company.find(game.involved_companies.developer.id) }
   
   
   #TODO - Refactor this model
