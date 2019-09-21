@@ -19,7 +19,7 @@
         <%=image_tag(@game.cover,class:"card-img-top")%>
       </div>
       <%end%>
-      <h5><%=@game.name%> details</h5>
+      <h5><%=@game.name%> Information</h5>
       <hr>
     <%= form_for(@game) do |f| %>
       <% if @game.errors.any? %>
@@ -64,28 +64,86 @@
   
   <div class="col-sm" id="game-edit-column">
   <!--Publisher and Developer + Genres here Dropdown-->
+   <h5><%=@game.name%> Company/Genres/Platform Detail</h5>
     <div class="card text-center">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
+          <a class="nav-link active" href="#">Developer</a>
         </li>
       </ul>
     </div>
     <div class="card-body">
-      <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <div class="row">
+        <div class="col">
+          <p class="card-text"><%= @publisher.name%></p>
+        </div>
+        
+        <div class="col">
+          <%=select_tag "publisher", options_from_collection_for_select(Company.all, "id", "name")%>  
+        </div>
+        <div class="col">
+           <%= link_to "Update",'#', class: "btn btn-warning" %>
+        </div>
+      </div>
+       <br>
+      <div class="row">
+        <div class="col">
+          <p class="card-text"> <%= @developer.name %></p> 
+        </div>
+          
+        <div class="col">
+           <%=select_tag "developer", options_from_collection_for_select(Company.all, "id", "name")%>
+        </div>
+        <div class="col">
+           <%= link_to "Update",'#', class: "btn btn-warning" %>
+        </div>
+      </div>
+       <br>
+      
+      <div class="row">
+        <div class="col">
+          <p class="card-text"> <%= @genres %></p>
+        </div>
+          
+        <div class="col">
+            <%=select_tag "developer", options_from_collection_for_select(GameGenre.all, "id", "name")%>
+        </div>
+        <div class="col">
+           <%= link_to "Add",'#', class: "btn btn-success" %>
+        </div>
+      </div>
+      <br>
+       <div class="row">
+        <div class="col">
+          <p class="card-text"> <%= @platform %></p>
+        </div>
+          
+        <div class="col">
+            <%=select_tag "platform", options_from_collection_for_select(Platform.all, "id", "name")%>
+        </div>
+        <div class="col">
+           <%= link_to "Add",'#', class: "btn btn-success" %>
+        </div>
+      </div>
+       <br>
+      <div class="row">
+        <div class="col">
+          <p>Release Date</p>  
+        </div>
+        <div class="col">
+          <%=game_release_dates(@game)%>
+        </div>
+        <div class="col">
+          
+        </div>
+        
+      </div>
+      <!--TODO - Make below dynamic-->
+     
     </div>
   </div>
-  <%= @game.involve_companies%>
-  <%= %>
+ 
   <%= %>
   <%= %>
   </div>

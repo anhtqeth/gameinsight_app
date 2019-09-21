@@ -153,7 +153,6 @@ module GamesApiModule
     if result.empty? 
       {:external_id => 'NA', :name => 'NA',:description => 'NA',:websites => 'NA'}
     else
-      # puts "Result here: " << result.to_s
       result.first
       #gameCompanyProcess(result.first)
     end
