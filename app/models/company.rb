@@ -1,9 +1,14 @@
 class Company < ApplicationRecord
   #TODO- Enable slug when save success
+  #TODO - Code smell here, this call to API every time game is saved
+  #even when the company already exist in db
+  
   # extend FriendlyId
   # friendly_id :name, use: :slugged
   has_many :involved_companies
   has_many :games, :through => :involved_companies
+  
+  validates :external_id, uniqueness: true
   
   enum start_date_category: [:YYYYMMMMDD, :YYYYMMMM, 
   :YYYY, :YYYYQ1, :YYYYQ2, :YYYYQ3, :YYYYQ4, :TBD]
@@ -17,33 +22,60 @@ class Company < ApplicationRecord
   
   def saveAPIData(id,company_type)
     api_data = fetchAPIData(id,company_type)
-    company = Company.new
     
-    company.external_id = api_data.id
-    company.name = api_data.name
-    company.description = api_data.description
-    #company.url = api_data.url
-    company.start_date = api_data.start_date
-    company.start_date_category = api_data.start_date_category
-    company.games << findGame(id)
-    company.save
-    puts company.errors.messages
-    updateInvolvedCompanies(company.id,company_type)
-    company
+    unless Company.find_by_external_id(id).nil?
+      company = Company.find_by_external_id(id)
+      company.games << findGame(id)
+      #company.save
+      puts "Found Company ID"
+      puts company.errors.messages
+      updateInvolvedCompanies(company.id,company_type)
+      company
+    else  
+      company = Company.new
+      company.external_id = api_data.id
+      company.name = api_data.name
+      company.description = api_data.description
+      #company.url = api_data.url
+      company.start_date = api_data.start_date
+      company.start_date_category = api_data.start_date_category
+      company.games << findGame(id)
+      
+      company.save
+      puts "Not found Company ID"
+      puts company.errors.messages
+      updateInvolvedCompanies(company.id,company_type)
+      company
+    end  
+    
   end
+  
+  #TODO - Work on this later
+  # def duplicatesDestroy(title)
+  #   dup_list = Game.where(name: title).group_by(&:name)
+  #   dup_list.values.each do |dup|
+  #     dup.pop #leave one
+  #     dup.each(&:destroy) #destroy other
+  #   end
+  # end
   
   private
   def updateInvolvedCompanies(id,company_type)
-    involved_company = InvolvedCompany.find_by_company_id(id)
-    case company_type
-      when 'Publisher'
-        involved_company.publisher = true
-      when 'Developer'
-        involved_company.developer = true
-      else
-       puts "error in #{company_type}"
-    end
-    involved_company.save
+    
+    # if InvolvedCompany.find_by_company_id(id).nil?
+      
+    # else
+      involved_company = InvolvedCompany.find_by_company_id(id)
+      case company_type
+        when 'Publisher'
+          involved_company.publisher = true
+        when 'Developer'
+          involved_company.developer = true
+        else
+         puts "error in #{company_type}"
+      end
+      involved_company.save
+    # end
   end
   
   def findGame(ex_id)

@@ -7,6 +7,12 @@ class GameReleaseDate < ApplicationRecord
   enum date_format_category: [:YYYYMMMMDD, :YYYYMMMM, 
   :YYYY, :YYYYQ1, :YYYYQ2, :YYYYQ3, :YYYYQ4, :TBD]
   
+  scope :ps4, -> { find_by(platform_id: 1) }
+  scope :switch, -> { find_by(platform_id: 2) }
+  scope :pc, -> { find_by(platform_id: 3) }
+  scope :xbox, -> { find_by(platform_id: 4) }
+  
+
   def fetchAPIData(id)
     result = gameReleaseDateRequest(id)
     result.map{|release_data| release_data = OpenStruct.new(release_data)}

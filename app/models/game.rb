@@ -21,8 +21,9 @@ class Game < ApplicationRecord
   
   extend FriendlyId
   friendly_id :name, use: :slugged
-
   
+  # Scoping for publisher 
+  # This use the scope from Involve Company Model and a Game object to query for the company attribute
   scope :publisher, ->(game) { Company.find(game.involved_companies.publisher.id) }
   scope :developer, ->(game) { Company.find(game.involved_companies.developer.id) }
   

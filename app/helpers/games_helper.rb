@@ -35,6 +35,23 @@ module GamesHelper
   
   end
   
+  def game_release_dates(game)
+    content = []
+    game.game_release_dates.each do |rd|
+      case rd.platform_id
+        when 1
+          content << content_tag(:hp, "PlayStation 4 ") << content_tag(:p, rd.date)
+        when 2 
+          content << content_tag(:p, "Nintendo Switch") << content_tag(:p, rd.date)
+        when 3
+          content <<  content_tag(:p, "PC") << content_tag(:p, rd.date)
+        when 4
+          content <<  content_tag(:p, "Xbox One") << content_tag(:p, rd.date)
+      end
+    end
+    safe_join(content)
+  end
+  
   #Render media type for news
   #News with empty img will be skipped
   #For wrapper div, like media-body, the conent need to be safe_join first, and put inside the content_tag
