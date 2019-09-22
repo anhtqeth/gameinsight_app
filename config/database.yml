@@ -30,8 +30,8 @@ production:
   adapter: postgresql
   encoding: unicode
   database: <%= ENV['RDS_DB_NAME'] %>
-  host: <%= ENV["RDS_HOSTNAME"] %>
-  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  password: '!!Tqa241192'
   username: <%= ENV['RDS_USERNAME'] %>
   port: <%= ENV['RDS_PORT'] %>
 #Added security group
