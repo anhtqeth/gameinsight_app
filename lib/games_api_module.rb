@@ -128,29 +128,32 @@ module GamesApiModule
   #gameCompaniesRequest
   #Fetch data base on game_external_id & company_type
   #Using company_type to get the id for Company Detail request
-  def gameCompaniesRequest(game_id,company_type) #
-    puts "Called to Game Companies Request with game ID : " << game_id.to_s << " and company type: " << company_type
-    companies = involvedCompaniesRequest(game_id)
+  
+  #TODO - InvolvedCompaniesRequest already returned all company id and role for a game
+  #
+  def gameCompaniesRequest(company_id) #
+    puts "Called to Game Companies Request with Company ID : " << company_id.to_s
+   # companies = involvedCompaniesRequest(game_id)
     
-    company_id = nil
-    case company_type
-      when 'Publisher'
-        puts 'PUBLISHER ID QUERY'
-        company_id = companies.select{|c| c[:type] == 'Publisher'}.map{|x| x[:id] }.join.to_i
-        #request.body = "fields *; where published = #{game_id};"
-      when 'Developer'
-        puts 'DEVELOPER ID QUERY'
-        company_id = companies.select{|c| c[:type] == 'Developer'}.map{|x| x[:id] }.join.to_i
-        #request.body = "fields *; where developed = #{game_id};"
-      else
-      "Please specify what company type you wish for #{company_type}"
-    end
+    # company_id = nil
+    # case company_type
+    #   when 'Publisher'
+    #     puts 'PUBLISHER ID QUERY'
+    #     company_id = companies.select{|c| c[:type] == 'Publisher'}.map{|x| x[:id] }.join.to_i
+    #     #request.body = "fields *; where published = #{game_id};"
+    #   when 'Developer'
+    #     puts 'DEVELOPER ID QUERY'
+    #     company_id = companies.select{|c| c[:type] == 'Developer'}.map{|x| x[:id] }.join.to_i
+    #     #request.body = "fields *; where developed = #{game_id};"
+    #   else
+    #   "Please specify what company type you wish for #{company_type}"
+    # end
     
     request = Net::HTTP::Get.new(URI(COMPANIES_URI), {'user-key' => USERKEY})
     request.body = "fields *; where id = #{company_id};"
     response = http_construct.request(request)
     result = JSON.parse(response.read_body)
-    if result.empty? 
+    if result.empty?
       {:external_id => 'NA', :name => 'NA',:description => 'NA',:websites => 'NA'}
     else
       result.first

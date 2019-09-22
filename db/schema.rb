@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_09_091811) do
+ActiveRecord::Schema.define(version: 2019_09_21_164244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,22 @@ ActiveRecord::Schema.define(version: 2019_09_09_091811) do
     t.index ["slug"], name: "index_platforms_on_slug", unique: true
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "name"
+    t.string "feature_img"
+    t.integer "status"
+    t.bigint "user_id"
+    t.bigint "game_id"
+    t.bigint "company_id"
+    t.bigint "platform_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_posts_on_company_id"
+    t.index ["game_id"], name: "index_posts_on_game_id"
+    t.index ["platform_id"], name: "index_posts_on_platform_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
   create_table "screenshots", force: :cascade do |t|
     t.integer "external_id"
     t.string "url"
@@ -203,5 +219,9 @@ ActiveRecord::Schema.define(version: 2019_09_09_091811) do
   add_foreign_key "games", "game_collections"
   add_foreign_key "involved_companies", "companies"
   add_foreign_key "involved_companies", "games"
+  add_foreign_key "posts", "companies"
+  add_foreign_key "posts", "games"
+  add_foreign_key "posts", "platforms"
+  add_foreign_key "posts", "users"
   add_foreign_key "screenshots", "games"
 end
