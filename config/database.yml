@@ -13,10 +13,8 @@ development:
   <<: *default
   # database: db/development.sqlite3 #before
   database: db/ethugamedb_development
-  username: <%= ENV['RDS_USERNAME'] %>
-   password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
+  username: 
+  password:
   
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -25,10 +23,8 @@ test:
   <<: *default
   #database: db/test.sqlite3 #before 
   database: db/ethugamedb_test
-  username: <%= ENV['RDS_USERNAME'] %>
-   password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
+  username: 
+  password:
 # production:
 #   <<: *default
 #   #database: db/production.sqlite3 #before
