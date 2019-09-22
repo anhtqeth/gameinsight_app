@@ -26,12 +26,13 @@ test:
 #   #database: db/production.sqlite3 #before
 #   database: db/ethugamedb_production
 
+#Why does this not work?
 production:
   <<: *default
   adapter: postgresql
   encoding: unicode
-  database: <%= ENV['gamedb-dev'] %>
-  username: <%= ENV['ethudev'] %>
-  password: <%= ENV['!!Tqa241192'] %>
-  host: <%= ENV['gamedb-dev.chz79wa1dbhn.us-west-2.rds.amazonaws.com'] %>
-  port: <%= ENV['5432'] %>
+  database: <%= ENV['RDS_DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
