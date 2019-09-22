@@ -216,8 +216,8 @@ class Game < ApplicationRecord
      videos = GameVideo.new
      videos.saveAPIData(id)
      company = Company.new
-     company.saveAPIData(id,'Publisher')
-     company.saveAPIData(id,'Developer')
+     company.saveAPIData(id)
+     #company.saveAPIData(id,'Developer')
   end
   
   def findGamesbyGenre(game_genre)

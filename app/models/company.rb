@@ -14,39 +14,37 @@ class Company < ApplicationRecord
   :YYYY, :YYYYQ1, :YYYYQ2, :YYYYQ3, :YYYYQ4, :TBD]
   
   #id is game_exernal_id
-  def fetchAPIData(id,company_type)
-    result = gameCompaniesRequest(id,company_type)
+  def fetchAPIData(id)
+    result = gameCompaniesRequest(id)
     OpenStruct.new(result)
     # result.map{|companies_data| companies_data = OpenStruct.new(companies_data)}
   end
   
-  def saveAPIData(id,company_type)
-    api_data = fetchAPIData(id,company_type)
-    
-    unless Company.find_by_external_id(id).nil?
-      company = Company.find_by_external_id(id)
-      company.games << findGame(id)
-      #company.save
-      puts "Found Company ID"
-      puts company.errors.messages
-      updateInvolvedCompanies(company.id,company_type)
-      company
-    else  
-      company = Company.new
-      company.external_id = api_data.id
-      company.name = api_data.name
-      company.description = api_data.description
-      #company.url = api_data.url
-      company.start_date = api_data.start_date
-      company.start_date_category = api_data.start_date_category
-      company.games << findGame(id)
-      
-      company.save
-      puts "Not found Company ID"
-      puts company.errors.messages
-      updateInvolvedCompanies(company.id,company_type)
-      company
-    end  
+  def saveAPIData(id)
+     companies = involvedCompaniesRequest(id)
+     game_id = findGame(id)
+    companies.each do |corp|
+      unless Company.find_by_external_id(corp[:id]).nil?
+        puts "Find Company ID"
+        company = Company.find_by_external_id(corp[:id])
+        updateInvolvedCompanies(game_id,company.id,corp[:type])
+      else
+        puts "Not found Company ID"
+        company = Company.new
+        api_data = fetchAPIData(corp[:id])
+        
+        company.external_id = api_data.id
+        company.name = api_data.name
+        company.description = api_data.description
+        #company.url = api_data.url
+        company.start_date = api_data.start_date
+        company.start_date_category = api_data.start_date_category
+        company.save
+        puts company.errors.messages
+        updateInvolvedCompanies(game_id,company.id,corp[:type])
+        
+      end
+    end
     
   end
   
@@ -60,22 +58,20 @@ class Company < ApplicationRecord
   # end
   
   private
-  def updateInvolvedCompanies(id,company_type)
-    
-    # if InvolvedCompany.find_by_company_id(id).nil?
-      
-    # else
-      involved_company = InvolvedCompany.find_by_company_id(id)
-      case company_type
-        when 'Publisher'
-          involved_company.publisher = true
-        when 'Developer'
-          involved_company.developer = true
-        else
-         puts "error in #{company_type}"
-      end
-      involved_company.save
-    # end
+  
+  def updateInvolvedCompanies(game_id,corp_id,company_type)
+    case company_type
+      when 'Publisher'
+        InvolvedCompany.create(publisher: true, game_id: game_id, company_id: corp_id)
+      when 'Developer'
+        InvolvedCompany.create(developer: true, game_id: game_id, company_id: corp_id)
+      when 'Supporter'
+        InvolvedCompany.create(supporting: true, game_id: game_id, company_id: corp_id)
+      when 'Porting'
+        InvolvedCompany.create(porting: true, game_id: game_id, company_id: corp_id)
+      else
+       puts "error in #{company_type}"
+    end
   end
   
   def findGame(ex_id)

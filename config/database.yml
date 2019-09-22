@@ -11,6 +11,7 @@ default: &default
 
 development:
   <<: *default
+  adapter: postgresql
   # database: db/development.sqlite3 #before
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -23,6 +24,7 @@ test:
 #   <<: *default
 #   #database: db/production.sqlite3 #before
 #   database: db/ethugamedb_production
+
 
 #Why does this not work?
 production:
