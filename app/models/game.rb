@@ -24,8 +24,8 @@ class Game < ApplicationRecord
   
   # Scoping for publisher 
   # This use the scope from Involve Company Model and a Game object to query for the company attribute
-  scope :publisher, ->(game) { Company.find(game.involved_companies.publisher.id) }
-  scope :developer, ->(game) { Company.find(game.involved_companies.developer.id) }
+  scope :publisher, ->(game) { Company.find(game.involved_companies.publisher.company_id) }
+  scope :developer, ->(game) { Company.find(game.involved_companies.developer.company_id) }
   
   
   #TODO - Refactor this model
