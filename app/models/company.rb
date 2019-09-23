@@ -22,10 +22,11 @@ class Company < ApplicationRecord
   
   def saveAPIData(id)
      companies = involvedCompaniesRequest(id)
-     game_id = findGame(id)
-    companies.each do |corp|
+     
+     companies.each do |corp|
       unless Company.find_by_external_id(corp[:id]).nil?
         puts "Find Company ID"
+        game_id = findGame(id).id
         company = Company.find_by_external_id(corp[:id])
         updateInvolvedCompanies(game_id,company.id,corp[:type])
       else
@@ -39,8 +40,10 @@ class Company < ApplicationRecord
         #company.url = api_data.url
         company.start_date = api_data.start_date
         company.start_date_category = api_data.start_date_category
+        
         company.save
         puts company.errors.messages
+        game_id = findGame(id).id
         updateInvolvedCompanies(game_id,company.id,corp[:type])
         
       end
