@@ -24,9 +24,25 @@ class Game < ApplicationRecord
   
   # Scoping for publisher 
   # This use the scope from Involve Company Model and a Game object to query for the company attribute
-  scope :publisher, ->(game) { Company.find(game.involved_companies.publisher.company_id) }
-  scope :developer, ->(game) { Company.find(game.involved_companies.developer.company_id) }
+  #scope :publisher, ->(game) { Company.find(game.involved_companies.publisher.company_id) if  game.involved_companies.publisher.try(:company_id).present? }
   
+  #scope :developer, ->(game) { Company.find(game.involved_companies.developer.company_id) }
+  
+  def self.publisher(game)
+    if game.involved_companies.publisher.try(:company_id).present?
+      Company.find(game.involved_companies.publisher.company_id)
+    else
+      nil
+    end
+  end  
+  
+  def self.developer(game)
+    if game.involved_companies.developer.try(:company_id).present?
+      Company.find(game.involved_companies.developer.company_id)
+    else
+      nil
+    end
+  end 
   
   #TODO - Refactor this model
   #TODO - Put all API request to private?

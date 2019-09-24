@@ -18,7 +18,7 @@ class InvolvedCompaniesController < ApplicationController
   private
   #TODO - Need all other attribute?
     def involved_company_params
-      params.require(:involved_company).permit(:developer,:publisher,:company_id,:game_id)
+      params.require(:involved_company).permit(:publisher,:company_id,:game_id)
     end
   
 end
