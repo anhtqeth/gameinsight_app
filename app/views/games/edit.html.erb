@@ -64,7 +64,7 @@
   
   <div class="col-sm" id="game-edit-column">
   <!--Publisher and Developer + Genres here Dropdown-->
-   <h5><%=@game.name%> Company/Genres/Platform Detail</h5>
+   <h5><%=@game.name%> Company - Genres - Platform Detail</h5>
     <div class="card text-center">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
@@ -74,17 +74,25 @@
       </ul>
     </div>
     <div class="card-body">
+       <%= form_with model: @pub_company do |f| %>
+         <%= f.hidden_field :publisher, :value => true %>
+         <%= f.hidden_field :game_id, :value => @game.id %>
+         <%= f.hidden_field :developer, :value => false %>
       <div class="row">
         <div class="col">
           <p class="card-text"><%= @publisher.name%></p>
         </div>
         
         <div class="col">
-          <%=select_tag "publisher", options_from_collection_for_select(Company.all, "id", "name")%>  
+      
+          <%= f.select(:company_id, options_from_collection_for_select(Company.all, "id", "name"))%>
+
         </div>
         <div class="col">
-           <%= link_to "Update",'#', class: "btn btn-warning" %>
+          <%= f.submit 'Update', class: 'btn btn-warning' %>
+          <%= link_to "Update", '#' , class: "btn btn-warning" %>
         </div>
+        <% end %>
       </div>
        <br>
       <div class="row">
