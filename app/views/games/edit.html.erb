@@ -80,7 +80,7 @@
          <%= f.hidden_field :game_id, :value => @game.id %>
       <div class="row">
         <div class="col">
-          <p class="card-text"><%= @publisher.name%></p>
+          <p class="card-text"><%=  @publisher.nil? ? "NA" :  @publisher.name %></p>
         </div>
         
         <div class="col">
@@ -100,7 +100,7 @@
          <%= f.hidden_field :game_id, :value => @game.id %>
       <div class="row">
         <div class="col">
-          <p class="card-text"> <%= @developer.name %></p> 
+          <p class="card-text"><%=  @developer.nil? ? "NA" :  @developer.name %></p> 
         </div>
         
         <div class="col">

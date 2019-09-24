@@ -23,8 +23,18 @@ class GamesController < ApplicationController
     @video = GameVideo.new
     @game_article = GameArticle.new
     
-    @pub_company = @game.involved_companies.publisher
-    @dev_company = @game.involved_companies.developer
+    if @game.involved_companies.publisher.nil? 
+      @pub_company = InvolvedCompany.new
+    else
+      @pub_company = @game.involved_companies.publisher
+    end
+    
+    if @game.involved_companies.developer.nil? 
+      @dev_company = InvolvedCompany.new
+    else
+      @dev_company = @game.involved_companies.developer
+    end
+   
     
    # game = Game.find_by(external_id: 103329)
 
