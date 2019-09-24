@@ -64,7 +64,7 @@
   
   <div class="col-sm" id="game-edit-column">
   <!--Publisher and Developer + Genres here Dropdown-->
-   <h5><%=@game.name%> Company/Genres/Platform Detail</h5>
+   <h5><%=@game.name%> Company - Genres - Platform Detail</h5>
     <div class="card text-center">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
@@ -74,32 +74,47 @@
       </ul>
     </div>
     <div class="card-body">
+      <%= form_with model: @pub_company do |f| %>
+         <%= f.hidden_field :publisher, :value => true %>
+          <%= f.hidden_field :developer, :value => false %>
+         <%= f.hidden_field :game_id, :value => @game.id %>
       <div class="row">
         <div class="col">
-          <p class="card-text"><%= @publisher.name%></p>
+          <p class="card-text"><%=  @publisher.nil? ? "NA" :  @publisher.name %></p>
         </div>
         
         <div class="col">
-          <%=select_tag "publisher", options_from_collection_for_select(Company.all, "id", "name")%>  
+      
+          <%= f.select(:company_id, options_from_collection_for_select(Company.all, "id", "name"))%>
+
         </div>
         <div class="col">
-           <%= link_to "Update",'#', class: "btn btn-warning" %>
+          <%= f.submit 'Update', class: 'btn btn-warning' %>
         </div>
+        <% end %>
       </div>
-       <br>
+       <hr>
+      <%= form_with model: @dev_company do |f| %>
+         <%= f.hidden_field :developer, :value => true %>
+         <%= f.hidden_field :publisher, :value => false %>
+         <%= f.hidden_field :game_id, :value => @game.id %>
       <div class="row">
         <div class="col">
-          <p class="card-text"> <%= @developer.name %></p> 
+          <p class="card-text"><%=  @developer.nil? ? "NA" :  @developer.name %></p> 
         </div>
-          
+        
         <div class="col">
-           <%=select_tag "developer", options_from_collection_for_select(Company.all, "id", "name")%>
+      
+          <%= f.select(:company_id, options_from_collection_for_select(Company.all, "id", "name"))%>
+
         </div>
+        
         <div class="col">
-           <%= link_to "Update",'#', class: "btn btn-warning" %>
+          <%= f.submit 'Update', class: 'btn btn-warning' %>
         </div>
       </div>
-       <br>
+      <%end%>
+       <hr>
       
       <div class="row">
         <div class="col">
@@ -113,7 +128,7 @@
            <%= link_to "Add",'#', class: "btn btn-success" %>
         </div>
       </div>
-      <br>
+       <hr>
        <div class="row">
         <div class="col">
           <p class="card-text"> <%= @platform %></p>
@@ -126,7 +141,7 @@
            <%= link_to "Add",'#', class: "btn btn-success" %>
         </div>
       </div>
-       <br>
+      <hr>
       <div class="row">
         <div class="col">
           <p>Release Date</p>  
