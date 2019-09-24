@@ -57,7 +57,7 @@ module GamesApiModule
   MESS_NA_SERIES = "There are no series related to this game. Or did we missed it?"
   
   #Authentication
-  USERKEY = 'ec80dc20b6c9b360aab19868b02ed17e'
+  USERKEY = '049d27f7325bcb67768a30d5140fefb7'
   #DeviJack ec80dc20b6c9b360aab19868b02ed17e
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
   
