@@ -19,8 +19,8 @@
 					  <p class="card-text">Genres: <% @game_details.game_genres.each do |genre| %>
 					  <strong><%=genre.name %></strong>
 					  <%end%>
-					  <p class="card-text">Developers: <strong><%= @game_developer[:name] %> </strong></p>
-					  <p class="card-text">Publisher: <strong><%= @game_publisher[:name] %> </strong></p>
+					  <p class="card-text">Developers: <strong><%=  @game_developer.nil? ? "NA" : @game_developer[:name] %> </strong></p>
+					  <p class="card-text">Publisher: <strong><%= @game_publisher.nil? ? "NA" : @game_publisher[:name]  %> </strong></p>
 				  </div>
 				</div>
 			</div>
