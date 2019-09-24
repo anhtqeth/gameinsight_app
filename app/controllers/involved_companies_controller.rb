@@ -1,4 +1,17 @@
 class InvolvedCompaniesController < ApplicationController
+  
+  def create
+    @involve_company = InvolvedCompany.new(involved_company_params)
+    if @involve_company.save
+      flash.now[:success] = "Company added!"
+      redirect_back(fallback_location: root_path)
+    else
+      puts @involve_company.errors.full_messages
+      redirect_back(fallback_location: root_path)
+    end
+  end
+  
+  
   def update
     @involve_company = InvolvedCompany.find(params[:id])
     
@@ -18,7 +31,7 @@ class InvolvedCompaniesController < ApplicationController
   private
   #TODO - Need all other attribute?
     def involved_company_params
-      params.require(:involved_company).permit(:publisher,:company_id,:game_id)
+      params.require(:involved_company).permit(:developer,:publisher,:company_id,:game_id)
     end
   
 end
