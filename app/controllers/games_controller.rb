@@ -23,6 +23,8 @@ class GamesController < ApplicationController
     @video = GameVideo.new
     @game_article = GameArticle.new
     
+    @pub_company = @game.involved_companies.publisher
+    
    # game = Game.find_by(external_id: 103329)
 
     @publisher = Game.publisher(@game)
