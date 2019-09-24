@@ -23,6 +23,19 @@ class GamesController < ApplicationController
     @video = GameVideo.new
     @game_article = GameArticle.new
     
+    if @game.involved_companies.publisher.nil? 
+      @pub_company = InvolvedCompany.new
+    else
+      @pub_company = @game.involved_companies.publisher
+    end
+    
+    if @game.involved_companies.developer.nil? 
+      @dev_company = InvolvedCompany.new
+    else
+      @dev_company = @game.involved_companies.developer
+    end
+   
+    
    # game = Game.find_by(external_id: 103329)
 
     @publisher = Game.publisher(@game)
@@ -94,19 +107,8 @@ class GamesController < ApplicationController
       @game_newsfeed_list = game_article_collection.game_articles
     end
     
-    # @game_newsfeed_list = Rails.cache.fetch("#{params[:id]}/game_newfeed", expires_in: 1.month) do
-    #   gameNewsFeedRequest(game.external_id)
-    # end
-
-    
-    game_dev = Game.developer(game) #InvolvedCompany.where(game_id: game.id).publisher.take
-    game_pub = Game.publisher(game) #InvolvedCompany.where(game_id: game.id).developer.take
-    
-    game_dev.nil? ? game_dev = Company.new.saveAPIData(game.external_id,'Developer') : game_dev
-    game_pub.nil? ? game_pub = Company.new.saveAPIData(game.external_id,'Publisher') : game_pub
-    
-    @game_publisher = game_dev
-    @game_developer = game_pub
+    @game_publisher = Game.developer(game)
+    @game_developer = Game.publisher(game)
     
     render 'games/game_detail'
   end

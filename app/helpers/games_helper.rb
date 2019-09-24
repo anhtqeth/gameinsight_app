@@ -34,7 +34,7 @@ module GamesHelper
   def error_messages(model)
   
   end
-  
+  #Display game release date
   def game_release_dates(game)
     content = []
     game.game_release_dates.each do |rd|
