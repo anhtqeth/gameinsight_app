@@ -570,7 +570,7 @@ module GamesApiModule
     else 
       puts "Single Game Info"
       #game_detail = gamesRequest(games_id_array).first
-      gameCardProcess(game_detail) if gamesRequest(games_id_array).first.present?
+      gameCardProcess(gamesRequest(games_id_array).first) if gamesRequest(games_id_array).first.present?
       #game_card
     end
   end
