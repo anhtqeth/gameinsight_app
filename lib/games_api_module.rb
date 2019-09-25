@@ -52,7 +52,6 @@ module GamesApiModule
   GAME_ARTICLE_URI = "https://api-v3.igdb.com/pulses"
   GAME_EXTERNAL_ARTICLE_URI = "https://api-v3.igdb.com/pulse_urls"
   
-  #GAME_NEWS_URI = "https://api-v3.igdb.com/feeds"
   
   MESS_NA_SERIES = "There are no series related to this game. Or did we missed it?"
   
@@ -134,21 +133,6 @@ module GamesApiModule
   def gameCompaniesRequest(company_id) #
     puts "Called to Game Companies Request with Company ID : " << company_id.to_s
    # companies = involvedCompaniesRequest(game_id)
-    
-    # company_id = nil
-    # case company_type
-    #   when 'Publisher'
-    #     puts 'PUBLISHER ID QUERY'
-    #     company_id = companies.select{|c| c[:type] == 'Publisher'}.map{|x| x[:id] }.join.to_i
-    #     #request.body = "fields *; where published = #{game_id};"
-    #   when 'Developer'
-    #     puts 'DEVELOPER ID QUERY'
-    #     company_id = companies.select{|c| c[:type] == 'Developer'}.map{|x| x[:id] }.join.to_i
-    #     #request.body = "fields *; where developed = #{game_id};"
-    #   else
-    #   "Please specify what company type you wish for #{company_type}"
-    # end
-    
     request = Net::HTTP::Get.new(URI(COMPANIES_URI), {'user-key' => USERKEY})
     request.body = "fields *; where id = #{company_id};"
     response = http_construct.request(request)
