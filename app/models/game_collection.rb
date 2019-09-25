@@ -22,7 +22,7 @@ class GameCollection < ApplicationRecord
         game = Game.find_by_external_id(id)
         if game.nil?
           game = Game.new
-          game_collection.games << game.saveAPIData(id)
+          game_collection.games << game.saveAPIData(id) if game.saveAPIData(id).present?
         else
           game = Game.find_by_external_id(id)
           game_collection.games << game

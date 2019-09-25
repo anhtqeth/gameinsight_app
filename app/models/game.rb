@@ -47,61 +47,58 @@ class Game < ApplicationRecord
   #TODO - Refactor this model
   #TODO - Put all API request to private?
   def fetchAPIData(id)
-     OpenStruct.new(gamesListProcess(id))
+    OpenStruct.new(gamesListProcess(id)) if gamesListProcess(id).present?
   end
-
+ #TODO - Code smell here
   def saveAPIData(id)
      game_detail = fetchAPIData(id)
-     game=Game.new
-     
-     game.external_id = game_detail.id
-     game.name = game_detail.name
-     game.summary = game_detail.summary
-     game.cover = game_detail.cover
-     
-     game.storyline = game_detail.storyline
-     
-     puts game_detail.platform
-     
-     unless game_detail.platform == 'NA'
-        game_detail.platform.each do |x|
-          if Platform.find_by(external_id: x).nil?
-            platform = Platform.new
-            game.platforms << platform.saveAPIData(x)
-          else
-            platform = Platform.find_by(external_id: x)
-            game.platforms << platform
-          end
-        end
-     else
-        
-     end
-    
-     puts 'GENRES'
-     puts game_detail.genres
-     unless game_detail.genres == 'NA'
-        game_detail.genres.each do |x|
-          if GameGenre.find_by(external_id: x).nil?
-            genres = GameGenre.new
-            game.game_genres << genres.saveAPIData(x)
-          else
-            genres = GameGenre.find_by(external_id: x)
-            game.game_genres << genres
-          end
-        end
-     else
-        #TODO - Need something meaninful here
-     end
-     
-     if game_detail.first_release_date == 'NA'
-      game.first_release_date = Time.now - 15.years
-     else
-      game.first_release_date = DateTime.strptime(game_detail.first_release_date.to_s,'%s') 
-     end
-     game.popularity = game_detail.popularity
-     game.save
-     saveGameRelatedData(id)
-     game
+     unless game_detail.nil?
+       game=Game.new
+       
+       game.external_id = game_detail.id
+       game.name = game_detail.name
+       game.summary = game_detail.summary
+       game.cover = game_detail.cover
+       
+       game.storyline = game_detail.storyline
+       
+       puts game_detail.platform
+       
+       unless game_detail.platform == 'NA'
+            game_detail.platform.each do |x|
+              if Platform.find_by(external_id: x).nil?
+                platform = Platform.new
+                game.platforms << platform.saveAPIData(x)
+              else
+                platform = Platform.find_by(external_id: x)
+                game.platforms << platform
+              end
+            end
+         end
+         puts 'GENRES'
+         puts game_detail.genres
+         unless game_detail.genres == 'NA'
+            game_detail.genres.each do |x|
+              if GameGenre.find_by(external_id: x).nil?
+                genres = GameGenre.new
+                game.game_genres << genres.saveAPIData(x)
+              else
+                genres = GameGenre.find_by(external_id: x)
+                game.game_genres << genres
+              end
+            end
+         end
+         
+         if game_detail.first_release_date == 'NA'
+          game.first_release_date = Time.now - 15.years
+         else
+          game.first_release_date = DateTime.strptime(game_detail.first_release_date.to_s,'%s') 
+         end
+         game.popularity = game_detail.popularity
+         game.save
+         saveGameRelatedData(id)
+         game
+       end
   end
   
   
