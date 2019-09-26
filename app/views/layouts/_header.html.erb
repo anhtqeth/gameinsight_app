@@ -49,11 +49,12 @@
     <% end %>
     
   </div>
- 
+
   <%= form_tag(search_path, :method => "get",   
     class: 'form-inline', id: 'search-bar') do %>  
-    <%= search_field_tag :name, params[:name], placeholder: " ", class: "form-control mr-sm-2" %>  
-      <%= button_tag "Search", :class => 'btn btn-outline-warning',:name => nil%>  
+    <%= search_field_tag :name, params[:name], placeholder: " " ,class:"form-control mr-sm-2", id: "custom-search"%>  
+    <i class="fas fa-search fa-2x" id="header-search-icon"></i>
+      <!--<= button_tag "Search", :class => 'btn btn-outline-warning',:name => nil%>  -->
   <% end %>
   
 </nav>
