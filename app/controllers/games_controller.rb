@@ -7,8 +7,19 @@ class GamesController < ApplicationController
   #TODO: Add more feature to controller
     
   def index
-    @games = Game.all.order(:name).paginate(:page =>params[:page], :per_page => 15)
-    #@game_card_result = result
+    if params[:search]
+      puts 'DEBUGGING SEARCH'
+      puts params[:search]
+      @search_result = Game.search_by_name(params[:search]).order(:name).paginate(:page =>params[:page], :per_page => 15)
+      
+      respond_to do |format|
+        format.js { render partial: 'search-results'}
+      end
+      
+    else  
+      @games = Game.all.order(:name).paginate(:page =>params[:page], :per_page => 15)
+      #@game_card_result = result
+    end
   end
   
   def destroy

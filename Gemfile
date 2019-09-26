@@ -27,6 +27,7 @@ gem 'contentful'
 gem 'rich_text_renderer', '~> 0.2.2'
 
 gem 'rails-i18n'
+gem 'pg_search', '~> 2.3'
 
 #Slug
 gem 'friendly_id', '~> 5.2', '>= 5.2.5'

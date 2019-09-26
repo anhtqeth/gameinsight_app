@@ -1,33 +1,6 @@
-<% provide(:title, 'All Games in Database') %>
-
-
 <div class="container" id="games-search-result">
-
-
-
-<small>MANAGED BY ADMIN</small>
-<hr>
-<%= form_tag(games_path, method: "get", remote:true, class: "form-inline") do %>
-<div class="row">
-  <div class = "col"><%= text_field_tag :search, params[:search], placeholder: "Enter Game Name", class: "input-group"%></div>
-  <div class = "col"><%= submit_tag "Search", class: "btn btn-warning" %></div>
-</div>
-<% end %>
-
-<div id="search-results">
-
-</div>
-
-
-<hr>
-
-<h1>All Games <span class="badge badge-secondary"><%=Game.count%></span></h1>
-
-<% flash.each do |message_type, message| %>
-   <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
-<% end %>
-<hr>
-    <%@games.each do |x|%>
+<h5>Search Results</h5>
+ <%@search_result.each do |x|%>
     <div class="row">
         <div class = "col-3">
         <%if x.cover.nil? || x.cover == 'NA' %>
@@ -74,9 +47,6 @@
      <hr>
     <%end%>
     <div class="my_pagination">     
-        <%= will_paginate @games %>
+        <%= will_paginate @search_result %>
     </div>
-</div>
-
-<div class="container">
 </div>

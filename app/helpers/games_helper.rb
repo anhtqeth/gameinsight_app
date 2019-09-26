@@ -79,8 +79,7 @@ module GamesHelper
       #Carousel.new(self,getMediaUrl(data,type)).html
       Carousel.new(self,data).html
     else
-      content_tag(:p, "We found no news source related to this game yet. 
-      Do you have ones? Consider contributing it!")
+      content_tag(:p, "OOPS! Something Wrong With the content here")
     end
   end
   
