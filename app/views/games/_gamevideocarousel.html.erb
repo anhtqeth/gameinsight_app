@@ -8,7 +8,7 @@
       
         <div class="carousel-item active">
             <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item" src=<%= @game_videos.first.url %> allowfullscreen></iframe>
+              <iframe class="embed-responsive-item" src=<%= @game_videos[0].url %> allowfullscreen></iframe>
             </div>
         </div>
         <% @game_videos[1..-1].each do |vid| %>
