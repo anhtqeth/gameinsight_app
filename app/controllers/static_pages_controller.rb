@@ -9,10 +9,10 @@ class StaticPagesController < ApplicationController
     @hotgames = game.fetchPopularUpcomingRelease
     
     #Currently set in controller, better if user can pick this from the view. Will change in 0.3
-    time = (Time.current - 6.days).to_time.to_i
-    game_article = GameArticle.new
+    # time = (Time.current - 6.days).to_time.to_i
+    # game_article = GameArticle.new
     
-    @latest_newsfeed = game_article.fetchLatestNews(time)
+    # @latest_newsfeed = game_article.fetchLatestNews(time)
     
     data = ['PlayStation 4','PC (Microsoft Windows)','Nintendo Switch','Xbox One']
     @platforms_list = Platform.where("name IN (?)",data).pluck(:name)
