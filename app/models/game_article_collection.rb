@@ -2,6 +2,15 @@ class GameArticleCollection < ApplicationRecord
   belongs_to :game
   has_many :game_articles,  dependent: :destroy
   
+  
+  def self.articles(game)
+    if GameArticleCollection.find_by_game_id(game.id).present?
+      GameArticleCollection.find_by_game_id(game.id).game_articles
+    else
+      nil
+    end
+  end
+  
   def fetchAPIData(id)
     gameNewsFeedRequest(id)
   end

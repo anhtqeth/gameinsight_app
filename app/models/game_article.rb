@@ -5,6 +5,7 @@ class GameArticle < ApplicationRecord
   validates :url,:title,:news_source,:publish_at,  presence: true
   belongs_to :game_article_collection,  optional: true
   
+  
   #HIGH PROFILE FEED
   GAMESPOT_NEWS_RSS_FEED = 'https://www.gamespot.com/feeds/news/'
   IGN_NEWS_RSS = 'http://feeds.ign.com/ign/news'
@@ -26,6 +27,8 @@ class GameArticle < ApplicationRecord
   #   puts self.publish_at
   #   self.publish_at.to_time.to_i
   # end
+  
+  
   
   #TODO Add uniqueness constraint
   def fetchAPIData(id)
