@@ -74,46 +74,31 @@ class GamesController < ApplicationController
   end
  
   def show
+
     game = nil
-    if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil?
+    # puts 'DEBUG --- GAME CONTROLLER'
+    # puts game
+    # puts game.external_id
+    if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil?# && params[:id].to_i != 0
       game = Game.new
-      @game_details = game.saveAPIData(params[:id])
-      @game_videos = @game_details.game_videos
-      @game_screenshots = @game_details.screenshots
+      game.saveAPIData(params[:id])
       game = Game.find_by(external_id: params[:id])
-    else 
-      game = (params[:id].to_i != 0) ? Game.find_by_external_id(params[:id]) : Game.friendly.find_by(slug: params[:id])
-      
-      @game_details = game
-      @game_videos = game.game_videos
-      @game_screenshots = game.screenshots
-    end
-   
-    puts 'DEBUG --- GAME CONTROLLER'
-    puts game
-    puts game.external_id
-    
-    #TODO - Handle this collection. Currently fecth all data and save. 
-    #This reduce performance by 10x
-   
-    if game.game_collection.nil?
-       FetchGamesCollectionJob.perform_later(game)
     else
-      @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10]
+      #Check if params is a slug or external_id (integer)
+      game = (params[:id].to_i != 0) ? Game.find_by_external_id(params[:id]) : Game.friendly.find_by(slug: params[:id])
+    end
+    
+    @game_details = game
+    @game_videos = game.game_videos
+    @game_screenshots = game.screenshots
+
+    unless game.game_collection.nil?
+      @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10] 
       @size = @game_card_carousel_list.size/2
     end
-    
-    
-    if game.game_article_collection.empty?
-      game_article_collection = GameArticleCollection.new
-      game_article_collection.saveAPIData(game.external_id)
-      game_article_collection = GameArticleCollection.where(game_id: game.id).take
-      @game_newsfeed_list = game_article_collection.game_articles
-    else
-      game_article_collection = GameArticleCollection.where(game_id: game.id).take
-      @game_newsfeed_list = game_article_collection.game_articles
-    end
-    
+   
+    @game_newsfeed_list = GameArticleCollection.articles(game)
+
     @game_publisher = Game.developer(game)
     @game_developer = Game.publisher(game)
     

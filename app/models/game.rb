@@ -15,7 +15,7 @@ class Game < ApplicationRecord
   has_many :game_release_dates, dependent: :destroy
   
   #Allow update on associated model
-  accepts_nested_attributes_for :screenshots
+  #accepts_nested_attributes_for :screenshots
   
   belongs_to :game_collection,  optional: true
   
@@ -238,6 +238,10 @@ class Game < ApplicationRecord
      videos.saveAPIData(id)
      company = Company.new
      company.saveAPIData(id)
+     game_article_collection = GameArticleCollection.new
+     game_article_collection.saveAPIData(id)
+     
+     FetchGamesCollectionJob.perform_later(id)
      #company.saveAPIData(id,'Developer')
   end
   
