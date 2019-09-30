@@ -93,7 +93,8 @@ class GamesController < ApplicationController
     puts game
     puts game.external_id
     
-    #TODO - Handle this collection. Currently fecth all data and save. This reduce performance by 10x
+    #TODO - Handle this collection. Currently fecth all data and save. 
+    #This reduce performance by 10x
     if game.game_collection.nil?
       game_collection = GameCollection.new
       
@@ -103,10 +104,14 @@ class GamesController < ApplicationController
         @game_card_carousel_list = game.game_collection.games
         @size = @game_card_carousel_list.size/2 #TODO - Move this to helper
       end
+      
     else
       @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10]
       @size = @game_card_carousel_list.size/2
     end
+    
+    
+    
     
     if game.game_article_collection.empty?
       game_article_collection = GameArticleCollection.new
