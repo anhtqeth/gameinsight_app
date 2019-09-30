@@ -74,7 +74,6 @@ class GamesController < ApplicationController
   end
  
   def show
-
     game = nil
     # puts 'DEBUG --- GAME CONTROLLER'
     # puts game
