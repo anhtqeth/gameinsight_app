@@ -76,17 +76,18 @@ class GamesController < ApplicationController
   def show
     #If this game is not in db, save it. 
     game = nil
-    if Game.friendly.find_by(slug: params[:id]).nil?
+    if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil?
       game = Game.new
       @game_details = game.saveAPIData(params[:id])
       @game_videos = @game_details.game_videos
       @game_screenshots = @game_details.screenshots
       game = Game.find_by(external_id: params[:id])
-    else
-      game =  Game.friendly.find(params[:id])
-      @game_details = Game.friendly.find(params[:id])
-      @game_videos = @game_details.game_videos
-      @game_screenshots = @game_details.screenshots
+    else 
+      game = (params[:id].to_i != 0) ? Game.find_by_external_id(params[:id]) : Game.friendly.find_by(slug: params[:id])
+      
+      @game_details = game
+      @game_videos = game.game_videos
+      @game_screenshots = game.screenshots
     end
    
     puts 'DEBUG --- GAME CONTROLLER'
@@ -95,22 +96,13 @@ class GamesController < ApplicationController
     
     #TODO - Handle this collection. Currently fecth all data and save. 
     #This reduce performance by 10x
+   
     if game.game_collection.nil?
-      game_collection = GameCollection.new
-      
-      if game_collection.saveAPIData(game.external_id).nil?
-        @game_card_carousel_list = nil
-      else
-        @game_card_carousel_list = game.game_collection.games
-        @size = @game_card_carousel_list.size/2 #TODO - Move this to helper
-      end
-      
+       FetchGamesCollectionJob.perform_later(game)
     else
       @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10]
       @size = @game_card_carousel_list.size/2
     end
-    
-    
     
     
     if game.game_article_collection.empty?
