@@ -74,7 +74,6 @@ class GamesController < ApplicationController
   end
  
   def show
-    #If this game is not in db, save it. 
     game = nil
     if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil?
       game = Game.new
