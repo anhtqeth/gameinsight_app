@@ -45,4 +45,6 @@ Rails.application.routes.draw do
     resources :game_article_collections
     resources :game_articles
     resources :involved_companies
+    
+    resources :posts
 end
