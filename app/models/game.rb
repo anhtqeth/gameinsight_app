@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: games
+#
+#  id                 :bigint           not null, primary key
+#  external_id        :integer
+#  name               :string
+#  summary            :text
+#  storyline          :text
+#  cover              :string
+#  platform           :text             is an Array
+#  genres             :string
+#  first_release_date :date
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  popularity         :decimal(, )
+#  slug               :string
+#  game_collection_id :bigint
+#
+
 class Game < ApplicationRecord
   #For PG Search
   include PgSearch::Model

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: game_article_collections
+#
+#  id              :bigint           not null, primary key
+#  external_id     :integer
+#  name            :string
+#  game_id         :bigint
+#  game_article_id :bigint
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class GameArticleCollection < ApplicationRecord
   belongs_to :game
   has_many :game_articles,  dependent: :destroy

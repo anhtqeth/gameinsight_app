@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: platforms
+#
+#  id            :bigint           not null, primary key
+#  external_id   :integer
+#  abbreviation  :string
+#  alt_name      :string
+#  generation    :integer
+#  name          :string
+#  platform_logo :string
+#  summary       :text
+#  details       :text
+#  url           :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  slug          :string
+#
+
 class Platform < ApplicationRecord
   has_and_belongs_to_many :games
   #Need to remove some validation below for platform save

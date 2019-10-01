@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: screenshots
+#
+#  id          :bigint           not null, primary key
+#  external_id :integer
+#  url         :string
+#  width       :integer
+#  height      :integer
+#  game_id     :bigint
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Screenshot, type: :model do

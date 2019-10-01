@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  name            :string
+#  email           :string
+#  nickname        :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  password_digest :string
+#  role            :integer
+#
+
 class User < ApplicationRecord
   #TODO - Utilize Devise feature when things are done for USER
   #TODO - Add Index to other model as well

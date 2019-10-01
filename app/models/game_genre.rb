@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: game_genres
+#
+#  id          :bigint           not null, primary key
+#  name        :string
+#  description :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  slug        :string
+#  external_id :integer
+#
+
 class GameGenre < ApplicationRecord
   has_and_belongs_to_many :games
   validates :name,:description,:external_id, presence: true

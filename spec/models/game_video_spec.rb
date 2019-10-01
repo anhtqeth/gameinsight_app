@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: game_videos
+#
+#  id          :bigint           not null, primary key
+#  external_id :integer
+#  url         :string
+#  name        :string
+#  description :text
+#  game_id     :bigint
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe GameVideo, type: :model do

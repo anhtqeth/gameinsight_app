@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: involved_companies
+#
+#  id         :bigint           not null, primary key
+#  developer  :boolean
+#  publisher  :boolean
+#  supporting :boolean
+#  porting    :boolean
+#  game_id    :bigint
+#  company_id :bigint
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe InvolvedCompany, type: :model do

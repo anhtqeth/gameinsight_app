@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: game_collections
+#
+#  id          :bigint           not null, primary key
+#  external_id :integer
+#  name        :string
+#  url         :string
+#  description :text
+#  game_id     :bigint
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class GameCollection < ApplicationRecord
   has_many :games, dependent: :destroy
   validates :name, presence: true,uniqueness: true

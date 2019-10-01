@@ -2,6 +2,7 @@ require 'contentful'
 require 'rich_text_renderer'
 module ContentModule
 
+
   CLIENT = Contentful::Client.new(
     space: 'wxo420nuykt4',
     access_token: 'ezEN0gg4g1L0tJCjTC4odpBhu73bNh8efDvSgLFY2ms',
@@ -9,6 +10,7 @@ module ContentModule
   )
 
   GAME_GENRE_ID = '72az5II9KZoQ9o0oo8Dywi'
+  POST_ID = ''
   
   def entryRequest
     puts CLIENT.entries
