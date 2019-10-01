@@ -29,10 +29,12 @@ gem 'rich_text_renderer', '~> 0.2.2'
 gem 'rails-i18n'
 gem 'pg_search', '~> 2.3'
 
+#Background JOB
 gem 'sidekiq', '~> 5.2.7'
 
-#Slug
-gem 'friendly_id', '~> 5.2', '>= 5.2.5'
+# SEO
+gem 'friendly_id', '~> 5.2', '>= 5.2.5' #Slug
+gem 'sitemap_generator', '~> 6.0', '>= 6.0.2' #Sitemap generator
 
 #Authentication
 gem 'devise'

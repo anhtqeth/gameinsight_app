@@ -466,6 +466,7 @@ body {
     outline: 0;
     background: transparent;
     border-bottom: 2px solid #ffc107;
+    // No blue glow when focus
     outline:0px !important;
     -webkit-appearance:none;
     box-shadow: none !important;

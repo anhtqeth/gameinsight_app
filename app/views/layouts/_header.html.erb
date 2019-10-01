@@ -45,7 +45,7 @@
     <%end%>
         <!--<li><= link_to "Users", '#' %></li>-->
     <% else %>
-    <button type="button" id ="header-menu-button"  class="btn btn-warning"><%= link_to "Log in", login_path %></button>
+      <%= link_to "Log in", login_path, class:"btn btn-warning", id:"header-menu-button"%>
     <% end %>
     
   </div>
