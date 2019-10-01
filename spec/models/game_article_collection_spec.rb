@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: game_article_collections
+#
+#  id              :bigint           not null, primary key
+#  external_id     :integer
+#  name            :string
+#  game_id         :bigint
+#  game_article_id :bigint
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe GameArticleCollection, type: :model do

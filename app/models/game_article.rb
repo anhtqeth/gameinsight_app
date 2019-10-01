@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: game_articles
+#
+#  id                         :bigint           not null, primary key
+#  external_id                :integer
+#  author                     :string
+#  summary                    :text
+#  img                        :string
+#  created_at                 :datetime         not null
+#  title                      :string
+#  url                        :string
+#  news_source                :string
+#  updated_at                 :datetime         not null
+#  publish_at                 :integer
+#  game_article_collection_id :bigint
+#
+
 require 'rss'
 require 'open-uri'
 class GameArticle < ApplicationRecord

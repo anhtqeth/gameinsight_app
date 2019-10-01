@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: game_videos
+#
+#  id          :bigint           not null, primary key
+#  external_id :integer
+#  url         :string
+#  name        :string
+#  description :text
+#  game_id     :bigint
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class GameVideo < ApplicationRecord
   belongs_to :game
   #validates :name,:url, presence: true

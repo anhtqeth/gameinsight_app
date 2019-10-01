@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: screenshots
+#
+#  id          :bigint           not null, primary key
+#  external_id :integer
+#  url         :string
+#  width       :integer
+#  height      :integer
+#  game_id     :bigint
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class Screenshot < ApplicationRecord
   belongs_to :game
   validates :url,:width,:height, presence: true

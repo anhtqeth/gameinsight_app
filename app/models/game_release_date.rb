@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: game_release_dates
+#
+#  id                   :bigint           not null, primary key
+#  date                 :date
+#  game_id              :bigint
+#  platform_id          :bigint
+#  region               :integer
+#  month                :integer
+#  year                 :integer
+#  date_format_category :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#
+
 class GameReleaseDate < ApplicationRecord
   belongs_to :game
   belongs_to :platform

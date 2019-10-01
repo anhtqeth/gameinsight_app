@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: companies
+#
+#  id                  :bigint           not null, primary key
+#  external_id         :integer
+#  name                :string
+#  description         :string
+#  logo                :string
+#  start_date          :integer
+#  start_date_category :integer
+#  url                 :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#
+
 class Company < ApplicationRecord
   #TODO- Enable slug when save success
   #TODO - Code smell here, this call to API every time game is saved

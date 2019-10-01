@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: game_genres
+#
+#  id          :bigint           not null, primary key
+#  name        :string
+#  description :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  slug        :string
+#  external_id :integer
+#
+
 require 'rails_helper'
 
 RSpec.describe GameGenre, type: :model do
