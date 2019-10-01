@@ -466,6 +466,9 @@ body {
     outline: 0;
     background: transparent;
     border-bottom: 2px solid #ffc107;
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
 }
 
 
@@ -486,7 +489,8 @@ body {
 }
 
 #custom-search input[type="text"], textarea {
-outline: none;
-box-shadow:none !important;
-border:1px solid #ccc !important;
+  outline: none;
+  box-shadow:none !important;
+  border:1px solid #ccc !important;
+
 }
