@@ -16,6 +16,11 @@ class Post < ApplicationRecord
     entryRequest(id)
   end
   
+  #Save Post data from Contentful using id
+  #Add new column data as require
+  #The content field from Contentful require render before displaying on the site
+  #TODO - Test Rich text with image and other relevant stuff
+  #TODO - Add Game Entry to Contentful
   def saveCMSPost(id)
     post_data = fetchCMSPost(id)
     Post.create(name: post_data.title, feature_img: post_data.feature_image.url,
