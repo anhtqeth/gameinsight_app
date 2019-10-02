@@ -18,5 +18,15 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
+   it "can fetch entry from contenful" do
+    arc = Post.new
+    result = arc.fetchCMSPost('10PCttqTZMbCMna6rBGsvb')
+    expect(result).not_to be_nil
+   end
+  
+  
+  
+  
 end
+
