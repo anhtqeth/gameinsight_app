@@ -1,7 +1,23 @@
 <% provide(:title, @post.name) %>
 <!--TODO - Move the flash to sidewide implement-->
 <div class="container">
- 
- 
- 
+   <h1> <%= @post.name %></h1>
+   <div>
+     <%= image_tag(@post.feature_img, alt: "#{@post.name}-feature-img")%>
+   </div>
+   <hr>
+   <div class="jumbotron">
+     <%= raw @post.content %>
+   </div>
+   
+   <!--Display Game related to the post-->
+   <div id="featured-game">
+     
+   </div>
+   
+   <!--Display Related Post of the same game-->
+   <div id="related-post">
+     
+   </div>
+   
 </div>

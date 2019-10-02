@@ -9,18 +9,37 @@ module ContentModule
     #api_url: 'preview.contentful.com'
   )
 
-  GAME_GENRE_ID = '72az5II9KZoQ9o0oo8Dywi'
-  POST_ID = ''
+  #GAME_GENRE_ID = '72az5II9KZoQ9o0oo8Dywi'
+  #POST_ID = '10PCttqTZMbCMna6rBGsvb'
   
-  def entryRequest
-    puts CLIENT.entries
-    puts CLIENT.entry(GAME_GENRE_ID).description
-    CLIENT.entry(GAME_GENRE_ID).description
+  def entryRequest(id)
+    entry_id = nil
+    #puts for testing
+    # puts 'TITLE'
+    # puts CLIENT.entry(id).title
+    # puts 'SUMMARY'
+    # puts CLIENT.entry(id).summary
+    # puts 'FEATURE_IMG'
+    # puts CLIENT.entry(id).feature_image.url
+    # puts 'CONTENT'
+    CLIENT.entry id
   end
   
-  def renderRichText
+  def entriesRequest(type)
+     case type 
+      when 'post'
+        CLIENT.entries(content_type: 'post')
+      when 'genres'
+        CLIENT.entries(content_type: 'gameGenre')
+      else
+        puts "(#{type}) is not a valid entry"
+    end
+  end
+  
+  
+  def renderRichText(entry)
     renderer = RichTextRenderer::Renderer.new
-    renderer.render(entryRequest)
+    renderer.render(entry)
   end
   
   def renderSnippet

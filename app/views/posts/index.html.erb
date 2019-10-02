@@ -1,0 +1,18 @@
+<div class="container">
+<% @posts.each do |arc| %>
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <%=image_tag(arc.feature_img,class:"card-img")%>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><%=arc.name%></h5>
+        <p class="card-text">A short summary of the post</p>
+        <p class="card-text"><small class="text-muted">Last updated <%= time_ago_in_words(arc.created_at) %> ago</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+<%end%>
+</div>

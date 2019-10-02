@@ -46,7 +46,7 @@ module GamesApiModule
   #Searching 
   GAME_SEARCH_URI = "https://api-v3.igdb.com/search"
   GAME_COLLECTION_URI = "https://api-v3.igdb.com/collections"
-  
+  # 
   #External Sites info
   GAME_NEWS_GROUP_URI = "https://api-v3.igdb.com/pulse_groups"
   GAME_ARTICLE_URI = "https://api-v3.igdb.com/pulses"
@@ -191,6 +191,9 @@ module GamesApiModule
     game_article
   end
   #TODO Refactor this for similar to the above
+  
+  
+  
   def gameLatestNewsRequest(time)
     puts "Called to Latest Feed Request with parameter: " << DateTime.strptime(time.to_s,'%s').strftime("%A-%d-%b-%Y")
     request = buildRequest(GAME_ARTICLE_URI)
@@ -202,7 +205,8 @@ module GamesApiModule
       latest_news << OpenStruct.new(gameArticleProcess(article))
     end
     latest_news
-  end
+  end    
+  
   
   #Get Related News from multiple sources for a game
   def gameNewsFeedRequest(game_id)
