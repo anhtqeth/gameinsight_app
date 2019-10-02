@@ -1,0 +1,40 @@
+<%unless @all_posts.empty? %>
+<div class="container">
+  <h4>| Latest Posts</h4>
+  <hr>
+   <div id="posts-carousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+           <div class="jumbotron">
+              <h1 class="display-4"><%= @all_posts.first.name%></h1>
+              <p class="lead"><%= @all_posts.first.summary%></p>
+              <hr class="my-4">
+              <p><%= @all_posts.first.content%></p>
+              <%=link_to "Read More", post_path(@all_posts.first),class:"btn btn-primary btn-lg"%>
+          </div>
+        </div>
+        <% @all_posts[1..-1].each do |x| %>
+        <div class="carousel-item">
+            <div class="jumbotron">
+              <h1 class="display-4"><%= x.name%></h1>
+              <p class="lead"><%= x.name%></p>
+              <hr class="my-4">
+              <p><%= x.summary%></p>
+              <%=link_to "Read More", post_path(x),class:"btn btn-primary btn-lg"%>
+            </div>
+        </div>
+        <% end%>
+     
+      <a class="carousel-control-prev" href="#posts-carousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#posts-carousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+  
+<div>
+<%end%>
