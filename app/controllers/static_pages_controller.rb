@@ -4,6 +4,9 @@ class StaticPagesController < ApplicationController
   def home
     game = Game.new
     @upcoming_popular_games = game.fetchPopularUpcomingRelease[1..8]
+   
+    #TODO Add sorting by created date here
+    @all_posts = Post.all[0..10]
     
     #TODO- This is a compensation for the lack of newsfeed in 0.9 will be removed
     @hotgames = game.fetchPopularUpcomingRelease

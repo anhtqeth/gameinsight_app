@@ -8,8 +8,9 @@
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title"><%=arc.name%></h5>
-        <p class="card-text">A short summary of the post</p>
+        <p class="card-text"><%=arc.summary%></p>
         <p class="card-text"><small class="text-muted">Last updated <%= time_ago_in_words(arc.created_at) %> ago</small></p>
+        <%=link_to "Read More", post_path(arc)%>
       </div>
     </div>
   </div>

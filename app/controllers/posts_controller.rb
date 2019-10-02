@@ -7,8 +7,8 @@ class PostsController < ApplicationController
   end
   
   def show
-    api_data = entryRequest('10PCttqTZMbCMna6rBGsvb')
-    @post = Post.find(params[:id])
+    #api_data = entryRequest('10PCttqTZMbCMna6rBGsvb')
+    @post = Post.friendly.find(params[:id])
   end
   
   def update
@@ -16,7 +16,7 @@ class PostsController < ApplicationController
   end
   
   def destroy
-  
+    
   end
   
   
