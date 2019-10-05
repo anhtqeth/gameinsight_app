@@ -18,6 +18,7 @@ gem 'coffee-rails', '4.2.2'
 gem 'jquery-rails', '4.3.1'
 gem 'turbolinks',   '5.0.1'
 gem 'jbuilder',     '2.7.0'
+gem 'mini_racer', platforms: :ruby
 
 #Database
 gem 'annotate', '~> 3.0', '>= 3.0.2' #Annotation on model
