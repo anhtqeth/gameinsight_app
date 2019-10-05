@@ -93,16 +93,16 @@ class Game < ApplicationRecord
        puts game_detail.platform
        
        unless game_detail.platform == 'NA'
-            game_detail.platform.each do |x|
-              if Platform.find_by(external_id: x).nil?
-                platform = Platform.new
-                game.platforms << platform.saveAPIData(x)
-              else
-                platform = Platform.find_by(external_id: x)
-                game.platforms << platform
-              end
+          game_detail.platform.each do |x|
+            if Platform.find_by(external_id: x).nil?
+              platform = Platform.new
+              game.platforms << platform.saveAPIData(x)
+            else
+              platform = Platform.find_by(external_id: x)
+              game.platforms << platform
             end
-         end
+          end
+       end
          puts 'GENRES'
          puts game_detail.genres
          unless game_detail.genres == 'NA'
@@ -220,7 +220,6 @@ class Game < ApplicationRecord
   #Output: list of game
   def findApiGames(name,saved_ex_ids)
     gamesSearchRequest(name,saved_ex_ids).map{|x| formatApiResult(OpenStruct.new(x))}
-    #gamesSearchRequest(name).map{|x| OpenStruct.new(x)}
   end
 
   #TODO - Make this more flexible
@@ -231,7 +230,6 @@ class Game < ApplicationRecord
     #Add rs external_id to an array
     #Use this array as a filter for the api call
     api_rs = findApiGames(name,saved_ex_ids)
-    #rs.empty? ? findApiGames(name) : rs
     [rs,api_rs]
   end
   

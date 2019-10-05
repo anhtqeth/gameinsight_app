@@ -28,6 +28,7 @@ gem 'rspec', '~> 3.8'
 gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
 gem 'capybara', '~> 3.22'
 
+
 #CMS
 gem 'contentful'
 gem 'rich_text_renderer', '~> 0.2.2'

@@ -5,7 +5,6 @@ class GamesController < ApplicationController
   #TODO: This is a fat controller. 
   #TODO: Implement caching 
   #TODO: Add more feature to controller
-    
   def index
     if params[:search]
       puts 'DEBUGGING SEARCH'
@@ -111,23 +110,11 @@ class GamesController < ApplicationController
       flash[:info] = "Please specify a name"
       redirect_to(root_path)
     else
-      #TODO - Move this to games.rb
       game = Game.new
-      #result = game.findGames(params[:name])
-      
       @rs = game.findGames(params[:name])[0]
-      puts 'DEBUG --- GAME CONTROLLER'
-      puts 'Result from own model'
-      puts @rs.count
       @api_rs = game.findGames(params[:name])[1]
-      puts 'Result from api'
-      puts @api_rs.count
-     
-      #@game_card_result = result.paginate(:page =>params[:page], :per_page => 5)
-      #@game_card_result = result.paginate(:page =>params[:page], :per_page => 5)
       render 'games/search_result'
     end
-    
   end
   
   def discover
@@ -140,7 +127,7 @@ class GamesController < ApplicationController
   
   def releases
     
-    
+    render 'games/latest_release'
   end
 
   private 

@@ -56,7 +56,7 @@ module GamesApiModule
   MESS_NA_SERIES = "There are no series related to this game. Or did we missed it?"
   
   #Authentication
-  USERKEY = '37c25b7c4526b3b1093f47ebe8416503' #NEW KEY
+  USERKEY = '049d27f7325bcb67768a30d5140fefb7' #NEW KEY
   #DeviJack ec80dc20b6c9b360aab19868b02ed17e #anhtruong 37c25b7c4526b3b1093f47ebe8416503
   #anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
   
@@ -437,11 +437,6 @@ module GamesApiModule
     response = http_construct.request(request)
     #puts JSON.parse(response.read_body)
     JSON.parse(response.read_body)
-    # game_ids = []
-    # result.each do |x|
-    #   game_ids << x["id"]
-    # end
-    # game_ids
   end
   #TODO - Handle empty image here
   def gameScreenshotRequest(game_id)

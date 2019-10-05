@@ -39,6 +39,12 @@ class StaticPagesController < ApplicationController
   def help
     
   end
+  
+  def latest_release
+    
+    
+    render ''
+  end
 
   def about
     
