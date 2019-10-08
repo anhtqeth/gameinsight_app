@@ -81,14 +81,12 @@ class Game < ApplicationRecord
   def saveAPIData(id)
      game_detail = fetchAPIData(id)
      unless game_detail.nil?
-       game=Game.new
-       
+       game             = Game.new
        game.external_id = game_detail.id
-       game.name = game_detail.name
-       game.summary = game_detail.summary
-       game.cover = game_detail.cover
-       
-       game.storyline = game_detail.storyline
+       game.name        = game_detail.name
+       game.summary     = game_detail.summary
+       game.cover       = game_detail.cover
+       game.storyline   = game_detail.storyline
        
        puts game_detail.platform
        
@@ -207,10 +205,10 @@ class Game < ApplicationRecord
   def formatApiResult(game_data)
     #Hashes -> OpenStruct
     #Map name to Array
-    game_data.platforms.nil? ?  game_data.platforms = [] : game_data.platforms = game_data.platforms.map{|x| OpenStruct.new(x)} #.map{|z| z.name}
-    game_data.genres.nil? ? game_data.genres = nil  : game_data.genres = game_data.genres.map{|x| OpenStruct.new(x)} #.map{|z| z.name}
-    game_data.cover.nil? ? game_data.cover = nil : game_data.cover = game_data.cover["url"].sub('t_thumb','t_cover_big')
-    game_data.collection.nil? ? game_data.collection = [] : game_data.collection = game_data.collection["name"]
+    game_data.platforms.nil? ? game_data.platforms = [] : game_data.platforms = game_data.platforms.map{|x| OpenStruct.new(x)} #.map{|z| z.name}
+    game_data.genres.nil? ? game_data.genres       = nil  : game_data.genres = game_data.genres.map{|x| OpenStruct.new(x)} #.map{|z| z.name}
+    game_data.cover.nil? ? game_data.cover         = nil : game_data.cover = game_data.cover["url"].sub('t_thumb','t_cover_big')
+    game_data.collection.nil? ? game_data.collection= [] : game_data.collection = game_data.collection["name"]
     game_data.first_release_date.nil? ? game_data.first_release_date = nil : game_data.first_release_date = DateTime.strptime(game_data.first_release_date.to_s,'%s')
     game_data
   end

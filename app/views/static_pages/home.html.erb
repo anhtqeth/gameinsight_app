@@ -1,6 +1,4 @@
 <% provide(:title, "Home ") %>
-
-<div class="container">
   <!--<div class="container" >-->
   <!--  <= render "featureguides" %>-->
   <!--</div>-->
@@ -8,14 +6,11 @@
   <!--<div class="container">-->
   <!--  <= render "latestnewsfeed"%>-->
   <!--</div>-->
-  
   <%= render "posts/latestposts" %>
   
   <%= render "games/layouts/hotgames" %>
-  
-  <div class="container">
-    <%= render "populargames" %>
-  </div>
+
+  <%= render "populargames" %>
   
   <br>
    
@@ -42,9 +37,6 @@
 
   <br>
   
-  <div class="container" >
-    <%= render "bestgamesplatform" %>
-  </div>
-</div>
+  <%= render "bestgamesplatform" %>
 
 <!--<= link_to image_tag("ethlogo.png", alt: "Ethu logo"),'http://ethugamer.com/' %>-->
