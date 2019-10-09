@@ -62,12 +62,12 @@ class GameArticle < ApplicationRecord
       nil
     else
       game_article.external_id = api_article.id
-      game_article.author = api_article.author
-      game_article.summary = api_article.summary
-      game_article.title = api_article.title
-      game_article.img = api_article.img
-      game_article.url = api_article.url
-      game_article.publish_at = api_article.published_at
+      game_article.author      = api_article.author
+      game_article.summary     = api_article.summary
+      game_article.title       = api_article.title
+      game_article.img         = api_article.img
+      game_article.url         = api_article.url
+      game_article.publish_at  = api_article.published_at
       game_article.news_source = api_article.news_source
       game_article.save
       puts '---DEBUG- ARTICLE SAVE ERRORS'
@@ -97,47 +97,54 @@ class GameArticle < ApplicationRecord
   #Gamespot feed title,link,pubDate,description
   #
   def rssFeed(source)
-      rss_feeds = nil
-      #Depend on the request source. Getting corresponding newsfeed
-      case source
-        when 'gamespot'
-          rss_feeds = RSS::Parser.parse(open(GAMESPOT_NEWS_RSS_FEED).read, false).items
-        when 'ign'
-          rss_feeds = RSS::Parser.parse(open(IGN_NEWS_RSS).read, false).items
-        when 'gematsu'
-          rss_feeds = RSS::Parser.parse(open(GEMATSU_RSS).read, false).items
-        when 'destructoid'
-          rss_feeds = RSS::Parser.parse(open(DESTRUCTOID_RSS).read, false).items
-        when 'pushsquare'
-          rss_feeds = RSS::Parser.parse(open(PUSHSQUARE_RSS).read, false).items
-      end
-      article_list = []
-      #Processing feeds in readable format. 
-      rss_feeds.each do |r|
-        #Used Nokogiri to parse the content 
-        parsed_html =  Nokogiri::HTML.parse(r.description)
-        #Get text content
-        text = parsed_html.xpath '//p/text()'
-        #Get feature image to article
-        if parsed_html.css('img').first.present?
-          feature_img = parsed_html.css('img').first['src']
-        else
-          feature_img = fetchImageFromURI(r.link)
+    Rails.cache.fetch("#{source}/newsfeed", expires_in: 12.hours) do
+        rss_feeds = nil
+        #Depend on the request source. Getting corresponding newsfeed
+        case source
+          when 'gamespot'
+            rss_feeds = RSS::Parser.parse(open(GAMESPOT_NEWS_RSS_FEED).read, false).items
+          when 'ign'
+            rss_feeds = RSS::Parser.parse(open(IGN_NEWS_RSS).read, false).items
+          when 'gematsu'
+            rss_feeds = RSS::Parser.parse(open(GEMATSU_RSS).read, false).items
+          when 'destructoid'
+            rss_feeds = RSS::Parser.parse(open(DESTRUCTOID_RSS).read, false).items
+          when 'pushsquare'
+            rss_feeds = RSS::Parser.parse(open(PUSHSQUARE_RSS).read, false).items
         end
-        #feature_img = parsed_html.css('img').first['src'] if parsed_html.css('img').first.present?
-        #Saved article to hash and add to array
-        article = {:title =>r.title,:url=>r.link,:source =>nil, 
-        :publish_at=>r.pubDate,:summary=>text.to_s,:img=>feature_img}
-        article_list << article
-      end
+        article_list = []
+        #Processing feeds in readable format. 
+        rss_feeds.each do |r|
+          #Used Nokogiri to parse the content 
+          parsed_html   =  Nokogiri::HTML.parse(r.description)
+          #Get text content
+          text = parsed_html.xpath '//p/text()'
+          #Get feature image to article
+          if parsed_html.css('img').first.present?
+            feature_img = parsed_html.css('img').first['src']
+          else
+            feature_img = fetchImageFromURI(r.link,source)
+          end
+          #feature_img = parsed_html.css('img').first['src'] if parsed_html.css('img').first.present?
+          #Saved article to hash and add to array
+          article = {:title =>r.title,:url=>r.link,:source =>nil, 
+          :publish_at=>r.pubDate,:summary=>text.to_s,:img=>feature_img}
+          article_list << article
+        end
       
-    article_list
+        article_list
+      end
   end
   
   private 
-    def fetchImageFromURI(url)
+    def fetchImageFromURI(url,source)
       doc = Nokogiri::HTML(open(url))
-      doc.css('img')[1]['src'] if doc.css('img')[1].present?
+      case source
+        when 'gematsu'
+          doc.css('img')[1]['src'] if doc.css('img')[1].present?
+        when 'pushsquare'
+          doc.css('img')[4]['src'] if doc.css('img')[4].present?
+      end
     end
   
 end

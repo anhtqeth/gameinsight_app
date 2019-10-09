@@ -9,7 +9,7 @@
 </div>
 
 <!--<div class="jumbotron">-->
-  <h5 class="display-4">Around the Gaming World (V2)</h5>
+  <h5>| Around the Gaming World </h5>
   <hr class="my-4">
    <div class="container">
       <div class="row">
@@ -22,6 +22,7 @@
           <div class="card-body">
             <h5 class="card-title"><%=arc[:title]%></h5>
             <p class="card-text"><%= truncate(arc[:summary], length: 200)%></p>
+            <hr>
             <%= link_to("View More", arc[:url],target: "_blank", rel: "nofollow")%>
             <p class="card-text"><small class="text-muted">Last updated <%= time_ago_in_words(arc[:publish_at]) %> ago</small></p>
           </div>
