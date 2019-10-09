@@ -9,26 +9,17 @@ Rails.application.routes.draw do
 
   scope "(:locale)", locale: /en|vi/ do
     root 'static_pages#home'
-    get '/news', to: 'static_pages#newsfeeds'
+    get  '/news', to: 'static_pages#newsfeeds'
     get  '/help',    to: 'static_pages#help'
     get  '/about',   to: 'static_pages#about'
     get  '/contact', to: 'static_pages#contact'
-    
-    get  '/signup',  to: 'users#new'
-  
-  #GamesController
-  #get '/games/:id', to: 'games#show', as: 'game'
-  
-    #get '/games/(/:id)(/:external_id)', to: 'games#show'
-  
-  
-    get 'games/newreleases', to: 'games#releases'
-    
-    get 'games/:id/guides', to: 'games#guides'
-  
-    get '/genres/', to: 'game_genre#show', as: 'game_genres'
-  
     get '/hot', to: 'static_pages#hot'
+
+    get  '/signup',  to: 'users#new'
+
+    get 'games/newreleases', to: 'games#releases'
+    get 'games/:id/guides', to: 'games#guides'
+    get '/genres/', to: 'game_genre#show', as: 'game_genres'
     get '/discover', to: 'games#discover'
   
     #PlatformsController

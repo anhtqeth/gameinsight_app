@@ -22,6 +22,7 @@ gem 'jbuilder',     '2.7.0'
 #Database
 gem 'annotate', '~> 3.0', '>= 3.0.2' #Annotation on model
 gem 'pg_search', '~> 2.3'
+gem 'pg'
 
 #TEST
 gem 'rspec', '~> 3.8'
@@ -29,9 +30,11 @@ gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
 gem 'capybara', '~> 3.22'
 
 
-#CMS
+#CMS & Text processing
 gem 'contentful'
 gem 'rich_text_renderer', '~> 0.2.2'
+gem 'nokogiri'
+
 
 gem 'rails-i18n'
 gem 'i18n', '~> 1.6'
@@ -48,7 +51,7 @@ gem 'sitemap_generator', '~> 6.0', '>= 6.0.2' #Sitemap generator
 gem 'devise'
 
 group :development, :test do
-  gem 'pg', '0.18.4'
+  
   gem 'byebug',  '9.0.6', platform: :mri
 end
 
@@ -68,7 +71,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg', '0.18.4'
   gem 'fog', '1.42'
 end
 
