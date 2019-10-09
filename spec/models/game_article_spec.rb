@@ -81,8 +81,8 @@ RSpec.describe GameArticle, type: :model do
   
   it "fetch news from rss feed" do 
     gs_news = subject.rssFeed('gamespot')
-    ign_news = subject.rssFeed('ign')
-    gematsu_news = subject.rssFeed('gematsu')
+    #ign_news = subject.rssFeed('ign')
+    #gematsu_news = subject.rssFeed('gematsu')
     puts 'NEWS RSS FEED RESULT'
     puts gs_news.count
     puts gs_news.first

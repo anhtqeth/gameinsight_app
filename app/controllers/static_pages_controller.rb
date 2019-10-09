@@ -60,5 +60,8 @@ class StaticPagesController < ApplicationController
     
     render 'news_feed'
   end
+  
+  #doc.xpath '//p/text()'
+  #doc.search('p').first.xpath '//p/text()'
 
 end

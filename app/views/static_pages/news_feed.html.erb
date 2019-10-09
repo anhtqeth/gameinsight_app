@@ -8,28 +8,33 @@
   </p>
 </div>
 
-<div class="jumbotron">
-  <h5 class="display-4">Around the Gaming World</h5>
+<!--<div class="jumbotron">-->
+  <h5 class="display-4">Around the Gaming World (V2)</h5>
   <hr class="my-4">
-  <%@rss_feeds[1..10].each do |arc|%>
-    <div class="card shadow p-3 mb-3" style="max-width: 540px;">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-        <img src="..." class="card-img" alt="...">
-        </div>
-        <div class="col-md-8">
+   <div class="container">
+      <div class="row">
+      <%@rss_feeds.each do |arc|%>  
+      <div class="col-md-4">
+          <div class="card shadow p-3 mb-3">
+          <% unless arc[:img].nil?%>
+            <%= image_tag(arc[:img], class: "card-img-top")%>
+          <%end%>
           <div class="card-body">
             <h5 class="card-title"><%=arc[:title]%></h5>
+            <p class="card-text"><%= truncate(arc[:summary], length: 200)%></p>
             <%= link_to("View More", arc[:url],target: "_blank", rel: "nofollow")%>
             <p class="card-text"><small class="text-muted">Last updated <%= time_ago_in_words(arc[:publish_at]) %> ago</small></p>
           </div>
         </div>
       </div>
-    </div>
-  <%end%>
-  <h5>Description</h5>
+      <%end%>
+  </div>
+</div>
+ 
+<!--</div>-->
+
+<h5>Description</h5>
   <hr>
   <div>
   <%= raw @rss_feeds.second[:description]%>
   </div>
-</div>
