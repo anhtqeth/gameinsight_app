@@ -1,5 +1,4 @@
 class StaticPagesController < ApplicationController
-  include GamesApiModule
   #Content on home page
   def home
     game = Game.new
@@ -53,6 +52,13 @@ class StaticPagesController < ApplicationController
 
   def contact
   
+  end
+  
+  def newsfeeds
+    arc = GameArticle.new
+    @rss_feeds = arc.rssFeed('gamespot')
+    
+    render 'news_feed'
   end
 
 end

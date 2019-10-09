@@ -19,5 +19,23 @@ include ApplicationHelper
     end
   end
   
+  #<div class="shadow p-3 mb-5 bg-white rounded">Regular shadow</div>
+  #Used to render rssfeed for an article list
+  def rssFeedrenderer(rss_data)
+    if data_verify(data)
+      rss_data.each do |arc|
+        html = []
+        
+        content_tag(:div,)
+        
+        
+      end
+      
+    else
+      
+    end
+    
+  end
+  
   
 end

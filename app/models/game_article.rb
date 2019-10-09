@@ -46,8 +46,6 @@ class GameArticle < ApplicationRecord
   #   self.publish_at.to_time.to_i
   # end
   
-  
-  
   #TODO Add uniqueness constraint
   def fetchAPIData(id)
     OpenStruct.new(gameArticleRequest(id))
@@ -99,25 +97,23 @@ class GameArticle < ApplicationRecord
   #IGN Feed
   
   def rssFeed(source)
-    rss = nil
-    case source
-      when 'gamespot'
-        rss = RSS::Parser.parse(open(GAMESPOT_NEWS_RSS_FEED).read, false).items
-      when 'ign'
-        rss = RSS::Parser.parse(open(IGN_NEWS_RSS).read, false).items
-      when 'gematsu'
-        rss = RSS::Parser.parse(open(GEMATSU_RSS).read, false).items
-    end
-       #arc = GameArticle.new
-        #arc.rssFeed('gamespot')
-    puts 'NEWS RSS FEED RESULT'
-    puts rss.count
-    puts rss.first
-    rss.each do |result|
-    # result = { title: result.title, date: result.pubDate, link: result.link, description: result.description }
-    # rss_results.push(result)
-    end
-    rss
+      rss_feeds = nil
+      case source
+        when 'gamespot'
+          rss_feeds = RSS::Parser.parse(open(GAMESPOT_NEWS_RSS_FEED).read, false).items
+        when 'ign'
+          rss_feeds = RSS::Parser.parse(open(IGN_NEWS_RSS).read, false).items
+        when 'gematsu'
+          rss_feeds = RSS::Parser.parse(open(GEMATSU_RSS).read, false).items
+      end
+      article_list = []
+      
+      
+      rss_feeds.each do |r|
+        article = {:title =>r.title,:url=>r.link,:source =>nil, :publish_at=>r.pubDate,:description=>r.description}
+        article_list << article
+      end
+    article_list
   end
   
 end

@@ -39,10 +39,10 @@ RSpec.describe GameArticle, type: :model do
     expect(subject).to_not be_valid
   end
   
-  it "is not valid without a author" do
-    subject.author = nil
-    expect(subject).to_not be_valid
-  end
+  # it "is not valid without a author" do
+  #   subject.author = nil
+  #   expect(subject).to_not be_valid
+  # end
   
   
   it "is not valid without an url" do
@@ -71,12 +71,25 @@ RSpec.describe GameArticle, type: :model do
   #   expect(api_article).not_to be_nil
   # end
  
-  it "can fetch latest news from db" do
-    time = (Time.current - 6.days).to_time.to_i
-    news_feed = subject.fetchLatestNews(time)
-    puts 'NEWS FEEDS'
-    puts news_feed
-    expect(news_feed).not_to be_empty
+  # it "can fetch latest news from db" do
+  #   time = (Time.current - 6.days).to_time.to_i
+  #   news_feed = subject.fetchLatestNews(time)
+  #   puts 'NEWS FEEDS'
+  #   puts news_feed
+  #   expect(news_feed).not_to be_empty
+  # end
+  
+  it "fetch news from rss feed" do 
+    gs_news = subject.rssFeed('gamespot')
+    ign_news = subject.rssFeed('ign')
+    gematsu_news = subject.rssFeed('gematsu')
+    puts 'NEWS RSS FEED RESULT'
+    puts gs_news.count
+    puts gs_news.first
+    
+    expect(gs_news).not_to be_empty
   end
+  
+  
 
 end
