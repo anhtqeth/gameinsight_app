@@ -60,13 +60,6 @@ RSpec.describe GameArticle, type: :model do
     expect(subject).to_not be_valid
   end
   
-  # it "can fetch latest News from API" do 
-  #   time = (Time.current - 6.days).to_time.to_i
-  #   game_article = subject.fetchAPILatestNews(time)
-  #   expect(game_article).not_to be_nil
-  #   expect(game_article.first[:created_at]).to be >  time
-  # end
-  
   # it "can covert string to time" do
   #   time = "Tuesday-02-Jul-2019-00:00"
   #   expect(subject.timeCoversion(time)).to be_kind_of(DateTime)
@@ -77,13 +70,7 @@ RSpec.describe GameArticle, type: :model do
   #   puts api_article
   #   expect(api_article).not_to be_nil
   # end
-  
-  # it "can save lates news Data" do
-  #   before_count = GameArticle.count
-  #   subject.saveAPIData(subject.fetchAPIData(781138))
-  #   expect(GameArticle.count).not_to eq(before_count)
-  # end 
-  
+ 
   it "can fetch latest news from db" do
     time = (Time.current - 6.days).to_time.to_i
     news_feed = subject.fetchLatestNews(time)
@@ -91,10 +78,5 @@ RSpec.describe GameArticle, type: :model do
     puts news_feed
     expect(news_feed).not_to be_empty
   end
-  
-  # it "can format News Souce name" do
-  #   news_source_list = ["gamespot","siliconera","vgr","kotaku","gamesindustry","twinfinite"]
-    
-  # end
-    
+
 end

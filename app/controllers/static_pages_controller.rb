@@ -11,6 +11,7 @@ class StaticPagesController < ApplicationController
     #TODO- This is a compensation for the lack of newsfeed in 0.9 will be removed
     @hotgames = game.fetchPopularUpcomingRelease
     
+    #TODO - Implemented your own
     #Currently set in controller, better if user can pick this from the view. Will change in 0.3
     # time = (Time.current - 6.days).to_time.to_i
     # game_article = GameArticle.new

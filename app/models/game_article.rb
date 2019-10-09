@@ -97,7 +97,7 @@ class GameArticle < ApplicationRecord
     
   #Gamespot feed title,link,pubDate,description
   #IGN Feed
-    
+  
   def rssFeed(source)
     rss = nil
     case source
