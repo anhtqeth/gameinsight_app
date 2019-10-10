@@ -1,25 +1,24 @@
 <% if @game_screenshots.empty? %>
-<div id="game-feature-img"  class="card bg-dark text-white">
-  <div class="card-img-overlay" id="game-detail-feature">
-    <div class="row">
-      <div class="col-md-auto">
-    
-      </div>  
-      <div class="col">  
-         <h1 style="float:right;"><%=@game_details[:name] %></h1>
+</div> 
+  <div id="game-feature-img"  class="card bg-dark text-white">
+    <div class="card-img-overlay" id="game-detail-feature">
+      <div class="row">
+        <div class="col-md-auto">
+      
+        </div>  
+        <div class="col">  
+           <h1 style="float:right;"><%=@game_details[:name] %></h1>
+        </div>
       </div>
     </div>
+  </div>  
   </div>
-</div>  
-</div>
+<div class="container">
 <% else%>
+</div>
 <div id="game-feature-img"  class="card bg-dark text-white">
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
-    <ol class="carousel-indicators">
-      <% @game_screenshots.each do |img| %>
-      <li data-target="#carouselExampleIndicators" data-slide-to=<% img %> </li>
-      <% end %>
-    </ol>
+   
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img id="img-slide" src=<%= @game_screenshots.first.url %> alt="First slide">
@@ -59,4 +58,5 @@
     </div>
   </div>
 </div>  
+<div class="container">
 <% end%>

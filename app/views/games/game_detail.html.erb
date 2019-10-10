@@ -1,28 +1,10 @@
 <% provide(:title, @game_details.name) %>
-<div>
-  <%= render "gamefeature" %>
-</div>
+<%= render "gamefeature" %>
 
-<div class="container" >
-  <br>
-  <%= render "gamecards" %>
-</div>
-<br>
+<%= render "gamecards" %>
 
-<br>
-<div class="container" >  
-   <%= render "gamevideocarousel"%>
-</div>
-<br>
-<div class="container" >
-  <%= render "gamecardcarousel"%>
-</div>
-<br>
-<div class="container" >
-    <%= render "gamenewsfeedcarousel"%>
-</div>
- <br>
- 
-<div class = "container">
-  
-</div>
+<%= render "gamevideocarousel"%>
+
+<%= render "gamecardcarousel"%>
+
+<%= render "gamenewsfeedcarousel"%>
