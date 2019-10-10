@@ -25,12 +25,11 @@ include ApplicationHelper
     if data_verify(rss_data)
       html = []
       rss_data.each do |arc|
-        
         html << content_tag(:div,cardRenderer(arc), class:"col-md-4")
       end
       content_tag(:div,content_tag(:div,safe_join(html),class:"row"),class: "container")
     else
-      
+      'Loading'
     end
     
   end

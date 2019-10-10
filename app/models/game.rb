@@ -256,7 +256,6 @@ class Game < ApplicationRecord
      company.saveAPIData(id)
      game_article_collection = GameArticleCollection.new
      game_article_collection.saveAPIData(id)
-     
      FetchGamesCollectionJob.perform_later(id)
      #company.saveAPIData(id,'Developer')
   end
