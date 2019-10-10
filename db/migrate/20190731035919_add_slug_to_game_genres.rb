@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddSlugToGameGenres < ActiveRecord::Migration[5.2]
   def change
     add_column :game_genres, :slug, :string

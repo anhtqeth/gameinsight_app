@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 rails_root = Rails.root || File.dirname(__FILE__) + '/../..'
 rails_env = Rails.env || 'development'
 
@@ -12,9 +14,6 @@ end
 Sidekiq.configure_client do |config|
   config.redis = { url: "redis://#{redis_config[:host]}:#{redis_config[:port]}/12" }
 end
-
-
-
 
 # Old configuration in dev
 # Sidekiq.configure_server do |config|
