@@ -5,7 +5,7 @@
           <div class="carousel-item active">
             <div class="card-deck">
                 <% @upcoming_popular_games[0..3].each do |gamecard| %>
-                <div class="card" style="width: 18rem;">
+                <div class="card shadow p-3" style="width: 18rem;">
                   <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
                   <div class="card-body">
                     <!--<p class="card-title center"><= gamecard[:name] %></p>-->
@@ -18,7 +18,7 @@
           <div class="carousel-item">
             <div class="card-deck">
                 <% @upcoming_popular_games[4..-1].each do |gamecard| %>
-                <div class="card" style="width: 18rem;">
+                <div class="card shadow p-3" style="width: 18rem;">
                   <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
                   <div class="card-body">
                     <!--<p class="card-title center"><= gamecard[:name] %></p>-->

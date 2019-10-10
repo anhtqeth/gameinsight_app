@@ -83,9 +83,7 @@ module GamesHelper
     end
   end
   
-  # <a href="#" class="badge badge-primary">Primary</a>
   #TODO Add href to game genres url
-  
   def getMediaUrl(model,data_type)
     media = []
     model.each do |game|
@@ -232,8 +230,6 @@ module GamesHelper
     card_text << content_tag(:div,safe_join(card_body_content),class: "card-body")
     safe_join(card_text)
   end
-  
-  
   
   #Carousel class for handling Carousel
   #There will be a check for media type (img/videos) 

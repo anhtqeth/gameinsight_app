@@ -27,8 +27,6 @@ Rails.application.routes.draw do
   
     #??Controller
     get '/reviews', to: 'reviews#show'
-    
-   
     get '/search/', to: 'games#find', as: 'search'
     end
     resources :users
