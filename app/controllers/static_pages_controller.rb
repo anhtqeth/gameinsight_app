@@ -56,15 +56,13 @@ class StaticPagesController < ApplicationController
   
   def newsfeeds
     arc = GameArticle.new
+    # @gematsu_rss_feeds = FetchNewsFeedJob.perform_later('gematsu')
+    # @gamespot_rss_feeds = FetchNewsFeedJob.perform_later('gamespot')
+    # @pushsquare_rss_feeds = FetchNewsFeedJob.perform_later('pushsquare')
     @gematsu_rss_feeds = arc.rssFeed('gematsu')
     @gamespot_rss_feeds = arc.rssFeed('gamespot')
-    #@rss_feeds = arc.rssFeed('destructoid')
-    @pushsquare_rss_feeds = arc.rssFeed('pushsquare') #Issue with feature img
+    @pushsquare_rss_feeds = arc.rssFeed('pushsquare') 
     
     render 'news_feed'
   end
-  
-  #doc.xpath '//p/text()'
-  #doc.search('p').first.xpath '//p/text()'
-
 end

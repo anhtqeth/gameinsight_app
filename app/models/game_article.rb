@@ -131,7 +131,7 @@ class GameArticle < ApplicationRecord
           :publish_at=>r.pubDate,:summary=>text.to_s,:img=>feature_img}
           article_list << article
         end
-      
+        
         article_list
       end
   end
