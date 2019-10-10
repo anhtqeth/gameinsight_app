@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: posts
@@ -18,15 +20,9 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  
-   it "can fetch entry from contenful" do
+  it 'can fetch entry from contenful' do
     arc = Post.new
     result = arc.fetchCMSPost('10PCttqTZMbCMna6rBGsvb')
     expect(result).not_to be_nil
-   end
-  
-  
-  
-  
+  end
 end
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -17,17 +19,15 @@ Rails.application.configure do
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
-    #config.cache_store = :memory_store
-    config.cache_store = :file_store, "tmp/game/cache"
+    # config.cache_store = :memory_store
+    config.cache_store = :file_store, 'tmp/game/cache'
     config.public_file_server.headers = {
       'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
-  else
-  
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
-  #config.active_storage.service = :local
+  # config.active_storage.service = :local
   config.action_mailer.default_url_options = { host: 'https://5e208e08277b4deebdcde96ab8626e60.vfs.cloud9.us-west-2.amazonaws.com/', port: 3000 }
 
   # Don't care if the mailer can't send.
@@ -42,7 +42,7 @@ Rails.application.configure do
   config.active_record.migration_error = :page_load
 
   # Highlight code that triggered database queries in logs.
-  #config.active_record.verbose_query_logs = true
+  # config.active_record.verbose_query_logs = true
 
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large

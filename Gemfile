@@ -1,73 +1,72 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
-gem 'rails',        '5.2'
-#gem 'bootstrap-sass', '3.4.1'
+gem 'rails', '5.2'
+# gem 'bootstrap-sass', '3.4.1'
 gem 'bootstrap', '~> 4.3.1'
 
-#Encryption
-gem 'bcrypt',       '3.1.13'
-gem 'faker', '~> 2.5'
-gem 'carrierwave',             '1.2.2'
-gem 'mini_magick',             '4.7.0'
-gem 'will_paginate',           '3.1.6'
+# Encryption
+gem 'bcrypt', '3.1.13'
 gem 'bootstrap-will_paginate', '1.0.0'
-gem 'puma',         '3.9.1'
-gem 'sass-rails',   '5.0.6'
-gem 'uglifier',     '3.2.0'
+gem 'carrierwave', '1.2.2'
 gem 'coffee-rails', '4.2.2'
-gem 'jquery-rails', '4.3.1'
-gem 'turbolinks',   '5.0.1'
+gem 'faker', '~> 2.5'
 gem 'jbuilder',     '2.7.0'
+gem 'jquery-rails', '4.3.1'
+gem 'mini_magick', '4.7.0'
+gem 'puma', '3.9.1'
+gem 'sass-rails', '5.0.6'
+gem 'turbolinks', '5.0.1'
+gem 'uglifier', '3.2.0'
+gem 'will_paginate', '3.1.6'
 
-#Database
-gem 'annotate', '~> 3.0', '>= 3.0.2' #Annotation on model
-gem 'pg_search', '~> 2.3'
+# Database
+gem 'annotate', '~> 3.0', '>= 3.0.2' # Annotation on model
 gem 'pg'
+gem 'pg_search', '~> 2.3'
 
-#TEST
+# TEST
+gem 'capybara', '~> 3.22'
 gem 'rspec', '~> 3.8'
 gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
-gem 'capybara', '~> 3.22'
 
-
-#CMS & Text processing
+# CMS & Text processing
 gem 'contentful'
-gem 'rich_text_renderer', '~> 0.2.2'
 gem 'nokogiri'
+gem 'rich_text_renderer', '~> 0.2.2'
 
-
-gem 'rails-i18n'
 gem 'i18n', '~> 1.6'
+gem 'rails-i18n'
 
-
-#Background JOB
+# Background JOB
 gem 'sidekiq', '~> 5.2.7'
 
 # SEO
-gem 'friendly_id', '~> 5.2', '>= 5.2.5' #Slug
-gem 'sitemap_generator', '~> 6.0', '>= 6.0.2' #Sitemap generator
+gem 'friendly_id', '~> 5.2', '>= 5.2.5' # Slug
+gem 'sitemap_generator', '~> 6.0', '>= 6.0.2' # Sitemap generator
 
-#Authentication
+# Authentication
 gem 'devise'
 
 group :development, :test do
-  
-  gem 'byebug',  '9.0.6', platform: :mri
+  gem 'byebug', '9.0.6', platform: :mri
 end
 
 group :development do
-  gem 'web-console',           '3.5.1'
-  gem 'listen',                '3.1.5'
+  gem 'listen', '3.1.5'
+  gem 'rubocop'
   gem 'spring',                '2.0.2'
   gem 'spring-watcher-listen', '2.0.1'
+  gem 'web-console',           '3.5.1'
 end
 
 group :test do
-  gem 'rails-controller-testing', '1.0.2'
-  gem 'minitest',                 '5.10.3'
-  gem 'minitest-reporters',       '1.1.14'
   gem 'guard',                    '2.13.0'
   gem 'guard-minitest',           '2.4.4'
+  gem 'minitest',                 '5.10.3'
+  gem 'minitest-reporters',       '1.1.14'
+  gem 'rails-controller-testing', '1.0.2'
 end
 
 group :production do
@@ -75,4 +74,4 @@ group :production do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-#gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

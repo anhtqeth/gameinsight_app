@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -14,14 +16,13 @@ module EthuGamedbApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
     config.eager_load_paths << Rails.root.join('lib')
-   
+
     config.i18n.load_path += Dir["#{Rails.root}/plugins/*/config/locales/*.yml"]
-    config.active_job.queue_adapter = :sidekiq 
+    config.active_job.queue_adapter = :sidekiq
   end
 end
 
-
-#TODO - Use these code snippet from the pro
+# TODO: - Use these code snippet from the pro
 # # Configure sensitive parameters which will be filtered from the log file.
 #     config.filter_parameters += [
 #       :password,

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateGameReleaseDates < ActiveRecord::Migration[5.2]
   def change
     create_table :game_release_dates do |t|
@@ -12,6 +14,4 @@ class CreateGameReleaseDates < ActiveRecord::Migration[5.2]
       t.timestamps
     end
   end
-  
-  
 end
