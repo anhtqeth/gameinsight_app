@@ -1,61 +1,59 @@
 <div class ="header">
-<nav id="header-menu" class="navbar navbar-dark bg-dark fixed-top">
-  <!--TODO - Styling the drop down menu for logged in user again-->
-
-  <p class="navbar-brand"><button type="button" id="sidebarCollapse" class="btn btn-outline-warning">
-    <i class="fas fa-bars"></i>
-  </button>
-  EthuGameDB</p>
- <!--Fixing header menu-->
-  <div class="btn-group">
-    <button type="button" id ="header-menu-button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Language<i class="fas fa-globe-asia"></i>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <!--   <p class="navbar-brand"><button type="button" id="sidebarCollapse" class="btn btn-outline-warning">-->
+  <!--    <i class="fas fa-bars"></i>-->
+  <!--  </button>-->
+  <!--EthuGameDB</p>-->
+    <p class="navbar-brand" href="#">EthuGameDB |</p>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="dropdown-menu">
-    <%= link_to 'English', root_path(locale: :en), class:"dropdown-item"%>
-    <%= link_to 'Tiếng Việt', root_path(locale: :vi), class:"dropdown-item" %>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href=<%=root_path %>><i class="fas fa-home"></i>
+          Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="far fa-newspaper"></i>
+          News</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fas fa-gamepad"></i>
+          Discover</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fab fa-hotjar fa-lg"></i>
+          Hot</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fas fa-hourglass-end"></i>
+          Count Down</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fab fa-steam fa-lg"></i>
+          PC</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fab fa-xbox fa-lg"></i>
+          Xbox One</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fab fa-playstation fa-lg"></i>
+          PlayStation 4</a>
+        </li>
+      </ul>
+      
     </div>
-    <% if logged_in? %>
-    <div class="btn-group">
-      <button type="button" id ="header-menu-button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-      Account<i class="fas fa-user-circle"></i></button>
-      <div class="dropdown-menu">
-          <%= link_to "Profile", current_user, class:"dropdown-item"%>
-          <%= link_to "Settings", '#' ,class:"dropdown-item"%>
-          <div class="dropdown-divider"></div>
-          <%= link_to "Log out", logout_path, method: :delete,class:"dropdown-item"%>
-      </div>
-      </div>
-    <% if current_user.admin? %>
-      <i class="fas fa-tools"></i>
-      <div class="btn-group">
-        <button type="button" id ="header-menu-button"  class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Admin<i class="fas fa-cogs"></i>
-      </button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href=<%=games_path %>>Games <span class="badge badge-warning badge-pill"><%=Game.count%></span> </a>
-        <a class="dropdown-item" href="#">Platform <span class="badge badge-warning badge-pill"><%=Platform.count%></span> </a>
-        <a class="dropdown-item" href="#">Genres<span class="badge badge-warning badge-pill"><%=GameGenre.count%></span> </a>
-        <a class="dropdown-item" href="#">Articles <span class="badge badge-warning badge-pill"><%=GameArticle.count%></span> </a>
-        <a class="dropdown-item" href="#">Articles <span class="badge badge-warning badge-pill"><%=InvolvedCompany.count%></span> </a>
-      </div>
-      </div>
-    <%else%>
+     <%= form_tag(search_path, :method => "get",   
+      class: 'form-inline', id: 'search-bar') do %>  
+      <%= search_field_tag :name, params[:name], placeholder: " " ,class:"form-control mr-sm-2", id: "custom-search"%>  
+      <i class="fas fa-search fa-2x" id="header-search-icon"></i>
+        <!--<= button_tag "Search", :class => 'btn btn-outline-warning',:name => nil%>  -->
+      <% end %>
     
-    <%end%>
-        <!--<li><= link_to "Users", '#' %></li>-->
-    <% else %>
-      <%= link_to "Log in", login_path, class:"btn btn-warning", id:"header-menu-button"%>
-    <% end %>
-    
-  </div>
-
-  <%= form_tag(search_path, :method => "get",   
-    class: 'form-inline', id: 'search-bar') do %>  
-    <%= search_field_tag :name, params[:name], placeholder: " " ,class:"form-control mr-sm-2", id: "custom-search"%>  
-    <i class="fas fa-search fa-2x" id="header-search-icon"></i>
-      <!--<= button_tag "Search", :class => 'btn btn-outline-warning',:name => nil%>  -->
-  <% end %>
-  
 </nav>
 </div>

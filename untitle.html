@@ -1,12 +1,49 @@
-<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-copy"></i>Pages</a>
-<ul class="collapse list-unstyled" id="pageSubmenu">
-  <li>
-    <a href="#">Page 1</a>
-  </li>
-  <li>
-    <a href="#">Page 2</a>
-  </li>
-  <li>
-    <a href="#">Page 3</a>
-  </li>
-</ul>
+ <div class="btn-group">
+    <button type="button" id ="header-menu-button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Language<i class="fas fa-globe-asia"></i>
+    </button>
+    <div class="dropdown-menu">
+    <%= link_to 'English', root_path(locale: :en), class:"dropdown-item"%>
+    <%= link_to 'Tiếng Việt', root_path(locale: :vi), class:"dropdown-item" %>
+    </div>
+    <% if logged_in? %>
+    <div class="btn-group">
+      <button type="button" id ="header-menu-button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      Account<i class="fas fa-user-circle"></i></button>
+      <div class="dropdown-menu">
+          <%= link_to "Profile", current_user, class:"dropdown-item"%>
+          <%= link_to "Settings", '#' ,class:"dropdown-item"%>
+          <div class="dropdown-divider"></div>
+          <%= link_to "Log out", logout_path, method: :delete,class:"dropdown-item"%>
+      </div>
+      </div>
+    <% if current_user.admin? %>
+      <i class="fas fa-tools"></i>
+      <div class="btn-group">
+        <button type="button" id ="header-menu-button"  class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Admin<i class="fas fa-cogs"></i>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href=<%=games_path %>>Games <span class="badge badge-warning badge-pill"><%=Game.count%></span> </a>
+        <a class="dropdown-item" href="#">Platform <span class="badge badge-warning badge-pill"><%=Platform.count%></span> </a>
+        <a class="dropdown-item" href="#">Genres<span class="badge badge-warning badge-pill"><%=GameGenre.count%></span> </a>
+        <a class="dropdown-item" href="#">Articles <span class="badge badge-warning badge-pill"><%=GameArticle.count%></span> </a>
+        <a class="dropdown-item" href="#">Articles <span class="badge badge-warning badge-pill"><%=InvolvedCompany.count%></span> </a>
+      </div>
+      </div>
+    <%else%>
+    
+    <%end%>
+        <!--<li><= link_to "Users", '#' %></li>-->
+    <% else %>
+      <%= link_to "Log in", login_path, class:"btn btn-warning", id:"header-menu-button"%>
+    <% end %>
+    
+  </div>
+
+  <%= form_tag(search_path, :method => "get",   
+    class: 'form-inline', id: 'search-bar') do %>  
+    <%= search_field_tag :name, params[:name], placeholder: " " ,class:"form-control mr-sm-2", id: "custom-search"%>  
+    <i class="fas fa-search fa-2x" id="header-search-icon"></i>
+      <!--<= button_tag "Search", :class => 'btn btn-outline-warning',:name => nil%>  -->
+  <% end %>
