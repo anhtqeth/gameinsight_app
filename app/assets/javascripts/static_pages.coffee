@@ -25,9 +25,13 @@ $(document).on 'ajax:complete ajaxComplete page:change', (event) ->
   
 $(document).on 'turbolinks:load', ->
   $('#sidebarCollapse').on 'click', ->
-    $('#sidebar').toggleClass 'active'
+     if ( $('#sidebar').css('visibility') == 'hidden' )
+        $('#sidebar').css('visibility','visible')
+        #$('#sidebar').toggleClass 'active'
+     else
+        $('#sidebar').css('visibility','hidden')
     return
-  return
+return
 
   
 # $(document).on 'turbolinks:load', ->

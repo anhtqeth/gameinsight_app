@@ -60,7 +60,7 @@ module GamesApiModule
   USERKEY = '049d27f7325bcb67768a30d5140fefb7' # NEW KEY
   # DeviJack ec80dc20b6c9b360aab19868b02ed17e #anhtruong 37c25b7c4526b3b1093f47ebe8416503
   # anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
-
+  
   def buildRequest(uri)
     url = URI(uri)
     request = Net::HTTP::Get.new(url, 'user-key' => USERKEY)
@@ -68,6 +68,15 @@ module GamesApiModule
     http.use_ssl = true
     request
   end
+  
+  # def dupString(string)
+  #   t = string.split''
+  #   t.each_with_index do |x,i|
+  #     if x == t[i+1]
+  #       return x
+  #     end
+  #   end
+  # end
 
   def gamesRequest(game_id)
     puts 'Called to Game Request with parameter: ' << game_id.to_s

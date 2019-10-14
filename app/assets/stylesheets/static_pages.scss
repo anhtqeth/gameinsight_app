@@ -125,13 +125,12 @@ footer li {
 //   //margin-left: 15px;
 // }
 
-.leftSidebar {
-  position: fixed;
-  padding-left: 15px;
-  left: 0;
-  height:100%;
-  
-}
+// .leftSidebar {
+//   position: fixed;
+//   padding-left: 15px;
+//   left: 0;
+//   height:100%;
+// }
 
 .rightSidebar {
   float: right;
@@ -203,12 +202,13 @@ a:focus {
 
 #sidebar {
     // width: 250px;
-    min-width: 80px;
-    max-width: 80px;
-
+    // min-width: 80px;
+    // max-width: 80px;
+    min-width: 200px;
+    max-width: 200px;
+    font-size: 1.1em;
+    text-align: left;
     padding: 20px 10px;
-    text-align: center;
-    font-size: 0.9em;
     position: fixed;
     top: 0;
     left: 0px;
@@ -216,28 +216,24 @@ a:focus {
     z-index: 999;
     background: #343A40;
     color: #fff;
-    // transition: all 0.3s;
+    visibility: hidden;
     // overflow-y: scroll;
     // box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
-/*// #sidebar.active {
+
+// #sidebar.active {
 //     left: 0;
-// }*/
+//     min-width: 200px;
+//     max-width: 200px;
+//     font-size: 1.1em;
+//     text-align: left;
+//     transition: all 0.3s;
+// }
 
-#sidebar.active {
-    
-    left: 0;
-    min-width: 250px;
-    max-width: 250px;
-    font-size: 1.1em;
-    text-align: left;
-    transition: all 0.3s;
-}
-
-#sidebar.active ul li a  {
-    text-align: left;
-    font-size: 1.1em;
-}
+// #sidebar.active ul li a  {
+//     text-align: left;
+//     font-size: 1.1em;
+// }
 
 
 .overlay {

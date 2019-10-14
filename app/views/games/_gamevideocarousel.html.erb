@@ -1,10 +1,10 @@
-
-<div class="card shadow p-3">
+<% if @game_videos.empty? || @game_videos.nil? %>
+    <p>We don't have any video for  <%= @game_details[:name] %> yet! Consider add one. </p>
+<%else%>
+  <!--</div>-->
+  <div id="game-feature-video">
   <span><h4>| <%= @game_details[:name] %> Trailers & Gameplay</h4></span>
   <hr id="new-content-line">
-  <% if @game_videos.empty? || @game_videos.nil? %>
-    <p>We don't have any video for  <%= @game_details[:name] %> yet! Consider add one. </p>
-  <%else%>
   <div id="video-carousel-example2" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false">
         <div class="carousel-inner">
         
@@ -32,5 +32,6 @@
           <span class="sr-only">Next</span>
         </a>
   </div>
-  <%end%>
-</div>
+  </div>
+<!--<div class="container">  -->
+<%end%>
