@@ -69,9 +69,27 @@ a {
   text-decoration: none;
 }
 
+// HEADER STYLING
 .navbar-brand {
   padding-top: 25px !important;
   float: left;
+}
+
+#header-menu {
+  padding-top: 0 !important;
+  
+}
+
+#navbarNav ul li a {
+    //padding: 10px;
+    display: block;
+    color: white;
+}
+
+#navbarNav ul li a:hover {
+    color: black;
+    text-decoration: none;
+    background: #FFC107;
 }
 
 
@@ -83,10 +101,7 @@ footer {
   left: 0;
 }
 
-#header-menu {
-  padding-top: 0 !important;
-  
-}
+
 
 footer a {
   color: white;
@@ -151,23 +166,23 @@ footer li {
     object-fit: cover;
 }
 
-#header-nav-ul{
-  display: -webkit-inline-box;
-  list-style: none;
-}
+// #header-nav-ul{
+//   display: -webkit-inline-box;
+//   list-style: none;
+// }
 
-#header-nav-ul li a{
-  padding: 10px;
-  text-decoration: none;
-  display: block;
-  color: white;
-}
+// #header-nav-ul li a{
+//   padding: 10px;
+//   text-decoration: none;
+//   display: block;
+//   color: white;
+// }
 
-#header-nav-ul ul li a:hover {
-    // color: black;
-    text-decoration: none;
-    background: #FFC107 !important;
-}
+// #header-nav-ul ul li a:hover {
+//     // color: black;
+//     text-decoration: none;
+//     background: #FFC107 !important;
+// }
 
 a,
 a:hover,
@@ -271,6 +286,8 @@ a:focus {
     text-decoration: none;
     background: #FFC107;
 }
+
+
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
@@ -421,7 +438,7 @@ body {
 #header-menu-button{
   padding-right: 35px;
   margin-right: 10px;
-   margin-left: 10px;
+  margin-left: 10px;
 }
 
 
