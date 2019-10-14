@@ -6,7 +6,7 @@
             <div class="card-deck">
                 <% @upcoming_popular_games[0..3].each do |gamecard| %>
                 <div class="card shadow p-3" style="width: 18rem;">
-                  <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
+                  <%= image_tag(gamecard[:cover],class:"card-img-top") %>
                   <div class="card-body">
                     <!--<p class="card-title center"><= gamecard[:name] %></p>-->
                     <a href=<%=game_path(gamecard[:slug]) %> target="_blank" class="btn btn-outline-warning btn-block">Details</a>
@@ -19,7 +19,7 @@
             <div class="card-deck">
                 <% @upcoming_popular_games[4..-1].each do |gamecard| %>
                 <div class="card shadow p-3" style="width: 18rem;">
-                  <img class="card-img-top"<%= image_tag("#{gamecard[:cover]}") %>
+                  <%= image_tag(gamecard[:cover],class:"card-img-top") %>
                   <div class="card-body">
                     <!--<p class="card-title center"><= gamecard[:name] %></p>-->
                     <a href=<%=game_path(gamecard[:slug]) %> target="_blank" class="btn btn-outline-warning btn-block">Details</a>

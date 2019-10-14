@@ -14,7 +14,6 @@ $(document).ready ->
     $('#loadingSpinner').delay(3000).hide(0)
     return
   return
-  
 $(document).on 'ajax:before ajaxStart page:fetch', (event) ->
   $('#loadingSpinner').show()
   $('#releaseByPlatform').hide()
