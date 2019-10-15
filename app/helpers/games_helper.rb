@@ -59,9 +59,9 @@ module GamesHelper
   def media(news)
     # unless news[:img].nil?
     news_img = image_tag(news[:img], class: 'mr-3', id: 'news-image')
-    news_title = content_tag(:a, content_tag(:h5, news[:title], class: 'mt-0'), class: 'mt-0', href: news[:url])
+    news_title = content_tag(:a, content_tag(:h5, news[:title], class: 'mt-0'), class: 'mt-0',id: 'game-news-title', href: news[:url])
     create_time = DateTime.strptime(news[:publish_at].to_s, '%s')
-    news_summary = content_tag(:p, truncate(news[:summary], length: 200), class: 'card-text')
+    news_summary = content_tag(:p, truncate(news[:summary], length: 200), class: 'card-text',id: 'game-news-summary')
     news_published_time = content_tag(:p, 'Last updated ' + time_ago_in_words(create_time) + ' ago', class: 'card-text')
     # Wrap media-body
     media_body = content_tag(:div, safe_join([news_title, news_summary, news_published_time]), class: 'media-body')

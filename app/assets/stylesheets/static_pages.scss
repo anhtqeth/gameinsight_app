@@ -492,11 +492,42 @@ body {
   box-shadow:none !important;
   border:1px solid #ccc !important;
 }
-
 /*CSS for different media devices*/
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-  
+    #game-feature-img{
+      height:auto;
+    }
+    
+    #game-news-summary {
+      display: none;
+    }
+    
+    h1 {
+      font-size: 20px !important;
+    }
+    
+    p,h5 {
+      font-size: 100% !important;
+    }
+     
+    #game-card{
+      width: 50% !important;
+      height: 100% !important;
+    }
+    
+    #game-card-img {
+      height: auto ;
+    }
+    
+    #news-image {
+      width:50%;
+      height:50%;
+    }
+    
+    #main-site-content{
+      padding-top:65px;
+    }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
