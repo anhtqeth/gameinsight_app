@@ -33,23 +33,23 @@
           Count Down</a>
         </li>
         
-        <li class="nav-item">
-          <a class="nav-link" href=<%=platform_path('pc-microsoft-windows') %>><i class="fab fa-steam fa-lg"></i>
-          PC</a>
-        </li>
+        <!--<li class="nav-item">-->
+        <!--  <a class="nav-link <=active_class(platform_path('pc-microsoft-windows'))%>" href=<=platform_path('pc-microsoft-windows') %>><i class="fab fa-steam fa-lg"></i>-->
+        <!--  PC</a>-->
+        <!--</li>-->
         
         <li class="nav-item">
-          <a class="nav-link" href=<%=platform_path('xbox-one') %> ><i class="fab fa-xbox fa-lg"></i>
+          <a class="nav-link <%=active_class(platform_path('xbox-one'))%>" href=<%=platform_path('xbox-one') %> ><i class="fab fa-xbox fa-lg"></i>
           Xbox One</a>
         </li>
        
         <li class="nav-item">
-          <a class="nav-link" href=<%=platform_path('playstation-4') %>><i class="fab fa-playstation fa-lg"></i>
+          <a class="nav-link <%=active_class(platform_path('playstation-4'))%>" href=<%=platform_path('playstation-4') %>><i class="fab fa-playstation fa-lg"></i>
           PlayStation 4</a>
         </li>
        
         <li class="nav-item">
-          <a class="nav-link" href=<%=platform_path('nintendo-switch') %>><i class="nintendo switch icon"></i>
+          <a class="nav-link <%=active_class(platform_path('nintendo-switch'))%>" href=<%=platform_path('nintendo-switch') %>><i class="nintendo switch icon"></i>
           Nintendo Switch</a>
         </li>
         
