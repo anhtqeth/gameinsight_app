@@ -23,6 +23,7 @@ $(document).on 'ajax:complete ajaxComplete page:change', (event) ->
   $('#releaseByPlatform').show()
   
 $(document).on 'turbolinks:load', ->
+  
   $('#sidebarCollapse').on 'click', ->
      if ( $('#sidebar').css('visibility') == 'hidden' )
         $('#sidebar').css('visibility','visible')
@@ -30,9 +31,15 @@ $(document).on 'turbolinks:load', ->
      else
         $('#sidebar').css('visibility','hidden')
     return
+
+
+$(document).on 'turbolinks:load', ->
+  $('#navbarNav a').on 'click', (e) ->
+  e.preventDefault()
+  $(this).addClass 'active'
+  return
 return
 
-  
 # $(document).on 'turbolinks:load', ->
 #   # $('#sidebar').mCustomScrollbar theme: 'minimal'
 #   $('#dismiss, .overlay').on 'click', ->

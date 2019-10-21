@@ -6,6 +6,7 @@ class PlatformsController < ApplicationController
     @platform = Platform.friendly.find(params[:id])
     @platform_games = game.fetchPopularGamebyPlatform(@platform.name)
 
+
     render 'platforms/platform_detail'
   end
 end

@@ -92,6 +92,12 @@ a {
     background: #FFC107;
 }
 
+#navbarNav a.active
+{  
+    color: black;
+    background: #FFC107;
+}
+
 
 footer {
   width: 100%;
@@ -492,6 +498,8 @@ body {
   box-shadow:none !important;
   border:1px solid #ccc !important;
 }
+
+
 /*CSS for different media devices*/
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {

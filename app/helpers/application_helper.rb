@@ -2,12 +2,16 @@
 
 module ApplicationHelper
   def full_title(page_title = '')
-    base_title = 'Ethu Inc GameInsight '
+    base_title = 'Ethu Inc Game Database '
     if page_title.empty?
       base_title
     else
       page_title + ' | ' + base_title
     end
+  end
+  
+  def active_class(link_path)
+    current_page?(link_path) ? "active" : ""
   end
 
   # Used to check data before render stuff to view.
