@@ -18,6 +18,7 @@
 #  updated_at    :datetime         not null
 #  slug          :string
 #
+include ContentModule
 
 class Platform < ApplicationRecord
   has_and_belongs_to_many :games
@@ -30,7 +31,37 @@ class Platform < ApplicationRecord
   def fetchAPIData(id)
     OpenStruct.new(gamesPlatformRequest(id))
   end
-
+  #Call to Contenful to retrieve entry content
+  #
+  def fetchContentData(name)
+    entries = entriesRequest('platform')
+    detail = nil
+    entries.each do |entry| 
+      if entry.name == name
+        detail = entry
+      end
+    end
+    detail
+  end
+  
+  # def saveContentData(id)
+  #   platform = Platform.find(id)
+  #   if platform.details.nil?
+  #     content = fetchContentData(platform.name)
+  #     platform.summary = content.summary
+  #     platform.details = renderRichText(content.description)
+  #     platform.save
+  #   end
+  # end
+  def saveContentData    #platform = Platform.find(id)
+    if self.details.nil?
+      content = fetchContentData(self.name)
+      self.summary = content.summary
+      self.details = renderRichText(content.description)
+      self.save
+    end
+  end
+  
   def saveAPIData(id)
     platform_detail = fetchAPIData(id)
 

@@ -13,15 +13,6 @@ module ContentModule
   # POST_ID = '10PCttqTZMbCMna6rBGsvb'
 
   def entryRequest(id)
-    entry_id = nil
-    # puts for testing
-    # puts 'TITLE'
-    # puts CLIENT.entry(id).title
-    # puts 'SUMMARY'
-    # puts CLIENT.entry(id).summary
-    # puts 'FEATURE_IMG'
-    # puts CLIENT.entry(id).feature_image.url
-    # puts 'CONTENT'
     CLIENT.entry id
   end
 
@@ -31,14 +22,16 @@ module ContentModule
       CLIENT.entries(content_type: 'post')
     when 'genres'
       CLIENT.entries(content_type: 'gameGenre')
+    when 'platform'
+      CLIENT.entries(content_type: 'gamePlatform')
     else
       puts "(#{type}) is not a valid entry"
-   end
+    end
   end
 
-  def renderRichText(entry)
+  def renderRichText(richText)
     renderer = RichTextRenderer::Renderer.new
-    renderer.render(entry)
+    renderer.render(richText)
   end
 
   def renderSnippet; end

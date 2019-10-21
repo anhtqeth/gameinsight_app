@@ -283,16 +283,12 @@ module GamesApiModule
     platform_id
   end
 
-  # gameAltRecentRelease('PlayStation 4')
-  # gameRecentRelease('PlayStation 4')
-
   def gameRecentRelease(platform)
     puts 'Called to Recent Released Game Request'
     request = buildRequest(RELEASE_URI)
     platform_id = platformCodeConvert(platform)
     # month = Time.now.month
     # year = Time.now.year
-
     # Return games released around 1 month
     request.body = "fields *,game.name; where date > #{Time.now.beginning_of_month.to_i} & m = #{Time.now.month}& game.platforms = #{platform_id}; limit 25;" # & date < #{Time.now.to_i}
 
