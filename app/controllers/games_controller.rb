@@ -75,38 +75,29 @@ class GamesController < ApplicationController
 
   def show
     game = nil
-    # puts 'DEBUG --- GAME CONTROLLER'
-    # puts game
-    # puts game.external_id
     if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil? # && params[:id].to_i != 0
       game = Game.new
       game.saveAPIData(params[:id])
       game = Game.find_by(external_id: params[:id])
     else
-      # Check if params is a slug or external_id (integer)
       game = params[:id].to_i != 0 ? Game.find_by_external_id(params[:id]) : Game.friendly.find_by(slug: params[:id])
     end
-
     @game_details = game
     @game_videos = game.game_videos
     @game_screenshots = game.screenshots
-
+    @game_newsfeed_list = GameArticleCollection.articles(game)
+    @game_publisher = Game.developer(game)
+    @game_developer = Game.publisher(game)
+    
     unless game.game_collection.nil?
       @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10]
       @size = @game_card_carousel_list.size / 2
     end
-
-    @game_newsfeed_list = GameArticleCollection.articles(game)
-
-    @game_publisher = Game.developer(game)
-    @game_developer = Game.publisher(game)
-
     render 'games/game_detail'
   end
 
   # TODO: - Add more way to search, currently search by name.
   def find
-    # TODO: - Seach game from api as well.
     if params[:name].blank?
       flash[:info] = 'Please specify a name'
       redirect_to(root_path)
@@ -122,29 +113,34 @@ class GamesController < ApplicationController
     game = Game.new
     @hotgames = game.fetchPopularUpcomingRelease
     @genres = GameGenre.all
-
     render 'games/game_discover'
   end
 
   def releases
     render 'games/latest_release'
   end
+  
+  # TODO - 
+  def countdown
+    @games = []
+    
+    render 'games/games_countdown'
+  end
 
   private
-
-  def game_params
-    params.require(:game).permit(:cover, :name,
-                                 :slug, :summary, :storyline, :first_release_date)
-  end
-
-  def screenshot_params
-    params.require(:screenshot).permit(:url, :width, :height, :game_id)
-  end
-
-  def logged_in_user
-    unless logged_in?
-      flash[:danger] = 'Please log in.'
-      redirect_to login_url
+    def game_params
+      params.require(:game).permit(:cover, :name,
+                                   :slug, :summary, :storyline, :first_release_date)
     end
-  end
+  
+    def screenshot_params
+      params.require(:screenshot).permit(:url, :width, :height, :game_id)
+    end
+  
+    def logged_in_user
+      unless logged_in?
+        flash[:danger] = 'Please log in.'
+        redirect_to login_url
+      end
+    end
 end

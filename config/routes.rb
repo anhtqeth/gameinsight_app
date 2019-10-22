@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     get  '/about',   to: 'static_pages#about'
     get  '/contact', to: 'static_pages#contact'
     get '/hot', to: 'static_pages#hot'
-
+    
     get '/signup', to: 'users#new'
 
     get 'games/newreleases', to: 'games#releases'
@@ -30,7 +30,10 @@ Rails.application.routes.draw do
     # ??Controller
     get '/reviews', to: 'reviews#show'
     get '/search/', to: 'games#find', as: 'search'
+    get 'games/countdown', to: 'games#countdown', as: 'countdown'
+    
   end
+  
   resources :users
   resources :games
   resources :screenshots
