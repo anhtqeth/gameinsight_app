@@ -2,5 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$ ->$('#release-countdown').countdown until: '+2d'
+$(document).on 'turbolinks:load', ->
+  $('#release-countdown').countdown({until: game.first_release_date});
+  return
 return

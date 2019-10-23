@@ -16,3 +16,4 @@
 //= require turbolinks
 //= require sidebar
 //= require_tree .
+//= require jquery.countdown

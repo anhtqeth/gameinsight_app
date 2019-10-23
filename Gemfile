@@ -49,6 +49,9 @@ gem 'sitemap_generator', '~> 6.0', '>= 6.0.2' # Sitemap generator
 # Authentication
 gem 'devise'
 
+#Utilites
+gem 'jquery-countdown-rails'
+
 group :development, :test do
   gem 'byebug', '9.0.6', platform: :mri
 end

@@ -124,7 +124,10 @@ class GamesController < ApplicationController
   def countdown
     @games = Game.upcoming_release
     
-    
+    respond_to do |format|
+      format.html
+      format.js 
+    end
     render 'games/games_countdown'
   end
 
