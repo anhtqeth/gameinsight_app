@@ -23,4 +23,8 @@ module ApplicationHelper
   def date_format(date)
     date.strftime('%d-%B-%Y')
   end
+  
+  def breadcrumb
+    puts request.request_uri
+  end
 end

@@ -34,7 +34,15 @@
       <!--</div>-->
   <!--</div>-->
   <body>
+     
      <div class="container" id="main-site-content">
+       <nav aria-label="breadcrumb" id="site-breadcrumb">
+      <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href=<%=root_path%>>Home</a></li>
+      <li class="breadcrumb-item"><a href="#">Library</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Data</li>
+      </ol>
+     </nav>
        <%= yield %>
      </div>
   </body>

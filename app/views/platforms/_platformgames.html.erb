@@ -3,7 +3,7 @@
 <div class="card-group">
   <div class="card-columns">
    <% @platform_games.each do |game| %>
-    <div class="card">
+    <div class="card shadow p-3 mb-3">
       <%= image_tag(game[:cover],class:"card-img-top",id:"game-card-img") %>
       <div class="card-body">
         <hr id="content-line">
