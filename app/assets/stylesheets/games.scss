@@ -2,6 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap";
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 #game-feature-img {
   width: 100%;
@@ -9,8 +10,6 @@
   overflow: hidden;
   padding-top: 0px;
 }
-
-
 
 #img-slide{
   width:100%;
@@ -84,4 +83,10 @@
 
 td, label {
   font-family: 'Poppins', sans-serif !important;
+}
+
+// Styling Games Countdown
+
+#coundown-text{
+  font-size: 35px;
 }

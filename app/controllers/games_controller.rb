@@ -122,7 +122,8 @@ class GamesController < ApplicationController
   
   # TODO - 
   def countdown
-    @games = []
+    @games = Game.upcoming_release
+    
     
     render 'games/games_countdown'
   end

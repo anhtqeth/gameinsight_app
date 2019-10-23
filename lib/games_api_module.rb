@@ -52,13 +52,17 @@ module GamesApiModule
   GAME_NEWS_GROUP_URI = 'https://api-v3.igdb.com/pulse_groups'
   GAME_ARTICLE_URI = 'https://api-v3.igdb.com/pulses'
   GAME_EXTERNAL_ARTICLE_URI = 'https://api-v3.igdb.com/pulse_urls'
+  
+  GAME_ACHIVEMENT_URI = 'https://api-v3.igdb.com/achievements'
 
-  MESS_NA_SERIES = 'There are no series related to this game. Or did we missed it?'
 
   # Authentication
   USERKEY = '049d27f7325bcb67768a30d5140fefb7' # NEW KEY
   # DeviJack ec80dc20b6c9b360aab19868b02ed17e #anhtruong 37c25b7c4526b3b1093f47ebe8416503
   # anhtq2411 '049d27f7325bcb67768a30d5140fefb7' #EthuDev ada77f859e3e4c235b5b6e360c79e249
+  
+  MESS_NA_SERIES = 'There are no series related to this game. Or did we missed it?'
+
   
   def buildRequest(uri)
     url = URI(uri)
@@ -588,4 +592,13 @@ module GamesApiModule
   # request = Net::HTTP::Get.new(URI('https://api-v3.igdb.com/achievements'), {'user-key' => YOUR_KEY})
   # request.body = 'fields *'
   # puts http.request(request).body
+  
+  def gameAchievementRequest(id)
+    request = Net::HTTP::Get.new(URI(GAME_ACHIVEMENT_URI), 'user-key' => USERKEY)
+    request.body = "fields *,achievement_icon.url; where game = #{id}; limit 50;"
+    response = http_construct.request(request)
+    JSON.parse(response.read_body)
+  end
+  #gow = Game.find_by_external_id(19560)
+  
 end

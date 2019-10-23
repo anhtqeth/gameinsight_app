@@ -14,23 +14,22 @@
       gtag('config', 'UA-121325947-2');
     </script>
 
-
+  
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-  
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/jquery.countdown.css"> 
+    <script type="text/javascript" src="javascripts/jquery.plugin.js"></script> 
+    <script type="text/javascript" src="javascripts/jquery.countdown.js"></script>
   </head>
  
   <!--< render 'layouts/rightSidebar' %>-->
   <%= render 'layouts/header' %>
-    <!--<div class="overlay"></div>-->
-    <!--<div class = "container" id = "home-content" style="background-color: #ffffff;">-->
-      <!--<div class="wrapper">-->
-      <!--     <= render 'layouts/leftSidebar' %>-->
-      <!--</div>-->
-  <!--</div>-->
+
   <body>
      <div class="container" id="main-site-content">
        <%= yield %>
@@ -38,28 +37,4 @@
   </body>
    <%= render 'layouts/footer' %>
   
-  <!--TODO- Refactor these code-->
-  <!-- Collapseable Sidebar -->
-  <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    
-  <!--<script type="text/javascript">-->
-  <!--  $(document).on('turbolinks:load', function() {-->
-  <!--  $("#sidebar").mCustomScrollbar({-->
-  <!--  theme: "minimal"          });-->
-  <!--          $('#dismiss, .overlay').on('click', function () {-->
-  <!--              $('#sidebar').removeClass('active');-->
-  <!--              $('.overlay').removeClass('active');-->
-  <!--          });-->
-
-  <!--          $('#sidebarCollapse').on('click', function () {-->
-  <!--              $('#sidebar').addClass('active');-->
-    <!--             // $('.overlay').addClass('active');
-  <!--              $('.collapse.in').toggleClass('in');-->
-  <!--              $('a[aria-expanded=true]').attr('aria-expanded', 'false');-->
-  <!--          });-->
-  <!--      });-->
-  <!-- </script>-->
 </html>
