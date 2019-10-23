@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
-
+  
+  get 'games/countdown', to: 'games#countdown', as: 'countdown'
+  
   scope '(:locale)', locale: /en|vi/ do
     root 'static_pages#home'
     get  '/news', to: 'static_pages#newsfeeds'
@@ -30,7 +32,6 @@ Rails.application.routes.draw do
     # ??Controller
     get '/reviews', to: 'reviews#show'
     get '/search/', to: 'games#find', as: 'search'
-    get 'games/countdown', to: 'games#countdown', as: 'countdown'
     
   end
   

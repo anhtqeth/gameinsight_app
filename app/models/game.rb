@@ -54,9 +54,10 @@ class Game < ApplicationRecord
   # Scoping for publisher
   # This use the scope from Involve Company Model and a Game object to query for the company attribute
   # scope :publisher, ->(game) { Company.find(game.involved_companies.publisher.company_id) if  game.involved_companies.publisher.try(:company_id).present? }
-
   # scope :developer, ->(game) { Company.find(game.involved_companies.developer.company_id) }
-
+  
+  scope :upcoming_release, -> {Game.where('first_release_date > ?', DateTime.now)}
+  
   def self.publisher(game)
     if game.involved_companies.publisher.try(:company_id).present?
       Company.find(game.involved_companies.publisher.company_id)

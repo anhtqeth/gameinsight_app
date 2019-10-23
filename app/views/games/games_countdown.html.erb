@@ -1,6 +1,27 @@
 <div>
   <%@games.each do |game|%>
-    
-  
+    <h1><%=game.name%></h1>
+    <hr>
+    <div class="card bg-dark text-white">
+      
+    <% if game.screenshots.empty? %>
+      
+    <% else%>
+      <%= image_tag(game.screenshots.first.url, class: "card-img", alt: "#{game.name} screenshot")%>
+    <%end%>
+      <div class="card-img-overlay" id="game-detail-feature">
+          <div class="row">
+              <div class="col">
+                <p class="card-text">Info here</p>
+              </div>
+          </div>
+          <div class="row">
+               <div class="col">
+                <p id="coundown-text">10 Days | 24 hours | 39 Minutes | 59 second</p>
+                <div id="release-countdown"></div>
+              </div>
+          </div>
+        </div>
+      </div>
   <%end%>
 </div>
