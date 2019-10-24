@@ -2,9 +2,17 @@
   <%@games.each do |game|%>
     <h1><%=game.name%></h1>
     <hr>
-    <p id="release-countdown"></p>
+    <p id="result"></p>
+    
+    <h5 id="js-newdate"></h5>
+    <h5 id="js-endate"></h5>
+    
+    <script type='text/javascript'>
+    var end_time = <%= game.first_release_date.to_time.to_i %> ;
+  
+    </script>
+    <!--<= hidden_field :game_release_date, :value =>  %>-->
     <div class="card bg-dark text-white">
-      
     <!--< if game.screenshots.empty? %>-->
       
     <!--< else%>-->
@@ -14,12 +22,13 @@
           <div class="row">
               <div class="col">
                 <p class="card-text">Info here</p>
+                <p id="result"></p>
               </div>
           </div>
           <div class="row">
             <div class="col">
                 
-                <p id="coundown-text">10 Days | 24 hours | 39 Minutes | 59 second</p>
+                <!--<p id="coundown-text">10 Days | 24 hours | 39 Minutes | 59 second</p>-->
             </div>   
           </div>
         </div>
