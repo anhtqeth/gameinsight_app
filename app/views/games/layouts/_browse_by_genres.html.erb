@@ -26,10 +26,21 @@
 </div>
 
 <script>
-  $("#pills-tab a").click(function(){
-    alert("Clicked " + $(".a").val());
+  $("#pills-tab a").click(function(e){
+      e.preventDefault();
+      var genre = $(this).text();
+      alert("Clicked " + genre);
+      $.ajax({
+        url: "/games/discover?genre="+ genre,
+        type: "get",
+        success: function(){
+          
+        },
+        error:function(){
+         alert('Cannot show result!');
+        }
+      });
   });
-  
 </script>
 
 </div>

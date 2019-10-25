@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   
   get 'games/countdown', to: 'games#countdown', as: 'countdown'
   get '/games/discover', to: 'games#discover', as: 'discover'
+  #post '/games/discover' => 'games#discover'
+
   
   scope '(:locale)', locale: /en|vi/ do
     root 'static_pages#home'

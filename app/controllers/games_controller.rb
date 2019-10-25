@@ -98,10 +98,11 @@ class GamesController < ApplicationController
   def discover
     #game           = Game.new
     #@hotgames      = game.fetchPopularUpcomingRelease
+    
     if params[:genre]
       @result = GameGenre.popular_games(params[:genre])
       respond_to do |format|
-      format.js { render partial: 'game_discover' }
+        format.js { render partial: 'game_discover' }
       end
     end
     
