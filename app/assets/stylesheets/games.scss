@@ -59,13 +59,7 @@
     background: black;
 }
 
-#game-detail-feature{
-  opacity: 0.5;
-  background: black;
-   h1 {
-      color: #ffc107;
-   }
-}
+
 
 #discover-btn{
   float: right;
@@ -86,7 +80,17 @@ td, label {
 }
 
 // Styling Games Countdown
+#game-detail-feature{
+  // opacity: 0.5;
+  // background: black;
+   h1 {
+      color: #ffc107;
+   }
+}
 
-#release-countdown{
-  font-size: 25px;
+.release-countdown{
+  font-size: 35px;
+  color: white;
+  background: border-box;
+  border: solid;
 }
