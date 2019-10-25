@@ -2,11 +2,7 @@
 
 class GamesController < ApplicationController
   before_action :logged_in_user, only: %i[index edit update]
-  # Show game detail page
-  # TODO: Move save logic to model. Just like article
-  # TODO: This is a fat controller.
-  # TODO: Implement caching
-  # TODO: Add more feature to controller
+  
   def index
     if params[:search]
       puts 'DEBUGGING SEARCH'
@@ -16,7 +12,6 @@ class GamesController < ApplicationController
       respond_to do |format|
         format.js { render partial: 'search-results' }
       end
-
     else
       @games = Game.all.order(:name).paginate(page: params[:page], per_page: 15)
       # @game_card_result = result
@@ -30,40 +25,33 @@ class GamesController < ApplicationController
   end
 
   def edit
-    @game = Game.friendly.find(params[:id])
-    @screenshot = Screenshot.new
-    @video = GameVideo.new
+    @game         = Game.friendly.find(params[:id])
+    @screenshot   = Screenshot.new
+    @video        = GameVideo.new
     @game_article = GameArticle.new
 
-    @pub_company = if @game.involved_companies.publisher.nil?
+    @pub_company  = if @game.involved_companies.publisher.nil?
                      InvolvedCompany.new
-                   else
+                    else
                      @game.involved_companies.publisher
-                   end
+                    end
 
-    @dev_company = if @game.involved_companies.developer.nil?
+    @dev_company  = if @game.involved_companies.developer.nil?
                      InvolvedCompany.new
-                   else
+                    else
                      @game.involved_companies.developer
-                   end
+                    end
+    @publisher    = Game.publisher(@game)
+    @developer    = Game.developer(@game)
 
-    # game = Game.find_by(external_id: 103329)
-
-    @publisher = Game.publisher(@game)
-    @developer = Game.developer(@game)
-
-    @genres = @game.game_genres.map(&:name).join(',')
-    @platform = @game.platforms.map(&:name).join(',')
-
-    puts '@game ID'
-    puts @game.id
+    @genres       = @game.game_genres.map(&:name).join(',')
+    @platform     = @game.platforms.map(&:name).join(',')
 
     game_article_collection = GameArticleCollection.where(game_id: @game.id).take
     game_article_collection.nil? ? @game_articles = nil : @game_articles = game_article_collection.game_articles
   end
 
   def update
-    # Should show assocciated screenshots and videos for update
     @game = Game.friendly.find(params[:id])
     if @game.update_attributes(game_params)
       flash.now[:success] = 'Game detail updated'
@@ -82,12 +70,12 @@ class GamesController < ApplicationController
     else
       game = params[:id].to_i != 0 ? Game.find_by_external_id(params[:id]) : Game.friendly.find_by(slug: params[:id])
     end
-    @game_details = game
-    @game_videos = game.game_videos
-    @game_screenshots = game.screenshots
+    @game_details       = game
+    @game_videos        = game.game_videos
+    @game_screenshots   = game.screenshots
     @game_newsfeed_list = GameArticleCollection.articles(game)
-    @game_publisher = Game.developer(game)
-    @game_developer = Game.publisher(game)
+    @game_publisher     = Game.developer(game)
+    @game_developer     = Game.publisher(game)
     
     unless game.game_collection.nil?
       @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10]
@@ -102,8 +90,8 @@ class GamesController < ApplicationController
       flash[:info] = 'Please specify a name'
       redirect_to(root_path)
     else
-      game = Game.new
-      @rs = game.findGames(params[:name])[0]
+      game    = Game.new
+      @rs     = game.findGames(params[:name])[0]
       @api_rs = game.findGames(params[:name])[1]
       render 'games/search_result'
     end
@@ -112,7 +100,7 @@ class GamesController < ApplicationController
   def discover
     game           = Game.new
     @hotgames      = game.fetchPopularUpcomingRelease
-    @genre_list = GameGenre.popular_games()
+    @genre_list    = GameGenre.popular_games()
     
     render 'games/game_discover'
   end

@@ -19,6 +19,7 @@ class GameGenre < ApplicationRecord
   validates :name, uniqueness: true
   validates :external_id, uniqueness: true
   
+  #Scope to get the most popular games for each genre.
   scope :popular_games,  -> (genre_name){GameGenre.find_by_name(genre_name).games.order(popularity: :desc)}
 
   extend FriendlyId
