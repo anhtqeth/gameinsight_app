@@ -58,6 +58,7 @@ class Game < ApplicationRecord
   
   scope :upcoming_release, -> {Game.where('first_release_date > ?', DateTime.now)}
   
+  
   def self.publisher(game)
     if game.involved_companies.publisher.try(:company_id).present?
       Company.find(game.involved_companies.publisher.company_id)
