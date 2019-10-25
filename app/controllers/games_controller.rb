@@ -110,9 +110,10 @@ class GamesController < ApplicationController
   end
 
   def discover
-    game = Game.new
-    @hotgames = game.fetchPopularUpcomingRelease
-    @genres = GameGenre.all
+    game           = Game.new
+    @hotgames      = game.fetchPopularUpcomingRelease
+    @genre_list = GameGenre.popular_games()
+    
     render 'games/game_discover'
   end
 
@@ -123,11 +124,7 @@ class GamesController < ApplicationController
   # TODO - 
   def countdown
     @games = Game.upcoming_release.where.not('first_release_date' => nil)
-    
-    respond_to do |format|
-      format.html
-      format.js 
-    end
+  
     render 'games/games_countdown'
   end
 
@@ -135,6 +132,11 @@ class GamesController < ApplicationController
     def game_params
       params.require(:game).permit(:cover, :name,
                                    :slug, :summary, :storyline, :first_release_date)
+    end
+    
+    # Do I need this?
+    def platform_param
+      params.require(:platform_name).permit(:name)
     end
   
     def screenshot_params

@@ -57,8 +57,7 @@ class Game < ApplicationRecord
   # scope :developer, ->(game) { Company.find(game.involved_companies.developer.company_id) }
   
   scope :upcoming_release, -> {Game.where('first_release_date > ?', DateTime.now)}
-  
-  
+ 
   def self.publisher(game)
     if game.involved_companies.publisher.try(:company_id).present?
       Company.find(game.involved_companies.publisher.company_id)
@@ -115,16 +114,16 @@ class Game < ApplicationRecord
         end
       end
 
-      if game_detail.first_release_date == 'NA'
-        game.first_release_date = Time.now - 15.years
-      else
-        game.first_release_date = DateTime.strptime(game_detail.first_release_date.to_s, '%s')
-      end
+        if game_detail.first_release_date == 'NA'
+          game.first_release_date = Time.now - 15.years
+        else
+          game.first_release_date = DateTime.strptime(game_detail.first_release_date.to_s, '%s')
+        end
       game.popularity = game_detail.popularity
       game.save
       saveGameRelatedData(id)
       game
-      end
+    end
   end
 
   def fetchLatestRelease(platform)
@@ -189,7 +188,7 @@ class Game < ApplicationRecord
         saveAPIData(id)
       else
           # Update popularity here?
-        end
+      end
     end
   end
 
