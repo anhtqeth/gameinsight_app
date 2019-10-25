@@ -122,7 +122,7 @@ class GamesController < ApplicationController
   
   # TODO - 
   def countdown
-    @games = Game.upcoming_release
+    @games = Game.upcoming_release.where.not('first_release_date' => nil)
     
     respond_to do |format|
       format.html
