@@ -5,8 +5,6 @@ class GamesController < ApplicationController
   
   def index
     if params[:search]
-      puts 'DEBUGGING SEARCH'
-      puts params[:search]
       @search_result = Game.search_by_name(params[:search]).order(:name).paginate(page: params[:page], per_page: 15)
 
       respond_to do |format|
@@ -63,7 +61,7 @@ class GamesController < ApplicationController
 
   def show
     game = nil
-    if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil? # && params[:id].to_i != 0
+    if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil?
       game = Game.new
       game.saveAPIData(params[:id])
       game = Game.find_by(external_id: params[:id])
@@ -98,9 +96,14 @@ class GamesController < ApplicationController
   end
 
   def discover
-    game           = Game.new
-    @hotgames      = game.fetchPopularUpcomingRelease
-    @genre_list    = GameGenre.popular_games()
+    #game           = Game.new
+    #@hotgames      = game.fetchPopularUpcomingRelease
+    if params[:genre]
+      @result = GameGenre.popular_games(params[:genre])
+      respond_to do |format|
+      format.js { render partial: 'game_discover' }
+      end
+    end
     
     render 'games/game_discover'
   end
@@ -109,10 +112,8 @@ class GamesController < ApplicationController
     render 'games/latest_release'
   end
   
-  # TODO - 
   def countdown
     @games = Game.upcoming_release.where.not('first_release_date' => nil)
-  
     render 'games/games_countdown'
   end
 
