@@ -1,0 +1,2 @@
+<!--Render partial here-->
+$("#releaseByPlatform").html("<%= escape_javascript(render partial: 'latestrelease', locals: { platform: @latest_games } ) %>")

@@ -18,6 +18,8 @@ class GameGenre < ApplicationRecord
   validates :name, :description, :external_id, presence: true
   validates :name, uniqueness: true
   validates :external_id, uniqueness: true
+  
+  scope :popular_games,  -> (genre_name){GameGenre.find_by_name(genre_name).games.order(popularity: :desc)}
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -27,10 +29,11 @@ class GameGenre < ApplicationRecord
   end
 
   def saveAPIData(id)
-    genre_detail = fetchAPIData(id)
-    genre = GameGenre.new
+    
+    genre_detail      = fetchAPIData(id)
+    genre             = GameGenre.new
     genre.external_id = genre_detail['id']
-    genre.name = genre_detail['name']
+    genre.name        = genre_detail['name']
     genre.description = 'Define by another CMS'
     genre.save
 
@@ -40,7 +43,6 @@ class GameGenre < ApplicationRecord
   def getAllApiData
     genre_ids = fetchAPIData(nil)
     genre_ids = genre_ids.map { |x| x['id'] }
-
     genre_ids.each do |x|
       saveAPIData(x)
     end
