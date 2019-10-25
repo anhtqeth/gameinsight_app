@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
   
   get 'games/countdown', to: 'games#countdown', as: 'countdown'
+  get '/games/discover', to: 'games#discover', as: 'discover'
   
   scope '(:locale)', locale: /en|vi/ do
     root 'static_pages#home'
@@ -24,13 +25,11 @@ Rails.application.routes.draw do
     get 'games/newreleases', to: 'games#releases'
     get 'games/:id/guides', to: 'games#guides'
     get '/genres/', to: 'game_genre#show', as: 'game_genres'
-    get '/discover', to: 'games#discover'
+    
 
     # PlatformsController
     get '/platforms/:id', to: 'platforms#show', as: 'platform'
-
-    # ??Controller
-    get '/reviews', to: 'reviews#show'
+    #get '/reviews', to: 'reviews#show'
     get '/search/', to: 'games#find', as: 'search'
     
   end
