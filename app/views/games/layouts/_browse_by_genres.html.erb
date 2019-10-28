@@ -8,38 +8,29 @@
 
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" id="pills-shooter-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Shooter</a>
+    <!--<a class="nav-link active" id="pills-shooter-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Shooter</a>-->
+    <%= link_to "Shooter", discover_path(:genre => "Shooter"),class: "nav-link",id:"pills-shooter-tab", "aria-selected": "true","data-toggle":"pill","role": "tab",:remote => true %>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Role-playing (RPG)</a>
+    <%= link_to "Role-playing (RPG)", discover_path(:genre => "Role-playing (RPG)"),class: "nav-link",id:"pills-rpg-tab", "aria-selected": "false","data-toggle":"pill","role": "tab", :remote => true %>
+    <!--<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Role-playing (RPG)</a>-->
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Hack and slash/Beat 'em up</a>
+    <%= link_to "Hack and slash/Beat 'em up", discover_path(:genre => "Hack and slash/Beat 'em up"),class: "nav-link",id:"pills-hns-tab", "aria-selected": "false","data-toggle":"pill","role": "tab", :remote => true %>
+    <!--<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Hack and slash/Beat 'em up</a>-->
   </li>
 </ul>
 
 
 <div class="tab-content" id="pills-tabContent">
   <div class="tab-pane fade show active" id="pill-games-list" role="tabpanel" aria-labelledby="pills-home-tab"></div>
-  <!--<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Role THere</div>-->
-  <!--<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">Hack There</div>-->
 </div>
 
 <script>
   $("#pills-tab a").click(function(e){
-      e.preventDefault();
-      var genre = $(this).text();
-      alert("Clicked " + genre);
-      $.ajax({
-        url: "/games/discover?genre="+ genre,
-        type: "get",
-        success: function(){
-          
-        },
-        error:function(){
-         alert('Cannot show result!');
-        }
-      });
+      $("#nav-link").addClass("active");
+      // var genre = $(this).text();
+      // alert("Clicked " + genre);
   });
 </script>
 
