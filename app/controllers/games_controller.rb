@@ -6,7 +6,6 @@ class GamesController < ApplicationController
   def index
     if params[:search]
       @search_result = Game.search_by_name(params[:search]).order(:name).paginate(page: params[:page], per_page: 15)
-
       respond_to do |format|
         format.js { render partial: 'search-results' }
       end
@@ -102,7 +101,7 @@ class GamesController < ApplicationController
     if params[:genre]
       @result = GameGenre.popular_games(params[:genre])
       respond_to do |format|
-        format.js { render partial: 'game_discover' }
+        format.js
       end
     end
     
