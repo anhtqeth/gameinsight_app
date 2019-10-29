@@ -23,7 +23,8 @@
 class Game < ApplicationRecord
   # For PG Search
   include PgSearch::Model
-
+  translates :storyline, :summary
+  
   pg_search_scope :search_by_name, against: [:name],
                                    using: {
                                      tsearch: { prefix: true }
