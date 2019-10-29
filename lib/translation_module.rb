@@ -28,17 +28,26 @@ module TranslationModule
     # Translation of a page?
   end
   
-  #
-  def gameDetailTrans(game,src_lang,targ_lang)
-    if game.is_a? Game
-      summary_txt    = game.summary
-      story_txt      = game.storyline
-      I18n.locale    = :vi
-      game.summary   = transText(summary_txt,src_lang,targ_lang)
-      game.storyline = transText(story_txt,src_lang,targ_lang)
-      game.save
+  #TODO - I18n locale diversify
+  def modelDetailTrans(model,src_lang,targ_lang)
+    if model.is_a? Game
+      summary_txt     = model.summary
+      story_txt       = model.storyline
+      I18n.locale     = :vi
+      model.summary   = transText(summary_txt,src_lang,targ_lang)
+      model.storyline = transText(story_txt,src_lang,targ_lang)
+      model.save
     end
-  
+    
+    if model.is_a? GameArticle
+      summary_txt     = model.summary
+      title_txt       = model.title
+      I18n.locale     = :vi
+      model.summary   = transText(summary_txt,src_lang,targ_lang)
+      model.title     = transText(title_txt,src_lang,targ_lang)
+      model.save
+    end
+    
   end
   
 end

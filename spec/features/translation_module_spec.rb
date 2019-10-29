@@ -27,12 +27,23 @@ RSpec.feature 'Translate Games Text', type: :feature do
     game.summary   = 'This is the description of the game'
     game.storyline = 'This is the storyline of the game'
     game.save
-    gameDetailTrans(game,'en','vi')
+    modelDetailTrans(game,'en','vi')
     I18n.locale = :vi
     puts game.summary
     puts game.storyline
     expect(game.summary).not_to be_nil
   end
   
+  it 'translate an article' do
+    arc = GameArticle.new
+    arc.title = 'This is the title of the news'
+    arc.summary = 'This is the summary of the news'
+    arc.save
+    modelDetailTrans(arc,'en','vi')
+    I18n.locale = :vi
+    puts arc.summary
+    puts arc.title
+    expect(arc.summary).not_to be_nil
+  end
   
 end

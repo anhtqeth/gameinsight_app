@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_29_091245) do
+ActiveRecord::Schema.define(version: 2019_10_29_101502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,13 +49,22 @@ ActiveRecord::Schema.define(version: 2019_10_29_091245) do
     t.index ["game_id"], name: "index_game_article_collections_on_game_id"
   end
 
+  create_table "game_article_translations", force: :cascade do |t|
+    t.integer "game_article_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "summary"
+    t.index ["game_article_id"], name: "index_game_article_translations_on_game_article_id"
+    t.index ["locale"], name: "index_game_article_translations_on_locale"
+  end
+
   create_table "game_articles", force: :cascade do |t|
     t.integer "external_id"
     t.string "author"
-    t.text "summary"
     t.string "img"
     t.datetime "created_at", null: false
-    t.string "title"
     t.string "url"
     t.string "news_source"
     t.datetime "updated_at", null: false
