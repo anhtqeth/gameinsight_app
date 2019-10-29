@@ -93,18 +93,17 @@ class GamesController < ApplicationController
       render 'games/search_result'
     end
   end
-
+  
+  #Show popular games base on genres
   def discover
-    #game           = Game.new
-    #@hotgames      = game.fetchPopularUpcomingRelease
-    @popular_genres = ['Role-playing (RPG)','Shooter',"Hack and slash/Beat 'em up",'Fighting','Adventure']
+    @popular_genres = ['Role-playing (RPG)','Shooter',"Hack and slash/Beat 'em up",
+    'Fighting','Adventure']
     if params[:genre]
       @result = GameGenre.popular_games(params[:genre])
       respond_to do |format|
         format.js
       end
     end
-    
     render 'games/game_discover'
   end
 
