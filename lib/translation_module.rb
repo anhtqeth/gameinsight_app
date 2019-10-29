@@ -28,9 +28,16 @@ module TranslationModule
     # Translation of a page?
   end
   
+  #
   def gameDetailTrans(game,src_lang,targ_lang)
-    
-    
+    if game.is_a? Game
+      summary_txt    = game.summary
+      story_txt      = game.storyline
+      I18n.locale    = :vi
+      game.summary   = transText(summary_txt,src_lang,targ_lang)
+      game.storyline = transText(story_txt,src_lang,targ_lang)
+      game.save
+    end
   
   end
   
