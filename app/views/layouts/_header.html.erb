@@ -1,7 +1,7 @@
 <div class ="header">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <!--EthuGameDB</p>-->
-    <p class="navbar-brand" href="#">EthuGameDB |</p>
+    <p class="navbar-brand" href=<%=root_path%>>EthuGameDB |</p>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -24,10 +24,10 @@
           Discover</a>
         </li>
         
-        <li class="nav-item">
-          <a class="nav-link" href=""><i class="fab fa-hotjar fa-lg"></i>
-          Hot</a>
-        </li>
+        <!--<li class="nav-item">-->
+        <!--  <a class="nav-link <=active_class(hot_path)%>" href=<=hot_path%>><i class="fab fa-hotjar fa-lg"></i>-->
+        <!--  Hot</a>-->
+        <!--</li>-->
         
         <li class="nav-item">
           <a class="nav-link <%=active_class(countdown_path)%>" href=<%=countdown_path%>><i class="fas fa-hourglass-end"></i>
@@ -67,7 +67,7 @@
           <div class="dropdown-divider"></div>
           <%= link_to "Log out", logout_path, method: :delete,class:"dropdown-item"%>
       </div>
-      </div>
+    </div>
     <% if current_user.admin? %>
       <i class="fas fa-tools"></i>
       

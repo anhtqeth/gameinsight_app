@@ -9,7 +9,6 @@
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <% @popular_genres.each do |genre|%>
     <li class="nav-item">
-      <!--<a class="nav-link active" id="pills-shooter-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Shooter</a>-->
       <%= link_to genre, discover_path(:genre => genre),class: "nav-link",id:"pills-shooter-tab", "aria-selected": "true","data-toggle":"pill","role": "tab",:remote => true %>
     </li>
   <%end%>
