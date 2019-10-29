@@ -26,7 +26,7 @@ gem 'annotate', '~> 3.0', '>= 3.0.2' # Annotation on model
 gem 'pg'
 gem 'pg_search', '~> 2.3'
 
-# TEST
+# Testing
 gem 'capybara', '~> 3.22'
 gem 'rspec', '~> 3.8'
 gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
@@ -36,8 +36,11 @@ gem 'contentful'
 gem 'nokogiri'
 gem 'rich_text_renderer', '~> 0.2.2'
 
+#Translation
 gem 'i18n', '~> 1.6'
 gem 'rails-i18n'
+gem 'aws-sdk', '~> 3'
+gem 'globalize'
 
 # Background JOB
 gem 'sidekiq', '~> 5.2.7'
