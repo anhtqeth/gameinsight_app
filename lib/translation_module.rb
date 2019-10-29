@@ -16,12 +16,14 @@ module TranslationModule
   )
   
   def transText(text,src_lang,targ_lang)
-    resp = CLIENT.translate_text({
-    text: text, # required
-    source_language_code: src_lang,
-    target_language_code: targ_lang,
-    })
-    resp[:translated_text]
+    unless text.nil?  
+      resp = CLIENT.translate_text({
+      text: text, # required
+      source_language_code: src_lang,
+      target_language_code: targ_lang,
+      })
+      resp[:translated_text]
+    end
   end
   
   def transPage(url,src_lang,targ_lang)
