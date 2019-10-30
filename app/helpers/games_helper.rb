@@ -257,7 +257,6 @@ module GamesHelper
     private
 
     attr_accessor :view, :media
-    # what is delegate?
     delegate :link_to, :content_tag, :image_tag, :safe_join, to: :view
 
     def carousel_indicator(size)

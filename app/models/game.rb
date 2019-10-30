@@ -236,26 +236,24 @@ class Game < ApplicationRecord
   end
 
   private
-
   # After a new game is added, an update to other model is also required.
-  # As these model reference back to game. This need to be executed after a game is saved.
+  # As these model reference back to game. 
+  # This need to be executed after a game is saved.
   # Private method
   # TODO - Can Refactor this using before_save or after_save?
-  def saveGameRelatedData(id)
-    # TODO: - Move below to a function
-    release_date = GameReleaseDate.new
-    release_date.saveAPIData(id)
-    screenshot = Screenshot.new
-    screenshot.saveAPIData(id)
-    videos = GameVideo.new
-    videos.saveAPIData(id)
-    company = Company.new
-    company.saveAPIData(id)
-    game_article_collection = GameArticleCollection.new
-    game_article_collection.saveAPIData(id)
-    FetchGamesCollectionJob.perform_later(id)
-    # company.saveAPIData(id,'Developer')
-  end
-
-  def findGamesbyGenre(game_genre); end
+    def saveGameRelatedData(id)
+      release_date            = GameReleaseDate.new
+      screenshot              = Screenshot.new
+      videos                  = GameVideo.new
+      company                 = Company.new
+      game_article_collection = GameArticleCollection.new
+      release_date.saveAPIData(id)
+      screenshot.saveAPIData(id)
+      videos.saveAPIData(id)
+      company.saveAPIData(id)
+      game_article_collection.saveAPIData(id)
+      FetchGamesCollectionJob.perform_later(id)
+    end
+  
+    def findGamesbyGenre(game_genre); end
 end

@@ -29,26 +29,17 @@ class GameArticle < ApplicationRecord
 
   # HIGH PROFILE FEED
   GAMESPOT_NEWS_RSS_FEED = 'https://www.gamespot.com/feeds/news/'
-  IGN_NEWS_RSS = 'http://feeds.ign.com/ign/news'
-  GEMATSU_RSS = 'https://gematsu.com/feed'
-  DESTRUCTOID_RSS = 'https://www.destructoid.com/index.phtml?t=ps4&mode=atom'
-  PUSHSQUARE_RSS = 'http://www.pushsquare.com/feeds/latest'
+  IGN_NEWS_RSS           = 'http://feeds.ign.com/ign/news'
+  GEMATSU_RSS            = 'https://gematsu.com/feed'
+  DESTRUCTOID_RSS        = 'https://www.destructoid.com/index.phtml?t=ps4&mode=atom'
+  PUSHSQUARE_RSS         = 'http://www.pushsquare.com/feeds/latest'
   # Need to pick one
-  EUROGAMER_RSS = 'https://www.eurogamer.net/rss'
-
+  EUROGAMER_RSS          = 'https://www.eurogamer.net/rss'
   # OTHER PROFILE
-  PUREPS_RSS = 'https://pureplaystation.com/feed/'
-  SILICONERA_RSS = 'https://www.siliconera.com/feed/'
+  PUREPS_RSS             = 'https://pureplaystation.com/feed/'
+  SILICONERA_RSS         = 'https://www.siliconera.com/feed/'
 
   # before_save :time_convert
-
-  # protected
-  # def time_convert
-  #   puts 'DEBUG CONVERT'
-  #   puts self.publish_at
-  #   self.publish_at.to_time.to_i
-  # end
-
   # TODO: Add uniqueness constraint
   def fetchAPIData(id)
     OpenStruct.new(gameArticleRequest(id))
@@ -126,7 +117,6 @@ class GameArticle < ApplicationRecord
                       else
                         fetchImageFromURI(r.link, source)
                       end
-        # feature_img = parsed_html.css('img').first['src'] if parsed_html.css('img').first.present?
         # Saved article to hash and add to array
         article = { title: r.title, url: r.link, source: nil,
                     publish_at: r.pubDate, summary: text.to_s, img: feature_img }

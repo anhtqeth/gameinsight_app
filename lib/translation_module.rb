@@ -49,7 +49,6 @@ module TranslationModule
       model.title     = transText(title_txt,src_lang,targ_lang)
       model.save
     end
-    
   end
   
 end
