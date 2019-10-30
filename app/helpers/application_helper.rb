@@ -24,7 +24,22 @@ module ApplicationHelper
     date.strftime('%d-%B-%Y')
   end
   
-  def breadcrumb
-    puts request.request_uri
+  def breadcrumb_trail
+    if current_page?(root_path)
+    
+    else
+      html = []
+      html << breadcrumb(root_path)
+      path = request.original_fullpath.split('/')
+      path[1..-1].each do |url|
+         html << breadcrumb(url)
+      end
+      safe_join(html)
+    end
+    debugger
+  end
+  
+  def breadcrumb(url)
+   
   end
 end
