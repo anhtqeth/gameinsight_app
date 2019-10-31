@@ -13,7 +13,6 @@
           <a class="nav-link <%=active_class(root_path)%>" href=<%=root_path %>><i class="fas fa-home"></i>
           Home</a>
         </li>
-        
         <li class="nav-item">
           <a class="nav-link <%=active_class(news_path)%>" href=<%=news_path%>><i class="far fa-newspaper"></i>
           News</a>
@@ -77,11 +76,12 @@
       </button>
       
       <div class="dropdown-menu">
-        <a class="dropdown-item" href=<%=games_path %>>Games <span class="badge badge-warning badge-pill"><%=Game.count%></span> </a>
-        <a class="dropdown-item" href="#">Platform <span class="badge badge-warning badge-pill"><%=Platform.count%></span> </a>
-        <a class="dropdown-item" href="#">Genres<span class="badge badge-warning badge-pill"><%=GameGenre.count%></span> </a>
-        <a class="dropdown-item" href="#">Articles <span class="badge badge-warning badge-pill"><%=GameArticle.count%></span> </a>
-        <a class="dropdown-item" href="#">Articles <span class="badge badge-warning badge-pill"><%=InvolvedCompany.count%></span> </a>
+        <a class="dropdown-item" href=<%=games_path %>>Games Management<span class="badge badge-warning badge-pill"><%=Game.count%></span> </a>
+        <a class="dropdown-item" href=<%=games_path %>>Content Management <span class="badge badge-warning badge-pill"><%=Game.count%></span> </a>
+        <a class="dropdown-item" href="#">Platform Management <span class="badge badge-warning badge-pill"><%=Platform.count%></span> </a>
+        <a class="dropdown-item" href="#">Genres Management<span class="badge badge-warning badge-pill"><%=GameGenre.count%></span> </a>
+        <a class="dropdown-item" href="#">Articles Management<span class="badge badge-warning badge-pill"><%=GameArticle.count%></span> </a>
+        <a class="dropdown-item" href="#">Company Management <span class="badge badge-warning badge-pill"><%=InvolvedCompany.count%></span> </a>
       </div>
       </div>
     <%else%>

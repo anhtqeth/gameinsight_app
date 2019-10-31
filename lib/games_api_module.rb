@@ -571,7 +571,8 @@ module GamesApiModule
     puts JSON.parse(response.read_body).first
     JSON.parse(response.read_body).first
   end
-
+  
+  
   # def gamesPlatformLogoRequest(logo_id)
   #   request = Net::HTTP::Get.new(URI(PLATFORM_LOGO), {'user-key' => USERKEY})
 
