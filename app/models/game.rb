@@ -58,6 +58,20 @@ class Game < ApplicationRecord
   # scope :developer, ->(game) { Company.find(game.involved_companies.developer.company_id) }
   
   scope :upcoming_release, -> {Game.where('first_release_date > ?', DateTime.now)}
+  
+  #Return true if there is value for the lang
+  def translated(lang)
+    case lang 
+      when 'vi'
+        I18n.locale     = :vi
+    end
+    self.summary.nil? ? false : true
+  end
+  
+  def translated_value(lang)
+    
+  end
+  
  
   def self.publisher(game)
     if game.involved_companies.publisher.try(:company_id).present?
@@ -74,7 +88,9 @@ class Game < ApplicationRecord
   # TODO: - Refactor this model
   # TODO - Put all API request to private?
   def fetchAPIData(id)
-    OpenStruct.new(gamesListProcess(id)) if gamesListProcess(id).present?
+    if id.is_a? Integer
+      OpenStruct.new(gamesListProcess(id)) if gamesListProcess(id).present?
+    end
   end
 
   # TODO: - Code smell here

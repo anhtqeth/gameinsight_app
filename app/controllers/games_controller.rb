@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class GamesController < ApplicationController
-  before_action :logged_in_user, only: %i[index edit update]
-  
+  before_action :admin_user, only: %i[index edit update]
   def index
     if params[:search]
       @search_result = Game.search_by_name(params[:search]).order(:name).paginate(page: params[:page], per_page: 15)
@@ -26,7 +25,6 @@ class GamesController < ApplicationController
     @screenshot   = Screenshot.new
     @video        = GameVideo.new
     @game_article = GameArticle.new
-
     @pub_company  = if @game.involved_companies.publisher.nil?
                      InvolvedCompany.new
                     else
@@ -60,25 +58,29 @@ class GamesController < ApplicationController
 
   def show
     game = nil
-    if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil?
-      game = Game.new
-      game.saveAPIData(params[:id])
-      game = Game.find_by(external_id: params[:id])
+      if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil? 
+        game = Game.new
+        game.saveAPIData(params[:id]).nil? ?  game = nil : game = Game.find_by(external_id: params[:id])
+      else
+        game = params[:id].to_i != 0 ? Game.find_by_external_id(params[:id]) : Game.friendly.find_by(slug: params[:id])
+      end
+    unless game.nil?
+      @game_details       = game
+      @game_videos        = game.game_videos
+      @game_screenshots   = game.screenshots
+      @game_newsfeed_list = GameArticleCollection.articles(game)
+      @game_publisher     = Game.developer(game)
+      @game_developer     = Game.publisher(game)
+      
+      unless game.game_collection.nil?
+        @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10]
+        @size = @game_card_carousel_list.size / 2
+      end
+      render 'games/game_detail'
     else
-      game = params[:id].to_i != 0 ? Game.find_by_external_id(params[:id]) : Game.friendly.find_by(slug: params[:id])
+      flash[:danger] = 'Invalid ID'
+      redirect_to(root_path)
     end
-    @game_details       = game
-    @game_videos        = game.game_videos
-    @game_screenshots   = game.screenshots
-    @game_newsfeed_list = GameArticleCollection.articles(game)
-    @game_publisher     = Game.developer(game)
-    @game_developer     = Game.publisher(game)
-    
-    unless game.game_collection.nil?
-      @game_card_carousel_list = game.game_collection.games.order('first_release_date DESC')[0..10]
-      @size = @game_card_carousel_list.size / 2
-    end
-    render 'games/game_detail'
   end
 
   # TODO: - Add more way to search, currently search by name.
@@ -93,6 +95,12 @@ class GamesController < ApplicationController
       render 'games/search_result'
     end
   end
+  
+  def adm_content
+    @translated_games = Game.select{|x| x.translated('vi') == true}
+    render 'games/admin_game_content'
+  end
+  
   
   #Show popular games base on genres
   def discover
@@ -135,6 +143,13 @@ class GamesController < ApplicationController
       unless logged_in?
         flash[:danger] = 'Please log in.'
         redirect_to login_url
+      end
+    end
+    
+    def admin_user
+      unless current_user.admin?
+        flash[:danger] = 'Only Admin can do this.'
+        redirect_to(root_path)
       end
     end
 end

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'games/countdown', to: 'games#countdown',  as: 'countdown'
   get '/games/discover', to: 'games#discover',   as: 'discover'
   get '/games/hot',      to: 'static_pages#hot', as: 'hot_games'
-
+  get 'admin/game_content', to: 'games#adm_content', as: 'adm_game_content'
   
   scope '(:locale)', locale: /en|vi/ do
     root 'static_pages#home'
