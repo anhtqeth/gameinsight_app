@@ -9,16 +9,7 @@ class StaticPagesController < ApplicationController
     # TODO: Add sorting by created date here
     @all_posts = Post.all[0..10]
 
-    # TODO- This is a compensation for the lack of newsfeed in 0.9 will be removed
     @hotgames = game.fetchPopularUpcomingRelease
-
-    # TODO: - Implemented your own
-    # Currently set in controller, better if user can pick this from the view. Will change in 0.3
-    # time = (Time.current - 6.days).to_time.to_i
-    # game_article = GameArticle.new
-
-    # @latest_newsfeed = game_article.fetchLatestNews(time)
-
     data = ['PlayStation 4', 'PC (Microsoft Windows)', 'Nintendo Switch', 'Xbox One']
     @platforms_list = Platform.where('name IN (?)', data).pluck(:name)
 
@@ -56,7 +47,7 @@ class StaticPagesController < ApplicationController
     @gematsu_rss_feeds = arc.rssFeed('gematsu')
     @gamespot_rss_feeds = arc.rssFeed('gamespot')
     @pushsquare_rss_feeds = arc.rssFeed('pushsquare')
-
+    
     render 'news_feed'
   end
 end

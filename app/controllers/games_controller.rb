@@ -46,7 +46,6 @@ class GamesController < ApplicationController
   def update
     
     @game = Game.friendly.find(params[:id])
-    debugger
     if game_params[:lang] == 'vi'
         I18n.locale   = :vi
     else 
