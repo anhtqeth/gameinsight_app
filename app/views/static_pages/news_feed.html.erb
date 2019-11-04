@@ -16,27 +16,25 @@
   <hr class="my-4">
   <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
   <li class="nav-item">
-      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#gematsu" role="tab" aria-controls="home" aria-selected="true">Gematsu</a>
+      <a class="nav-link active" id="gematsu-tab" data-toggle="tab" href="#gematsu" role="tab" aria-controls="gematsu" aria-selected="true">Gematsu</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#pushsquare" role="tab" aria-controls="profile" aria-selected="false">PushSquare</a>
+      <a class="nav-link" id="pushsquare-tab" data-toggle="tab" href="#pushsquare" role="tab" aria-controls="pushsquare" aria-selected="false">PushSquare</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#gamespot" role="tab" aria-controls="contact" aria-selected="false">GameSpot</a>
+      <a class="nav-link" id="gs-tab" data-toggle="tab" href="#gamespot" role="tab" aria-controls="gamespot" aria-selected="false">GameSpot</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#gamespot" role="tab" aria-controls="contact" aria-selected="false">GameSpot</a>
+      <a class="nav-link" id="ign-tab" data-toggle="tab" href="#ign" role="tab" aria-controls="contact" aria-selected="false">IGN</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#gamespot" role="tab" aria-controls="contact" aria-selected="false">GameSpot</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#gamespot" role="tab" aria-controls="contact" aria-selected="false">GameSpot</a>
-    </li>
+    <!--<li class="nav-item">-->
+    <!--  <a class="nav-link" id="destructoid-tab" data-toggle="tab" href="#gamespot" role="tab" aria-controls="contact" aria-selected="false">Destructoid</a>-->
+    <!--</li>-->
   </ul>         
   <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="gematsu" role="tabpanel" aria-labelledby="home-tab"><%=rssFeedrenderer(@gematsu_rss_feeds)%></div>
-  <div class="tab-pane fade" id="pushsquare" role="tabpanel" aria-labelledby="profile-tab"><%=rssFeedrenderer(@pushsquare_rss_feeds)%></div>
-  <div class="tab-pane fade" id="gamespot" role="tabpanel" aria-labelledby="contact-tab"><%=rssFeedrenderer(@gamespot_rss_feeds)%></div>
+    <div class="tab-pane fade show active" id="gematsu" role="tabpanel" aria-labelledby="gematsu-tab"><%=rssFeedrenderer(@gematsu_rss_feeds)%></div>
+    <div class="tab-pane fade" id="pushsquare" role="tabpanel" aria-labelledby="pushsquare-tab"><%=rssFeedrenderer(@pushsquare_rss_feeds)%></div>
+    <div class="tab-pane fade" id="gamespot" role="tabpanel" aria-labelledby="gs-tab"><%=rssFeedrenderer(@gamespot_rss_feeds)%></div>
+    <div class="tab-pane fade" id="ign" role="tabpanel" aria-labelledby="ign-tab"><%=rssFeedrenderer(@ign_rss_feeds)%></div>
   </div>
 </div>
