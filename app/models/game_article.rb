@@ -92,6 +92,7 @@ class GameArticle < ApplicationRecord
     Rails.cache.fetch("#{source}/newsfeed", expires_in: 12.hours) do
       rss_feeds = nil
       # Depend on the request source. Getting corresponding newsfeed
+      
       case source
       when 'gamespot'
         rss_feeds = RSS::Parser.parse(open(GAMESPOT_NEWS_RSS_FEED).read, false).items
@@ -107,20 +108,23 @@ class GameArticle < ApplicationRecord
       article_list = []
       # Processing feeds in readable format.
       rss_feeds.each do |r|
-        # Used Nokogiri to parse the content
-        parsed_html = Nokogiri::HTML.parse(r.description)
-        # Get text content
-        text = parsed_html.xpath '//p/text()'
-        # Get feature image to article
-        feature_img = if parsed_html.css('img').first.present?
-                        parsed_html.css('img').first['src']
-                      else
-                        fetchImageFromURI(r.link, source)
-                      end
-        # Saved article to hash and add to array
-        article = { title: r.title, url: r.link, source: nil,
-                    publish_at: r.pubDate, summary: text.to_s, img: feature_img }
-        article_list << article
+        unless r.description.nil?
+          # Used Nokogiri to parse the content
+          parsed_html = Nokogiri::HTML.parse(r.description)
+          # Get text content
+          text = parsed_html.xpath '//p/text()'
+          # Get feature image to article
+          feature_img = if parsed_html.css('img').first.present?
+                          parsed_html.css('img').first['src']
+                        else
+                          fetchImageFromURI(r.link, source)
+                        end
+          # Saved article to hash and add to array
+          article     = { title: r.title, url: r.link, source: nil,
+                      publish_at: r.pubDate, summary: text.to_s, img: feature_img }
+          article_list << article
+          debugger
+        end
       end
 
       article_list
@@ -136,6 +140,7 @@ class GameArticle < ApplicationRecord
       doc.css('img')[1]['src'] if doc.css('img')[1].present?
     when 'pushsquare'
       doc.css('img')[4]['src'] if doc.css('img')[4].present?
+    
     end
   end
 end

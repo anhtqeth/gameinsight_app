@@ -47,6 +47,8 @@ class StaticPagesController < ApplicationController
     @gematsu_rss_feeds = arc.rssFeed('gematsu')
     @gamespot_rss_feeds = arc.rssFeed('gamespot')
     @pushsquare_rss_feeds = arc.rssFeed('pushsquare')
+    @ign_rss_feeds = arc.rssFeed('ign')
+    #@destructoid_rss_feeds = arc.rssFeed('destructoid')
     
     render 'news_feed'
   end

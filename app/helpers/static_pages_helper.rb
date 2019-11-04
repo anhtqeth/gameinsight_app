@@ -11,7 +11,7 @@ module StaticPagesHelper
   def platform_selection(data)
     if data_verify(data)
       platform_list = Platform.where('name IN (?)', data).pluck(:name)
-      html = []
+      html          = []
       platform_list.each do |platform|
         html << content_tag(:a, link_to(platform, root_path(platform_name: platform), remote: true, class: 'dropdown-item'))
       end
@@ -61,7 +61,7 @@ module StaticPagesHelper
 
   def mediaRenderer(data)
     media = []
-    body = []
+    body  = []
     unless data[:img].nil?
       media << image_tag(data[:img], class: 'align-self-center mr-3',id: 'news-image')
     end
@@ -69,7 +69,9 @@ module StaticPagesHelper
     body << content_tag(:p, truncate(data[:summary], length: 300))
     body << link_to('View More', data[:url], target: '_blank', rel: 'nofollow')
     body << content_tag(:hr)
-    body << content_tag(:p, content_tag(:small, 'Last updated ' + time_ago_in_words(data[:publish_at]) + ' ago'))
+    unless data[:publish_at].nil?
+      body << content_tag(:p, content_tag(:small, 'Last updated ' + time_ago_in_words(data[:publish_at]) + ' ago'))
+    end
     media << content_tag(:div,safe_join(body),class:'media-body')
     safe_join(media)
   end
