@@ -24,7 +24,8 @@ class Game < ApplicationRecord
   # For PG Search
   include PgSearch::Model
   translates :storyline, :summary
-  
+  attr_accessor :lang #Used to set up language flag when saving model.
+
   pg_search_scope :search_by_name, against: [:name],
                                    using: {
                                      tsearch: { prefix: true }
