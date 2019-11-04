@@ -1,20 +1,78 @@
 <!--Show Translated Content-->
+<% provide(:title, 'Manage Game Content') %>
+<h1>Game Content Management</h1>
+<small>REVISE CONTENT</small>
+<hr id="new-content-line">
 <%@translated_games.each do |game|%>
+<% I18n.locale = :en%>
 <h4><%=game.name%></h4>
   <div class="row">
     <div class="col">
-      <h4>Original Value</h4>
+      <div class="card">
+        <div class="card-body">
+          <h4>Summary</h4>
+          <hr id ="new-content-line">
+          <h6 class="card-subtitle mb-2 text-muted"><%= %></h6>
+          <%=form_for(game) do |f|%>
+            <%= f.text_area :summary, class: 'form-control', rows: 15 %>
+            <%= f.hidden_field :lang, :value => 'en' %>
+            <%= f.submit "SAVE", class: "btn btn-warning" %>
+          <%end%>
+          <p id="summary-eng" class="card-text"><%= game.summary%></p>
+          <button id="edit-en-summary" class="btn btn-primary">Edit</button>
+          
+          <a href="#" class="card-link">Save</a>
+          <hr>
+          <h5>Storyline</h5>
+          <hr id ="new-content-line">
+          <p class="card-text"><%= game.storyline%></p>
+           <%=form_for(game) do |f|%>
+            <%= f.text_area :storyline, class: 'form-control', rows: 15 %>
+            <%= f.hidden_field :lang, :value => 'en' %>
+            <%= f.submit "Save", class: "btn btn-warning" %>
+          <%end%>
+          <button  id="edit-<%=game.id%>-en-storyline" class="btn btn-primary">Edit</button>
+        </div>
+      </div>
     </div>
     
     <div class="col">
-      <!--Translated-->
-      <text>
-        
-      </text>
+      <% I18n.locale = :vi%>
+      <div class="card">
+        <div class="card-body">
+          <h5>Tóm Tắt</h5>
+          <hr>
+          <h6 class="card-subtitle mb-2 text-muted"><%= %></h6>
+          <%=form_for(game) do |f|%>
+            <%= f.text_area :summary, class: 'form-control', rows: 15 %>
+            <%= f.hidden_field :lang, :value => 'vi' %>
+            <%= f.submit "Save", class: "btn btn-warning" %>
+          <%end%>
+          <p class="card-text" style="font-family: 'Be Vietnam' !important;"><%= game.summary%></p>
+          <button id="edit-<%=game.id%>-vi-summary" class="btn btn-primary">Edit</button>
+          <h5>Cốt Truyện</h5>
+          <hr>
+          <p class="card-text"  style="font-family: 'Be Vietnam' !important;"><%= game.storyline%></p>
+          <%=form_for(game) do |f|%>
+            <%= f.text_area :storyline, class: 'form-control', rows: 15 %>
+            <%= f.hidden_field :lang, :value => 'vi' %>
+            <%= f.submit "Save", class: "btn btn-warning" %>
+          <%end%>
+          <button  id="edit-<%=game.id%>-vi-storyline" class="btn btn-primary">Edit</button>
+        </div>
+      </div>
       <!--Update Button-->
-      <button>Update</button>
     </div>
   </div>
+  <hr>
+  <script>
+   $("button#edit-en-summary").click(function(e){
+      alert("Clicked " + $(this).text());
+      $("#summary-eng").replaceWith( '<textarea class="form-control" rows="15">' + $("#summary-eng").text() + "</textarea>" );
+    })
+  </script>
 <%end%>
-  <div id="pagination"></div>
+   <div class="my_pagination">     
+        <%= will_paginate @translated_games %>
+  </div>
 <hr>

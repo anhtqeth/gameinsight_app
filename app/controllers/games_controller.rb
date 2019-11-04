@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+# TODO- Refactor Controller
 class GamesController < ApplicationController
   before_action :admin_user, only: %i[index edit update]
   def index
@@ -13,7 +13,7 @@ class GamesController < ApplicationController
       # @game_card_result = result
     end
   end
-
+ 
   def destroy
     Game.friendly.find(params[:id]).destroy
     flash.now[:success] = 'Game deleted!'
@@ -30,7 +30,6 @@ class GamesController < ApplicationController
                     else
                      @game.involved_companies.publisher
                     end
-
     @dev_company  = if @game.involved_companies.developer.nil?
                      InvolvedCompany.new
                     else
@@ -38,16 +37,23 @@ class GamesController < ApplicationController
                     end
     @publisher    = Game.publisher(@game)
     @developer    = Game.developer(@game)
-
     @genres       = @game.game_genres.map(&:name).join(',')
     @platform     = @game.platforms.map(&:name).join(',')
-
     game_article_collection = GameArticleCollection.where(game_id: @game.id).take
     game_article_collection.nil? ? @game_articles = nil : @game_articles = game_article_collection.game_articles
   end
 
   def update
+    
     @game = Game.friendly.find(params[:id])
+    debugger
+    if game_params[:lang] == 'vi'
+        I18n.locale   = :vi
+    else 
+      if game_params[:lang] == 'en' 
+        I18n.locale = :en
+      end
+    end
     if @game.update_attributes(game_params)
       flash.now[:success] = 'Game detail updated'
       redirect_to @game
@@ -78,7 +84,7 @@ class GamesController < ApplicationController
       end
       render 'games/game_detail'
     else
-      flash[:danger] = 'Invalid ID'
+      #flash[:danger] = 'Invalid ID'
       redirect_to(root_path)
     end
   end
@@ -97,7 +103,7 @@ class GamesController < ApplicationController
   end
   
   def adm_content
-    @translated_games = Game.select{|x| x.translated('vi') == true}
+    @translated_games = Game.select{|x| x.translated('vi') == true}.paginate(page: params[:page], per_page: 5)
     render 'games/admin_game_content'
   end
   
@@ -127,7 +133,7 @@ class GamesController < ApplicationController
   private
     def game_params
       params.require(:game).permit(:cover, :name,
-                                   :slug, :summary, :storyline, :first_release_date)
+                                   :slug, :summary, :storyline, :first_release_date, :lang)
     end
     
     # Do I need this?
@@ -148,7 +154,7 @@ class GamesController < ApplicationController
     
     def admin_user
       unless current_user.admin?
-        flash[:danger] = 'Only Admin can do this.'
+        #flash[:danger] = 'Only Admin can do this.'
         redirect_to(root_path)
       end
     end
