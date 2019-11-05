@@ -123,7 +123,7 @@ class GameArticle < ApplicationRecord
           article     = { title: r.title, url: r.link, source: nil,
                       publish_at: r.pubDate, summary: text.to_s, img: feature_img }
           article_list << article
-          debugger
+          
         end
       end
 
