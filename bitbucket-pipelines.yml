@@ -8,7 +8,8 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - gem install bundler
           - bundle install
-          - apt-get install zip -y
+          - apt-get update
+          - apt-get install zip
           - zip -r gamedb-application.zip -x *.git*
           - pipe: atlassian/aws-elasticbeanstalk-deploy:0.5.2
             variables:
