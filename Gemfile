@@ -39,7 +39,6 @@ gem 'rich_text_renderer', '~> 0.2.2'
 #Translation
 gem 'i18n', '~> 1.6'
 gem 'rails-i18n'
-gem 'aws-sdk', '~> 3'
 gem 'globalize'
 
 # Background JOB
@@ -60,6 +59,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'aws-sdk', '~> 3'
   gem 'listen', '3.1.5'
   gem 'rubocop'
   gem 'spring',                '2.0.2'

@@ -12,7 +12,8 @@ module TranslationModule
   #Init translation client for AWS
   CLIENT = Aws::Translate::Client.new(
     access_key_id: 'AKIA43LK2ICEXSYIW3NR',
-    secret_access_key: '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'
+    secret_access_key: 'aU5SxS8Dfz+x38ob3EDUlMnoVCREDBHojmJoL/HB',
+    region: 'us-west-2'
   )
   
   def transText(text,src_lang,targ_lang)
