@@ -64,6 +64,7 @@ class GamesController < ApplicationController
   def show
     game = nil
       if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil? 
+        
         game = Game.new
         game.saveAPIData(params[:id]).nil? ?  game = nil : game = Game.find_by(external_id: params[:id])
       else
