@@ -5,5 +5,6 @@ test:
   host: 'localhost'
   port: '6379'
 production:
-  host: 'ethugamedb-redis-server.xadimb.ng.0001.usw2.cache.amazonaws.com'
+  #host: 'ethugamedb-redis-server.xadimb.ng.0001.usw2.cache.amazonaws.com'
+  host: 'redis://redistogo:55c16a2542415e38ba0af363921e1e08@hammerjaw.redistogo.com:10097/'
   port: '6379'
