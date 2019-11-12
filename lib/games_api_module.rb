@@ -52,9 +52,7 @@ module GamesApiModule
   GAME_NEWS_GROUP_URI = 'https://api-v3.igdb.com/pulse_groups'
   GAME_ARTICLE_URI = 'https://api-v3.igdb.com/pulses'
   GAME_EXTERNAL_ARTICLE_URI = 'https://api-v3.igdb.com/pulse_urls'
-  
   GAME_ACHIVEMENT_URI = 'https://api-v3.igdb.com/achievements'
-
 
   # Authentication
   USERKEY = '049d27f7325bcb67768a30d5140fefb7' # NEW KEY

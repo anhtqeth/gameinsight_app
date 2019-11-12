@@ -10,7 +10,11 @@
 					  <div class="card-body">
 						  <h5 class="card-title"><%= @game_details[:name] %></h5>
 						  <hr id="content-line">
-						  <p class="card-text">Release Date: <strong><%= date_format(@game_details[:first_release_date]) %></strong></p>
+						  <%= unless @game_details[:first_release_date].nil?%>
+						  	<p class="card-text">Release Date: <strong><%= date_format(@game_details[:first_release_date]) %></strong></p>
+						  <%else%>
+						  	<p class="card-text">Release Date: <strong>TBD</strong></p>
+						  <%end%>
 						  <!--TODO Change to logo link to platform page-->
 						  <p class="card-text">Platform: <strong><%= @game_details.platforms.map{|x| x.name}.join(', ') %></strong></p>
 						  <!--TODO Change to logo link to platform page-->
