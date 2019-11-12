@@ -47,7 +47,7 @@ class Game < ApplicationRecord
   has_many :involved_companies, dependent: :destroy
   has_many :companies, through: :involved_companies
 
-  validates :name, :summary, :first_release_date, presence: true
+  validates :name, :summary, presence: true
   validates :external_id, uniqueness: true
 
   extend FriendlyId
@@ -133,7 +133,7 @@ class Game < ApplicationRecord
       end
 
         if game_detail.first_release_date == 'NA'
-          game.first_release_date = Time.now - 15.years
+          game.first_release_date = nil
         else
           game.first_release_date = DateTime.strptime(game_detail.first_release_date.to_s, '%s')
         end
