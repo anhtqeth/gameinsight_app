@@ -108,7 +108,7 @@ module GamesHelper
     if data_verify(data)
       content = []
       data.each do |x|
-        content << content_tag(:span, x.name, class: 'badge badge-warning')
+        content << content_tag(:span, x.name, class: 'badge badge-pill badge-dark')
       end
       safe_join(content)
     else
