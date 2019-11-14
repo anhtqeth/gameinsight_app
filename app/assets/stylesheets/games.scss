@@ -3,6 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap";
 
+.card-columns {
+   column-count: 2 !important;
+}
+
 #game-feature-img {
   width: 100%;
   height: 500px;
