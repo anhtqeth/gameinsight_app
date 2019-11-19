@@ -8,9 +8,10 @@ class StaticPagesController < ApplicationController
 
     # TODO: Add sorting by created date here
     @all_posts = Post.all[0..10]
-
+    
     @hotgames = game.fetchPopularUpcomingRelease
     data = ['PlayStation 4', 'PC (Microsoft Windows)', 'Nintendo Switch', 'Xbox One']
+    # debugger
     @platforms_list = Platform.where('name IN (?)', data).pluck(:name)
 
     if params[:platform_name].nil?

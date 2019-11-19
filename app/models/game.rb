@@ -192,11 +192,12 @@ class Game < ApplicationRecord
   def fetchPopularUpcomingRelease
     time = Date.parse(Time.now.to_s)
 
-    Rails.cache.fetch("#{time}/popular_upcoming_releases", expires_in: 7.days) do
+    Rails.cache.fetch("#{time}/popular_upcoming_releases", expires_in: 3.days) do
       saveAPIPopularGame
     end
-
-    Game.order(popularity: :desc).where('first_release_date > ?', time)
+    #Need this or not?
+    games = Game.order(popularity: :desc).where('first_release_date > ?', time)
+    games.to_a.delete_if{|x| x.screenshots.empty?}
   end
 
   def saveAPIPopularGame
@@ -218,9 +219,9 @@ class Game < ApplicationRecord
   def formatApiResult(game_data)
     # Hashes -> OpenStruct
     # Map name to Array
-    game_data.platforms.nil? ? game_data.platforms = [] : game_data.platforms = game_data.platforms.map { |x| OpenStruct.new(x) } # .map{|z| z.name}
-    game_data.genres.nil? ? game_data.genres       = nil : game_data.genres = game_data.genres.map { |x| OpenStruct.new(x) } # .map{|z| z.name}
-    game_data.cover.nil? ? game_data.cover         = nil : game_data.cover = game_data.cover['url'].sub('t_thumb', 't_cover_big')
+    game_data.platforms.nil? ? game_data.platforms  = [] : game_data.platforms = game_data.platforms.map { |x| OpenStruct.new(x) } # .map{|z| z.name}
+    game_data.genres.nil? ? game_data.genres        = nil : game_data.genres = game_data.genres.map { |x| OpenStruct.new(x) } # .map{|z| z.name}
+    game_data.cover.nil? ? game_data.cover          = nil : game_data.cover = game_data.cover['url'].sub('t_thumb', 't_cover_big')
     game_data.collection.nil? ? game_data.collection = [] : game_data.collection = game_data.collection['name']
     game_data.first_release_date.nil? ? game_data.first_release_date = nil : game_data.first_release_date = DateTime.strptime(game_data.first_release_date.to_s, '%s')
     game_data

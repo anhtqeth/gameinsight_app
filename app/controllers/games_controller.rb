@@ -126,7 +126,7 @@ class GamesController < ApplicationController
   end
   
   def countdown
-    @games = Game.upcoming_release.where.not('first_release_date' => nil)
+    @games = Game.upcoming_release.where.not('first_release_date' => nil).to_a.delete_if{|x| x.screenshots.empty?}
     render 'games/games_countdown'
   end
 
