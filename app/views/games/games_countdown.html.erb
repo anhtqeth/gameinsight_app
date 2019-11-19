@@ -3,7 +3,7 @@
     
     <hr>
     
-    <p class="release-date"><%= game.first_release_date %> </p>
+    <!--<p class="release-date"><= game.first_release_date %> </p>-->
     <div class="card bg-dark text-white">
     <% if game.screenshots.empty? %>
       
@@ -11,27 +11,32 @@
       <%= image_tag(game.screenshots.first.url, class: "card-img", alt: "#{game.name} screenshot")%>
     <%end%>
     <div class="card-img-overlay" id="game-detail-feature">
-          <div class="row">
-              <div class="col">
+          
+          <div id="countdown-info">
+            <div class="row">
                 <p class="card-text"></p>
                 <p class="release-countdown" id="result-<%= game.id %>"></p>
-              </div>
-          </div>
-          <div class="row" id="countdown-info">
-            <div class="col" id="game-info-col">
-              <h1><%=game.name%></h1>
-              <hr id="new-content-line">
-              <p><%=game.summary%></p>
-              <%unless Game.developer(game).nil?%>
-              <h5 id="game-info-corp"><%=Game.developer(game).name%></h5>
-              <%end%>
-              <%unless Game.publisher(game).nil?%>
-              <h5  id="game-info-corp"><%=Game.publisher(game).name %></h5>
-              <%end%>
-              <h6>Release on: <%=game.first_release_date%></h6>
             </div>
-            <div class ="col">
-             
+            <div class="row">
+              <div class="col" id="game-info-col">
+                <h1><%=game.name%></h1>
+                <hr id="new-content-line">
+               
+                <%unless Game.developer(game).nil?%>
+                <h6>PUBLISHER</h6><h5 id="game-info-corp"><%=Game.developer(game).name%></h5>
+                <%end%>
+                <%unless Game.publisher(game).nil?%>
+                <h6>DEVELOPER</h6><h5  id="game-info-corp"><%=Game.publisher(game).name %></h5>
+                <%end%>
+                <h6>RELEASE DATE</h6><h5  id="game-info-corp"><%=date_format(game.first_release_date)%></h6>
+              </div>
+              <div class ="col">
+                <p><%=game.summary%></p>
+                <hr>
+                <a>Pre-Order</a>
+                <a>Amazon</a>
+                <a>Other</a>
+              </div>
             </div>
           </div>
         </div>
