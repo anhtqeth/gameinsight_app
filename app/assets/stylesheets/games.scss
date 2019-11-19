@@ -90,8 +90,11 @@ td, label {
 .release-countdown{
   font-size: 35px;
   color: white;
-  background: border-box;
+  // background: border-box;
   border: solid;
+  border-radius: 5px;
+  display: inline-block;
+  padding:4px;
 }
 
 // Countdown styling
@@ -113,7 +116,7 @@ td, label {
 #countdown-info{
   // position: absolute;
   // bottom: 0;
-  height: 80%;
+  height: 90%;
   // background-color: black;
   // opacity: 0.5;
   background-image: linear-gradient(

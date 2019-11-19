@@ -4,7 +4,7 @@ module StaticPagesHelper
   include ApplicationHelper
 
   def date_format(date)
-    date.strftime('%d-%B-%Y')
+    date.strftime('%d - %B - %Y')
   end
 
   # TODO: - Refine this code

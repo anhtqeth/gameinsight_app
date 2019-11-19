@@ -3,14 +3,20 @@
 <div class="card-group">
   <div class="card-columns">
    <% @platform_games.each do |game| %>
-    <div class="card shadow p-3 mb-3">
-      <%= image_tag(game[:cover],class:"card-img-top",id:"game-card-img") %>
-      <div class="card-body">
-        <hr id="content-line">
-        <h5 class="card-title"><%=game[:name]%></h5>
-        <p class="card-text"><%= truncate(game[:summary], length: 200)%></p>
-        <cite title="News Source"> <%=game[:news_source] %> </cite>
-        <a href=<%=game_path(game[:slug]) %> target="_blank" class="btn btn-outline-warning btn-block">Details</a>
+    <div class="card mb-3 shadow p-3 mb-5 bg-white rounded" style="max-width: 540px;">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          <img src=<%=game.cover%> class="card-img" alt="<%=game.name%> cover">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"><%=game.name%></h5>
+            <p class="card-text"><%=truncate(game.summary,length: 80)%></p>
+            <%=badge_render(game.game_genres)%>
+            <hr>
+            <a href=<%=game_path(game[:slug]) %> target="_blank" >Details</a>
+          </div>
+        </div>
       </div>
     </div>
   <% end %>
