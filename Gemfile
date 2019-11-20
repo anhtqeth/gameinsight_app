@@ -53,6 +53,7 @@ gem 'devise'
 
 #Utilites
 gem 'jquery-countdown-rails'
+gem 'webpacker'
 
 group :development, :test do
   gem 'byebug', '9.0.6', platform: :mri
