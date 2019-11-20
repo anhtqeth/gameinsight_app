@@ -6,6 +6,18 @@
 1. Action is defined in controller located in app/controllers
 2. Router will determine what action to be perform and pick the controller to be used
 3. Router can act like RequestMapping 
+4. 
+
+
+RVM & RUBY & BUNDLE
+This need to be installed for single user
+sudo rm -rf /etc/rvmrc /etc/profile.d/rvm.sh /usr/local/rvm #Removed all rvm install.
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+curl -L https://get.rvm.io | bash -s stable or \curl -sSL https://get.rvm.io | bash -s stable --ruby
+
+
+
+
 
 
 #Setting up SSH for GIT - Bitbucket
