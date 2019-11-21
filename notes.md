@@ -8,13 +8,41 @@
 3. Router can act like RequestMapping 
 4. 
 
+# Upgrading to Rails 6
 
 RVM & RUBY & BUNDLE
 This need to be installed for single user
 sudo rm -rf /etc/rvmrc /etc/profile.d/rvm.sh /usr/local/rvm #Removed all rvm install.
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 curl -L https://get.rvm.io | bash -s stable or \curl -sSL https://get.rvm.io | bash -s stable --ruby
+gem install bundle
+bundle install
+Resolve dependency
 
+nvm install node --reinstall-packages-from=node
+curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+sudo yum install yarn
+
+rails webpacker:install
+
+sudo yum search postgres >> Install postgress96
+
+add this to development.rb 
+    -   config.hosts << "5e208e08277b4deebdcde96ab8626e60.vfs.cloud9.us-west-2.amazonaws.com"
+
+sudo vim /var/lib/pgsql96/data/postgresql.conf
+sudo vim /var/lib/pgsql96/data/pg_hba.conf
+
+sudo service postgresql96 restart
+
+sudo su - postgres # login as postgres user
+psql -U postgres # login to postgres db as postgres user
+sudo -u postgres createdb ec2-user
+
+pg_dump db/ethugamedb_development > ethu_tmp/bkup
+psql -p 5432 -f ethu_tmp/bkup
+
+ALTER USER postgres WITH PASSWORD '!Tq@241192'
 
 
 

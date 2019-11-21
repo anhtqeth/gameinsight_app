@@ -14,9 +14,10 @@
       gtag('config', 'UA-121325947-2');
     </script>
 
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!--<= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>-->
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>   
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Be+Vietnam&display=swap" rel="stylesheet">
@@ -28,25 +29,12 @@
   
   </head>
  
-  <!--< render 'layouts/rightSidebar' %>-->
   <%= render 'layouts/header' %>
-    <!--<div class="overlay"></div>-->
-    <!--<div class = "container" id = "home-content" style="background-color: #ffffff;">-->
-      <!--<div class="wrapper">-->
-      <!--     <= render 'layouts/leftSidebar' %>-->
-      <!--</div>-->
-  <!--</div>-->
+  
   <body>
      
      <div class="container" id="main-site-content">
-     <!--<nav aria-label="breadcrumb" id="site-breadcrumb">-->
-     <!-- <ol class="breadcrumb">-->
-     <!--   <li class="breadcrumb-item"><a href=<=root_path%>>Home</a></li>-->
-     <!--   <= breadcrumb_trail %>-->
-     <!--   <li class="breadcrumb-item"><a href="#">Library</a></li>-->
-     <!--   <li class="breadcrumb-item active" aria-current="page">Data</li>-->
-     <!-- </ol>-->
-     <!--</nav>-->
+     
        <%= yield %>
      </div>
   </body>

@@ -1,132 +1,132 @@
-// Place all the styles related to the Games controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-@import "bootstrap";
+// // Place all the styles related to the Games controller here.
+// // They will automatically be included in application.css.
+// // You can use Sass (SCSS) here: http://sass-lang.com/
+// @import "bootstrap";
 
-#game-feature-img {
-  width: 100%;
-  height: 500px;
-  overflow: hidden;
-  padding-top: 0px;
-}
+// #game-feature-img {
+//   width: 100%;
+//   height: 500px;
+//   overflow: hidden;
+//   padding-top: 0px;
+// }
 
-#img-slide{
-  width:100%;
-  height:100%;
-  object-fit: cover;
-  overflow: hidden;
-}
+// #img-slide{
+//   width:100%;
+//   height:100%;
+//   object-fit: cover;
+//   overflow: hidden;
+// }
 
-#news-image{
-  width: 250px;
-  height: 200px;
-}
+// #news-image{
+//   width: 250px;
+//   height: 200px;
+// }
 
-#new-content-line{
-  border: 1px solid #FFC107;
-  width: 25%;
-  margin-left:0;
-}
+// #new-content-line{
+//   border: 1px solid #FFC107;
+//   width: 25%;
+//   margin-left:0;
+// }
 
-//Styling carousel 
-.carousel-indicators li {
-  width: 10px !important;
-  height: 10px!important;
-  border-radius: 50%!important;
-  background-color: #ffc107!important;
-}
+// //Styling carousel 
+// .carousel-indicators li {
+//   width: 10px !important;
+//   height: 10px!important;
+//   border-radius: 50%!important;
+//   background-color: #ffc107!important;
+// }
 
-#game-discover-overlay{
-  opacity:0;
-}
+// #game-discover-overlay{
+//   opacity:0;
+// }
 
 
-#game-discover-overlay:hover {
-    h1 {
-      color: #ffc107;
-    }
+// #game-discover-overlay:hover {
+//     h1 {
+//       color: #ffc107;
+//     }
     
-    a {
-      text-decoration: none;
-      color: #ffc107;
-    }
+//     a {
+//       text-decoration: none;
+//       color: #ffc107;
+//     }
     
-    p {
-      color: white;
-    }
-    opacity: 0.8;
-    background: black;
-}
+//     p {
+//       color: white;
+//     }
+//     opacity: 0.8;
+//     background: black;
+// }
 
 
 
-#discover-btn{
-  float: right;
-}
+// #discover-btn{
+//   float: right;
+// }
 
-#preview-img{
-  width: 200px;
-  height: 200px;
-}
+// #preview-img{
+//   width: 200px;
+//   height: 200px;
+// }
 
-#game-edit-column{
-  //border-right: 5px solid;
-  // color: #FFC107;
-}
+// #game-edit-column{
+//   //border-right: 5px solid;
+//   // color: #FFC107;
+// }
 
-td, label {
-  font-family: 'Poppins', sans-serif !important;
-}
+// td, label {
+//   font-family: 'Poppins', sans-serif !important;
+// }
 
-// Styling Games Countdown
-#game-detail-feature{
-  // opacity: 0.5;
-  // background: black;
-   h1 {
-      color: #ffc107;
-   }
-}
+// // Styling Games Countdown
+// #game-detail-feature{
+//   // opacity: 0.5;
+//   // background: black;
+//   h1 {
+//       color: #ffc107;
+//   }
+// }
 
-.release-countdown{
-  font-size: 35px;
-  color: white;
-  // background: border-box;
-  border: solid;
-  border-radius: 5px;
-  display: inline-block;
-  padding:4px;
-}
+// .release-countdown{
+//   font-size: 35px;
+//   color: white;
+//   // background: border-box;
+//   border: solid;
+//   border-radius: 5px;
+//   display: inline-block;
+//   padding:4px;
+// }
 
-// Countdown styling
-#game-info-col{
-  border-right: 2px solid;
-  border-color: #FFC107;
-}
+// // Countdown styling
+// #game-info-col{
+//   border-right: 2px solid;
+//   border-color: #FFC107;
+// }
 
-#game-info-corp{
-  background-color: #FFC107;
-  color: black;
-  border-radius: 5px;
-  padding: 0.5rem;
-  display: inline-block;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
+// #game-info-corp{
+//   background-color: #FFC107;
+//   color: black;
+//   border-radius: 5px;
+//   padding: 0.5rem;
+//   display: inline-block;
+//   -webkit-box-decoration-break: clone;
+//   box-decoration-break: clone;
+// }
 
-#countdown-info{
-  // position: absolute;
-  // bottom: 0;
-  height: 90%;
-  // background-color: black;
-  // opacity: 0.5;
-  background-image: linear-gradient(
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.5)
-  );
-}
-// End Countdown Styling
+// #countdown-info{
+//   // position: absolute;
+//   // bottom: 0;
+//   height: 90%;
+//   // background-color: black;
+//   // opacity: 0.5;
+//   background-image: linear-gradient(
+//       rgba(0, 0, 0, 0.5),
+//       rgba(0, 0, 0, 0.5)
+//   );
+// }
+// // End Countdown Styling
 
-// Styling for card group
-.card-columns {
-   column-count: 2 !important;
-}
+// // Styling for card group
+// .card-columns {
+//   column-count: 2 !important;
+// }
