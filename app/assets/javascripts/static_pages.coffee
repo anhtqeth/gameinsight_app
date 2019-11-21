@@ -34,8 +34,7 @@ $(document).on 'turbolinks:load', ->
 
 
 $(document).on 'turbolinks:load', ->
-  $('#navbarNav a').on 'click', (e) ->
-  e.preventDefault()
+  $('#navbarNav a').on 'click', () ->
   $(this).addClass 'active'
   return
 return

@@ -1,0 +1,557 @@
+@import "~bootstrap/scss/bootstrap";
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+.container {
+  position: relative;
+}
+
+.center {
+  text-align: center;
+}
+
+#site-breadcrumb{
+  //padding-top: 15px;
+}
+
+.platform-scrollspy{
+    position: relative;
+    height: 350px;
+    overflow: auto;
+}
+
+.carousel-control-next, .carousel-control-prev  {
+    max-height: 25%;
+    margin-top: 21%;
+}
+
+.nav-pills .pill-1 .nav-link {
+    background-color: #ffc107;
+    color: white;
+}
+
+h1,h2,h3,h4,h5 {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+p {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+a {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* header */
+/*<input type="search" name="name" id="name" placeholder=" " class="form-control mr-sm-2">*/
+
+.carousel-control-next{
+    width: 50px !important;   
+}
+
+.carousel-control-prev{
+    width: 50px !important;   
+}
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+}
+
+
+// Styling for hr
+#content-line{
+  border: 1px solid #FFC107;
+}
+
+#logo:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+// HEADER STYLING
+.navbar-brand {
+  padding-top: 25px !important;
+  float: left;
+}
+
+#header-menu {
+  padding-top: 0 !important;
+  
+}
+
+#navbarNav ul li a {
+    //padding: 10px;
+    display: block;
+    color: white;
+}
+
+#navbarNav ul li a:hover {
+    color: black;
+    text-decoration: none;
+    background: #FFC107;
+}
+
+#navbarNav a.active
+{  
+    color: black;
+    background: #FFC107;
+}
+
+
+footer {
+  width: 100%;
+  //bottom: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+
+
+footer a {
+  color: white;
+}
+
+footer p{
+  color: white;
+}
+
+footer h5 {
+  font-family: 'Arial', sans-serif !important;
+  color: white;
+}
+
+
+footer a:hover {
+  color: #FFC107;
+}
+
+footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer li {
+  margin: 0;
+}
+
+#footer-column{
+  border-left: 1px solid;
+  color: #FFC107;
+}
+
+#footer-menu {
+  font-weight: 500;
+}
+
+// footer ul li {
+//   float: left;
+//   //margin-left: 15px;
+// }
+
+// .leftSidebar {
+//   position: fixed;
+//   padding-left: 15px;
+//   left: 0;
+//   height:100%;
+// }
+
+.rightSidebar {
+  float: right;
+  position: fixed;
+  width: 350px;
+  padding-right: 15px;
+  right: 0;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+// #header-nav-ul{
+//   display: -webkit-inline-box;
+//   list-style: none;
+// }
+
+// #header-nav-ul li a{
+//   padding: 10px;
+//   text-decoration: none;
+//   display: block;
+//   color: white;
+// }
+
+// #header-nav-ul ul li a:hover {
+//     // color: black;
+//     text-decoration: none;
+//     background: #FFC107 !important;
+// }
+
+a,
+a:hover,
+a:focus {
+    color: #FFC107;
+    text-decoration: none;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+// .navbar {
+//     padding: 15px 10px;
+//     background: #fff;
+//     border: none;
+//     border-radius: 0;
+//     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+// }
+
+// .navbar-btn {
+//     box-shadow: none;
+//     outline: none !important;
+//     border: none;
+// }
+
+// .line {
+//     width: 100%;
+//     height: 1px;
+//     border-bottom: 1px dashed #ddd;
+//     margin: 40px 0;
+// }
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+    // width: 250px;
+    // min-width: 80px;
+    // max-width: 80px;
+    min-width: 200px;
+    max-width: 200px;
+    font-size: 1.1em;
+    text-align: left;
+    padding: 20px 10px;
+    position: fixed;
+    top: 0;
+    left: 0px;
+    height: 100vh;
+    z-index: 999;
+    background: #343A40;
+    color: #fff;
+    visibility: hidden;
+    // overflow-y: scroll;
+    // box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.overlay.active {
+    display: block;
+    opacity: 0.9;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #FFC107;
+}
+
+#sidebar hr {
+    border: 1px solid #FFC107;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 0.8em;
+    display: block;
+    color: white;
+}
+
+#sidebar ul li a:hover {
+    color: black;
+    text-decoration: none;
+    background: #FFC107;
+}
+
+
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: white;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+    color: white;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+
+
+// END OF SIDEBAR
+
+//Spinner styling for Ajax request 
+#loadingSpinner {
+  text-align: center !important;
+}
+
+
+#release-overlay{
+  opacity:0;
+}
+
+//Overlay for new release
+#release-overlay:hover {
+    h5 {
+      color: #ffc107;
+    }
+    
+    a {
+      text-decoration: none;
+      color: #ffc107;
+    }
+    
+    p {
+      color: white;
+    }
+    opacity: 0.8;
+    background: black;
+}
+
+
+// Handling footer and body proportion
+body {
+  padding-top: 70px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.footer {
+  flex: 0 0 50px;/*or just height:50px;*/
+  margin-top: auto;
+}
+
+.container {
+    padding-top: 20px;
+}
+
+// Styling for pagination 
+.my_pagination {
+  justify-content: center !important;
+  padding: 0.3em;
+  cursor: pointer; }
+  .my_pagination a, .my_pagination span, .my_pagination em {
+    padding: 0.2em 0.5em; }
+  .my_pagination li {
+    padding: 2px;
+  }
+  .my_pagination .disabled {
+    color: #aaaaaa; }
+  .my_pagination .active a{
+    font-style: normal;
+    border-radius: 2em;
+    font-weight: bold;
+    ackground: black;
+    background: #ffc107;}
+  .my_pagination a {
+    border: 1px solid #dddddd;
+    border-radius: 2em;
+    color: black;
+    text-decoration: none; }
+    .my_pagination a:hover, .my_pagination a:focus {
+      border-color: #ffc107;
+      background: #ffc107;
+      color: white; }
+  .my_pagination .page_info {
+    color: #aaaaaa;
+    padding-top: 0.8em; }
+  .my_pagination .previous_page, .my_pagination .next_page {
+    border-width: 2px; }
+  .my_pagination .previous_page {
+    margin-right: 1em; }
+  .my_pagination .next_page {
+    margin-left: 1em; }
+
+
+.pagination {
+   place-content: center;
+}
+
+#best-platform-games-list li:hover {
+  background-color: #ffc107 !important;
+  border-radius: 15px !important;
+}
+
+#best-platform-games-list a {
+   color: black;
+}
+
+#game-media-img{
+  height: 150px;
+  width: 100%;
+  overflow: hidden;
+}
+
+#game-media-cover{
+  width:100%;
+}
+
+#header-menu-button{
+  padding-right: 35px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+
+// SEARCH CSS STYLING
+#custom-search {
+    border: none;
+    color:white;
+    font-family: 'Poppins', sans-serif !important;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 2px solid #ffc107;
+    -webkit-transition: width .5s ease-in-out !important;
+    -moz-transition: width .5s ease-in-out !important;
+    -o-transition: width .5s ease-in-out !important;
+    transition: width .5s ease-in-out !important;
+}
+
+#custom-search:focus {
+    width: 300px !important;
+    border: none;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 2px solid #ffc107;
+    // No blue glow when focus
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+}
+
+
+#custom-search:hover {
+    width: 300px !important;
+}
+
+.form-control.mr-sm-2 {
+    width: 200px !important;
+    -webkit-transition: width .5s ease-in-out !important;
+    -moz-transition: width .5s ease-in-out !important;
+    -o-transition: width .5s ease-in-out !important;
+    transition: width .5s ease-in-out !important;
+}
+
+#header-search-icon{
+  color: #ffc107;
+}
+
+#custom-search input[type="text"], textarea {
+  outline: none;
+  box-shadow:none !important;
+  border:1px solid #ccc !important;
+}
+
+
+/*CSS for different media devices*/
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    #game-feature-img{
+      height:auto;
+    }
+    
+    #game-news-summary {
+      display: none;
+    }
+    
+    h1 {
+      font-size: 20px !important;
+    }
+    
+    p,h5 {
+      font-size: 100% !important;
+    }
+     
+    #game-card{
+      width: 50% !important;
+      height: 100% !important;
+    }
+    
+    #game-card-img {
+      height: auto ;
+    }
+    
+    #news-image {
+      width:50%;
+      height:50%;
+    }
+    
+    #main-site-content{
+      padding-top:65px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) { }
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
