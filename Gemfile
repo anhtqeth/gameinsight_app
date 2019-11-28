@@ -18,7 +18,7 @@ gem 'puma', '3.9.1'
 gem 'sass-rails', '5.0.6'
 gem 'turbolinks', '5.0.1'
 gem 'uglifier', '3.2.0'
-gem 'will_paginate', '3.1.6'
+gem 'will_paginate', '3.1.7'
 gem 'coffee-rails', '~> 5.0.0'
 
 # Database
