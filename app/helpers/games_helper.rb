@@ -127,7 +127,26 @@ module GamesHelper
       puts 'Invalid Data!'
     end
   end
-
+  
+  def fizzBuzz(array)
+    result = Array.new
+    array.each do |num|
+      if (num % 3) == 0 && (num % 5) ==0
+        result << 'Fizz Buzz'
+        next
+      end
+      if (num % 3) == 0
+        result << 'Fizz'
+        next
+      else if (num % 5) == 0 
+        result << 'Buzz'
+        else 
+        result << num
+        end
+      end
+    end  
+    result
+  end
   # Used to render a card only.
   # TODO - Refactor to make this more generic and can be used again
   def card_render(game_data)
@@ -139,7 +158,6 @@ module GamesHelper
     content << content_tag(:a, 'Details', class: 'btn btn-dark', id: 'discover-btn', "href": game_path(game_data.slug, game_data.id))
     safe_join(content)
   end
-
   # Used to render search result page
   # TODO - Implement after search work correctly
   def search_result(result, api_result)
