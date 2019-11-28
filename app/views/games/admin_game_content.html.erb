@@ -15,6 +15,7 @@
       <%=form_for(game) do |f|%>
       <%= f.text_area :summary, class: 'form-control', rows: 15 %>
       <%= f.hidden_field :lang, :value => 'en' %>
+      <hr>
       <%= f.submit "SAVE", class: "btn btn-warning" %>
       <%end%>
     </div>
@@ -26,6 +27,7 @@
       <%=form_for(game) do |f|%>
       <%= f.text_area :summary, class: 'form-control', rows: 15 %>
       <%= f.hidden_field :lang, :value => 'vi' %>
+      <hr>
       <%= f.submit "Save", class: "btn btn-warning" %>
       <%end%>
     </div>
@@ -35,8 +37,9 @@
       <h5>Storyline</h5>
       <hr id ="new-content-line">
       <!--<p class="card-text"><= game.storyline%></p>-->
-      <%=form_for(game) do |f|%>
-      <%= f.text_area :storyline, class: 'form-control', rows: 15 %>
+     
+      <%=form_with model: game do |f|%>
+      <%= f.rich_text_area :storyline,class: 'form-control' %>
       <%= f.hidden_field :lang, :value => 'en' %>
       <%= f.submit "Save", class: "btn btn-warning" %>
       <%end%>
@@ -46,7 +49,7 @@
       <hr id ="new-content-line">
       <!--<p class="card-text"  style="font-family: 'Be Vietnam' !important;"><= game.storyline%></p>-->
       <%=form_for(game) do |f|%>
-      <%= f.text_area :storyline, class: 'form-control', rows: 15 %>
+      <%= f.rich_text_area :storyline,class: 'form-control' %>
       <%= f.hidden_field :lang, :value => 'vi' %>
       <%= f.submit "Save", class: "btn btn-warning" %>
       <%end%>
