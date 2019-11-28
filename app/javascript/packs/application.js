@@ -15,7 +15,7 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-console.log('Do I need this')
+console.log('Webpack upgrade')
 import 'bootstrap'
 import "../stylesheets/games"
 import "../stylesheets/static_pages"
