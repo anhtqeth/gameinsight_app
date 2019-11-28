@@ -89,6 +89,7 @@ class Game < ApplicationRecord
   # TODO: - Refactor this model
   # TODO - Put all API request to private?
   def fetchAPIData(id)
+    
     if id.is_a? Integer
       OpenStruct.new(gamesListProcess(id)) if gamesListProcess(id).present?
     end

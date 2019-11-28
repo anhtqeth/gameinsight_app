@@ -44,7 +44,6 @@ class GamesController < ApplicationController
   end
 
   def update
-    
     @game = Game.friendly.find(params[:id])
     if game_params[:lang] == 'vi'
         I18n.locale   = :vi
@@ -62,14 +61,13 @@ class GamesController < ApplicationController
   end
 
   def show
-    game = nil
-      if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil? 
-        
-        game = Game.new
-        game.saveAPIData(params[:id]).nil? ?  game = nil : game = Game.find_by(external_id: params[:id])
-      else
+    game = Game.new
+    if Game.friendly.find_by(slug: params[:id]).nil? && Game.find_by_external_id(params[:id]).nil? 
+        game.saveAPIData(params[:id].to_i).nil? ?  game = nil : game = Game.find_by(external_id: params[:id])
+    else
         game = params[:id].to_i != 0 ? Game.find_by_external_id(params[:id]) : Game.friendly.find_by(slug: params[:id])
-      end
+    end
+    
     unless game.nil?
       @game_details       = game
       @game_videos        = game.game_videos

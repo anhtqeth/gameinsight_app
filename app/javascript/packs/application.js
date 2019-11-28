@@ -19,3 +19,6 @@ console.log('Webpack upgrade')
 import 'bootstrap'
 import "../stylesheets/games"
 import "../stylesheets/static_pages"
+
+require("trix")
+require("@rails/actiontext")
