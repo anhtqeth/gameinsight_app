@@ -1,4 +1,7 @@
 <div>
+    <div class="jumbotron">
+      <h4 id="item-1">Countdown to your belove games</h4>
+    </div>
   <%@games.each do |game|%>
     
     <hr>
@@ -33,9 +36,11 @@
               <div class ="col">
                 <p><%=game.summary%></p>
                 <hr>
-                <a>Pre-Order</a>
-                <a>Amazon</a>
-                <a>Other</a>
+                <!--<a>Pre-Order</a>-->
+                <!--<a>Amazon</a>-->
+                <!--<a>Other</a>-->
+                <!--<br>-->
+                <a class="btn btn-warning" href=<%=game_path(game[:slug]) %>>Details</a>
               </div>
             </div>
           </div>
