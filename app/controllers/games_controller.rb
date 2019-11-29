@@ -111,9 +111,13 @@ class GamesController < ApplicationController
     @popular_genres = ['Role-playing (RPG)','Shooter',"Hack and slash/Beat 'em up",
     'Fighting','Adventure']
     if params[:genre]
-      @result = GameGenre.popular_games(params[:genre])
+      #@result = GameGenre.popular_games(params[:genre])
+      # Pagination for load more button
+      @result = GameGenre.popular_games(params[:genre]).paginate(page: params[:page], per_page: 10)
+      
       respond_to do |format|
         format.js
+        format.html
       end
     end
     render 'games/game_discover'

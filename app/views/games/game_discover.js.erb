@@ -1,1 +1,7 @@
 $("#pill-games-list").html("<%= escape_javascript(render partial: 'gameslist_by_genre', locals: { games: @result } )  %>");
+<% if @result.next_page %>
+    $('.pagination').replaceWith('<%= j will_paginate @result %>');
+    $('.pagination').hide();
+<% else %>
+    $('.pagination, #load-more-games').remove();
+<% end %>
