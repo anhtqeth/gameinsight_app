@@ -17,6 +17,37 @@
         </div>
       </div>
     </div>
+    
+    <div id="with-button">
+      <%= will_paginate games%>
+    </div>
+   
   <% end%>
   </div>
 </div>
+ <% if games.next_page %>
+      <div id="load-more-games" class="btn btn-primary btn-lg">Moar!</div>
+ <% end %>
+
+<script>
+var loading_posts;
+  if ($('#with-button').size() > 0) {
+    $('.pagination').hide();
+    loading_posts = false;
+    $('#load-more-games').show().click(function() {
+      var $this, more_posts_url;
+      if (!loading_posts) {
+        loading_posts = true;
+        more_posts_url = $('.pagination .next_page a').attr('href');
+        $this = $(this);
+        $this.html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." />').addClass('disabled');
+        $.getScript(more_posts_url, function() {
+          if ($this) {
+            $this.text('More posts').removeClass('disabled');
+          }
+          return loading_posts = false;
+        });
+      }
+    });
+  }
+</script>
