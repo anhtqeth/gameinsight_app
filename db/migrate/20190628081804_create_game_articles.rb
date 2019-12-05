@@ -7,7 +7,7 @@ class CreateGameArticles < ActiveRecord::Migration[5.2]
       t.string :author
       t.text :summary
       t.string :img
-      t.date :created_at
+      #t.date :created_at
       t.string :title
       t.string :url
       t.string :news_source
