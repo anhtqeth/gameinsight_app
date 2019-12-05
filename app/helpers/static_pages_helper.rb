@@ -21,7 +21,6 @@ module StaticPagesHelper
     end
   end
 
-  # <div class="shadow p-3 mb-5 bg-white rounded">Regular shadow</div>
   # Used to render rssfeed for an article list
   def rssFeedrenderer(rss_data)
     if data_verify(rss_data)
@@ -49,15 +48,6 @@ module StaticPagesHelper
     card_body << content_tag(:p, content_tag(:small, 'Last updated ' + time_ago_in_words(data[:publish_at]), class: 'text-muted'), class: 'card-text')
     content_tag(:div, content_tag(:div, safe_join(card_body), class: 'card-body'), class: 'card shadow p-3 mb-3')
   end
-  
-#   <div class="media">
-#   <img class="align-self-center mr-3" src="..." alt="Generic placeholder image">
-#   <div class="media-body">
-#     <h5 class="mt-0">Center-aligned media</h5>
-#     <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-#     <p class="mb-0">Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-#   </div>
-# </div>
 
   def mediaRenderer(data)
     media = []

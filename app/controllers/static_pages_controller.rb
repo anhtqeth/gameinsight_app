@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
   # Content on home page
   def home
     game = Game.new
-    @upcoming_popular_games = game.fetchPopularUpcomingRelease[1..8]
+    # @upcoming_popular_games = game.fetchPopularUpcomingRelease[1..8]
 
     # TODO: Add sorting by created date here
     @all_posts = Post.all[0..10]
@@ -45,11 +45,10 @@ class StaticPagesController < ApplicationController
     # @gematsu_rss_feeds = FetchNewsFeedJob.perform_later('gematsu')
     # @gamespot_rss_feeds = FetchNewsFeedJob.perform_later('gamespot')
     # @pushsquare_rss_feeds = FetchNewsFeedJob.perform_later('pushsquare')
-    @gematsu_rss_feeds = arc.rssFeed('gematsu')
-    @gamespot_rss_feeds = arc.rssFeed('gamespot')
+    @gematsu_rss_feeds    = arc.rssFeed('gematsu')
+    @gamespot_rss_feeds   = arc.rssFeed('gamespot')
     @pushsquare_rss_feeds = arc.rssFeed('pushsquare')
-    @ign_rss_feeds = arc.rssFeed('ign')
-    #@destructoid_rss_feeds = arc.rssFeed('destructoid')
+    @ign_rss_feeds        = arc.rssFeed('ign')
     
     render 'news_feed'
   end
