@@ -52,6 +52,15 @@ module GamesHelper
     end
     safe_join(content)
   end
+  
+  # Used to render multiple release date
+  def release_date_render(rdate) 
+    content = []
+    rdate.each do |date|
+     
+    end
+    
+  end
 
   # Render media type for news
   # News with empty img will be skipped
@@ -128,25 +137,7 @@ module GamesHelper
     end
   end
   
-  def fizzBuzz(array)
-    result = Array.new
-    array.each do |num|
-      if (num % 3) == 0 && (num % 5) ==0
-        result << 'Fizz Buzz'
-        next
-      end
-      if (num % 3) == 0
-        result << 'Fizz'
-        next
-      else if (num % 5) == 0 
-        result << 'Buzz'
-        else 
-        result << num
-        end
-      end
-    end  
-    result
-  end
+  
   # Used to render a card only.
   # TODO - Refactor to make this more generic and can be used again
   def card_render(game_data)

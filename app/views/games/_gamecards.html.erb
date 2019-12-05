@@ -15,6 +15,23 @@
 						  <%else%>
 						  	<p class="card-text">Release Date: <strong>TBD</strong></p>
 						  <%end%>
+						  
+						  <% @game_details.game_release_dates.each do |rd|%>
+						  <%if rd.date.nil?%>
+						  	<%next%>
+						  <%end%>
+						  <div class="row">
+						  	<div class="col">
+						  		<p><%= rd.platform.name%></p>
+						  	</div>
+						  	<div class="col-md-auto">
+						  		 <p><%= rd.date%></p>
+						  	</div>
+						  </div>
+						  
+						 
+						  <%end%>
+						  
 						  <!--TODO Change to logo link to platform page-->
 						  <p class="card-text">Platform: <strong><%= @game_details.platforms.map{|x| x.name}.join(', ') %></strong></p>
 						  <!--TODO Change to logo link to platform page-->

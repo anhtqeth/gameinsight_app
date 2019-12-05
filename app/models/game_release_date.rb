@@ -41,13 +41,7 @@ class GameReleaseDate < ApplicationRecord
   def saveAPIData(id)
     release_data = fetchAPIData(id)
     release_data.each do |release_date|
-      # puts 'DEBUG --- Release data here'
-      # puts release_date
-      # puts 'release category...'
-      # puts release_date.category
-      # puts release_date.created_at
-
-      game_release_dates = GameReleaseDate.new
+      game_release_dates                      = GameReleaseDate.new
       game_release_dates.date_format_category = release_date.category
 
       game_release_dates.date = if release_date.date.nil?
@@ -66,19 +60,21 @@ class GameReleaseDate < ApplicationRecord
       end
 
       if Platform.find_by_external_id(release_date.platform).nil?
-        platform = Platform.new
+        platform                    = Platform.new
         game_release_dates.platform = platform.saveAPIData(release_date.platform)
       else
         game_release_dates.platform = Platform.find_by_external_id(release_date.platform)
       end
 
       game_release_dates.month = release_date.m
-      game_release_dates.year = release_date.y
+      game_release_dates.year  = release_date.y
 
       game_release_dates.save
       game_release_dates
     end
   end
 
-  def getReleaseDatebyRegion; end
+  def getReleaseDatebyRegion
+    
+  end
 end

@@ -36,8 +36,8 @@ class Game < ApplicationRecord
   has_and_belongs_to_many :platforms
   has_and_belongs_to_many :game_genres
 
-  has_many :screenshots, dependent: :destroy
-  has_many :game_videos, dependent: :destroy
+  has_many :screenshots,        dependent: :destroy
+  has_many :game_videos,        dependent: :destroy
   has_many :game_release_dates, dependent: :destroy
 
   # Allow update on associated model
@@ -172,7 +172,6 @@ class Game < ApplicationRecord
   # Params: platform - name of the platform
   def fetchPopularGamebyPlatform(platform)
     time = Date.parse(Time.now.to_s)
-
     Rails.cache.fetch("#{time}_#{platform}/popular_upcoming_releases", expires_in: 7.days) do
       savePopularGame(platform)
     end
@@ -261,18 +260,19 @@ class Game < ApplicationRecord
   # As these model reference back to game. 
   # This need to be executed after a game is saved.
   # Private method
+  # 4 - Dec - 2019 - Remove article fetch
   # TODO - Can Refactor this using before_save or after_save?
     def saveGameRelatedData(id)
       release_date            = GameReleaseDate.new
       screenshot              = Screenshot.new
       videos                  = GameVideo.new
       company                 = Company.new
-      game_article_collection = GameArticleCollection.new
+      #game_article_collection = GameArticleCollection.new
       release_date.saveAPIData(id)
       screenshot.saveAPIData(id)
       videos.saveAPIData(id)
       company.saveAPIData(id)
-      game_article_collection.saveAPIData(id)
+      #game_article_collection.saveAPIData(id)
       FetchGamesCollectionJob.perform_later(id)
     end
   

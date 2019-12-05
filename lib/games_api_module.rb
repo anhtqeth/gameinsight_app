@@ -351,7 +351,7 @@ module GamesApiModule
     platform_id = platformCodeConvert(platform)
     platformCodeConvert(platform)
 
-    request.body = "fields id,name,platforms.name; where platforms = {#{platform_id}}; sort popularity desc; limit 10;"
+    request.body = "fields id,name,platforms.name; where platforms = {#{platform_id}} & first_release_date < #{UNIX_TIME_NOW}; sort popularity desc; limit 10;"
     puts request.body
 
     response = http_construct.request(request)
