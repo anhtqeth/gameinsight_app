@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  before_action :authenticate_user!
   # Guide content is created by headless CMS Contenful
   # Admin/ Editor can only update surrounding metadata
   include ContentModule
