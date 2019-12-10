@@ -27,32 +27,32 @@ module GamesApiModule
   BASE_URI = 'https://api-v3.igdb.com/'
 
   # General Information
-  GAME_URI = 'https://api-v3.igdb.com/games/'
+  GAME_URI           = 'https://api-v3.igdb.com/games/'
   GAME_FRANCHISE_URI = 'https://api-v3.igdb.com/franchises'
-  GAME_GENRE = 'https://api-v3.igdb.com/genres'
+  GAME_GENRE         = 'https://api-v3.igdb.com/genres'
 
   # Media (Videos/Photos)
-  COVER_URI = 'https://api-v3.igdb.com/covers'
-  ARTWORK_URI = 'https://api-v3.igdb.com/artworks'
-  SCREENSHOTS_URI = 'https://api-v3.igdb.com/screenshots'
-  VIDEO_URI = 'https://api-v3.igdb.com/game_videos'
+  COVER_URI          = 'https://api-v3.igdb.com/covers'
+  ARTWORK_URI        = 'https://api-v3.igdb.com/artworks'
+  SCREENSHOTS_URI    = 'https://api-v3.igdb.com/screenshots'
+  VIDEO_URI          = 'https://api-v3.igdb.com/game_videos'
 
-  INVOLVED_COMS_URI = 'https://api-v3.igdb.com/involved_companies'
-  COMPANIES_URI = 'https://api-v3.igdb.com/companies'
+  INVOLVED_COMS_URI  = 'https://api-v3.igdb.com/involved_companies'
+  COMPANIES_URI      = 'https://api-v3.igdb.com/companies'
 
   # PLATFORM_LOGO = 'https://api-v3.igdb.com/platform_logos'
-  PLATFORM_URI = 'https://api-v3.igdb.com/platforms'
+  PLATFORM_URI       = 'https://api-v3.igdb.com/platforms'
   # Specific Info
-  RELEASE_URI = 'https://api-v3.igdb.com/release_dates/'
+  RELEASE_URI        = 'https://api-v3.igdb.com/release_dates/'
   # Searching
-  GAME_SEARCH_URI = 'https://api-v3.igdb.com/search'
+  GAME_SEARCH_URI     = 'https://api-v3.igdb.com/search'
   GAME_COLLECTION_URI = 'https://api-v3.igdb.com/collections'
   #
   # External Sites info
-  GAME_NEWS_GROUP_URI = 'https://api-v3.igdb.com/pulse_groups'
-  GAME_ARTICLE_URI = 'https://api-v3.igdb.com/pulses'
+  GAME_NEWS_GROUP_URI       = 'https://api-v3.igdb.com/pulse_groups'
+  GAME_ARTICLE_URI          = 'https://api-v3.igdb.com/pulses'
   GAME_EXTERNAL_ARTICLE_URI = 'https://api-v3.igdb.com/pulse_urls'
-  GAME_ACHIVEMENT_URI = 'https://api-v3.igdb.com/achievements'
+  GAME_ACHIVEMENT_URI       = 'https://api-v3.igdb.com/achievements'
 
   # Authentication
   USERKEY = '049d27f7325bcb67768a30d5140fefb7' # NEW KEY
@@ -327,10 +327,9 @@ module GamesApiModule
   end
 
   def gamePopularUpcomingRelease
-    puts 'Called to Popular Upcoming Release game'
+    Rails.logger.info 'Called to Popular Upcoming Release game...'
     request = buildRequest(GAME_URI)
     request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW}; sort popularity desc; limit 25;"
-    # request.body = "fields *; where first_release_date > #{UNIX_TIME_NOW} & hypes > 500; sort hypes desc;"
 
     response = http_construct.request(request)
     puts response.read_body
@@ -339,8 +338,6 @@ module GamesApiModule
     result.each do |x|
       ids_array << x['id']
     end
-
-    puts ids_array
     ids_array
   end
 
@@ -352,24 +349,15 @@ module GamesApiModule
     platformCodeConvert(platform)
 
     request.body = "fields id,name,platforms.name; where platforms = {#{platform_id}} & first_release_date < #{UNIX_TIME_NOW}; sort popularity desc; limit 10;"
-    puts request.body
+    
 
     response = http_construct.request(request)
-    puts response.read_body
     JSON.parse(response.read_body)
-    # ids_array = []
-    # result.each do |x|
-    #   ids_array << x["id"]
-    # end
-
-    # puts ids_array
-    # ids_array
   end
 
   def gameReleaseDateRequest(id)
     puts 'Called to Release Date Request with parameter: '
     request = Net::HTTP::Get.new(URI(RELEASE_URI), 'user-key' => USERKEY)
-
     request.body = if id.nil?
                      "fields *; where date > #{UNIX_TIME_NOW};"
                    else
@@ -379,18 +367,11 @@ module GamesApiModule
     response = http_construct.request(request)
 
     JSON.parse(response.read_body)
-    # releaseTime = result.first['date']
-
-    # result.each do |x|
-    #   x['date'] = DateTime.strptime(x['date'].to_s,'%s').strftime("%A-%d-%b-%Y")
-    # end
-    # result
   end
 
   def gameCoverRequest(game_id)
     puts 'Called to Game Cover Request with parameter: ' << game_id.to_s
     request = Net::HTTP::Get.new(URI(COVER_URI), 'user-key' => USERKEY)
-    # request.body = "fields name,summary; where id = #{gameID};";
     request.body = "fields url; where game = (#{game_id});"
     response = http_construct.request(request)
 
@@ -436,7 +417,6 @@ module GamesApiModule
 
     puts request.body
     response = http_construct.request(request)
-    # puts JSON.parse(response.read_body)
     JSON.parse(response.read_body)
   end
 
@@ -446,7 +426,6 @@ module GamesApiModule
     request = Net::HTTP::Get.new(URI(SCREENSHOTS_URI), 'user-key' => USERKEY)
     request.body = "fields *; where game = (#{game_id});"
     response = http_construct.request(request)
-
     if JSON.parse(response.read_body).empty?
       nil
     else
@@ -482,7 +461,6 @@ module GamesApiModule
 
   def gameCardProcess(game_detail)
     # TODO: Refactor this. There is surely a better way to handle hash here...
-
     game_card = { id: nil, name: nil, summary: nil, storyline: nil, cover: nil, first_release_date: nil, popularity: nil, platform: nil, genres: nil }
 
     game_id = game_detail['id']
@@ -569,7 +547,16 @@ module GamesApiModule
     puts JSON.parse(response.read_body).first
     JSON.parse(response.read_body).first
   end
+
+  def gameAchievementRequest(id)
+    request = Net::HTTP::Get.new(URI(GAME_ACHIVEMENT_URI), 'user-key' => USERKEY)
+    request.body = "fields *,achievement_icon.url; where game = #{id}; limit 50;"
+    response = http_construct.request(request)
+    JSON.parse(response.read_body)
+  end
+  #gow = Game.find_by_external_id(19560)
   
+    
   
   # def gamesPlatformLogoRequest(logo_id)
   #   request = Net::HTTP::Get.new(URI(PLATFORM_LOGO), {'user-key' => USERKEY})
@@ -591,13 +578,5 @@ module GamesApiModule
   # request = Net::HTTP::Get.new(URI('https://api-v3.igdb.com/achievements'), {'user-key' => YOUR_KEY})
   # request.body = 'fields *'
   # puts http.request(request).body
-  
-  def gameAchievementRequest(id)
-    request = Net::HTTP::Get.new(URI(GAME_ACHIVEMENT_URI), 'user-key' => USERKEY)
-    request.body = "fields *,achievement_icon.url; where game = #{id}; limit 50;"
-    response = http_construct.request(request)
-    JSON.parse(response.read_body)
-  end
-  #gow = Game.find_by_external_id(19560)
   
 end

@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # Configuration for sidekiq web
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
+  
+  devise_for :users
 
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'

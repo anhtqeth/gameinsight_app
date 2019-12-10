@@ -121,8 +121,7 @@ class Game < ApplicationRecord
           end
         end
       end
-      puts 'GENRES'
-      puts game_detail.genres
+      
       unless game_detail.genres == 'NA'
         game_detail.genres.each do |x|
           if GameGenre.find_by(external_id: x).nil?
@@ -221,9 +220,9 @@ class Game < ApplicationRecord
   def formatApiResult(game_data)
     # Hashes -> OpenStruct
     # Map name to Array
-    game_data.platforms.nil? ? game_data.platforms  = [] : game_data.platforms = game_data.platforms.map { |x| OpenStruct.new(x) } # .map{|z| z.name}
-    game_data.genres.nil? ? game_data.genres        = nil : game_data.genres = game_data.genres.map { |x| OpenStruct.new(x) } # .map{|z| z.name}
-    game_data.cover.nil? ? game_data.cover          = nil : game_data.cover = game_data.cover['url'].sub('t_thumb', 't_cover_big')
+    game_data.platforms.nil? ? game_data.platforms   = [] : game_data.platforms = game_data.platforms.map { |x| OpenStruct.new(x) } # .map{|z| z.name}
+    game_data.genres.nil? ? game_data.genres         = nil : game_data.genres = game_data.genres.map { |x| OpenStruct.new(x) } # .map{|z| z.name}
+    game_data.cover.nil? ? game_data.cover           = nil : game_data.cover = game_data.cover['url'].sub('t_thumb', 't_cover_big')
     game_data.collection.nil? ? game_data.collection = [] : game_data.collection = game_data.collection['name']
     game_data.first_release_date.nil? ? game_data.first_release_date = nil : game_data.first_release_date = DateTime.strptime(game_data.first_release_date.to_s, '%s')
     game_data
