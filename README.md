@@ -3,7 +3,8 @@
 This is a Web Application display details of videogames
 
 # PURPOSE
-
+- Integrate with a headless CMS for authors and fans to write content on their favorite game
+- Integrate with a forum system to establish community
 - To have established a place for local audience to participate and discuss their favorite video games. 
 - This is intended to be translated to local language and managed by editor of the current country. 
 
@@ -17,13 +18,13 @@ This is a Web Application display details of videogames
 - Showing Games Information (Release Date, Platforms, Screenshots/ Videos News...) For almost any games with a combination of own database and result from API Services [Games Search](https://gameinsight.herokuapp.com/en/search?utf8=%E2%9C%93&name=Xenoblade+Chronicles)
 
 # Some Technical Notes
-- This web app retrieve data from API services and format it to save to a PostgreSQL database. 
-- A Redis Cache is used to store seasonal data (Popular Games for a time period...) and is updated daily, weekly depend on the content types (Video Games News url & info are refreshed every 12 hours...)
+- This web app retrieve data from API services and format it to save to a PostgreSQL database. Result is then formatted 
+- Redis is used to store seasonal data (Popular Games for a time period...) and is updated daily, weekly depend on the content types (Video Games News url & info are refreshed every 12 hours...)
 
 ### INSTALLATION
 
 This source is currently only for references. 
-API keys were removed for security purpose. A demo of the app is currently live [here](https://gameinsight.herokuapp.com/en)
+A demo of the app is currently live [here](https://gameinsight.herokuapp.com/en)
 
 ### CODE CONVENTION
 
