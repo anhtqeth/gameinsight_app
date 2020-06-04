@@ -18,8 +18,11 @@ This is a Web Application display details of videogames
 - Showing Games Information (Release Date, Platforms, Screenshots/ Videos News...) For almost any games with a combination of own database and result from API Services [Games Search](https://gameinsight.herokuapp.com/en/search?utf8=%E2%9C%93&name=Xenoblade+Chronicles)
 
 # Some Technical Notes
-- This web app retrieve data from API services and format it to save to a PostgreSQL database. Result is then formatted 
+- This web app retrieve data from API services (RESTful API) and format it to save to a PostgreSQL database. 
 - Redis is used to store seasonal data (Popular Games for a time period...) and is updated daily, weekly depend on the content types (Video Games News url & info are refreshed every 12 hours...)
+- A Scheduler was setup (Sidekiq) to occasionally fetch news from other sources. 
+- It is also setup to be able to call to AWS Translation service for content Translation. 
+- A Headless CMS was used (Contentful) is already setup for author to create their content on a CMS system. 
 
 ### INSTALLATION
 
