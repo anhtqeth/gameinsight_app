@@ -6,5 +6,5 @@ test:
   port: '6379'
 production:
   #host: 'ethugamedb-redis-server.xadimb.ng.0001.usw2.cache.amazonaws.com'
-  host: 'redis://redistogo:55c16a2542415e38ba0af363921e1e08@hammerjaw.redistogo.com/'
+  host: 'redis://h:pac680b3c0e990891e6b1678f92ce2307cb649d1ab15bde94007529ad7f522454@ec2-54-160-97-168.compute-1.amazonaws.com:14949'
   port: '10097'
