@@ -1,65 +1,45 @@
-         ___        ______     ____ _                 _  ___  
-        / \ \      / / ___|   / ___| | ___  _   _  __| |/ _ \ 
-       / _ \ \ /\ / /\___ \  | |   | |/ _ \| | | |/ _` | (_) |
-      / ___ \ V  V /  ___) | | |___| | (_) | |_| | (_| |\__, |
-     /_/   \_\_/\_/  |____/   \____|_|\___/ \__,_|\__,_|  /_/ 
- ----------------------------------------------------------------- 
+# Game Info Web App
 
+This is a Web Application display details of videogames
 
-# Games Data Base Application for Vietnam - Ethu Inc
+# PURPOSE
 
-This is a Ruby Webapp display details of videogames by using the API Service provided from third party company.
+- To have established a place for local audience to participate and discuss their favorite video games. 
+- This is intended to be translated to local language and managed by editor of the current country. 
 
-## Getting Started
+# FEATURES
 
-As of 29 - May - 2019 - This web app is still in development
+- Showing most popular games base on platform (Switch/PS4/Xbox) [Home Page](https://gameinsight.herokuapp.com/en)
+- Discover Popular Games base on genres [Discover](https://gameinsight.herokuapp.com/games/discover?locale=en)
+- Discover Popular Games base on platforms [PS4 Games](https://gameinsight.herokuapp.com/en/platforms/playstation-4)
+- Showing upcoming release with a countdown to the release date. [Count Down](https://gameinsight.herokuapp.com/games/countdown?locale=en)
+- Showing news sources from various popular gaming press [News Page](https://gameinsight.herokuapp.com/en/news)
+- Showing Games Information (Release Date, Platforms, Screenshots/ Videos News...) For almost any games with a combination of own database and result from API Services [Games Search](https://gameinsight.herokuapp.com/en/search?utf8=%E2%9C%93&name=Xenoblade+Chronicles)
 
-### Prerequisites
+# Some Technical Notes
+- This web app retrieve data from API services and format it to save to a PostgreSQL database. 
+- A Redis Cache is used to store seasonal data (Popular Games for a time period...) and is updated daily, weekly depend on the content types (Video Games News url & info are refreshed every 12 hours...)
 
-- Working Experience in Ruby on Rails (minimum 1 year)
-- Strong Understanding on Front End development (CSS, SCSS, HTML5)
-- Familiar with utilizing Bootstrap 4 on FE Components
-- Strong understanding on API Development and REST API protocol
-- Gaming Enthusiastic
+### INSTALLATION
 
-### Installing
+This source is currently only for references. 
+API keys were removed for security purpose. A demo of the app is currently live [here](https://gameinsight.herokuapp.com/en)
 
-This will be hosted via AWS S3 services. Right now, no specification is neeed.
+### CODE CONVENTION
 
-
-## Running the tests
-
-TBD
-
-
-### And coding style tests
-
-- [Ruby Styles Guides](https://github.com/rubocop-hq/ruby-style-guide) I followed this popular Ruby style guides from Git.
+- [Ruby Styles Guides](https://github.com/rubocop-hq/ruby-style-guide)
+I followed this popular Ruby style guides from Git.
 
 
 ## Deployment
 
-- During development and testing phase, heroku was used. 
-- 
+- App is currently deployed to Heroku
 
 ## Built With
 
 * [Rails 5.2](https://guides.rubyonrails.org/5_2_release_notes.html)
 * [Bootstrap 4.3.1](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
-* [AWS Cloud 9](https://aws.amazon.com/cloud9/)
-
-
-## Versioning
-
 
 ## Authors
 
-* **Ethu Developer** - *Initial work* - [EthuDeveloper](https://github.com/PurpleBooth)
-
-
-## License
-
-
-## Acknowledgments
-
-Thanks to the infamous Ruby on Rails tutorials of the Learn Enough Community.
+* **Coding Enthusiast** - *Initial work*
