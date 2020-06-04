@@ -1,6 +1,7 @@
 # Game Info Web App
+[Game Insight](https://gameinsight.herokuapp.com/en)
 
-This is a Web Application display details of videogames
+This is a Web Application display details of video games
 
 # PURPOSE
 - Integrate with a headless CMS for authors and fans to write content on their favorite game
