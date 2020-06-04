@@ -4,9 +4,26 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
   # Guide content is created by headless CMS Contenful
   # Admin/ Editor can only update surrounding metadata
+  # Admin/ Editor can create new post directly in app
   include ContentModule
   def index
     @posts = Post.all.order(:name).paginate(page: params[:page], per_page: 5)
+  end
+  
+  def create
+  
+  end
+  
+  def edit 
+  
+  end
+  
+  def update
+  
+  end
+
+  def destroy
+    
   end
 
   def show
@@ -14,7 +31,4 @@ class PostsController < ApplicationController
     @post = Post.friendly.find(params[:id])
   end
 
-  def update; end
-
-  def destroy; end
 end

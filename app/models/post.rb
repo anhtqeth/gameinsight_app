@@ -26,7 +26,11 @@ class Post < ApplicationRecord
 
   extend FriendlyId
   friendly_id :name, use: :slugged
-
+  # For Editable
+  translates :content
+  has_rich_text :content
+  
+  
   include ContentModule
 
   def fetchCMSPost(id)

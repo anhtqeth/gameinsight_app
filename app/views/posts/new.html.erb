@@ -1,0 +1,18 @@
+<!--View for Creating new Post (Rich Text)-->
+<%= form_with model: post do |f| %>
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.rich_text_area :content %>
+    <%= f.text_field :name %>
+  </div>
+<% end %>
+
+<div id="post-game-picker">
+  
+</div>
+<div id="post-company-picker">
+  
+</div>
+<div id="platform-picker">
+  
+</div>

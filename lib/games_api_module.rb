@@ -79,6 +79,7 @@ module GamesApiModule
   #   end
   # end
 
+
   def gamesRequest(game_id)
     puts 'Called to Game Request with parameter: ' << game_id.to_s
     request = buildRequest(GAME_URI)
@@ -153,6 +154,8 @@ module GamesApiModule
       # gameCompanyProcess(result.first)
     end
   end
+  
+
 
   # TODO: Add field as needed
   # gameCompanyProcess

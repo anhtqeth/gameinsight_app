@@ -178,7 +178,6 @@ https://coderwall.com/p/adv71w/basic-vim-commands-for-getting-started
 ALTER USER "ec2-user" WITH PASSWORD 'password';
 
 
-
 Author.joins("INNER JOIN posts ON posts.author_id = authors.id AND posts.published = 't'")
 latest_release = Game.where('first_release_date BETWEEN ? AND ?',min_time,max_time).joins('INNER JOIN platforms ON platforms.game_id = games.id AND platforms.name = ?',platform)
 

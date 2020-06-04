@@ -5,11 +5,19 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
   
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
+        
+  devise_scope :user do
+    get 'sign_up', to: 'users/registrations#new'
+    # get 'forgot_password', to: 'users/passwords#new'
+    # get 'reset_password', to: 'users/passwords#edit'
+  end
 
-  get    '/login',   to: 'sessions#new'
-  post   '/login',   to: 'sessions#create'
-  delete '/logout',  to: 'sessions#destroy'
+  # get    '/login',   to: 'users#new'
+  # post   '/login',   to: 'users#create'
+  # delete '/logout',  to: 'sessions#destroy'
   
   get 'games/countdown', to: 'games#countdown',  as: 'countdown'
   get '/games/discover', to: 'games#discover',   as: 'discover'
@@ -23,7 +31,7 @@ Rails.application.routes.draw do
     get  '/about',   to: 'static_pages#about'
     get  '/contact', to: 'static_pages#contact'
 
-    get '/signup', to: 'users#new'
+    #get '/signup', to: 'users#new'
 
     get 'games/newreleases', to: 'games#releases'
     get 'games/:id/guides',  to: 'games#guides'
@@ -35,13 +43,11 @@ Rails.application.routes.draw do
     
   end
   
-  resources :users
   resources :games
   resources :screenshots
   resources :game_videos
   resources :game_article_collections
   resources :game_articles
   resources :involved_companies
-
   resources :posts
 end

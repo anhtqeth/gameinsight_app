@@ -29,6 +29,8 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 8 }
   enum role: %i[user vip admin]
   after_initialize :set_default_role, if: :new_record?
+  
+  devise :registerable, :confirmable
 
   def set_default_role
     self.role ||= :user

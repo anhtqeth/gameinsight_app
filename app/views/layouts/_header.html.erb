@@ -91,8 +91,8 @@
     <%end%>
         <!--<li><= link_to "Users", '#' %></li>-->
     <% else %>
-       <a id="header-menu-button" class="btn btn-warning" href=<%=login_path %>><i class="fas fa-sign-in-alt"></i>
-          Sign in</a>
+       <a id="header-menu-button" class="btn btn-warning" href=<%=sign_up_path %>><i class="fas fa-sign-in-alt"></i>
+          Sign Up</a>
     <% end %>
     <%= form_tag(search_path, :method => "get",   
       class: 'form-inline', id: 'search-bar') do %>  
