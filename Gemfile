@@ -9,7 +9,7 @@ gem 'bootstrap', '~> 4.3.1'
 # Encryption
 gem 'bcrypt', '3.1.13'
 gem 'bootstrap-will_paginate', '1.0.0'
-gem 'carrierwave', '1.2.2'
+gem 'carrierwave', '1.3.2'
 gem 'faker', '~> 2.5'
 gem 'jbuilder',     '2.7.0'
 gem 'jquery-rails', '4.3.1'
