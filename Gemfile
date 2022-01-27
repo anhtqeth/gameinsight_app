@@ -42,7 +42,7 @@ gem 'rails-i18n'
 gem 'globalize'
 gem 'aws-sdk', '~> 3'
 # Background JOB
-gem 'sidekiq', '~> 5.2.7'
+gem 'sidekiq', '~> 6.4.0'
 
 # SEO
 gem 'friendly_id', '~> 5.2', '>= 5.2.5' # Slug
