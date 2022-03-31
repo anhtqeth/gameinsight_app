@@ -1157,7 +1157,8 @@ GEM
       activesupport (>= 4.2)
     popper_js (1.14.5)
     public_suffix (4.0.1)
-    puma (3.9.1)
+    puma (4.3.12)
+      nio4r (~> 2.0)
     rack (2.0.7)
     rack-protection (2.0.7)
       rack
@@ -1346,7 +1347,7 @@ DEPENDENCIES
   nokogiri
   pg (~> 1.1, >= 1.1.4)
   pg_search (~> 2.3)
-  puma (= 3.9.1)
+  puma (= 4.3.12)
   rails (~> 6.0.0.rc1)
   rails-i18n
   rich_text_renderer (~> 0.2.2)
