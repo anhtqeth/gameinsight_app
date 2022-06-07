@@ -1112,7 +1112,7 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
-    jmespath (1.4.0)
+    jmespath (1.6.1)
     jquery-countdown-rails (2.0.2)
     jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
